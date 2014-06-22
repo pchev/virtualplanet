@@ -1,0 +1,17 @@
+
+Copyright: GPL
+
+Information :
+Name        : virtualplanet
+Version     : 1
+Release     : 1
+Group       : Sciences/Astronomy
+License     : GPL
+Packager    : Patrick Chevalley
+URL         : http://ap-i.net/vpa
+Summary     : Virtual Planet Atlas
+Description :
+Can visualize the telluric planet aspect for every date and hour. 
+It permits also to study the planet formations with unique database.
+
+
