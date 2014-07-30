@@ -161,6 +161,7 @@ type
     FPhase: single;
     FSunIncl: single;
     FCentralMeridian: single;
+    FTerminator : single;
     FPoleIncl: single;
     FOrientation: single;
     FPoleorientation: single;
@@ -293,6 +294,7 @@ type
     property CurrentB : single read MarkB;
     property SunIncl : single read FSunIncl write SetSunIncl;
     property CentralMeridian : single read FCentralMeridian write SetCentralMeridian;
+    property Terminator : single read FTerminator write FTerminator;
     property PoleIncl : single read FPoleIncl write SetPoleIncl;
     property RaCentre: single read FRaCentre write FRaCentre;
     property DeCentre: single read FDeCentre write FDeCentre;

@@ -421,7 +421,7 @@ type
     wheelstep, EphStep, fov, searchl,
     searchb, markx, marky, flipx, rotstep, lunaison: double;
     ra, Dec, rag2000,deg2000, dist, dkm, phase, illum, pa, sunincl, parallacticangle, currentmeridian,
-    tphase, by, bxpos, dummy: double;
+    by, bxpos, dummy: double;
     editrow, notesrow, rotdirection, searchpos,BumpMethod: integer;
     dbedited: boolean;
     SkipIdent, geocentric, FollowNorth, ZenithOnTop, notesok, notesedited,
@@ -1448,6 +1448,18 @@ begin
   listbox1.Clear;
   l1 := rad2deg*activeplanet.CentralMeridian - range;
   l2 := rad2deg*activeplanet.CentralMeridian + range;
+  CentralMeridian.Caption := rsCentralMerid;
+  if (CurrentPlanet<=2)and(illum<0.5) then begin
+    CentralMeridian.Caption :=rst_51;
+    range:=abs(range);
+    if (rad2deg*activeplanet.Phase) < 180 then begin
+      l1 := activeplanet.Terminator;
+      l2 := activeplanet.Terminator + range;
+    end else begin
+      l1 := activeplanet.Terminator - range;
+      l2 := activeplanet.Terminator;
+    end;
+  end;
   currentmeridian := activeplanet.CentralMeridian;
   Val(trim(ComboBox2.Text),s,n);
   if n<>0 then s:=0;
@@ -2250,6 +2262,16 @@ begin
   end;
   activeplanet.PoleIncl := deg2rad*De;
   activeplanet.CentralMeridian := deg2rad*w1;
+  if (CurrentPlanet<=2)and(illum<0.5) then CentralMeridian.Caption :=rst_51
+     else CentralMeridian.Caption := rsCentralMerid;
+  if phase < 180 then
+  begin
+    activeplanet.Terminator := phase - 90 + w1;
+  end
+  else
+  begin
+    activeplanet.Terminator := phase - 90 + w1 - 180;
+  end;
   PA:=pa-parallacticangle;
   if FollowNorth or ZenithOnTop then
   begin
@@ -2264,7 +2286,6 @@ begin
   activeplanet.PlanetDistance:=dist*km_au;
   activeplanet.ShowPhase:=phaseeffect;
   activeplanet.Phase:=deg2rad*phase;
-  tphase:=phase;
   activeplanet.SunIncl:=deg2rad*sunincl;
   activeplanet.RefreshAll;
 end;
