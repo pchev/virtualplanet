@@ -1,0 +1,41 @@
+#
+# source : http://astrogeology.usgs.gov/search/details/Venus/Magellan/Colorized/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m/cub
+#
+ 
+# use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
+# cat stretch_1-2.txt 
+# 0.0:0.0 80.0:100.0 190.0:240.0 256.0:253.0
+
+
+# resize channel 2 to L2 size
+enlarge from=Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.cub+2 to=l2a.cub mode=total ons=10000 onl=5000
+
+# stretch dynamic 
+stretch from=l2a.cub to=l2.cub readfile=true inputfile=stretch_1-2.txt null=0 lis=0 lrs=0 his=253 hrs=253
+
+# make l2 png
+isis2std from=l2.cub to=l2.png format=png stretch=manual minimum=0 maximum=255
+
+# make L2 slice 
+mkdir L2
+convert l2.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/%d.jpg
+convert l2.png +gravity -crop 10000x1000 R%d.png
+convert R0.png -resize 3000x1000\!  RS0.jpg
+convert R4.png -resize 3000x1000\!  RS4.jpg
+convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/1000%d.jpg
+convert RS4.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/2000%d.jpg
+rm R[0-4].png RS[0-4].jpg
+
+# resize to L1 size
+reduce from=l2.cub to=l1.cub mode=total ons=4000 onl=2000
+
+# make l1 png
+isis2std from=l1.cub to=l1.png format=png stretch=manual minimum=0 maximum=255
+
+# make L1 slice (100% quality to avoid transparency on level 1)
+mkdir L1
+convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 100% L1/%d.jpg
+
+rm *.pgw
+rm l2a.cub l1.cub l2.cub l2.png l1.png
+
