@@ -1,16 +1,19 @@
+#
+# source : http://astrogeology.usgs.gov/search/details/Venus/Magellan/Colorized/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m/cub
+#
  
 # use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
-# cat stretch.txt 
+# cat stretch_1-2c.txt 
 # 0.0:0.0 255.0:255.0
 
 # stretch dynamic
-stretch from=Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.cub to=v1.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=255 hrs=255
+stretch from=Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.cub to=gl4641c.cub readfile=true inputfile=stretch_1-2c.txt null=0 lis=0 lrs=0 his=255 hrs=255
 
+# resize to L2 size
+enlarge from=gl4641c.cub to=l2.cub mode=total ons=10000 onl=5000
 
 # make l2 png
-isis2std red=v1.cub+1 green=v1.cub+2 blue=v1.cub+3 to=v1.png mode=rgb format=png stretch=manual rmin=0 rmax=255 gmin=0 gmax=255 bmin=0 bmax=255
-# resize to 10000x5000
-convert v1.png -resize 10000x5000 l2.png
+isis2std red=l2.cub+1 green=l2.cub+2 blue=l2.cub+3 to=l2.png mode=rgb format=png stretch=manual rmin=0 rmax=255 gmin=0 gmax=255 bmin=0 bmax=255
 
 # make L2 slice 
 mkdir L2
@@ -31,5 +34,5 @@ convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -qualit
 
 
 rm *.pgw
-rm v1.cub v1.png print.prt
+rm gl4641c.cub l2.cub l2.png l1.png
 
