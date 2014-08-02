@@ -27,6 +27,6 @@ install -m 755 -d $destdir/share/virtualplanet
 
 
 # big data
-InstData VPA_Base_Bumpmap $destdir
+#InstData VPA_Base_Bumpmap $destdir
 InstData VPA_Base_Overlay $destdir
 

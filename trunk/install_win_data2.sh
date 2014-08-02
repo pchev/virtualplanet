@@ -30,5 +30,5 @@ echo Install virtualplanet data2 to $destdir
 install -m 755 -d $destdir
 
 # big data
-InstData VPA_Base_Bumpmap $destdir
+#InstData VPA_Base_Bumpmap $destdir
 InstData VPA_Base_Overlay $destdir

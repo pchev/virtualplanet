@@ -15,11 +15,11 @@ unset make_linux32
 ##make_linux32=1
 unset make_linux64
 if [[ $arch == x86_64 ]]; then 
-   make_linux64=1
+#   make_linux64=1
    extratarget=",x86_64-linux"
 fi
 unset make_linux_data
-make_linux_data=1
+#make_linux_data=1
 unset make_win32
 make_win32=1
 
@@ -60,7 +60,7 @@ mkdir $wd/$outdir
 
 # check if new revision since last run
 read lastrev <last.build
-currentrev=$(LC_ALL=C svn info .. | grep Revision: | sed 's/Revision: //')
+currentrev=$(LC_ALL=C svn info . | grep Revision: | sed 's/Revision: //')
   echo $lastrev ' - ' $currentrev
   if [[ $lastrev -eq $currentrev ]]; then
     echo Already build at revision $currentrev
