@@ -2576,7 +2576,7 @@ try
   // initial zoom
   i:=min(Panelplanet.Width,Panelplanet.Height);
   if i>500 then begin
-    zoom:=i/500;
+    zoom:=0.8*i/500;
   end;
   planet1.zoom:=zoom;
   planet1.GridSpacing:=gridspacing;
