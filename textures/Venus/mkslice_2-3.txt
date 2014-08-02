@@ -21,12 +21,12 @@ isis2std from=l3.cub to=l3.png mode=gray format=png stretch=manual minimum=0 max
 # make L3 slice 
 mkdir L3
 convert l3.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/%d.jpg
-convert l3.png +gravity -crop 20000x1000 R%d.png
-convert R0.png -resize 3000x1000\!  RS0.jpg
-convert R9.png -resize 3000x1000\!  RS9.jpg
-convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/1000%d.jpg
-convert RS9.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/2000%d.jpg
-rm R[0-9].png RS[0-9].jpg
+convert l3.png +gravity -crop 20000x1000 R%d.pnm
+convert R0.pnm -resize 3000x1000\!  RS0.pnm
+convert R9.pnm -resize 3000x1000\!  RS9.pnm
+convert RS0.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/1000%d.jpg
+convert RS9.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/2000%d.jpg
+rm R[0-9].pnm RS[0-9].pnm
 
 # make l2 png
 isis2std from=l2.cub to=l2.png format=png stretch=manual minimum=0 maximum=255
@@ -34,12 +34,12 @@ isis2std from=l2.cub to=l2.png format=png stretch=manual minimum=0 maximum=255
 # make L2 slice 
 mkdir L2
 convert l2.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/%d.jpg
-convert l2.png +gravity -crop 10000x1000 R%d.png
-convert R0.png -resize 3000x1000\!  RS0.jpg
-convert R4.png -resize 3000x1000\!  RS4.jpg
-convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/1000%d.jpg
-convert RS4.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/2000%d.jpg
-rm R[0-4].png RS[0-4].jpg
+convert l2.png +gravity -crop 10000x1000 R%d.pnm
+convert R0.pnm -resize 3000x1000\!  RS0.pnm
+convert R4.pnm -resize 3000x1000\!  RS4.pnm
+convert RS0.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/1000%d.jpg
+convert RS4.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/2000%d.jpg
+rm R[0-4].pnm RS[0-4].pnm
 
 rm *.pgw
 rm gl2025.cub l3.cub l3.png l2.cub l2.png print.prt
