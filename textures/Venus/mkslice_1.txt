@@ -1,0 +1,25 @@
+#
+# source : http://astrogeology.usgs.gov/search/details/Venus/Magellan/Colorized/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m/cub
+#
+ 
+# use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
+# cat stretch_1.txt 
+# 0.0:0.0 80.0:110.0 100.0:130.0 190.0:210.0 255.0:255.0
+
+
+# resize channel 2 to L1 size
+reduce from=Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.cub to=l1a.cub mode=total ons=4000 onl=2000
+
+# stretch dynamic 
+stretch from=l1a.cub+2 to=l1.cub readfile=true inputfile=stretch_1.txt null=0 lis=0 lrs=0 his=253 hrs=253
+
+# make l1 png
+isis2std from=l1.cub to=l1.png format=png stretch=manual minimum=0 maximum=255
+
+# make L1 slice (100% quality to avoid transparency on level 1)
+mkdir L1
+convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 100% L1/%d.jpg
+
+rm *.pgw
+rm l1a.cub l1.cub l1.png
+
