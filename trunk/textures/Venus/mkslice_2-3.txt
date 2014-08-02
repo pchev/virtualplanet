@@ -3,14 +3,17 @@
 #
  
 # use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
-# cat stretch_3.txt 
+# cat stretch_2-3.txt 
 # 0.0:0.0 65.0:5.0 225.0:250.0 255.0:255.0
 
 # stretch dynamic
-stretch from=Venus_Magellan_C3-MDIR_Global_Mosaic_2025m.cub to=gl2025.cub readfile=true inputfile=stretch_3.txt null=0 lis=0 lrs=0 his=255 hrs=255
+stretch from=Venus_Magellan_C3-MDIR_Global_Mosaic_2025m.cub to=gl2025.cub readfile=true inputfile=stretch_2-3.txt null=0 lis=0 lrs=0 his=255 hrs=255
 
 # resize to L3 size
 enlarge from=gl2025.cub to=l3.cub mode=total ons=20000 onl=10000
+
+# resize to L2 size
+reduce from=gl2025.cub to=l2.cub mode=total ons=10000 onl=5000
 
 # make l3 png
 isis2std from=l3.cub to=l3.png mode=gray format=png stretch=manual minimum=0 maximum=255
@@ -25,6 +28,19 @@ convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quali
 convert RS9.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/2000%d.jpg
 rm R[0-9].png RS[0-9].jpg
 
+# make l2 png
+isis2std from=l2.cub to=l2.png format=png stretch=manual minimum=0 maximum=255
+
+# make L2 slice 
+mkdir L2
+convert l2.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/%d.jpg
+convert l2.png +gravity -crop 10000x1000 R%d.png
+convert R0.png -resize 3000x1000\!  RS0.jpg
+convert R4.png -resize 3000x1000\!  RS4.jpg
+convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/1000%d.jpg
+convert RS4.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/2000%d.jpg
+rm R[0-4].png RS[0-4].jpg
+
 rm *.pgw
-rm gl2025.cub l3.cub l3.png print.prt
+rm gl2025.cub l3.cub l3.png l2.cub l2.png print.prt
 
