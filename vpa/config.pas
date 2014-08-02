@@ -252,8 +252,8 @@ begin
       Label35.Caption:=rsCountry;
       Label34.Caption:=rst_21;
       BumpRadioGroup.Items[0]:=rsPhaseWithout+blank+rsStandardText;
-      BumpRadioGroup.Items[1]:=rsPhaseWithDyn;
-      BumpRadioGroup.Items[2]:=rsNoTextureToU;
+      //BumpRadioGroup.Items[1]:=rsPhaseWithDyn;
+      BumpRadioGroup.Items[1]:=rsNoTextureToU;
       RadioGroupLong.Caption:=rsLongitudeSys;
       RadioGroupLong.Items[0]:=rsEast0360;
       RadioGroupLong.Items[1]:=rsEast180180;
@@ -341,6 +341,7 @@ begin
   bt.OnClick:=RadioButtonLvClick;
 end;
 begin
+BumpRadioGroup.Items.Delete(2);
 {$ifdef mswindows}
  ScaleForm(self,Screen.PixelsPerInch/96);
 {$endif}
@@ -437,7 +438,7 @@ procedure Tf_config.BumpRadioGroupClick(Sender: TObject);
 begin
 TexturePanel.Visible:=(BumpRadioGroup.ItemIndex=0);
 TextureChanged:=true;
-if BumpRadioGroup.ItemIndex=2 then CheckBox11.Checked:=true;
+if BumpRadioGroup.ItemIndex=1 then CheckBox11.Checked:=true;
 end;
 
 procedure Tf_config.FormDestroy(Sender: TObject);

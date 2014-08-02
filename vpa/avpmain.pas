@@ -2717,10 +2717,10 @@ begin
     f_config.Shape3.Brush.Color := autolabelcolor;
     f_config.TrackBar2.Position := -LabelDensity;
     f_config.newlang := language;
-    if wantbump[CurrentPlanet] or activeplanet.Bumpmap then
+    {if wantbump[CurrentPlanet] or activeplanet.Bumpmap then
        f_config.BumpRadioGroup.ItemIndex:=1
-    else if activeplanet.Texture[0]='NONE' then
-       f_config.BumpRadioGroup.ItemIndex:=2
+    else }if activeplanet.Texture[0]='NONE' then
+       f_config.BumpRadioGroup.ItemIndex:=1
     else
        f_config.BumpRadioGroup.ItemIndex:=0;
     f_config.BumpRadioGroup.Visible:=(activeplanet.BumpMapCapabilities<>[]);
@@ -2770,12 +2770,12 @@ begin
         texturefiles[CurrentPlanet].Assign(f_config.texturefn);
         reload := True;
       end;
-      if activeplanet=planet1 then begin
+      {if activeplanet=planet1 then begin
         if wantbump[CurrentPlanet]<>(f_config.BumpRadioGroup.ItemIndex=1) then reload:=true;
         wantbump[CurrentPlanet] := (f_config.BumpRadioGroup.ItemIndex=1)and(activeplanet.BumpMapCapabilities<>[]);
-      end else
+      end else }
         wantbump[CurrentPlanet]:=false;
-      notexture:=(f_config.BumpRadioGroup.ItemIndex=2);
+      notexture:=(f_config.BumpRadioGroup.ItemIndex=1);
       LongSystem[CurrentPlanet] := TLongSystem(f_config.RadioGroupLong.ItemIndex);
       markcolor     := f_config.Shape2.Brush.Color;
       spritecolor:=markcolor;
