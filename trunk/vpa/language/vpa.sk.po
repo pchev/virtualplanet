@@ -178,7 +178,9 @@ msgid "Mi"
 msgstr "Mi"
 
 #: u_translation.rsm_2
-msgid "born in"
+#, fuzzy
+#| msgid "born in"
+msgid "of"
 msgstr "narodený v"
 
 #: u_translation.rsm_20
@@ -204,8 +206,8 @@ msgstr "alebo"
 
 #: u_translation.rsm_27
 #, fuzzy
-#| msgid "No formation actually near the terminator"
-msgid "No formation actually near the central meridian"
+#| msgid "No formation actually near the central meridian"
+msgid "No formation match the criteria"
 msgstr "Žiadne útvary blízko terminátora"
 
 #: u_translation.rsm_29
@@ -350,8 +352,16 @@ msgstr "Altitúda"
 msgid "From Database:"
 msgstr "Z databázy:"
 
+#: u_translation.rsnametype
+msgid "Name type:"
+msgstr ""
+
 #: u_translation.rsneptune
 msgid "Neptune"
+msgstr ""
+
+#: u_translation.rsnotappliable
+msgid "Not appliable"
 msgstr ""
 
 #: u_translation.rsnotexturetou

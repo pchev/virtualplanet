@@ -177,7 +177,9 @@ msgid "Mi"
 msgstr " milles"
 
 #: u_translation.rsm_2
-msgid "born in"
+#, fuzzy
+#| msgid "born in"
+msgid "of"
 msgstr "nascut a"
 
 #: u_translation.rsm_20
@@ -203,8 +205,8 @@ msgstr "o"
 
 #: u_translation.rsm_27
 #, fuzzy
-#| msgid "No formation actually near the terminator"
-msgid "No formation actually near the central meridian"
+#| msgid "No formation actually near the central meridian"
+msgid "No formation match the criteria"
 msgstr "No hi ha formacions prop del terminador"
 
 #: u_translation.rsm_29
@@ -350,8 +352,16 @@ msgstr "Altura"
 msgid "From Database:"
 msgstr "De la base de dades:"
 
+#: u_translation.rsnametype
+msgid "Name type:"
+msgstr ""
+
 #: u_translation.rsneptune
 msgid "Neptune"
+msgstr ""
+
+#: u_translation.rsnotappliable
+msgid "Not appliable"
 msgstr ""
 
 #: u_translation.rsnotexturetou

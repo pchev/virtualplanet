@@ -135,7 +135,7 @@ rst_183='Label Color';
 rst_184='Your graphic card do not support to display more than one texture for the same object. Be sure that hardware acceleration is activated or change the graphic card. The require function is GL_ARB_MULTITEXTURE ';
 rst_185='Look here for a list of supported graphic card';
 rsm_1='from';
-rsm_2='born in';
+rsm_2='of';
 rsm_3='Born at:';
 rsm_4='in';
 rsm_5='Dead at:';
@@ -237,6 +237,8 @@ rsNeptune = 'Neptune';
 rsPluto = 'Pluto';
 rsLongitudeSys = 'Longitude system';
 rsMinimalLengt = 'Minimal length (km)';
+rsNameType = 'Name type:';
+rsNotAppliable = 'Not appliable';
 
 implementation
 

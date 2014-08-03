@@ -1669,14 +1669,17 @@ end;
 
 procedure Tf_planet.RefreshAll;
 begin
+if Enabled then begin
   ClearLabel;
   RefreshTimer.Enabled:=false;
   RefreshTimer.Enabled:=true;
+end else RefreshTimer.Enabled:=false;
 end;
 
 procedure Tf_planet.RefreshTimerTimer(Sender: TObject);
 begin
-  RefreshTimer.Enabled:=false;
+RefreshTimer.Enabled:=false;
+if Enabled then begin
   GLCamera1.Position.X:=GLCamera1.Position.X-0.001;
   GLCamera1.Position.X:=GLCamera1.Position.X+0.001;
   SetScale;
@@ -1687,6 +1690,7 @@ begin
     if zone>1 then LoadSlice(zone);
     GetZoomInfo;
   end;
+end;
 end;
 
 procedure Tf_planet.SetRotation(value:single);
