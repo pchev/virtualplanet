@@ -1,12 +1,13 @@
+# , 2014.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: \n"
-"PO-Revision-Date: 2014-04-25 16:09+0200\n"
+"PO-Revision-Date: 2014-08-03 11:22+0200\n"
 "Project-Id-Version: maplun.fr\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "MIME-Version: 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Language: fr\n"
@@ -176,8 +177,9 @@ msgid "Mi"
 msgstr "Mi"
 
 #: u_translation.rsm_2
-msgid "born in"
-msgstr "né en"
+#| msgid "born in"
+msgid "of"
+msgstr "de"
 
 #: u_translation.rsm_20
 msgid "Height:"
@@ -201,9 +203,9 @@ msgid "or"
 msgstr "ou"
 
 #: u_translation.rsm_27
-#| msgid "No formation actually near the terminator"
-msgid "No formation actually near the central meridian"
-msgstr "Pas de formation visible près du méridien central"
+#| msgid "No formation actually near the central meridian"
+msgid "No formation match the criteria"
+msgstr "Aucune formation ne rempli le critère"
 
 #: u_translation.rsm_29
 msgid "Right Ascension:"
@@ -348,9 +350,17 @@ msgstr "Altitude"
 msgid "From Database:"
 msgstr "De la base de donnée:"
 
+#: u_translation.rsnametype
+msgid "Name type:"
+msgstr "Type de nom:"
+
 #: u_translation.rsneptune
 msgid "Neptune"
 msgstr "Neptune"
+
+#: u_translation.rsnotappliable
+msgid "Not appliable"
+msgstr "Non applicable"
 
 #: u_translation.rsnotexturetou
 msgid "No texture (to use with an overlay alone)"

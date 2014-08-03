@@ -175,7 +175,7 @@ msgid "Mi"
 msgstr ""
 
 #: u_translation.rsm_2
-msgid "born in"
+msgid "of"
 msgstr ""
 
 #: u_translation.rsm_20
@@ -200,7 +200,7 @@ msgid "or"
 msgstr ""
 
 #: u_translation.rsm_27
-msgid "No formation actually near the central meridian"
+msgid "No formation match the criteria"
 msgstr ""
 
 #: u_translation.rsm_29
@@ -345,8 +345,16 @@ msgstr ""
 msgid "From Database:"
 msgstr ""
 
+#: u_translation.rsnametype
+msgid "Name type:"
+msgstr ""
+
 #: u_translation.rsneptune
 msgid "Neptune"
+msgstr ""
+
+#: u_translation.rsnotappliable
+msgid "Not appliable"
 msgstr ""
 
 #: u_translation.rsnotexturetou

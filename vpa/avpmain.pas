@@ -447,8 +447,7 @@ type
     distancestart: boolean;
     param:  TStringList;
     imgdir: array of array[0..2] of string;
-    LONGIN, LATIN, WIDEKM, WIDEMI, LENGHTKM, LENGHTMI, FNAME, INTERESTN,
-    DIAMINST, wordformat: integer;
+    LONGIN, LATIN, WIDEKM, LENGHTKM, FNAME, INTERESTN, DIAMINST, wordformat: integer;
     overlayhi, overlayimg: Tbitmap;
     zoom:   double;
     useDBN: integer;
@@ -1597,6 +1596,8 @@ var
     if shortdesc then begin
       if result='?' then result:='';
       if result='??' then result:='';
+      if result='???' then result:='';
+      if result=rsNotAppliable then result:='';
       if result>'' then
         for k := 1 to num_bl do
         begin
@@ -1619,16 +1620,14 @@ begin
   if (GetField('PUN'))>'' then
      memo.Lines.Add('P.U.N.:' + b + GetField('PUN'));
   if (GetField('NAMETYPE'))>'' then
-     memo.Lines.Add('Name type:' + b + GetField('NAMETYPE'));
+     memo.Lines.Add(rsNameType + b + GetField('NAMETYPE'));
   memo.Lines.Add(rsm_56 + b + GetField('TYPE'));
 
   //Taille
-  if (GetField('LENGTHKM')>'')or(GetField('WIDEKM')>'')or(GetField('LENGTHMI')>'')or(GetField('WIDEMI')>'') then
+  if (GetField('LENGTHKM')>'')or(GetField('WIDEKM')>'') then begin
      memo.Lines.Add(rsm_57); //Taille
-  if (GetField('LENGTHKM')>'')or(GetField('WIDEKM')>'')or(GetField('LENGTHMI')>'')or(GetField('WIDEMI')>'') then
-     memo.Lines.Add(rsm_17 + b + GetField('LENGTHKM') + 'x' +
-                    GetField('WIDEKM') + rsm_18 + b + '/' + b + GetField('LENGTHMI') +
-                    'x' + GetField('WIDEMI') + rsm_19);
+     memo.Lines.Add(rsm_17 + b + GetField('LENGTHKM') + 'x' + GetField('WIDEKM') + rsm_18);
+  end;
 
 
   //Position
@@ -1746,6 +1745,8 @@ var
     if shortdesc then begin
       if result='?' then result:='';
       if result='??' then result:='';
+      if result='???' then result:='';
+      if result=rsNotAppliable then result:='';
       if result>'' then
         for k := 1 to num_bl do
         begin
@@ -1763,22 +1764,21 @@ begin
   i    := row.ByField['DBN'].AsInteger;
   if i > 99 then
   begin
-    txt := txt + t3 + 'From Database:' + t3end + b + IntToStr(i) + b;
+    txt := txt + t3 + rsm_75 + t3end + b + IntToStr(i) + b;
   end;
   if (GetField('PUN'))>'' then
      txt  := txt + t3 + 'P.U.N.:' + t3end + b + GetField('PUN') + '<br>';
   if (GetField('NAMETYPE'))>'' then
-     txt  := txt + t3 + 'Name type:' + t3end + b + GetField('NAMETYPE') + '<br>';
+     txt  := txt + t3 + rsNameType + t3end + b + GetField('NAMETYPE') + '<br>';
   if (GetField('TYPE'))>'' then
      txt  := txt + t3 + rsm_56 + t3end + b + GetField('TYPE') + '<br>';
   txt  := txt + b + '<br>';
 
   //Taille
   txtbuf:='';
-  if (GetField('LENGTHKM')>'')or(GetField('WIDEKM')>'')or(GetField('LENGTHMI')>'')or(GetField('WIDEMI')>'') then
+  if (GetField('LENGTHKM')>'')or(GetField('WIDEKM')>'') then
      txtbuf  := txtbuf + t3 + rsm_17 + t3end + b + GetField('LENGTHKM') + 'x' +
-             GetField('WIDEKM') + rsm_18 + b + '/' + b + GetField('LENGTHMI') +
-             'x' + GetField('WIDEMI') + rsm_19 + '<br>';
+             GetField('WIDEKM') + rsm_18 + '<br>';
   if txtbuf>'' then
      txt  := txt + t2 + rsm_57 + t2end + '<br>'+txtbuf+ b + '<br>'; //Taille
 
@@ -1808,16 +1808,25 @@ begin
     (trim(GetField('CENTURYC') + GetField('COUNTRY')) > '') then
   begin
     case wordformat of
-      0: txtbuf := txtbuf + GetField('CENTURYC') + b + GetField('NATIONALITY') +
-          b + GetField('WORK') + b + rsm_2 + b + GetField('COUNTRY') + '<br>';
       // english
-      1: txtbuf := txtbuf + GetField('WORK') + b + GetField('NATIONALITY') +
-          b + rsm_1 + b + GetField('CENTURYC') + b + rsm_2 + b +
-          GetField('COUNTRY') + '<br>';
+      0: begin
+        txtbuf := txtbuf + GetField('CENTURYC') + b + GetField('NATIONALITY') + b + GetField('WORK');
+        if trim(GetField('COUNTRY'))>'' then txtbuf:=txtbuf + b + rsm_2 + b + GetField('COUNTRY');
+        txtbuf:=txtbuf + '<br>';
+      end;
       // francais, italian
-      2: txtbuf := txtbuf + GetField('NATIONALITY') + b + GetField('WORK') +
-          b + GetField('CENTURYC') + b + rsm_2 + b + GetField('COUNTRY') + '<br>';
+      1: begin
+        txtbuf := txtbuf + GetField('WORK') + b + GetField('NATIONALITY');
+        if trim(GetField('CENTURYC'))>'' then txtbuf:=txtbuf + b + rsm_1 + b + GetField('CENTURYC');
+        if trim(GetField('COUNTRY'))>'' then txtbuf:=txtbuf + b + rsm_2 + b + GetField('COUNTRY');
+        txtbuf:=txtbuf + '<br>';
+      end;
       // russian
+      2: begin
+        txtbuf := txtbuf + GetField('NATIONALITY') + b + GetField('WORK') + b + GetField('CENTURYC');
+        if trim(GetField('COUNTRY'))>'' then txtbuf:=txtbuf + b + rsm_2 + b + GetField('COUNTRY');
+        txtbuf:=txtbuf + '<br>';
+      end;
     end;
     if (GetField('BIRTHPLACE')>'')or((GetField('BIRTHDATE')>'')) then
        txtbuf := txtbuf + t3 + rsm_3 + t3end + b + GetField('BIRTHPLACE') + b +
@@ -2300,21 +2309,21 @@ end;
 
 procedure  Tf_avpmain.GetMsg(Sender: TObject; msgclass:TplanetMsgClass; value: String);
 begin
-if sender is Tf_planet then SetActiveplanet(Tf_planet(sender));
-case msgclass of
-MsgZoom: begin
-          value:=StringReplace(value,'FOV:',rsm_43,[]);
-          statusbar1.Panels[3].Text := value;
-          statusbar1.Hint:=value;
-          SetZoomBar;
-         end;
-MsgPerf: begin
-          Label15.Caption := rsm_44 + blank + value;
-         end;
-   else  statusbar1.Panels[4].Text := value;
+if Tf_planet(sender)=activeplanet then begin
+  case msgclass of
+  MsgZoom: begin
+            value:=StringReplace(value,'FOV:',rsm_43,[]);
+            statusbar1.Panels[3].Text := pla[CurrentPlanet]+blank+value+blank+LongitudeSystemName;
+            statusbar1.Hint:=value;
+            SetZoomBar;
+           end;
+  MsgPerf: begin
+            Label15.Caption := rsm_44 + blank + value;
+           end;
+     else  statusbar1.Panels[3].Text := value;
+  end;
+  end;
 end;
-end;
-
 
 procedure Tf_avpmain.IdentLB(l, b, w: single);
 begin
@@ -2341,17 +2350,18 @@ end;
 procedure Tf_avpmain.SetPlanet(p:integer);
 begin
 if notesedited then UpdNotesClick(nil);
+SetActiveplanet(planet1);
 planet1.Bumpmap:=false;
 CurrentPlanet:=p;
 InitNotes;
 planet1.texture:=texturefiles[CurrentPlanet];
 LoadOverlay(overlayname[CurrentPlanet], overlaytr[CurrentPlanet]);
-if planet1.CanBump then
+{if planet1.CanBump then
    planet1.BumpPath:=slash(appdir)+slash('Bumpmap')+slash(epla[CurrentPlanet]);
 if phaseeffect and wantbump[CurrentPlanet] and planet1.CanBump then
    planet1.Bumpmap:=true
 else
-   planet1.Bumpmap:=false;
+   planet1.Bumpmap:=false;  }
 currentid := '';
 RefreshplanetImage;
 SelectMedirian;
@@ -4039,9 +4049,9 @@ begin
 end;
 
 procedure Tf_avpmain.NewWindowButtonClick(Sender: TObject);
-//var cdo:single;
+var cdo:single;
 begin
-{if planet2=nil then begin
+if planet2=nil then begin
  planet2:=Tf_planet.Create(Panelplanet2);
  planet2.GLSceneViewer1.Visible:=false;
  planet2.Caption:=Caption;
@@ -4057,22 +4067,26 @@ begin
  planet2.Init(false);
 end;
 if NewWindowButton.Down then begin
+  SelectPlanet1.Enabled:=false;
   SplitSize:=0.5;
   Panelplanet2.Width:=Panelplanet.Width div 2;
   Splitter2.Visible:=true;
   Panelplanet2.Visible:=true;
+  planet2.Enabled:=true;
   planet2.GLSceneViewer1.Visible:=true;
-  wantbump:=false;
+//  wantbump:=false;
   cdo:=planet2.GLSceneViewer1.Camera.DepthOfView;
   planet2.GLSceneViewer1.Camera.DepthOfView:=0;
   planet2.Assignplanet(planet1);
   planet2.GLSceneViewer1.Camera.DepthOfView:=cdo;
 end else begin
-  wantbump:=planet1.Bumpmap;
+  SelectPlanet1.Enabled:=true;
+//  wantbump:=planet1.Bumpmap;
+  planet2.Enabled:=false;
   Panelplanet2.Width:=0;
   Splitter2.Visible:=false;
   Panelplanet2.Visible:=false;
-end; }
+end;
 end;
 
 procedure Tf_avpmain.PhaseButtonClick(Sender: TObject);
@@ -4270,7 +4284,7 @@ end;
 
 procedure Tf_avpmain.LoadOverlay(fn: string; transparent: single);
 begin
-  if showoverlay[CurrentPlanet] and (fn<>'') and fileexists(Slash(planet1.OverlayPath)+Slash(epla[CurrentPlanet]) + fn) then
+  if showoverlay[CurrentPlanet] and (fn<>'') and fileexists(Slash(activeplanet.OverlayPath)+Slash(epla[CurrentPlanet]) + fn) then
   begin
       activeplanet.OverlayTransparency:=transparent;
       activeplanet.OverlayTransparencyMethode:=0;

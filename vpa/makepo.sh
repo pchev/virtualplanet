@@ -3,4 +3,4 @@
 # Update first the path to your Lazarus installation and run "make" in lazarus/tools
 
 rstconv -i units/x86_64-linux-gtk2/u_translation.rst -o language/vpa.po
-/home/pch/lazarus/tools/updatepofiles language/vpa.po
+/home/compiler/lazarus/tools/updatepofiles language/vpa.po

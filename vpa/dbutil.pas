@@ -27,9 +27,9 @@ interface
 Uses Forms, Dialogs, SysUtils, mlb2, passql, passqlite;
 
 const
-    DBversion=100;
+    DBversion=101;
     MaxDBN=200;
-    NumPlanetDBFields = 50;
+    NumPlanetDBFields = 48;
     PlanetDBFields : array[1..NumPlanetDBFields,1..2] of string = (
       ('BODY','text'),
       ('NAME','text'),
@@ -56,8 +56,6 @@ const
       ('QUADRANT','text'),
       ('LENGTHKM','float'),
       ('WIDEKM','float'),
-      ('LENGHTMI','float'),
-      ('WIDEMI','float'),
       ('Target','text'),
       ('Feature_ID','integer'),
       ('Feature_Name','text'),
