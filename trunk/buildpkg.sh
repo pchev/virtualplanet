@@ -239,7 +239,7 @@ fi
 # make Windows i386 version
 if [[ $make_win32 ]]; then 
   cd $wd/data
-  ./mkzoneinfo.sh
+  #./mkzoneinfo.sh
   cd $wd
   rsync -a --exclude=.svn Installer/Windows/* $builddir
   ./configure $configopt prefix=$builddir/virtualplanet/Data target=i386-win32$extratarget
