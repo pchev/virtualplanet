@@ -9,7 +9,7 @@ function InstData {
   tmpdir=$(mktemp -d -t tmp)
   pkgz=BaseData/$pkg
   if [ ! -e $pkgz ]; then
-     curl -L -o $pkgz http://sourceforge.net/projects/virtualmoon/files/6-Source_Data/$pkg/download
+     curl -L -o $pkgz http://sourceforge.net/projects/virtualplanet/files/9-Source_Data/$pkg/download
   fi
   tar xvzf $pkgz -C $tmpdir
   cp -R -p $tmpdir/share/virtualplanet/* $ddir/
