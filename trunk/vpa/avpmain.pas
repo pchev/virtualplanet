@@ -482,7 +482,7 @@ implementation
 {$R avpmain.lfm}
 
 uses
-  telescope, config, splashunit, pu_ephem,
+  config, splashunit, pu_ephem,
   fmsg, dbutil, LCLProc;
 
 procedure Tf_avpmain.SetLang1;
@@ -3261,11 +3261,6 @@ begin
   try
     SaveDefault;
     if CanCloseCDC and StartCDC then OpenCDC('','--quit');
-    if scopelibok then
-      if ScopeConnected then
-      begin
-        ScopeDisconnect(ok);
-      end;
   except
     on E: Exception do begin
     {$ifdef trace_debug}

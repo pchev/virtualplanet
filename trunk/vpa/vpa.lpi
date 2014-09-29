@@ -103,7 +103,7 @@
         <PackageName Value="LCL"/>
       </Item9>
     </RequiredPackages>
-    <Units Count="20">
+    <Units Count="19">
       <Unit0>
         <Filename Value="vpa.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -186,48 +186,43 @@
         <UnitName Value="splashunit"/>
       </Unit11>
       <Unit12>
-        <Filename Value="telescope.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="telescope"/>
-      </Unit12>
-      <Unit13>
         <Filename Value="u_constant.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="u_constant"/>
-      </Unit13>
-      <Unit14>
+      </Unit12>
+      <Unit13>
         <Filename Value="uDE.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uDE"/>
-      </Unit14>
-      <Unit15>
+      </Unit13>
+      <Unit14>
         <Filename Value="u_projection.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="u_projection"/>
-      </Unit15>
-      <Unit16>
+      </Unit14>
+      <Unit15>
         <Filename Value="u_translation.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="u_translation"/>
-      </Unit16>
-      <Unit17>
+      </Unit15>
+      <Unit16>
         <Filename Value="u_translation_database.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="u_translation_database"/>
-      </Unit17>
-      <Unit18>
+      </Unit16>
+      <Unit17>
         <Filename Value="u_util.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="u_util"/>
-      </Unit18>
-      <Unit19>
+      </Unit17>
+      <Unit18>
         <Filename Value="pu_ephem.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="f_ephem"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="pu_ephem"/>
-      </Unit19>
+      </Unit18>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

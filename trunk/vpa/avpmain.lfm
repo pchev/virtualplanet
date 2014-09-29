@@ -692,7 +692,7 @@ object f_avpmain: Tf_avpmain
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 2
-          ClientHeight = 26
+          ClientHeight = 40
           ClientWidth = 244
           Columns = 2
           Items.Strings = (
@@ -753,7 +753,7 @@ object f_avpmain: Tf_avpmain
         Top = -1000
         Width = 253
         Caption = 'Satellisation'
-        ClientHeight = 296
+        ClientHeight = 310
         ClientWidth = 249
         TabOrder = 5
         Visible = False
@@ -1146,7 +1146,7 @@ object f_avpmain: Tf_avpmain
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 2
-          ClientHeight = 21
+          ClientHeight = 35
           ClientWidth = 222
           Columns = 2
           Items.Strings = (

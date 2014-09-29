@@ -10,7 +10,7 @@ uses
   InterfaceBase, LCLVersion, // version number
   Forms, Dialogs, glscene_runtime, avpmain, config,
   OpenGLAdapter, OpenGLTokens, CraterList, dbutil, fmsg, splashunit,
-  telescope, SysUtils, TurboPowerIPro, u_constant, cu_tz, cu_planet,
+  SysUtils, TurboPowerIPro, u_constant, cu_tz, cu_planet,
   u_projection, u_util, pu_planet, u_translation_database, u_translation,
   uniqueinstance_package, BigIma, uDE, mlb2, pu_ephem;
 
