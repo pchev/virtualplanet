@@ -239,6 +239,8 @@ rsLongitudeSys = 'Longitude system';
 rsMinimalLengt = 'Minimal length (km)';
 rsNameType = 'Name type:';
 rsNotAppliable = 'Not appliable';
+rsMagnitude = 'Magnitude';
+rsPoleInclinat = 'Pole inclination';
 
 implementation
 

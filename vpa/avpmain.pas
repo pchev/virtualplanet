@@ -2182,10 +2182,13 @@ begin
   Stringgrid1.Cells[0, i] := rsm_36;
   Stringgrid1.Cells[1, i] := formatfloat(f1, diam) + lsec;
   Inc(i);
+  Stringgrid1.Cells[0, i] := rsMagnitude;
+  Stringgrid1.Cells[1, i] := formatfloat(f1, magn);
+  Inc(i);
   Stringgrid1.Cells[0, i] := rsCentralMerid;
   Stringgrid1.Cells[1, i] := FormatLongitude(w1)+' ('+LongitudeSystemName+')';
   Inc(i);
-  Stringgrid1.Cells[0, i] := 'Pole inclination';
+  Stringgrid1.Cells[0, i] := rsPoleInclinat;
   Stringgrid1.Cells[1, i] := formatfloat(f2, De) + ldeg ;
   Inc(i);
   Stringgrid1.Cells[0, i] := rsm_32;

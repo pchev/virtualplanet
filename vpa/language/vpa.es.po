@@ -124,6 +124,10 @@ msgstr ""
 msgid "Longitude system"
 msgstr ""
 
+#: u_translation.rsmagnitude
+msgid "Magnitude"
+msgstr ""
+
 #: u_translation.rsmars
 msgid "Mars"
 msgstr ""
@@ -380,6 +384,10 @@ msgstr ""
 
 #: u_translation.rspluto
 msgid "Pluto"
+msgstr ""
+
+#: u_translation.rspoleinclinat
+msgid "Pole inclination"
 msgstr ""
 
 #: u_translation.rsquitfull
