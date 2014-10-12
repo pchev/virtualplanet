@@ -2601,7 +2601,9 @@ try
   Trackbar2.position := planet1.ambientColor and $FF;
   Trackbar3.position := planet1.diffuseColor and $FF;
   Trackbar4.position := planet1.specularColor and $FF;
-  if planet1.GLSphereplanet.Slices = 1440 then
+  if planet1.GLSphereplanet.Slices = 2880 then
+    Trackbar5.position := 7
+  else if planet1.GLSphereplanet.Slices = 1440 then
     Trackbar5.position := 6
   else if planet1.GLSphereplanet.Slices = 720 then
       Trackbar5.position := 5
@@ -3364,8 +3366,10 @@ var
   i: integer;
 begin
   i := Trackbar5.position;
-  if i = 6 then
-    i := 1440
+  if i = 7 then
+    i := 2880
+  else if i = 6 then
+      i := 1440
   else if i = 5 then
     i := 720
   else if i = 4 then
