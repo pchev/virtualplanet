@@ -902,3 +902,11 @@ msgstr ""
 msgid "Not appliable"
 msgstr ""
 
+#: u_translation:rsmagnitude
+msgid "Magnitude"
+msgstr ""
+
+#: u_translation:rspoleinclinat
+msgid "Pole inclination"
+msgstr ""
+

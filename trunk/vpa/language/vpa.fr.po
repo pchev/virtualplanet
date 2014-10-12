@@ -1,9 +1,8 @@
-# , 2014.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: \n"
-"PO-Revision-Date: 2014-08-03 11:22+0200\n"
+"PO-Revision-Date: 2014-10-12 10:27+0200\n"
 "Project-Id-Version: maplun.fr\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -125,6 +124,10 @@ msgstr "Zénith local en haut"
 #: u_translation.rslongitudesys
 msgid "Longitude system"
 msgstr "Système de longitude"
+
+#: u_translation.rsmagnitude
+msgid "Magnitude"
+msgstr "Magnitude"
 
 #: u_translation.rsmars
 msgid "Mars"
@@ -381,6 +384,10 @@ msgstr "Sélection de la planète"
 #: u_translation.rspluto
 msgid "Pluto"
 msgstr "Pluton"
+
+#: u_translation.rspoleinclinat
+msgid "Pole inclination"
+msgstr "Inclinaison du pôle"
 
 #: u_translation.rsquitfull
 msgid "Quit full screen (Esc)"
