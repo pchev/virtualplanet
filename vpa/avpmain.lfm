@@ -262,9 +262,9 @@ object f_avpmain: Tf_avpmain
     Height = 512
     Top = 24
     Width = 340
-    ActivePage = Ephemerides
+    ActivePage = Position
     MultiLine = True
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 0
     OnChange = PageControl1Change
     Options = [nboMultiLine]
@@ -1117,7 +1117,7 @@ object f_avpmain: Tf_avpmain
           Left = 9
           Height = 26
           Top = 104
-          Width = 60
+          Width = 62
           Caption = 'Miroir'
           OnClick = CheckBox2Click
           TabOrder = 2
@@ -1126,7 +1126,7 @@ object f_avpmain: Tf_avpmain
           Left = 9
           Height = 26
           Top = 125
-          Width = 199
+          Width = 198
           Caption = 'Pole celeste toujours en haut.'
           OnClick = CheckBox1Click
           TabOrder = 3
@@ -1160,7 +1160,7 @@ object f_avpmain: Tf_avpmain
           Left = 9
           Height = 26
           Top = 146
-          Width = 109
+          Width = 108
           Caption = 'Zenith on top '
           OnClick = CheckBox4Click
           TabOrder = 5
@@ -1181,33 +1181,33 @@ object f_avpmain: Tf_avpmain
       end
       object Label8: TLabel
         Left = 32
-        Height = 15
+        Height = 14
         Top = 24
-        Width = 59
+        Width = 58
         Caption = 'Penombre'
         ParentColor = False
       end
       object Label12: TLabel
         Left = 32
-        Height = 15
+        Height = 14
         Top = 136
-        Width = 34
+        Width = 33
         Caption = 'Direct'
         ParentColor = False
       end
       object Label11: TLabel
         Left = 32
-        Height = 15
+        Height = 14
         Top = 80
-        Width = 34
+        Width = 33
         Caption = 'Diffus'
         ParentColor = False
       end
       object Label14: TLabel
         Left = 32
-        Height = 15
+        Height = 14
         Top = 2
-        Width = 57
+        Width = 56
         Caption = 'Eclairage '
         Color = clBtnFace
         ParentColor = False
@@ -1215,49 +1215,49 @@ object f_avpmain: Tf_avpmain
       end
       object Label22: TLabel
         Left = 16
-        Height = 15
+        Height = 14
         Top = 48
-        Width = 5
+        Width = 4
         Caption = '-'
         ParentColor = False
       end
       object Label29: TLabel
         Left = 16
-        Height = 15
+        Height = 14
         Top = 104
-        Width = 5
+        Width = 4
         Caption = '-'
         ParentColor = False
       end
       object Label30: TLabel
         Left = 16
-        Height = 15
+        Height = 14
         Top = 157
-        Width = 5
+        Width = 4
         Caption = '-'
         ParentColor = False
       end
       object Label32: TLabel
         Left = 197
-        Height = 15
+        Height = 14
         Top = 48
-        Width = 10
+        Width = 9
         Caption = '+'
         ParentColor = False
       end
       object Label33: TLabel
         Left = 197
-        Height = 15
+        Height = 14
         Top = 104
-        Width = 10
+        Width = 9
         Caption = '+'
         ParentColor = False
       end
       object Label34: TLabel
         Left = 197
-        Height = 15
+        Height = 14
         Top = 157
-        Width = 10
+        Width = 9
         Caption = '+'
         ParentColor = False
       end
@@ -1310,41 +1310,41 @@ object f_avpmain: Tf_avpmain
         TabOrder = 3
         object Label13: TLabel
           Left = 13
-          Height = 15
+          Height = 14
           Top = 40
-          Width = 60
+          Width = 59
           Caption = 'Resolution'
           ParentColor = False
         end
         object Label15: TLabel
           Left = 13
-          Height = 15
+          Height = 14
           Top = 112
-          Width = 33
+          Width = 32
           Caption = '0 FPS'
           ParentColor = False
         end
         object Label16: TLabel
           Left = 13
-          Height = 15
+          Height = 14
           Top = 4
-          Width = 74
+          Width = 73
           Caption = 'Performance'
           ParentColor = False
         end
         object Label31: TLabel
           Left = 1
-          Height = 15
+          Height = 14
           Top = 63
-          Width = 5
+          Width = 4
           Caption = '-'
           ParentColor = False
         end
         object Label35: TLabel
           Left = 181
-          Height = 15
+          Height = 14
           Top = 63
-          Width = 10
+          Width = 9
           Caption = '+'
           ParentColor = False
         end
@@ -1353,7 +1353,7 @@ object f_avpmain: Tf_avpmain
           Height = 25
           Top = 57
           Width = 175
-          Max = 6
+          Max = 7
           Min = 1
           OnChange = TrackBar5Change
           PageSize = 1
@@ -1368,23 +1368,23 @@ object f_avpmain: Tf_avpmain
         Top = 372
         Width = 204
         Caption = 'Options valid at next startup'
-        ClientHeight = 56
+        ClientHeight = 42
         ClientWidth = 200
         TabOrder = 4
         object CheckBox8: TCheckBox
           Left = 6
-          Height = 23
+          Height = 26
           Top = 10
-          Width = 180
+          Width = 183
           Caption = 'Force texture compression'
           OnClick = CheckBox8Click
           TabOrder = 0
         end
         object CheckBox3: TCheckBox
           Left = 6
-          Height = 23
+          Height = 26
           Top = 32
-          Width = 78
+          Width = 81
           Caption = 'Anti-Alias'
           OnClick = CheckBox3Click
           TabOrder = 1
