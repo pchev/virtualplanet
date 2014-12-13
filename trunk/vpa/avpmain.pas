@@ -2046,7 +2046,7 @@ end;
 procedure Tf_avpmain.Button1Click(Sender: TObject);
 begin
   Firstsearch := True;
-  SearchText  := Combobox1.Text;
+  SearchText  := StringReplace(Combobox1.Text,'*','%',[rfReplaceAll]);
   SearchName(SearchText, True);
 end;
 
