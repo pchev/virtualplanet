@@ -1,7 +1,7 @@
 object f_avpmain: Tf_avpmain
-  Left = 317
+  Left = 361
   Height = 570
-  Top = 113
+  Top = 136
   Width = 885
   HorzScrollBar.Page = 813
   HorzScrollBar.Range = 785
@@ -1368,7 +1368,7 @@ object f_avpmain: Tf_avpmain
         Top = 372
         Width = 204
         Caption = 'Options valid at next startup'
-        ClientHeight = 42
+        ClientHeight = 56
         ClientWidth = 200
         TabOrder = 4
         object CheckBox8: TCheckBox
