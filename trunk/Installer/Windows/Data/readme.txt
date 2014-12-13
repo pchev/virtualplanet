@@ -1,5 +1,5 @@
 Virtual Planet Atlas
-version 6.1
+version 0.9 beta
 Free software for the planet observation or survey
 For Windows XP/Vista/7/8
 

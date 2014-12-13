@@ -1,7 +1,7 @@
-virtualplanet (1.0) experimental; urgency=low
+virtualplanet (0.9) experimental; urgency=low
 
-  * First version
+  * Beta version
     For the full change log, see :
-    http://virtualmoon.svn.sourceforge.net/viewvc/virtualmoon/trunk/?view=log
+    http://sourceforge.net/p/virtualplanet/code/log/
     
- -- Patrick Chevalley <pch@ap-i.net>  Fri Apr 25 16:52:16 CEST 2014
+ -- Patrick Chevalley <pch@ap-i.net>  Sat Dec 13 12:36:51 CET 2014

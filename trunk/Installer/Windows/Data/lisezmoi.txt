@@ -1,5 +1,5 @@
 Atlas Virtuel des Planètes
-version 1.0
+version 0.9 beta
 Programme gratuit d'étude et d'observation dees planètes.
 Pour Windows XP/Vista/7/8
 

@@ -29,4 +29,6 @@ install -m 755 -d $destdir/share/virtualplanet
 # big data
 #InstData VPA_Base_Bumpmap $destdir
 InstData VPA_Base_Overlay $destdir
+InstData VPA_Base_Texture_Mars_Historical $destdir
+InstData VPA_Base_Texture_Mercury_Historical $destdir
 

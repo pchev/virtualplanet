@@ -8,9 +8,9 @@ Release     : 1
 Group       : Sciences/Astronomy
 License     : GPL
 Packager    : Patrick Chevalley
-URL         : http://virtualmoon.sourceforge.net
+URL         : http://ap-i.net/vpa
 Summary     : Virtual Planet Atlas - data files
 Description :
 This software can visualize the planet aspect for every location, date and hour. 
- It permits also to study the formations with unique database of more than 9000 entries.
+ It permits also to study the formations with a unique database.
 

@@ -7,5 +7,5 @@ Architecture: all
 Suggests: virtualplanet 
 Description: Virtual Planet Atlas - data files
  This software can visualize the planet aspect for every location, date and hour. 
- It permits also to study the formations with unique database of more than 9000 entries
+ It permits also to study the formations with a unique database
  .

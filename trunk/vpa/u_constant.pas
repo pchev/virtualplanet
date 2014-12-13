@@ -31,7 +31,7 @@ uses
 
 const crlf = chr(10)+chr(13);
       cpyr = '(c)';//chr($a9)+chr($c2);  // ©
-      VPAversion = '1.0';
+      VPAversion = '0.9 beta';
       VersionName = 'VPA';
       vpacpy = 'Copyright '+cpyr+' 2014 Christian Legrand, Patrick Chevalley';
       vmaurl='http://ap-i.net/vpa';
