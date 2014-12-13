@@ -473,7 +473,7 @@
 							<key>International</key>
 							<dict>
 								<key>MessageKey</key>
-								<string>This software require Mac OS X 10.5.0 or later.</string>
+								<string>This software require Mac OS X 10.4.0 or later.</string>
 								<key>TitleKey</key>
 								<string>Version check</string>
 							</dict>
@@ -534,9 +534,9 @@
 						<key>IFPkgDescriptionDeleteWarning</key>
 						<string></string>
 						<key>IFPkgDescriptionDescription</key>
-						<string>Virtual Planet Atlas version 0.9</string>
+						<string>Virtual Planets Atlas version 0.9beta</string>
 						<key>IFPkgDescriptionTitle</key>
-						<string>virtualplanet1</string>
+						<string>virtualplanet</string>
 						<key>IFPkgDescriptionVersion</key>
 						<string>0.9</string>
 					</dict>
@@ -580,16 +580,16 @@
 				<key>Version</key>
 				<dict>
 					<key>IFMajorVersion</key>
-					<integer>1</integer>
-					<key>IFMinorVersion</key>
 					<integer>0</integer>
+					<key>IFMinorVersion</key>
+					<integer>9</integer>
 				</dict>
 			</dict>
 		</dict>
 		<key>IFPkgFlagPackageSelection</key>
 		<integer>0</integer>
 		<key>Name</key>
-		<string>virtualplanet1/string>
+		<string>virtualplanet</string>
 		<key>Status</key>
 		<integer>1</integer>
 		<key>Type</key>
