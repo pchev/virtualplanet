@@ -12,16 +12,18 @@ unset extratarget
 
 unset make_debug
 unset make_linux32
-##make_linux32=1
 unset make_linux64
+unset make_linux_data
+unset make_win32
 if [[ $arch == x86_64 ]]; then 
-#   make_linux64=1
+   make_linux64=1
+   make_linux_data=1
+   make_win32=1
    extratarget=",x86_64-linux"
 fi
-unset make_linux_data
-#make_linux_data=1
-unset make_win32
-make_win32=1
+if [[ $arch == i686 ]]; then 
+   make_linux32=1
+fi
 
 builddir=/tmp/virtualplanet  # Be sure this is set to a non existent directory, it is removed after the run!
 innosetup="C:\Program Files\Inno Setup 5\ISCC.exe"  # Install under Wine from http://www.jrsoftware.org/isinfo.php
