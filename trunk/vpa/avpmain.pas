@@ -2458,7 +2458,7 @@ begin
   end;
   tz := TCdCTimeZone.Create;
   tz.LoadZoneTab(ZoneDir+'zone.tab');
-  CurrentPlanet:=1;
+  //CurrentPlanet:=1;
   notexture:=false;
   texturenone:=TStringList.Create;
   for i:=0 to 5 do texturenone.Add('NONE');
@@ -2466,7 +2466,7 @@ begin
     texturefiles[k]:=TStringList.Create;
     for i:=0 to 5 do texturefiles[k].Add('');
   end;
-  CurrentPlanet:=1;
+  CurrentPlanet:=4;
   CursorImage1 := TCursorImage.Create;
   overlayhi := Tbitmap.Create;
   overlayimg := Tbitmap.Create;
