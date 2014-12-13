@@ -8,5 +8,5 @@ Depends: libc6, libx11-6, libgtk2.0-0, libglib2.0-0, libpango1.0-0, libjpeg62, l
 Suggests: virtualmoon, skychart
 Description: Virtual Planet Atlas
  This software can visualize the planet aspect for every location, date and hour. 
- It permits also to study the formations with unique database of more than 9000 entries
+ It permits also to study the formations with a unique database
  .

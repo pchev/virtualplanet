@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Virtual Planet Atlas
-AppVerName=Virtual Planet Atlas V1
+AppVerName=Virtual Planet Atlas V0.9
 AppPublisherURL={cm:MyAppUrl}
 AppSupportURL={cm:MyAppUrl}
 AppUpdatesURL={cm:MyAppUrl}

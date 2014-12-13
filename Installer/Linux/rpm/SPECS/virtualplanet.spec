@@ -4,7 +4,7 @@ Version: 1
 Release: 1
 Group: Sciences/Astronomy
 License: GPL
-URL: http://virtualmoon.sourceforge.net
+URL: http://ap-i.net/vpa
 Packager: Patrick Chevalley
 BuildRoot: %_topdir/%{name}
 BuildArch: i386
@@ -14,7 +14,7 @@ AutoReqProv: no
 
 %description
 This software can visualize the planet aspect for every location, date and hour. 
- It permits also to study the formations with unique database of more than 9000 entries.
+ It permits also to study the formations with a unique database
 
 %files
 %defattr(-,root,root)
