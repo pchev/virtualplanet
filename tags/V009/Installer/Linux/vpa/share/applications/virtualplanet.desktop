@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Education;Science;Astronomy
+Comment=Virtual Planet Atlas
+Encoding=UTF-8
+Exec=virtualplanet
+GenericName=
+Icon=../pixmaps/virtualplanet.png
+MimeType=
+Name=VirtualPlanet
+Type=Application
