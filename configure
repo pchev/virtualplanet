@@ -16,7 +16,7 @@ dirs="component/libsql \
      component/downloaddialog \
      component/uniqueinstance \
      component/enhedits \
-     component/glscene/Lazarus \
+     component/glscene/Packages \
      component \
      vpa/library \
      vpa \
