@@ -11,7 +11,7 @@ object f_planet: Tf_planet
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.2.4.0'
+  LCLVersion = '1.4.0.4'
   object Planet: TPanel
     Left = 200
     Height = 500
@@ -242,6 +242,13 @@ object f_planet: Tf_planet
       Material.FrontProperties.Emission.Color = {
         0000803F0000803F000000000000803F
       }
+      Material.Texture.ImageClassName = 'TGLBlankImage'
+      Material.Texture.Image.Width = 64
+      Material.Texture.Image.Height = 64
+      Material.Texture.Image.ColorFormat = 6408
+      Material.Texture.MagFilter = maNearest
+      Material.Texture.MinFilter = miNearest
+      Material.Texture.Compression = tcNone
       PitchAngle = 0
       RollAngle = 0
       TurnAngle = 0
@@ -318,6 +325,13 @@ object f_planet: Tf_planet
         00000000000000000000000000000000
       }
       Material.BlendingMode = bmTransparency
+      Material.Texture.ImageClassName = 'TGLBlankImage'
+      Material.Texture.Image.Width = 64
+      Material.Texture.Image.Height = 64
+      Material.Texture.Image.ColorFormat = 6408
+      Material.Texture.MagFilter = maNearest
+      Material.Texture.MinFilter = miNearest
+      Material.Texture.Compression = tcNone
       PitchAngle = 0
       RollAngle = 0
       TurnAngle = 0

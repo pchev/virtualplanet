@@ -8,11 +8,10 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   InterfaceBase, LCLVersion, // version number
-  Forms, Dialogs, glscene_runtime, avpmain, config,
-  OpenGLAdapter, OpenGLTokens, CraterList, dbutil, fmsg, splashunit,
-  SysUtils, TurboPowerIPro, u_constant, cu_tz, cu_planet,
-  u_projection, u_util, pu_planet, u_translation_database, u_translation,
-  uniqueinstance_package, BigIma, uDE, mlb2, pu_ephem;
+  Forms, Dialogs, avpmain, config, OpenGLAdapter, OpenGLTokens, GLScene_RunTime,
+  CraterList, dbutil, fmsg, splashunit, SysUtils, TurboPowerIPro, u_constant,
+  cu_tz, cu_planet, u_projection, u_util, pu_planet, u_translation_database,
+  u_translation, uniqueinstance_package, BigIma, uDE, mlb2, pu_ephem;
 
 var i:integer;
 
