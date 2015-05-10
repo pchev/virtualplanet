@@ -45,11 +45,7 @@
             <Verbosity>
               <ShowHints Value="False"/>
             </Verbosity>
-            <CompilerMessages>
-              <UseMsgFile Value="True"/>
-            </CompilerMessages>
             <CustomOptions Value="-dUseCThreads"/>
-            <CompilerPath Value="$(CompPath)"/>
           </Other>
         </CompilerOptions>
       </Item2>
@@ -69,11 +65,9 @@
     <RequiredPackages Count="9">
       <Item1>
         <PackageName Value="GLScene_DesignTime"/>
-        <MinVersion Major="1" Valid="True"/>
       </Item1>
       <Item2>
         <PackageName Value="GLScene_RunTime"/>
-        <MinVersion Major="1" Valid="True"/>
       </Item2>
       <Item3>
         <PackageName Value="FCL"/>
@@ -107,7 +101,6 @@
       <Unit0>
         <Filename Value="vpa.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="vpa"/>
       </Unit0>
       <Unit1>
         <Filename Value="avpmain.pas"/>
@@ -123,7 +116,6 @@
         <ComponentName Value="f_craterlist"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="craterlist"/>
       </Unit2>
       <Unit3>
         <Filename Value="config.pas"/>
@@ -131,7 +123,6 @@
         <ComponentName Value="f_config"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="config"/>
       </Unit3>
       <Unit4>
         <Filename Value="BigIma.pas"/>
@@ -139,17 +130,14 @@
         <ComponentName Value="BigImaForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="BigIma"/>
       </Unit4>
       <Unit5>
         <Filename Value="cu_planet.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="cu_planet"/>
       </Unit5>
       <Unit6>
         <Filename Value="cu_tz.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="cu_tz"/>
       </Unit6>
       <Unit7>
         <Filename Value="dbutil.pas"/>
@@ -162,12 +150,10 @@
         <ComponentName Value="MsgForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="fmsg"/>
       </Unit8>
       <Unit9>
         <Filename Value="mlb2.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="mlb2"/>
       </Unit9>
       <Unit10>
         <Filename Value="pu_planet.pas"/>
@@ -183,37 +169,30 @@
         <ComponentName Value="splash"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="splashunit"/>
       </Unit11>
       <Unit12>
         <Filename Value="u_constant.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="u_constant"/>
       </Unit12>
       <Unit13>
         <Filename Value="uDE.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="uDE"/>
       </Unit13>
       <Unit14>
         <Filename Value="u_projection.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="u_projection"/>
       </Unit14>
       <Unit15>
         <Filename Value="u_translation.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="u_translation"/>
       </Unit15>
       <Unit16>
         <Filename Value="u_translation_database.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="u_translation_database"/>
       </Unit16>
       <Unit17>
         <Filename Value="u_util.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="u_util"/>
       </Unit17>
       <Unit18>
         <Filename Value="pu_ephem.pas"/>
@@ -246,11 +225,7 @@
       <Verbosity>
         <ShowHints Value="False"/>
       </Verbosity>
-      <CompilerMessages>
-        <UseMsgFile Value="True"/>
-      </CompilerMessages>
       <CustomOptions Value="-dUseCThreads"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>

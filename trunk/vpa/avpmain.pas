@@ -120,6 +120,7 @@ type
     Splitter2: TSplitter;
     StartTimer: TTimer;
     ResizeTimer: TTimer;
+    SetFPSTimer: TTimer;
     ToolButton13: TToolButton;
     ToolButton14: TToolButton;
     TrackBar6: TTrackBar;
@@ -269,6 +270,7 @@ type
     procedure ResizeTimerTimer(Sender: TObject);
     procedure SaveEphemClick(Sender: TObject);
     procedure SelectPlanet(Sender: TObject);
+    procedure SetFPSTimerTimer(Sender: TObject);
     procedure SpeedButton7Click(Sender: TObject);
     procedure Splitter1Moved(Sender: TObject);
     procedure Splitter2Moved(Sender: TObject);
@@ -2323,6 +2325,10 @@ if Tf_planet(sender)=activeplanet then begin
   MsgPerf: begin
             Label15.Caption := rsm_44 + blank + value;
            end;
+  MsgPerfWarning: begin
+            statusbar1.Panels[3].Text := value;
+            Label16.Caption := value;
+           end;
      else  statusbar1.Panels[3].Text := value;
   end;
   end;
@@ -2472,6 +2478,7 @@ begin
   overlayimg := Tbitmap.Create;
  planet1:=Tf_planet.Create(Panelplanet);
  activeplanet:=planet1;
+ planet1.Initialized:=false;
  planet1.planet.Align:=alClient;
  planet1.onplanetClick:=planetClickEvent;
  planet1.onplanetMove:=planetMoveEvent;
@@ -2500,13 +2507,13 @@ begin
   GetSkyChartInfo;
   CheckBox8.Checked := compresstexture;
   CheckBox3.Checked := antialias;
+  skiporient:=true;
   if PoleOrientation = 0 then
     RadioGroup2.ItemIndex := 0
   else begin
     RadioGroup2.ItemIndex := 1;
     RadioGroup2Click(nil);
   end;
-  skiporient:=true;
   checkbox1.Checked := FollowNorth;
   checkbox4.Checked := ZenithOnTop;
   skiporient:=false;
@@ -2673,6 +2680,7 @@ try
   Application.ProcessMessages;
   PhaseButtonClick(nil);
   SetZoomBar;
+  planet1.Initialized:=true;
   planet1.RefreshAll;
   screen.cursor := crDefault;
 if firstuse then begin
@@ -3395,7 +3403,7 @@ begin
   if planet1=nil then exit;
   if (pagecontrol1.ActivePage = Reglage) then
   begin
-    planet1.ShowFPS:=true;
+    SetFPSTimer.Enabled:=true;
     Label15.Caption     := rsm_44 + ' 0 FPS';
   end
   else
@@ -3422,6 +3430,12 @@ begin
     activeplanet.MeasuringDistance := False;
     activeplanet.SatelliteRotation:=0;
   end;
+end;
+
+procedure Tf_avpmain.SetFPSTimerTimer(Sender: TObject);
+begin
+  SetFPSTimer.Enabled:=false;
+  planet1.ShowFPS:=true;
 end;
 
 procedure Tf_avpmain.Stop1Click(Sender: TObject);
@@ -4067,6 +4081,7 @@ if planet2=nil then begin
  planet2.PopUp:=PopupMenu1;
  planet2.Visible:=false;
  planet2.Init(false);
+ planet2.Initialized:=true;
 end;
 if NewWindowButton.Down then begin
   SelectPlanet1.Enabled:=false;

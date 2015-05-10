@@ -42,7 +42,7 @@ type
 
   { Tf_planet }
 
-  TPlanetMsgClass = (MsgZoom, MsgPerf, MsgOther);
+  TPlanetMsgClass = (MsgZoom, MsgPerf, MsgOther, MsgPerfWarning);
   TplanetKeyClass = (mkUp, mkDown);
 
   TplanetClickEvent = procedure(Sender: TObject; Button: TMouseButton;
@@ -141,6 +141,7 @@ type
     FOnGetMsg: TGetMsgEvent;
     FOnGetLabel: TNotifyEvent;
     FOnGetSprite: TNotifyEvent;
+    FInitialized: Boolean;
     FTexturePath: String;
     FTexture: TStringList;
     FOverlayPath: String;
@@ -267,6 +268,7 @@ type
     procedure SatDirection(x,y,z:single);
     procedure SatUp(x,y,z:single);
     procedure SatPos(x,y,z:single);
+    property Initialized: boolean read FInitialized write FInitialized;
     property TexturePath : String read FtexturePath write FTexturePath;
     property Texture : TStringList read Ftexture write SetTexture;
     property OverlayPath : String read FOverlayPath write FOverlayPath;
@@ -342,7 +344,7 @@ implementation
 
 {$R pu_planet.lfm}
 
-uses LCLProc, VectorGeometry, GLFile3DS, OpenGLAdapter;
+uses LCLProc, GLVectorGeometry, GLFile3DS, OpenGLAdapter;
 
 { Tf_planet }
 
@@ -1249,7 +1251,7 @@ if check then begin
  debugln('Check Acceleration');
 {$endif}
 if GLSceneViewer1.Buffer.Acceleration=chaSoftware then begin
-   ShowMessage('Warning! OpenGL hardware acceleration not detected, program performance can be very poor or the program may crash. Please install a graphic card and driver that support OpenGL acceleration.');
+   if assigned(FOnGetMsg) then FOnGetMsg(self,MsgPerfWarning,'Warning! OpenGL hardware acceleration not detected, program performance can be very poor.');
 end;
 // Check texture size
 {$ifdef trace_debug}
@@ -1669,7 +1671,7 @@ end;
 
 procedure Tf_planet.RefreshAll;
 begin
-if Enabled then begin
+if Enabled and Initialized then begin
   ClearLabel;
   RefreshTimer.Enabled:=false;
   RefreshTimer.Enabled:=true;
@@ -1696,6 +1698,7 @@ end;
 procedure Tf_planet.SetRotation(value:single);
 var changestate:boolean;
 begin
+if value<>FRotation then begin
  if FRotation=0 then begin
    GetCenter(satl,satb);
    satli:=satl;
@@ -1724,6 +1727,7 @@ begin
    FShowScale := SaveShowScale;
    SetScale;
  end;
+end;
 end;
 
 procedure Tf_planet.SetSatAltitude(value:single);
