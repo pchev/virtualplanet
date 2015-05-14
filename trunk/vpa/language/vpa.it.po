@@ -76,7 +76,6 @@ msgid "0"
 msgstr "1"
 
 #: u_translation.rsfullscreen
-#| msgid "Full screen"
 msgid "Full screen (Esc)"
 msgstr "A tutto schermo (Esc)"
 
@@ -143,7 +142,6 @@ msgid "Minimal length (km)"
 msgstr ""
 
 #: u_translation.rsminute
-#| msgid "m"
 msgctxt "u_translation.rsminute"
 msgid "'"
 msgstr "'"
@@ -218,7 +216,9 @@ msgid "Right Ascension:"
 msgstr "Ascensione Retta:"
 
 #: u_translation.rsm_3
-msgid "Born at:"
+#, fuzzy
+#| msgid "Born at:"
+msgid "Born:"
 msgstr "Nato a:"
 
 #: u_translation.rsm_30
@@ -278,12 +278,13 @@ msgid "Refresh rate"
 msgstr "Freq.za di aggiornamento"
 
 #: u_translation.rsm_45
-#| msgid "Solar inclination:"
 msgid "Sub-solar latitude:"
 msgstr "Latitudine sub-solare:"
 
 #: u_translation.rsm_5
-msgid "Dead at:"
+#, fuzzy
+#| msgid "Dead at:"
+msgid "Dead:"
 msgstr "Morto a:"
 
 #: u_translation.rsm_50
@@ -405,7 +406,6 @@ msgid "Save ephemeris to file"
 msgstr "Salva le effemeridi in un file"
 
 #: u_translation.rssecond
-#| msgid "s"
 msgid "\""
 msgstr "\""
 
@@ -600,7 +600,6 @@ msgid "Date / Time"
 msgstr "Data / Ora"
 
 #: u_translation.rst_174
-#| msgid "Use Computer Date and Time Zone"
 msgid "Use Computer Date and Time"
 msgstr "Usa data e fuso orario del calcolatore"
 
@@ -670,7 +669,6 @@ msgid "Picture"
 msgstr "Fotografie"
 
 #: u_translation.rst_26
-#| msgid "Geocentric position"
 msgid "Geocentric"
 msgstr "Posiz. geocentrica"
 
@@ -922,6 +920,10 @@ msgstr ""
 
 #: u_translation.rsvenus
 msgid "Venus"
+msgstr ""
+
+#: u_translation.rsvpawebpage
+msgid "VPA web page"
 msgstr ""
 
 #: u_translation.rswest0360

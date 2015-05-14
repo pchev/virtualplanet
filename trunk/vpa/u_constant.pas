@@ -31,10 +31,10 @@ uses
 
 const crlf = chr(10)+chr(13);
       cpyr = '(c)';//chr($a9)+chr($c2);  // ©
-      VPAversion = '0.9 beta';
+      VPAversion = '1.0';
       VersionName = 'VPA';
-      vpacpy = 'Copyright '+cpyr+' 2014 Christian Legrand, Patrick Chevalley';
-      vmaurl='http://ap-i.net/vpa';
+      vpacpy = 'Copyright '+cpyr+' 2015 Christian Legrand, Patrick Chevalley';
+      vpaurl='http://ap-i.net/avp';
       jd2000 =2451545.0 ;
       jd1950 =2433282.4235;
       jd1900 =2415020.3135;

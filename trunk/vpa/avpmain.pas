@@ -85,6 +85,7 @@ type
     FullScreen1: TMenuItem;
     DecreaseFont1: TMenuItem;
     IncreaseFont1: TMenuItem;
+    Menuwebpage: TMenuItem;
     SelectPlanet1: TMenuItem;
     SelectMercury: TMenuItem;
     SelectVenus: TMenuItem;
@@ -263,6 +264,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure DecreaseFont1Click(Sender: TObject);
     procedure IncreaseFont1Click(Sender: TObject);
+    procedure MenuwebpageClick(Sender: TObject);
     procedure Quitter1Click(Sender: TObject);
     procedure Configuration1Click(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -549,6 +551,7 @@ begin
     Label6.Caption := rsm_50;
     toolbutton8.Caption := rst_15;
     aide2.Caption := toolbutton8.Caption;
+    Menuwebpage.Caption:=rsVPAWebPage;
     Apropos1.Caption := rst_16;
     Button5.Caption := rst_17;
     Button4.Caption := rst_113;
@@ -2087,6 +2090,11 @@ except
   {$endif}
   end;
 end;
+end;
+
+procedure Tf_avpmain.MenuwebpageClick(Sender: TObject);
+begin
+  OpenURL(vpaurl);
 end;
 
 procedure Tf_avpmain.ComboBox1Select(Sender: TObject);
@@ -3889,7 +3897,7 @@ begin
     Canvas.Font.Size := 8;
     hl   := round(Canvas.TextHeight('H') * 1.1);
     Canvas.Font.Style := [fsBold];
-    buf1 := Caption+':  '+vmaurl;
+    buf1 := Caption+':  '+vpaurl;
     Canvas.TextOut(Xmin + 10, ymin, buf1);
     Canvas.Font.Style := [];
     if language = 'fr' then

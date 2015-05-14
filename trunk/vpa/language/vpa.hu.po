@@ -218,7 +218,9 @@ msgid "Right Ascension:"
 msgstr "Rektaszcenzió:"
 
 #: u_translation.rsm_3
-msgid "Born at:"
+#, fuzzy
+#| msgid "Born at:"
+msgid "Born:"
 msgstr "Születési dátum:"
 
 #: u_translation.rsm_30
@@ -282,7 +284,9 @@ msgid "Sub-solar latitude:"
 msgstr "Sub-solar latitude:"
 
 #: u_translation.rsm_5
-msgid "Dead at:"
+#, fuzzy
+#| msgid "Dead at:"
+msgid "Dead:"
 msgstr "Halálozási dátum:"
 
 #: u_translation.rsm_50
@@ -924,6 +928,10 @@ msgstr ""
 
 #: u_translation.rsvenus
 msgid "Venus"
+msgstr ""
+
+#: u_translation.rsvpawebpage
+msgid "VPA web page"
 msgstr ""
 
 #: u_translation.rswest0360

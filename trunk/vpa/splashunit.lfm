@@ -24,7 +24,7 @@ object splash: Tsplash
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.0.8.0'
+  LCLVersion = '1.4.0.4'
   object Panel1: TPanel
     Left = 0
     Height = 368
@@ -492,7 +492,7 @@ object splash: Tsplash
     end
     object Label1: TLabel
       Left = 0
-      Height = 35
+      Height = 33
       Top = 0
       Width = 432
       Align = alTop
@@ -525,12 +525,13 @@ object splash: Tsplash
     end
     object Label3: TLabel
       Left = 0
-      Height = 83
+      Height = 98
       Top = 270
       Width = 432
       Align = alBottom
       Alignment = taCenter
-      Caption = 'Copyright © 2014  Christian Legrand, Patrick Chevalley, '#10'All rights reserved'#13#10'This program is free software; you can redistribute it and/or'#10'modify it under the terms of the GNU General Public License.'#13#10'All database, pictures and documentation © Ch. Legrand'#13
+      AutoSize = False
+      Caption = 'All rights reserved'#13#10'This program is free software; you can redistribute it and/or'#10'modify it under the terms of the GNU General Public License.'#13#10'All database, pictures and documentation © Ch. Legrand'#13
       Color = clBlack
       Font.Color = clSilver
       Font.Height = -11
@@ -540,23 +541,6 @@ object splash: Tsplash
       ParentFont = False
       Transparent = False
       OnClick = Image1DblClick
-    end
-    object Label5: TLabel
-      Left = 0
-      Height = 15
-      Top = 353
-      Width = 432
-      Align = alBottom
-      Alignment = taCenter
-      Caption = ' '
-      Color = clBlack
-      Font.Color = clSilver
-      Font.Height = -11
-      Font.Pitch = fpVariable
-      Font.Style = [fsItalic]
-      ParentColor = False
-      ParentFont = False
-      Transparent = False
     end
     object Label6: TLabel
       Left = 0
@@ -582,7 +566,7 @@ object splash: Tsplash
       Align = alBottom
       Alignment = taCenter
       AutoSize = False
-      Caption = 'Virtual Planets Atlas  http://www.ap-i.net/vpa'
+      Caption = 'Copyright © 2015  Christian Legrand, Patrick Chevalley'
       Color = clBlack
       Font.Color = clSilver
       Font.Height = -11

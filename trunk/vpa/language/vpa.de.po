@@ -143,7 +143,6 @@ msgid "Minimal length (km)"
 msgstr ""
 
 #: u_translation.rsminute
-#| msgid "m"
 msgctxt "u_translation.rsminute"
 msgid "'"
 msgstr "'"
@@ -218,7 +217,9 @@ msgid "Right Ascension:"
 msgstr "Rectascension_"
 
 #: u_translation.rsm_3
-msgid "Born at:"
+#, fuzzy
+#| msgid "Born at:"
+msgid "Born:"
 msgstr "Geboren am:"
 
 #: u_translation.rsm_30
@@ -282,7 +283,9 @@ msgid "Sub-solar latitude:"
 msgstr "Sub-Solar Breite:"
 
 #: u_translation.rsm_5
-msgid "Dead at:"
+#, fuzzy
+#| msgid "Dead at:"
+msgid "Dead:"
 msgstr "Gestorben am:"
 
 #: u_translation.rsm_50
@@ -404,7 +407,6 @@ msgid "Save ephemeris to file"
 msgstr "Ephemeride in Datei speichern"
 
 #: u_translation.rssecond
-#| msgid "s"
 msgid "\""
 msgstr "\""
 
@@ -919,6 +921,10 @@ msgstr ""
 
 #: u_translation.rsvenus
 msgid "Venus"
+msgstr ""
+
+#: u_translation.rsvpawebpage
+msgid "VPA web page"
 msgstr ""
 
 #: u_translation.rswest0360
