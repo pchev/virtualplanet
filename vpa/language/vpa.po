@@ -499,7 +499,7 @@ msgid "of"
 msgstr ""
 
 #: u_translation:rsm_3
-msgid "Born at:"
+msgid "Born:"
 msgstr ""
 
 #: u_translation:rsm_4
@@ -507,7 +507,7 @@ msgid "in"
 msgstr ""
 
 #: u_translation:rsm_5
-msgid "Dead at:"
+msgid "Dead:"
 msgstr ""
 
 #: u_translation:rsm_6
@@ -908,5 +908,9 @@ msgstr ""
 
 #: u_translation:rspoleinclinat
 msgid "Pole inclination"
+msgstr ""
+
+#: u_translation:rsvpawebpage
+msgid "VPA web page"
 msgstr ""
 

@@ -1,8 +1,9 @@
+# , 2015.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: \n"
-"PO-Revision-Date: 2014-10-12 10:27+0200\n"
+"PO-Revision-Date: 2015-05-10 21:49+0200\n"
 "Project-Id-Version: maplun.fr\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -76,7 +77,6 @@ msgid "0"
 msgstr "1"
 
 #: u_translation.rsfullscreen
-#| msgid "Full screen"
 msgid "Full screen (Esc)"
 msgstr "Plein écran (Esc)"
 
@@ -85,7 +85,6 @@ msgid "Grid"
 msgstr "Grilles"
 
 #: u_translation.rshelp_prefix
-#| msgid "UK"
 msgid "EN"
 msgstr "FR"
 
@@ -142,7 +141,6 @@ msgid "Minimal length (km)"
 msgstr "Longueur minimale (km)"
 
 #: u_translation.rsminute
-#| msgid "m"
 msgctxt "u_translation.rsminute"
 msgid "'"
 msgstr "'"
@@ -180,7 +178,6 @@ msgid "Mi"
 msgstr "Mi"
 
 #: u_translation.rsm_2
-#| msgid "born in"
 msgid "of"
 msgstr "de"
 
@@ -206,7 +203,6 @@ msgid "or"
 msgstr "ou"
 
 #: u_translation.rsm_27
-#| msgid "No formation actually near the central meridian"
 msgid "No formation match the criteria"
 msgstr "Aucune formation ne rempli le critère"
 
@@ -215,8 +211,9 @@ msgid "Right Ascension:"
 msgstr "Ascension droite:"
 
 #: u_translation.rsm_3
-msgid "Born at:"
-msgstr "Né à:"
+#| msgid "Born at:"
+msgid "Born:"
+msgstr "Né :"
 
 #: u_translation.rsm_30
 msgid "Declination:"
@@ -275,13 +272,13 @@ msgid "Refresh rate"
 msgstr "Rafraichissement"
 
 #: u_translation.rsm_45
-#| msgid "Solar inclination:"
 msgid "Sub-solar latitude:"
 msgstr "Latitude sub-solaire:"
 
 #: u_translation.rsm_5
-msgid "Dead at:"
-msgstr "Mort à:"
+#| msgid "Dead at:"
+msgid "Dead:"
+msgstr "Mort :"
 
 #: u_translation.rsm_50
 msgctxt "u_translation.rsm_50"
@@ -402,7 +399,6 @@ msgid "Save ephemeris to file"
 msgstr "Enregistre l'éphéméride dans un fichier"
 
 #: u_translation.rssecond
-#| msgid "s"
 msgid "\""
 msgstr "\""
 
@@ -431,7 +427,6 @@ msgid "Steps"
 msgstr "Pas"
 
 #: u_translation.rstitle
-#| msgid "Virtual Moon Atlas"
 msgid "Virtual Planets Atlas"
 msgstr "Atlas Virtuel des planètes"
 
@@ -472,7 +467,6 @@ msgid "Label density"
 msgstr "Densité de label"
 
 #: u_translation.rst_11
-#| msgid "Find Next"
 msgid "Next"
 msgstr "Suivant"
 
@@ -597,7 +591,6 @@ msgid "Date / Time"
 msgstr "Date / Heure"
 
 #: u_translation.rst_174
-#| msgid "Use Computer Date and Time Zone"
 msgid "Use Computer Date and Time"
 msgstr "Utiliser la date et l'heure de l'ordinateur"
 
@@ -606,7 +599,6 @@ msgid "Show Phase"
 msgstr "Montre la phase"
 
 #: u_translation.rst_177
-#| msgid "Flip N-S"
 msgid "Rotate N-S"
 msgstr "Rotation N-S"
 
@@ -674,7 +666,6 @@ msgid "Picture"
 msgstr "Image"
 
 #: u_translation.rst_26
-#| msgid "Geocentric position"
 msgid "Geocentric"
 msgstr "Geocentrique"
 
@@ -927,6 +918,10 @@ msgstr "Uranus"
 #: u_translation.rsvenus
 msgid "Venus"
 msgstr "Vénus"
+
+#: u_translation.rsvpawebpage
+msgid "VPA web page"
+msgstr "Page web AVP"
 
 #: u_translation.rswest0360
 msgid "+West 0..360"

@@ -169,10 +169,12 @@
         <ComponentName Value="splash"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="splashunit"/>
       </Unit11>
       <Unit12>
         <Filename Value="u_constant.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="u_constant"/>
       </Unit12>
       <Unit13>
         <Filename Value="uDE.pas"/>
@@ -185,6 +187,7 @@
       <Unit15>
         <Filename Value="u_translation.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="u_translation"/>
       </Unit15>
       <Unit16>
         <Filename Value="u_translation_database.pas"/>
@@ -193,6 +196,7 @@
       <Unit17>
         <Filename Value="u_util.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="u_util"/>
       </Unit17>
       <Unit18>
         <Filename Value="pu_ephem.pas"/>

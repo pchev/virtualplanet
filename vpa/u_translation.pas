@@ -136,9 +136,9 @@ rst_184='Your graphic card do not support to display more than one texture for t
 rst_185='Look here for a list of supported graphic card';
 rsm_1='from';
 rsm_2='of';
-rsm_3='Born at:';
+rsm_3='Born:';
 rsm_4='in';
-rsm_5='Dead at:';
+rsm_5='Dead:';
 rsm_6='Name Author:';
 rsm_10='Longitude:';
 rsm_11='Latitude:';
@@ -241,6 +241,7 @@ rsNameType = 'Name type:';
 rsNotAppliable = 'Not appliable';
 rsMagnitude = 'Magnitude';
 rsPoleInclinat = 'Pole inclination';
+rsVPAWebPage = 'VPA web page';
 
 implementation
 

@@ -33,7 +33,6 @@ type
   { Tsplash }
 
   Tsplash = class(TForm)
-    Label5: TLabel;
     Label6: TLabel;
     Timer1: TTimer;
     Panel1: TPanel;
@@ -69,7 +68,7 @@ const nlin=54;
       trlin=48;
 var
 cpylst: array[1..2,1..nlin]of string=((
-'Copyright © 2014  Christian Legrand, Patrick Chevalley,',
+'Copyright © 2015  Christian Legrand, Patrick Chevalley,',
 'All rights reserved',
 'This program is free software; you can redistribute it and/or',
 'modify it under the terms of the GNU General Public License.',
@@ -123,7 +122,7 @@ cpylst: array[1..2,1..nlin]of string=((
 'OCTROI DES LICENSES : Christian LEGRAND & Patrick CHEVALLEY ',
 'GESTION DES LICENSES : Christian LEGRAND',
 ''),(
-'Copyright © 2014  Christian Legrand, Patrick Chevalley,',
+'Copyright © 2015  Christian Legrand, Patrick Chevalley,',
 'All rights reserved',
 'This program is free software; you can redistribute it and/or',
 'modify it under the terms of the GNU General Public License.',
@@ -227,11 +226,9 @@ ClientHeight:=panel1.Height;
 label2.Caption:=VersionName+' '+Splashversion;
 label6.Caption:=compile_version;
  if SplashTimer then begin
-     label5.Caption:=transmsg;
      label6.visible:=false;
      Timer1.enabled:=true
   end else begin
-     label5.Caption:='';
      label6.visible:=true;
      cpylst[1,trlin]:=transmsg;
      cpylst[2,trlin]:=transmsg;

@@ -76,7 +76,6 @@ msgid "0"
 msgstr "1"
 
 #: u_translation.rsfullscreen
-#| msgid "Full screen"
 msgid "Full screen (Esc)"
 msgstr "Pantalla completa (Esc)"
 
@@ -143,7 +142,6 @@ msgid "Minimal length (km)"
 msgstr ""
 
 #: u_translation.rsminute
-#| msgid "m"
 msgctxt "u_translation.rsminute"
 msgid "'"
 msgstr "'"
@@ -218,7 +216,9 @@ msgid "Right Ascension:"
 msgstr "Ascensió recta:"
 
 #: u_translation.rsm_3
-msgid "Born at:"
+#, fuzzy
+#| msgid "Born at:"
+msgid "Born:"
 msgstr "Nascut a:"
 
 #: u_translation.rsm_30
@@ -278,12 +278,13 @@ msgid "Refresh rate"
 msgstr "Freqüència de refresc"
 
 #: u_translation.rsm_45
-#| msgid "Solar inclination:"
 msgid "Sub-solar latitude:"
 msgstr "Latitud sub-solar:"
 
 #: u_translation.rsm_5
-msgid "Dead at:"
+#, fuzzy
+#| msgid "Dead at:"
+msgid "Dead:"
 msgstr "Mort a:"
 
 #: u_translation.rsm_50
@@ -405,7 +406,6 @@ msgid "Save ephemeris to file"
 msgstr "Enregistra l'efemeris en un fitxer"
 
 #: u_translation.rssecond
-#| msgid "s"
 msgid "\""
 msgstr "\""
 
@@ -602,7 +602,6 @@ msgid "Date / Time"
 msgstr "Dia/hora"
 
 #: u_translation.rst_174
-#| msgid "Use Computer Date and Time Zone"
 msgid "Use Computer Date and Time"
 msgstr "Usa data i hora de l'ordinador"
 
@@ -611,7 +610,6 @@ msgid "Show Phase"
 msgstr "Mostra la fase"
 
 #: u_translation.rst_177
-#| msgid "Flip N-S"
 msgid "Rotate N-S"
 msgstr "Rotació N-S"
 
@@ -673,7 +671,6 @@ msgid "Picture"
 msgstr "Imatge"
 
 #: u_translation.rst_26
-#| msgid "Geocentric position"
 msgid "Geocentric"
 msgstr "Geocèntric"
 
@@ -925,6 +922,10 @@ msgstr ""
 
 #: u_translation.rsvenus
 msgid "Venus"
+msgstr ""
+
+#: u_translation.rsvpawebpage
+msgid "VPA web page"
 msgstr ""
 
 #: u_translation.rswest0360
