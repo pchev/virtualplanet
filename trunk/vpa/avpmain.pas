@@ -370,7 +370,7 @@ type
     ima: TBigImaForm;
     ToolsWidth: integer;
     FullScreen: boolean;
-    lockzoombar,notexture: boolean;
+    lockzoombar,notexture,TextureBW: boolean;
     texturenone: TStringList;
     texturefiles: array[1..maxpla]of TStringList;
     SplitSize: single;
@@ -813,6 +813,7 @@ begin
     if ReadBool(section, 'Maximized', False) then
       windowstate := wsMaximized;
     notexture := ReadBool(section, 'notexture', notexture);
+    TextureBW := ReadBool(section, 'TextureBW', TextureBW);
     for k:=1 to maxpla do
      for j:=0 to 5 do
       texturefiles[k][j] := ReadString(section, 'texturefile_'+IntToStr(k)+'_'+IntToStr(j), texturefiles[k][j]);
@@ -878,6 +879,7 @@ begin
         WriteBool(section, 'showoverlay_'+IntToStr(k), showoverlay[k]);
       end;
       WriteBool(section, 'notexture', notexture);
+      WriteBool(section, 'TextureBW', TextureBW);
       for k:=1 to maxpla do
         for i := 0 to 5 do
           WriteString(section, 'texturefile_'+IntToStr(k)+'_'+IntToStr(i), texturefiles[k][i]);
@@ -2474,6 +2476,7 @@ begin
   tz.LoadZoneTab(ZoneDir+'zone.tab');
   //CurrentPlanet:=1;
   notexture:=false;
+  TextureBW:=false;
   texturenone:=TStringList.Create;
   for i:=0 to 5 do texturenone.Add('NONE');
   for k:=1 to maxpla do begin
@@ -2582,6 +2585,7 @@ try
   planet1.BumpMethod:=TBumpMapCapability(BumpMethod);
   planet1.BumpMipmap:=BumpMipmap;
   planet1.TextureCompression:=compresstexture;
+  planet1.TextureBW:=TextureBW;
   try
   if notexture
      then planet1.texture:=texturenone
@@ -2765,6 +2769,7 @@ begin
     f_config.CheckBox13.Checked := PrintChart;
     f_config.CheckBox8.Checked  := PrintEph;
     f_config.CheckBox9.Checked  := PrintDesc;
+    f_config.TextureBW.Checked := activeplanet.TextureBW;
     f_config.TexturePath := activeplanet.TexturePath;
     f_config.texturefn.Assign(texturefiles[CurrentPlanet]);
     if (overlayname[CurrentPlanet]='')and(f_config.combobox5.Items.Count>0) then f_config.combobox5.Text:=f_config.combobox5.Items[0]
@@ -2796,8 +2801,10 @@ begin
       showoverlay[CurrentPlanet] := f_config.checkbox11.Checked;
       GridButton.Down:=f_config.checkbox10.Checked;
       gridspacing:=f_config.TrackBar3.Position;
+      TextureBW:=f_config.TextureBW.Checked;
       if f_config.TextureChanged then
       begin
+        activeplanet.TextureBW := TextureBW;
         texturefiles[CurrentPlanet].Assign(f_config.texturefn);
         reload := True;
       end;
@@ -2805,7 +2812,7 @@ begin
         if wantbump[CurrentPlanet]<>(f_config.BumpRadioGroup.ItemIndex=1) then reload:=true;
         wantbump[CurrentPlanet] := (f_config.BumpRadioGroup.ItemIndex=1)and(activeplanet.BumpMapCapabilities<>[]);
       end else }
-        wantbump[CurrentPlanet]:=false;
+      wantbump[CurrentPlanet]:=false;
       notexture:=(f_config.BumpRadioGroup.ItemIndex=1);
       LongSystem[CurrentPlanet] := TLongSystem(f_config.RadioGroupLong.ItemIndex);
       markcolor     := f_config.Shape2.Brush.Color;

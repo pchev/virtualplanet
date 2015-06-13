@@ -24,7 +24,7 @@ object f_avpmain: Tf_avpmain
   OnKeyUp = FormKeyUp
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.4.1.0'
   object Memo2: TMemo
     Left = 64
     Height = 41

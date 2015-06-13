@@ -43,6 +43,7 @@ type
     Button4: TButton;
     Button5: TButton;
     CheckBox10: TCheckBox;
+    TextureBW: TCheckBox;
     ColorDialog1: TColorDialog;
     ComboBox6: TComboBox;
     ComboBoxCountry: TComboBox;
@@ -162,6 +163,7 @@ type
       Rect: TRect; State: TGridDrawState);
     procedure ComboBox5Change(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure TextureBWClick(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure TrackBar3Change(Sender: TObject);
     procedure TrackBar5Change(Sender: TObject);
@@ -259,6 +261,7 @@ begin
       RadioGroupLong.Items[1]:=rsEast180180;
       RadioGroupLong.Items[2]:=rsWest0360;
       RadioGroupLong.Items[3]:=rsWest180180;
+      TextureBW.Caption:=rsConvertColor;
 end;
 
 Function GetLangCode(buf:string):string;
@@ -447,6 +450,11 @@ countrycode.Free;
 TextureList.Free;
 Texturefn.Free;
 ov.Free;
+end;
+
+procedure Tf_config.TextureBWClick(Sender: TObject);
+begin
+  TextureChanged:=true;
 end;
 
 procedure Tf_config.TrackBar1Change(Sender: TObject);
