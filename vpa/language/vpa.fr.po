@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: \n"
-"PO-Revision-Date: 2015-05-10 21:49+0200\n"
+"PO-Revision-Date: 2015-06-13 10:34+0200\n"
 "Project-Id-Version: maplun.fr\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,6 +31,10 @@ msgstr "Méridien central"
 #: u_translation.rscheckforopti
 msgid "Check for optional features"
 msgstr "Composants en option"
+
+#: u_translation.rsconvertcolor
+msgid "Convert color texture to grayscale"
+msgstr "Convertir les textures couleur en niveaux de gris"
 
 #: u_translation.rscountry
 msgid "Country"
@@ -211,7 +215,6 @@ msgid "Right Ascension:"
 msgstr "Ascension droite:"
 
 #: u_translation.rsm_3
-#| msgid "Born at:"
 msgid "Born:"
 msgstr "Né :"
 
@@ -276,7 +279,6 @@ msgid "Sub-solar latitude:"
 msgstr "Latitude sub-solaire:"
 
 #: u_translation.rsm_5
-#| msgid "Dead at:"
 msgid "Dead:"
 msgstr "Mort :"
 

@@ -242,6 +242,7 @@ rsNotAppliable = 'Not appliable';
 rsMagnitude = 'Magnitude';
 rsPoleInclinat = 'Pole inclination';
 rsVPAWebPage = 'VPA web page';
+rsConvertColor = 'Convert color texture to grayscale';
 
 implementation
 

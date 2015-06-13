@@ -914,3 +914,7 @@ msgstr ""
 msgid "VPA web page"
 msgstr ""
 
+#: u_translation:rsconvertcolor
+msgid "Convert color texture to grayscale"
+msgstr ""
+

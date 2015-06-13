@@ -1,7 +1,7 @@
 object f_config: Tf_config
-  Left = 734
+  Left = 711
   Height = 470
-  Top = 141
+  Top = 145
   Width = 454
   ActiveControl = PageControl1
   BorderStyle = bsSizeToolWin
@@ -14,7 +14,7 @@ object f_config: Tf_config
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '1.2.4.0'
+  LCLVersion = '1.4.1.0'
   object PageControl1: TPageControl
     Left = 0
     Height = 429
@@ -28,8 +28,8 @@ object f_config: Tf_config
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ClientHeight = 393
-      ClientWidth = 446
+      ClientHeight = 401
+      ClientWidth = 450
       object Bevel8: TBevel
         Left = 16
         Height = 140
@@ -192,8 +192,8 @@ object f_config: Tf_config
     end
     object TabSheet3: TTabSheet
       Caption = 'Affichage'
-      ClientHeight = 393
-      ClientWidth = 446
+      ClientHeight = 401
+      ClientWidth = 450
       ImageIndex = 3
       object Bevel3: TBevel
         Left = 16
@@ -376,8 +376,8 @@ object f_config: Tf_config
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 64
-        ClientWidth = 376
+        ClientHeight = 65
+        ClientWidth = 378
         Columns = 2
         Items.Strings = (
           '+East  0 ... 360'
@@ -390,14 +390,14 @@ object f_config: Tf_config
     end
     object TabSheet4: TTabSheet
       Caption = 'Textures'
-      ClientHeight = 393
-      ClientWidth = 446
+      ClientHeight = 401
+      ClientWidth = 450
       ImageIndex = 4
       object BumpRadioGroup: TRadioGroup
         Left = 0
         Height = 88
         Top = 0
-        Width = 446
+        Width = 450
         Align = alTop
         AutoFill = True
         ChildSizing.LeftRightSpacing = 6
@@ -408,8 +408,8 @@ object f_config: Tf_config
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 84
-        ClientWidth = 442
+        ClientHeight = 86
+        ClientWidth = 448
         Items.Strings = (
           'Phase sans reliefeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
           'Phase avec relief dynamiqueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -420,21 +420,21 @@ object f_config: Tf_config
       end
       object TexturePanel: TPanel
         Left = 0
-        Height = 297
-        Top = 96
-        Width = 446
+        Height = 289
+        Top = 112
+        Width = 450
         Align = alBottom
         BevelOuter = bvNone
-        ClientHeight = 297
-        ClientWidth = 446
+        ClientHeight = 289
+        ClientWidth = 450
         TabOrder = 1
         object GBlvall: TGroupBox
           Left = 8
           Height = 253
           Top = 40
           Width = 242
-          ClientHeight = 249
-          ClientWidth = 238
+          ClientHeight = 251
+          ClientWidth = 240
           TabOrder = 0
           object ComboBox6: TComboBox
             Left = 105
@@ -558,11 +558,20 @@ object f_config: Tf_config
           Visible = False
         end
       end
+      object TextureBW: TCheckBox
+        Left = 8
+        Height = 24
+        Top = 88
+        Width = 239
+        Caption = 'Convert color texture to grayscale'
+        OnClick = TextureBWClick
+        TabOrder = 2
+      end
     end
     object TabSheet6: TTabSheet
       Caption = 'Overlay'
-      ClientHeight = 393
-      ClientWidth = 446
+      ClientHeight = 401
+      ClientWidth = 450
       ImageIndex = 6
       object Panel2: TPanel
         Left = 14
@@ -634,15 +643,15 @@ object f_config: Tf_config
         end
         object CheckBox11: TCheckBox
           Left = 19
-          Height = 23
+          Height = 24
           Top = 10
-          Width = 160
+          Width = 185
           Caption = 'Show overlayyyyyyyyyyyyyy'
           TabOrder = 0
         end
         object ComboBox5: TComboBox
           Left = 19
-          Height = 23
+          Height = 27
           Top = 64
           Width = 145
           ItemHeight = 0
@@ -669,8 +678,8 @@ object f_config: Tf_config
           Top = 284
           Width = 367
           Caption = 'Grid'
-          ClientHeight = 57
-          ClientWidth = 363
+          ClientHeight = 58
+          ClientWidth = 365
           TabOrder = 3
           object Label45: TLabel
             Left = 134
@@ -715,9 +724,9 @@ object f_config: Tf_config
           end
           object CheckBox10: TCheckBox
             Left = 4
-            Height = 23
+            Height = 24
             Top = 23
-            Width = 80
+            Width = 88
             Caption = 'Show Grid'
             TabOrder = 0
           end
@@ -726,8 +735,8 @@ object f_config: Tf_config
     end
     object Impression: TTabSheet
       Caption = 'Impression'
-      ClientHeight = 393
-      ClientWidth = 446
+      ClientHeight = 401
+      ClientWidth = 450
       ImageIndex = 2
       object Bevel6: TBevel
         Left = 8

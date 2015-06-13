@@ -144,6 +144,7 @@ type
     FInitialized: Boolean;
     FTexturePath: String;
     FTexture: TStringList;
+    FTextureBW: boolean;
     FOverlayPath: String;
     FOverlay,FOverlayTitle: String;
     FBumpPath: String;
@@ -271,6 +272,7 @@ type
     property Initialized: boolean read FInitialized write FInitialized;
     property TexturePath : String read FtexturePath write FTexturePath;
     property Texture : TStringList read Ftexture write SetTexture;
+    property TextureBW: boolean read FTextureBW write FTextureBW;
     property OverlayPath : String read FOverlayPath write FOverlayPath;
     property OverlayTransparency : single read FOverlayTransparency write FOverlayTransparency;
     property OverlayTransparencyMethode : integer read FOverlayTransparencyMethode write FOverlayTransparencyMethode;
@@ -429,6 +431,21 @@ var toffset,tscale : single;
     jp: TJPEGImage;
     bmp: Tbitmap;
 
+procedure SetGrayscale(imout:TBitmap; imin:TJPEGImage);
+var i,j,v:integer;
+    imtmp: TLazIntfImage;
+begin
+imtmp:=imin.CreateIntfImage;
+for i:=0 to imtmp.Width-1 do begin
+  for j:=0 to imtmp.Height-1 do begin
+    v:=(imtmp.Colors[i,j].red+imtmp.Colors[i,j].green+imtmp.Colors[i,j].blue) div 3;
+    imtmp.Colors[i,j]:=FPColor(v,v,v);
+  end;
+end;
+imout.LoadFromIntfImage(imtmp);
+imtmp.Free;
+end;
+
 procedure LoadSlice2;
 var i,j: integer;
     pmapfn: string;
@@ -525,8 +542,11 @@ begin
            if Ftexture[level-1]='NONE'
              then jp.Assign(blankjp)
              else jp.LoadFromFile(tpath+inttostr(maps2[k])+'.jpg');
-            bmp.Assign(jp);
-            with bmp.Canvas do begin
+           if FTextureBW then
+             SetGrayscale(bmp,jp)
+           else
+             bmp.Assign(jp);
+           with bmp.Canvas do begin
               brush.Color:=clWhite;   // replace white border because of jpeg compression
               pen.Color:=clWhite;
               FillRect(0,0,bmp.Width,12);
@@ -568,7 +588,10 @@ begin
             if Ftexture[level-1]='NONE'
                 then jp.Assign(blankjp)
                 else jp.LoadFromFile(pmapfn);
-            bmp.Assign(jp);
+            if FTextureBW then
+              SetGrayscale(bmp,jp)
+            else
+              bmp.Assign(jp);
             with bmp.Canvas do begin
               brush.Color:=clWhite;
               pen.Color:=clWhite;
@@ -631,7 +654,10 @@ case level of
           if Ftexture[level-1]='NONE'
             then jp.Assign(blankjp)
             else jp.LoadFromFile(tpath+nn+'.jpg');
-          bmp.Assign(jp);
+          if FTextureBW then
+            SetGrayscale(bmp,jp)
+          else
+            bmp.Assign(jp);
           with bmp.Canvas do begin
             brush.Color:=clWhite;    // replace white border because of jpeg compression
             pen.Color:=clWhite;
@@ -1220,6 +1246,7 @@ begin
  BumpMapLimit1K:=false;
  ForceBumpMapSize:=0;
  TextureCompression:=true;
+ FTextureBW:=false;
  MaxZoom:=3;
  MaxTextureSize:=1024;
  Flabelcolor:=clWhite;
@@ -1394,6 +1421,7 @@ begin
  FBumpOk:=Source.FBumpOk;
  FAsMultiTexture:=Source.FAsMultiTexture;
  TexturePath:=Source.TexturePath;
+ TextureBW:=Source.TextureBW;
  OverlayPath:=Source.OverlayPath;
  if CanBump then BumpPath:=Source.BumpPath;
  TextureCompression:=Source.TextureCompression;

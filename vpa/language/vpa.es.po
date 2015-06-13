@@ -30,6 +30,10 @@ msgstr ""
 msgid "Check for optional features"
 msgstr "Comprobar características opcionales"
 
+#: u_translation.rsconvertcolor
+msgid "Convert color texture to grayscale"
+msgstr ""
+
 #: u_translation.rscountry
 msgid "Country"
 msgstr "País"
