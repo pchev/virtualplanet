@@ -96,7 +96,7 @@ if [[ $make_win32 ]]; then
   if [[ $? -ne 0 ]]; then exit 1;fi
   # zip
     cd $builddir/virtualplanet/Data
-    zip -r  virtualplanet-extra-$version-$currentrev-windows.zip *
+    zip -r  virtualplanet-extra-$version-windows.zip *
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv virtualplanet-extra*.zip $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
@@ -104,7 +104,7 @@ if [[ $make_win32 ]]; then
     cd $builddir
     cp $builddir/Data/*.txt $builddir/virtualplanet/Data/
     sed -i "/AppVerName/ s/V1/V$version/" virtualplanet.iss
-    sed -i "/OutputBaseFilename/ s/-windows/-extra-$updname-$version-windows/" virtualplanet.iss
+    sed -i "/OutputBaseFilename/ s/-windows/-extra-$version-windows/" virtualplanet.iss
     wine "$innosetup" "$wine_build\virtualplanet.iss"
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv $builddir/virtualplanet*.exe $wd/$outdir/
