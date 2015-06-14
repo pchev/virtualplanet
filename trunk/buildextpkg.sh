@@ -44,33 +44,33 @@ if [[ $make_linux_data ]]; then
   if [[ $? -ne 0 ]]; then exit 1;fi
   # tar
     cd $builddir
-    tar cvzf virtualplanet-ext-$version-linux_all.tgz --owner=root --group=root *
+    tar cvzf virtualplanet-extra-$version-linux_all.tgz --owner=root --group=root *
     if [[ $? -ne 0 ]]; then exit 1;fi
-    mv virtualplanet*.tgz $wd/$outdir/
+    mv virtualplanet-extra*.tgz $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
     cd $wd
   # deb
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/debian $builddir
     cd $builddir
-    mv share debian/virtualplanet-data/usr/
+    mv share debian/virtualplanet-extra/usr/
     cd debian
-    sed -i "/Version:/ s/1/$version/" virtualplanet-data/DEBIAN/control
-    fakeroot dpkg-deb --build virtualplanet-data .
+    sed -i "/Version:/ s/1/$version/" virtualplanet-extra/DEBIAN/control
+    fakeroot dpkg-deb --build virtualplanet-extra .
     if [[ $? -ne 0 ]]; then exit 1;fi
-    mv virtualplanet-data*.deb $wd/$outdir/
+    mv virtualplanet-extra*.deb $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
   # rpm
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
-    mv debian/virtualplanet-data/usr/* rpm/virtualplanet-data/usr/
+    mv debian/virtualplanet-extra/usr/* rpm/virtualplanet-extra/usr/
     cd rpm
-    sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet-data.spec
-    sed -i "/Release:/ s/1/1/" SPECS/virtualplanet-data.spec
-    fakeroot rpmbuild  --buildroot "$builddir/rpm/virtualplanet-data" --define "_topdir $builddir/rpm/" -bb SPECS/virtualplanet-data.spec
+    sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet-extra.spec
+    sed -i "/Release:/ s/1/1/" SPECS/virtualplanet-extra.spec
+    fakeroot rpmbuild  --buildroot "$builddir/rpm/virtualplanet-extra" --define "_topdir $builddir/rpm/" -bb SPECS/virtualplanet-extra.spec
     if [[ $? -ne 0 ]]; then exit 1;fi
-    mv RPMS/noarch/virtualplanet*.rpm $wd/$outdir/
+    mv RPMS/noarch/virtualplanet-extra*.rpm $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
 
   cd $wd
@@ -87,15 +87,15 @@ if [[ $make_win32 ]]; then
   if [[ $? -ne 0 ]]; then exit 1;fi
   # zip
     cd $builddir/virtualplanet/Data
-    zip -r  virtualplanet-ext-$version-$currentrev-windows.zip *
+    zip -r  virtualplanet-extra-$version-$currentrev-windows.zip *
     if [[ $? -ne 0 ]]; then exit 1;fi
-    mv virtualplanet*.zip $wd/$outdir/
+    mv virtualplane-extra*.zip $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
   # exe
     cd $builddir
     cp $builddir/Data/*.txt $builddir/virtualplanet/Data/
     sed -i "/AppVerName/ s/V1/V$version/" virtualplanet.iss
-    sed -i "/OutputBaseFilename/ s/-windows/$updname-$version-windows/" virtualplanet.iss
+    sed -i "/OutputBaseFilename/ s/-windows/$updname-$version-windows-extra/" virtualplanet.iss
     wine "$innosetup" "$wine_build\virtualplanet.iss"
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv $builddir/virtualplanet*.exe $wd/$outdir/

@@ -1,4 +1,4 @@
-virtualplanet-data (1.0) experimental; urgency=low
+virtualplanet-extra (1.0) experimental; urgency=low
 
   * Stable version
     For the full change log, see :
@@ -6,7 +6,7 @@ virtualplanet-data (1.0) experimental; urgency=low
     
  -- Patrick Chevalley <pch@ap-i.net>  Sun Jun 14 08:40:46 CEST 2015
 
- virtualplanet-data (0.9) experimental; urgency=low
+ virtualplanet-extra (0.9) experimental; urgency=low
 
   * beta version
     For the full change log, see :
