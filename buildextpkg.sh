@@ -34,6 +34,15 @@ fi
 wd=`pwd`
 mkdir $wd/$outdir
 
+# delete old files
+  deldir=$outdir; 
+
+  rm $deldir/virtualplanet*.tgz
+  rm $deldir/virtualplanet*.deb
+  rm $deldir/virtualplanet*.rpm
+  rm $deldir/virtualplanet*.zip
+  rm $deldir/virtualplanet*.exe
+  rm -rf $builddir
 
 
 # make Linux Data for both architectures
