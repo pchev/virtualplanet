@@ -19,6 +19,7 @@ if [[ -n $2 ]]; then
   configopt=$configopt" lazarus=$2"
 fi
 
+unset make_debug
 unset pro
 unset basic
 unset updname
@@ -90,16 +91,18 @@ if [[ $make_darwin_i386 ]]; then
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv virtualplanet*.dmg $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
-  #debug
-  cd $wd
-  mkdir $basedir/debug
-  cp vpa/vpa $basedir/debug/
-  cd $basedir/debug/
-  if [[ $? -ne 0 ]]; then exit 1;fi
-  tar cvzf virtualplanet$updname-bin-macosx-i386-debug-$currentrev.tgz *
-  if [[ $? -ne 0 ]]; then exit 1;fi
-  mv virtualplanet$updname-bin-*.tgz $wd/$outdir/
-  if [[ $? -ne 0 ]]; then exit 1;fi
+  if [[ $make_debug ]]; then  
+    #debug
+    cd $wd
+    mkdir $basedir/debug
+    cp vpa/vpa $basedir/debug/
+    cd $basedir/debug/
+    if [[ $? -ne 0 ]]; then exit 1;fi
+    tar cvzf virtualplanet$updname-bin-macosx-i386-debug-$currentrev.tgz *
+    if [[ $? -ne 0 ]]; then exit 1;fi
+    mv virtualplanet$updname-bin-*.tgz $wd/$outdir/
+    if [[ $? -ne 0 ]]; then exit 1;fi
+  fi
 
   cd $wd
   rm -rf $basedir
