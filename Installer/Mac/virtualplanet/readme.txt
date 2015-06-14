@@ -1,5 +1,5 @@
 Virtual Planet Atlas
-version 0.9 beta
+version 1.0
 Free software for planet observation or survey
 For Mac OS X
 
@@ -7,4 +7,4 @@ This software, realized by Patrick Chevalley and Christian Legrand can visualize
 Version for Linux and Windows are also available.
 
 How to support our action ?
-http://www.ap-i.net/vpa/en/support
+http://www.ap-i.net/avp/en/support

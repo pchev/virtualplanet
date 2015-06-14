@@ -1,6 +1,6 @@
 Atlas Virtuel des Planètes
-Copyright (C) 2014 Christian Legrand & Patrick Chevalley
-http://www.ap-i.net/vpa
+Copyright (C) 2015 Christian Legrand & Patrick Chevalley
+http://www.ap-i.net/avp
 
 L' "Atlas Virtuel des Planètes" est un logiciel libre comme décrit par la
 Licence Publique Générale GNU ci-dessous.

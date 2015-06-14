@@ -1,10 +1,10 @@
 Virtual Planet Atlas
-Copyright (C) 2014 Christian Legrand & Patrick Chevalley
-http://www.ap-i.net/vpa
+Copyright (C) 2015 Christian Legrand & Patrick Chevalley
+http://www.ap-i.net/avp
 
 The "Virtual Planet Atlas" is free software as described by the 
 GNU General Public License undermentioned.
-Source code is available from SVN at http://sourceforge.net/projects/virtualmoon
+Source code is available from SVN at http://sourceforge.net/projects/virtualplanet
 
 The Database information copyrighted and cannot be used 
 outside of the software without permission. 

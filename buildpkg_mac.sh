@@ -2,7 +2,7 @@
 
 # script to build virtualplanet on a Mac OS X system
 
-version=0.9
+version=1.0
 
 unset make_darwin_i386
 make_darwin_i386=1
@@ -22,10 +22,11 @@ fi
 unset pro
 unset basic
 unset updname
-if [[ -n $3 ]]; then
-  if [[ $3 == basic ]]; then basic=1; fi
-  if [[ $3 == pro ]]; then pro=1; fi
-fi
+pro=1
+#if [[ -n $3 ]]; then
+#  if [[ $3 == basic ]]; then basic=1; fi
+#  if [[ $3 == pro ]]; then pro=1; fi
+#fi
 if [[ $basic ]]; then
   echo make basic
   updname=_basic

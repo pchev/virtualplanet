@@ -8,7 +8,7 @@ Release     : 1
 Group       : Sciences/Astronomy
 License     : GPL
 Packager    : Patrick Chevalley
-URL         : http://ap-i.net/vpa
+URL         : http://ap-i.net/avp
 Summary     : Virtual Planet Atlas - data files
 Description :
 This software can visualize the planet aspect for every location, date and hour. 
