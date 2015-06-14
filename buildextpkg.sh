@@ -14,7 +14,7 @@ if [[ $arch == x86_64 ]]; then
    extratarget=",x86_64-linux"
 fi
 unset make_linux_data
-#make_linux_data=1
+make_linux_data=1
 unset make_win32
 make_win32=1
 
