@@ -1,6 +1,14 @@
-virtualplanet (0.9) experimental; urgency=low
+virtualplanet (1.0) experimental; urgency=low
 
-  * Beta version
+  * Stable version
+    For the full change log, see :
+    http://sourceforge.net/p/virtualplanet/code/log/
+    
+ -- Patrick Chevalley <pch@ap-i.net>  Sun Jun 14 08:40:46 CEST 2015
+
+ virtualplanet (0.9) experimental; urgency=low
+
+  * beta version
     For the full change log, see :
     http://sourceforge.net/p/virtualplanet/code/log/
     

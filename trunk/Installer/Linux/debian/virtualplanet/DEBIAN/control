@@ -5,7 +5,6 @@ Priority: optional
 Maintainer: Patrick Chevalley <pch@ap-i.net>
 Architecture: i386
 Depends: libc6, libx11-6, libgtk2.0-0, libglib2.0-0, libpango1.0-0, libjpeg62, libpng12-0, libsqlite3-0
-Suggests: virtualmoon, skychart
 Description: Virtual Planet Atlas
  This software can visualize the planet aspect for every location, date and hour. 
  It permits also to study the formations with a unique database

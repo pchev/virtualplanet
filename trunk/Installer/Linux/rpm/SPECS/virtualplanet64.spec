@@ -4,7 +4,7 @@ Version: 1
 Release: 1
 Group: Sciences/Astronomy
 License: GPL
-URL: http://ap-i.net/vpa
+URL: http://ap-i.net/avp
 Packager: Patrick Chevalley
 BuildRoot: %_topdir/%{name}
 BuildArch: x86_64
