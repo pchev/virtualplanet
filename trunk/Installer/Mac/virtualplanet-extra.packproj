@@ -26,11 +26,11 @@
 					<key>International</key>
 					<dict>
 						<key>Mode</key>
-						<integer>1</integer>
+						<integer>0</integer>
 						<key>Path</key>
-						<string>Virtual_Planet_Atlas/licence.txt</string>
+						<string></string>
 						<key>Path Type</key>
-						<integer>2</integer>
+						<integer>1</integer>
 					</dict>
 				</dict>
 				<key>ReadMe</key>
@@ -38,11 +38,11 @@
 					<key>International</key>
 					<dict>
 						<key>Mode</key>
-						<integer>1</integer>
+						<integer>0</integer>
 						<key>Path</key>
-						<string>Virtual_Planet_Atlas/readme.txt</string>
+						<string></string>
 						<key>Path Type</key>
-						<integer>2</integer>
+						<integer>1</integer>
 					</dict>
 				</dict>
 				<key>Welcome</key>
