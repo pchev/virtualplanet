@@ -19,11 +19,6 @@ fi
 
 outdir='EXT'
 
-if [[ -z $updname ]]; then
-  echo "Syntaxe : daily_build.sh freepascal_path lazarus_path [basic|pro]"
-  exit 1;
-fi
-
 wd=`pwd`
 mkdir $wd/$outdir
 
