@@ -13,7 +13,7 @@ CreateUninstallRegKey=no
 UpdateUninstallLogAppName=no
 DefaultGroupName={cm:MyAppName}
 AllowNoIcons=yes
-InfoBeforeFile=virtualplanet\Data\readme.txt
+InfoBeforeFile=virtualplanet\Data\readme-extra.txt
 OutputDir=.\
 OutputBaseFilename=virtualplanet-extra-windows
 Compression=lzma
@@ -33,8 +33,8 @@ fre.MyAppName=Atlas Virtuel des planètes
 fre.MyAppUrl=http://www.ap-i.net/avp
 
 [Languages]
-Name: eng; MessagesFile: compiler:Default.isl; InfoBeforeFile: virtualplanet\Data\readme.txt;
-Name: fre; MessagesFile: compiler:Languages\French.isl; InfoBeforeFile: virtualplanet\Data\lisezmoi.txt;
+Name: eng; MessagesFile: compiler:Default.isl; InfoBeforeFile: virtualplanet\Data\readme-extra.txt;
+Name: fre; MessagesFile: compiler:Languages\French.isl; InfoBeforeFile: virtualplanet\Data\lisezmoi-extra.txt;
 
 [Files]
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
