@@ -1,0 +1,16 @@
+Atlas Virtuel des Planètes
+version 1.0
+Programme gratuit d'étude et d'observation des planètes.
+Pour Linux
+
+Ce programme réalisé par Patrick Chevalley et Christian Legrand permet de visualiser l'aspect des planètes pour toute date et heure et d'étudier en détail les formations à l'aide d'une base de données compilées par Christian Legrand.
+Des versions pour Windows et Mac OS X sont également disponibles. 
+
+INSTALLATION:
+
+Selon votre système Linux vous devez utiliser les fichiers dans le répertoire DEB ou RPM.
+
+Installez tout d'abord le fichier virtualplanet selon le type de processeur que vous utilisez et virtualplanet_data avec les textures de base.
+
+Ensuite vous pouvez installer virtualplanet-extra qui ajoute les textures haute résolution des planètes 
+
