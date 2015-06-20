@@ -103,9 +103,8 @@ if [[ $make_win32 ]]; then
   # exe
     cd $builddir
     cp $builddir/Data/*.txt $builddir/virtualplanet/Data/
-    sed -i "/AppVerName/ s/V1/V$version/" virtualplanet.iss
-    sed -i "/OutputBaseFilename/ s/-windows/-extra-$version-windows/" virtualplanet.iss
-    wine "$innosetup" "$wine_build\virtualplanet.iss"
+    sed -i "/OutputBaseFilename/ s/-windows/-$version-windows/" virtualplanet-extra.iss
+    wine "$innosetup" "$wine_build\virtualplanet-extra.iss"
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv $builddir/virtualplanet*.exe $wd/$outdir/
 
