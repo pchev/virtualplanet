@@ -38,6 +38,7 @@ install -m 755 -d $destdir/Database
 install -v -m 644 Database/Mercury_Named_EN.csv $destdir/Database/
 install -v -m 644 Database/Mercury_Named_FR.csv $destdir/Database/
 install -v -m 644 Database/Venus_Named_EN.csv $destdir/Database/
+install -v -m 644 Database/Venus_Named_FR.csv $destdir/Database/
 install -v -m 644 Database/Mars_Named_EN.csv $destdir/Database/
 install -v -m 644 Database/Mars_Named_FR.csv $destdir/Database/
 
