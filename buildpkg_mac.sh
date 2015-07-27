@@ -9,7 +9,7 @@ make_darwin_i386=1
 unset make_darwin_ppc
 #make_darwin_ppc=1
 
-basedir=/Volumes/Data/tmp/virtualplanet  # Be sure this is set to a non existent directory, it is removed after the run!
+basedir=/tmp/virtualplanet  # Be sure this is set to a non existent directory, it is removed after the run!
 builddir=$basedir/Virtual_Planet_Atlas
 
 if [[ -n $1 ]]; then
@@ -87,7 +87,7 @@ if [[ $make_darwin_i386 ]]; then
     cd $basedir
     freeze -v virtualplanet.packproj
     if [[ $? -ne 0 ]]; then exit 1;fi
-    hdiutil create -anyowners -volname virtualplanet$updname-$version-macosx-i386 -imagekey zlib-level=9 -format UDZO -srcfolder ./build virtualplanet$updname-$version-macosx-i386.dmg
+    hdiutil create -megabytes 1500 -anyowners -volname virtualplanet$updname-$version-macosx-i386 -imagekey zlib-level=9 -format UDZO -srcfolder ./build virtualplanet$updname-$version-macosx-i386.dmg
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv virtualplanet*.dmg $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
