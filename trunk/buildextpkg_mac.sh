@@ -7,7 +7,7 @@ version=1.0
 unset make_darwin_data
 make_darwin_data=1
 
-basedir=/Volumes/Data/tmp/virtualplanet  # Be sure this is set to a non existent directory, it is removed after the run!
+basedir=/tmp/virtualplanet  # Be sure this is set to a non existent directory, it is removed after the run!
 builddir=$basedir/Virtual_Planet_Atlas
 
 if [[ -n $1 ]]; then
@@ -39,7 +39,7 @@ if [[ $make_darwin_data ]]; then
     cd $basedir
     freeze -v virtualplanet-extra.packproj
     if [[ $? -ne 0 ]]; then exit 1;fi
-    hdiutil create -anyowners -volname virtualplanet-extra-$version-macosx -imagekey zlib-level=9 -format UDZO -srcfolder ./build virtualplanet-extra-$version-macosx.dmg
+    hdiutil create -megabytes 2000 -anyowners -volname virtualplanet-extra-$version-macosx -imagekey zlib-level=9 -format UDZO -srcfolder ./build virtualplanet-extra-$version-macosx.dmg
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv virtualplanet-extra*.dmg $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
