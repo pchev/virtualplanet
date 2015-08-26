@@ -1,0 +1,16 @@
+Group = Mapping
+  ProjectionName     = Equirectangular
+  CenterLongitude    = 0.00
+  CenterLatitude     = 0.00
+  TargetName         = Venus
+  EquatorialRadius   = 6051000.0 <meters>
+  PolarRadius        = 6051000.0 <meters>
+  LatitudeType       = Planetocentric
+  LongitudeDirection = PositiveEast
+  LongitudeDomain    = 180
+  MinimumLatitude    = -90.0
+  MaximumLatitude    = 90.0
+  MinimumLongitude   = -180.000
+  MaximumLongitude   = 180.00
+End_Group
+End 

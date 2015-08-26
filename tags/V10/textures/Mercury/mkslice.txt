@@ -1,0 +1,104 @@
+#
+# source file : http://astrogeology.usgs.gov/search/details/Mercury/Messenger/Global/Mercury_MESSENGER_MDIS_mosaic_global_250m_2013/cub
+#
+
+
+# use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
+# cat stretch.txt 
+# 0.0:0.0 200.0:245.0 255.0:253.0
+
+# stretch dynamic
+stretch from=Mercury_MESSENGER_MDIS_mosaic_global_250m_2013.cub to=gl250.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=253 hrs=253
+
+# resize to L5 size
+enlarge from=gl250.cub to=l5.cub mode=total ons=80000 onl=40000
+
+# reduce to L4 size
+reduce from=gl250.cub to=l4.cub mode=total ons=40000 onl=20000 
+
+# resize to L3 size
+reduce from=l4.cub to=l3.cub mode=total ons=20000 onl=10000
+
+# resize to L2 size
+reduce from=l3.cub to=l2.cub mode=total ons=10000 onl=5000
+
+# resize to L1 size
+reduce from=l3.cub to=l1.cub mode=total ons=4000 onl=2000
+
+# make l1 png
+isis2std from=l1.cub to=l1.png format=png stretch=manual minimum=0 maximum=255
+
+# make L1 slice (100% quality to avoid transparency on level 1)
+mkdir L1
+convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 100% L1/%d.jpg
+
+# make l2 png
+isis2std from=l2.cub to=l2.png format=png stretch=manual minimum=0 maximum=255
+
+# make L2 slice 
+mkdir L2
+convert l2.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/%d.jpg
+convert l2.png +gravity -crop 10000x1000 R%d.pnm
+convert R0.pnm -resize 3000x1000\!  RS0.pnm
+convert R4.pnm -resize 3000x1000\!  RS4.pnm
+convert RS0.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/1000%d.jpg
+convert RS4.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/2000%d.jpg
+rm R[0-4].pnm RS[0-4].pnm
+
+# make l3 png
+isis2std from=l3.cub to=l3.png mode=gray format=png stretch=manual minimum=0 maximum=255
+
+# make L3 slice 
+mkdir L3
+convert l3.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/%d.jpg
+convert l3.png +gravity -crop 20000x1000 R%d.pnm
+convert R0.pnm -resize 3000x1000\!  RS0.pnm
+convert R9.pnm -resize 3000x1000\!  RS9.pnm
+convert RS0.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/1000%d.jpg
+convert RS9.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/2000%d.jpg
+rm R[0-9].pnm RS[0-9].pnm
+
+# make l4 band
+crop from=l4.cub to=l4r\$1.cub line=\$2 nlines=1000 -batchlist=n20.txt
+isis2std from=l4r\$1.cub to=l4r\$1.png -batchlist=n20.txt format=png stretch=manual minimum=0 maximum=255
+rm l4r*.cub
+
+# make l4 slices
+mkdir L4
+i=1; while ((i<21)); 
+do ((j=40*(i-1))); 
+ echo convert l4r$i.png +repage +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% -scene $j  L4/%d.jpg;
+ convert l4r$i.png +repage +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% -scene $j  L4/%d.jpg;
+ ((i++));  
+done;
+convert l4r1.png -resize 3000x1000\!  RS0.pnm
+convert l4r20.png -resize 3000x1000\!  RS1.pnm
+convert RS0.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L4/1000%d.jpg
+convert RS1.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L4/2000%d.jpg
+rm RS0.pnm RS1.pnm
+rm l4r*.png
+
+
+# make l5 band
+crop from=l5.cub to=l5r\$1.cub line=\$2 nlines=1000 -batchlist=n40.txt
+isis2std from=l5r\$1.cub to=l5r\$1.png -batchlist=n40.txt format=png stretch=manual minimum=0 maximum=255
+rm l5r*.cub
+
+# make l5 slices
+mkdir L5
+i=1; while ((i<41)); 
+do ((j=80*(i-1))); 
+ echo convert l5r$i.png +repage +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% -scene $j  L5/%d.jpg;
+ convert l5r$i.png +repage +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% -scene $j  L5/%d.jpg;
+ ((i++));  
+done;
+convert l5r1.png -resize 3000x1000\!  RS0.pnm
+convert l5r40.png -resize 3000x1000\!  RS1.pnm
+convert RS0.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L5/1000%d.jpg
+convert RS1.pnm +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L5/2000%d.jpg
+rm RS0.pnm RS1.pnm
+rm l5r*.png
+
+rm *.pgw
+rm gl250.cub
+rm l5.cub l4.cub l3.cub l2.cub l1.cub l3.png l2.png l1.png

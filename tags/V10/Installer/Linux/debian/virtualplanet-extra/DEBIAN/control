@@ -1,0 +1,11 @@
+Package: virtualplanet-extra
+Version: 1
+Section: science
+Priority: optional
+Maintainer: Patrick Chevalley <pch@ap-i.net>
+Architecture: all
+Suggests: virtualplanet-data
+Description: Virtual Planet Atlas - extra data files
+ This software can visualize the planet aspect for every location, date and hour. 
+ It permits also to study the formations with a unique database
+ .
