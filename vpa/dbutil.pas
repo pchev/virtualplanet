@@ -30,6 +30,7 @@ const
     DBversion=101;
     MaxDBN=200;
     NumPlanetDBFields = 48;
+    IAUStartField = 26;
     PlanetDBFields : array[1..NumPlanetDBFields,1..2] of string = (
       ('BODY','text'),
       ('NAME','text'),
@@ -180,6 +181,10 @@ repeat
   cmd:='insert into planet values(NULL,'+pla+',';
   for i:=1 to NumPlanetDBFields do begin
     v:=db1.GetData(PlanetDBFields[i,1]);
+    if (i>=IAUStartField) then begin
+      v:=StringReplace(v,'Ä"','è',[rfreplaceall]);
+      v:=StringReplace(v,'Ä','è',[rfreplaceall]);
+    end;
     v:=stringreplace(v,',','.',[rfreplaceall]);
     v:=stringreplace(v,'""','''',[rfreplaceall]);
     v:=stringreplace(v,'"','',[rfreplaceall]);
