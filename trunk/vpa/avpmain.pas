@@ -38,7 +38,7 @@ uses
   u_translation_database, u_translation,
   u_constant, u_util, cu_planet, u_projection, cu_tz, pu_planet,
   LCLIntf, Forms, StdCtrls, ExtCtrls, Graphics, Grids,
-  mlb2, PrintersDlgs, Printers, Controls, DateUtils,
+  mlb2, PrintersDlgs, Printers, Controls,
   Messages, SysUtils, Classes, Dialogs, FileUtil,
   ComCtrls, Menus, Buttons, dynlibs, BigIma,
   EnhEdits, IniFiles, passql, passqlite,
@@ -3362,9 +3362,7 @@ begin
   ToolButton8.Down := False;
   splash := Tsplash.Create(application);
   splashunit.SplashTimer := False;
-  splash.BorderStyle := bsToolWindow;
   splash.Caption := stringreplace(Apropos1.Caption, '&', '', []);
-  ;
   splash.VersionName   := VersionName;
   splash.Splashversion := Splashversion;
   splash.transmsg      := transmsg;

@@ -59,7 +59,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <WorkingDirectory Value="\usr\local\bin"/>
+        <WorkingDirectory Value="\home\astro\bin"/>
       </local>
     </RunParams>
     <RequiredPackages Count="9">
