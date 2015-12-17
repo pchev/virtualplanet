@@ -25,6 +25,15 @@ install -m 755 -d $destdir
 install -m 755 -d $destdir/share
 install -m 755 -d $destdir/share/virtualplanet
 
+# translation
+install -m 755 -d $destdir/share/virtualplanet/language
+install -v -m 644 vpa/language/vpa.en.po $destdir/share/virtualplanet/language/
+install -v -m 644 vpa/language/vpa.fr.po $destdir/share/virtualplanet/language/
+
+install -m 755 -d $destdir/share/virtualplanet/data
+install -v -m 644 data/country.tab $destdir/share/virtualplanet/data/
+install -v -m 644 data/retic.cur $destdir/share/virtualplanet/data/
+
 # documentation
 install -m 755 -d $destdir/share/virtualplanet/doc
 install -v -m 644 doc/* $destdir/share/virtualplanet/doc/
