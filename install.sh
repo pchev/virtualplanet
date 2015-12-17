@@ -26,13 +26,4 @@ install -v -m 644 Installer/Linux/vpa/share/pixmaps/virtualplanet.png $destdir/s
 install -v -m 644 Installer/Linux/vpa/share/doc/virtualplanet/changelog $destdir/share/doc/virtualplanet/changelog
 install -v -m 644 Installer/Linux/vpa/share/doc/virtualplanet/copyright $destdir/share/doc/virtualplanet/copyright
 
-# translation
-install -m 755 -d $destdir/share/virtualplanet
-install -m 755 -d $destdir/share/virtualplanet/language
-install -v -m 644 vpa/language/vpa.en.po $destdir/share/virtualplanet/language/
-install -v -m 644 vpa/language/vpa.fr.po $destdir/share/virtualplanet/language/
-
-install -m 755 -d $destdir/share/virtualplanet/data
-install -v -m 644 data/country.tab $destdir/share/virtualplanet/data/
-install -v -m 644 data/retic.cur $destdir/share/virtualplanet/data/
 
