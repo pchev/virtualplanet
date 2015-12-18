@@ -102,7 +102,6 @@ if [[ $make_linux32 ]]; then
     rsync -a --exclude=.svn Installer/Linux/debian $builddir
     cd $builddir
     mv bin debian/virtualplanet/usr/
-    mv lib debian/virtualplanet/usr/
     mv share debian/virtualplanet/usr/
     cd debian
     sed -i "/Version:/ s/1/$version/" virtualplanet/DEBIAN/control
@@ -157,7 +156,6 @@ if [[ $make_linux64 ]]; then
     rsync -a --exclude=.svn Installer/Linux/debian $builddir
     cd $builddir
     mv bin debian/virtualplanet64/usr/
-    mv lib debian/virtualplanet64/usr/
     mv share debian/virtualplanet64/usr/
     cd debian
     sed -i "/Version:/ s/1/$version/" virtualplanet64/DEBIAN/control
@@ -170,8 +168,6 @@ if [[ $make_linux64 ]]; then
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
     mv debian/virtualplanet64/usr/* rpm/virtualplanet/usr/
-    # Redhat 64bits lib is lib64 
-    mv rpm/virtualplanet/usr/lib rpm/virtualplanet/usr/lib64
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet64.spec
     sed -i "/Release:/ s/1/1/" SPECS/virtualplanet64.spec

@@ -13,7 +13,6 @@ echo Install virtualplanet to $destdir
 # software
 install -m 755 -d $destdir
 install -m 755 -d $destdir/bin
-install -m 755 -d $destdir/lib
 install -m 755 -d $destdir/share
 install -m 755 -d $destdir/share/applications
 install -m 755 -d $destdir/share/doc
@@ -25,7 +24,6 @@ install -m 755 -d $destdir/share/icons/hicolor/48x48
 install -m 755 -d $destdir/share/icons/hicolor/48x48/apps
 
 install -v -m 755 -s vpa/vpa  $destdir/bin/virtualplanet
-install -v -m 644 -s vpa/library/plan404/libvpa404.so  $destdir/lib/libvpa404.so
 install -v -m 644 Installer/Linux/vpa/share/applications/virtualplanet.desktop $destdir/share/applications/virtualplanet.desktop
 install -v -m 644 Installer/Linux/vpa/share/pixmaps/virtualplanet.png $destdir/share/pixmaps/virtualplanet.png
 install -v -m 644 Installer/Linux/vpa/share/pixmaps/virtualplanet.png $destdir/share/icons/hicolor/48x48/apps/virtualplanet.png
