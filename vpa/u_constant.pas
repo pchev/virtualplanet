@@ -178,7 +178,7 @@ type
 // external library
 const
 {$ifdef linux}
-      lib404   = 'libvpa404.so';
+      lib404   = 'libpasplan404.so.1';
 {$endif}
 {$ifdef darwin}
       lib404   = 'libplan404.dylib';
