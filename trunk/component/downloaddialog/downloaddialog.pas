@@ -17,7 +17,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 }
 
 {$mode objfpc}{$H+}
@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 interface
 
 uses
-  LResources, blcksock, HTTPsend, FTPSend, FileUtil,
+  LResources, blcksock, HTTPsend, FTPSend, FileUtil, ssl_openssl,
   Classes, SysUtils, Dialogs, Buttons, Graphics, Forms, Controls, StdCtrls, ExtCtrls;
 
 type
@@ -143,6 +143,7 @@ constructor TDownloadDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   http:=THTTPSend.Create;
+  http.UserAgent:='Wget/1.16.1 (linux-gnu)';
   ftp :=TFTPSend.Create;
   Timer1:=TTimer.Create(self);
   Timer1.Enabled:=false;
@@ -338,7 +339,7 @@ if copy(Furl,1,4)='http' then begin        // HTTP protocol
   DownloadDaemon.protocol:=prHttp;
   DownloadDaemon.onProgress:=@progressreport;
   DownloadDaemon.onDownloadComplete:=@HTTPComplete;
-  DownloadDaemon.Resume;
+  DownloadDaemon.Start;
 end else begin                // FTP protocol
   if copy(Furl,1,3)<>'ftp' then exit;
   i:=pos('://',Furl);
@@ -367,7 +368,7 @@ end else begin                // FTP protocol
   DownloadDaemon.protocol:=prFtp;
   DownloadDaemon.onProgress:=@progressreport;
   DownloadDaemon.onDownloadComplete:=@FTPComplete;
-  DownloadDaemon.Resume;
+  DownloadDaemon.Start;
 end;
 end;
 
