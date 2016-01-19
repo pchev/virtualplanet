@@ -5214,7 +5214,9 @@ end;
 
 initialization
 
+{$IFNDEF CPUARM}
    Set8087CW($133F);
+{$ENDIF}
 
 finalization
 
