@@ -62,7 +62,7 @@
         <WorkingDirectory Value="\home\astro\bin"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="10">
+    <RequiredPackages Count="9">
       <Item1>
         <PackageName Value="GLScene_RunTime"/>
       </Item1>
@@ -70,35 +70,32 @@
         <PackageName Value="GLScene_DesignTime"/>
       </Item2>
       <Item3>
-        <PackageName Value="CDCjdcalendar"/>
-      </Item3>
-      <Item4>
         <PackageName Value="FCL"/>
         <MinVersion Major="1" Valid="True"/>
-      </Item4>
-      <Item5>
+      </Item3>
+      <Item4>
         <PackageName Value="uniqueinstance_package"/>
         <MinVersion Minor="2" Release="1" Valid="True"/>
-      </Item5>
-      <Item6>
+      </Item4>
+      <Item5>
         <PackageName Value="TurboPowerIPro"/>
         <MinVersion Major="1" Valid="True"/>
-      </Item6>
-      <Item7>
+      </Item5>
+      <Item6>
         <PackageName Value="Printer4Lazarus"/>
         <MinVersion Minor="5" Valid="True"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="enhedit"/>
+        <MinVersion Valid="True"/>
       </Item7>
       <Item8>
-        <PackageName Value="enhedit"/>
+        <PackageName Value="libsql"/>
         <MinVersion Valid="True"/>
       </Item8>
       <Item9>
-        <PackageName Value="libsql"/>
-        <MinVersion Valid="True"/>
-      </Item9>
-      <Item10>
         <PackageName Value="LCL"/>
-      </Item10>
+      </Item9>
     </RequiredPackages>
     <Units Count="19">
       <Unit0>
