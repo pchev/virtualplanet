@@ -41,8 +41,9 @@ const crlf = chr(10)+chr(13);
       km_au = 149597870.691 ;
       clight = 299792.458 ;
       tlight = km_au/clight/3600/24;
-      maxpla = 4;
-      Rplanet: array [1..maxpla] of single = (2439.5,6052.0,0,3389.5);  // planet radius Km
+      maxpla = 8;
+      REplanet: array [1..maxpla] of single = (2439.7,6051.8,0,3396.19,71492,60268,25559,24764);  // planet equatorial radius Km
+      RPplanet: array [1..maxpla] of single = (2439.7,6051.8,0,3376.20,66854,54364,24973,24341);  // planet polar radius Km
       footpermeter = 0.3048;
       secday=3600*24;
       eps2000 = 23.43928111111111111111; // 23d 26m 21.412s
@@ -135,6 +136,7 @@ const crlf = chr(10)+chr(13);
                       'Textures/WAC/L3/0.jpg'
                       );
 
+      URL_GRS =  'http://jupos.privat.t-online.de/rGrs.htm';
 
 {$ifdef linux}
       DefaultHome='~/';
@@ -218,6 +220,7 @@ Var  Splashversion, compile_time, compile_version: string;
      CurYear,CurrentMonth,CurrentDay : integer;
      CurrentTime,TimeBias,CurrentST,DT_UT_val,CurrentSunH,CurrentMoonH,CurrentMoonIllum,diam : Double;
      PlanetParalaxe: boolean;
+     GRSL,GRSLongitude,GRSDailydrift,GRSjd: double;
      ForceConfig, Configfile, CdCconfig, language, uplanguage : string;
      ldeg,lmin,lsec : string;
      PrinterResolution: integer;

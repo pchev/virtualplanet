@@ -9,9 +9,10 @@ uses
   Interfaces, // this includes the LCL widgetset
   InterfaceBase, LCLVersion, // version number
   Forms, Dialogs, avpmain, config, OpenGLAdapter, OpenGLTokens, GLScene_RunTime,
-  CraterList, dbutil, fmsg, splashunit, SysUtils, TurboPowerIPro, u_constant,
-  cu_tz, cu_planet, u_projection, u_util, pu_planet, u_translation_database,
-  u_translation, uniqueinstance_package, BigIma, uDE, mlb2, pu_ephem;
+  CraterList, dbutil, fmsg, splashunit, SysUtils,
+  TurboPowerIPro, u_constant, cu_tz, cu_planet, u_projection, u_util, pu_planet,
+  u_translation_database, u_translation, uniqueinstance_package, cdcjdcalendar,
+  BigIma, uDE, mlb2, pu_ephem;
 
 var i:integer;
 

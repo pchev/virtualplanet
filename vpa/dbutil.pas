@@ -83,14 +83,14 @@ const
       );
       FPLANETN=1;
       FNAME=2;
-      FLONGIN=5;
-      FLATIN=6;
+      FLONGIN=19;
+      FLATIN=21;
 var
     database : array[1..9] of string;
 
 Procedure LoadDB(dbm: TLiteDB);
 Procedure CreateDB(dbm: TLiteDB);
-Procedure ConvertDB(dbm: TLiteDB; fn,pla:string);
+Procedure ConvertDB(dbm: TLiteDB; fn,pla:string; flipcoord:boolean);
 procedure DBjournal(dbname,txt:string);
 
 implementation
@@ -149,9 +149,10 @@ if dbv<DBversion then begin
 end;
 end;
 
-Procedure ConvertDB(dbm: TLiteDB; fn,pla:string);
+Procedure ConvertDB(dbm: TLiteDB; fn,pla:string; flipcoord:boolean);
 var cmd,v: string;
     i,imax,ii,j:integer;
+    x:double;
     db1:Tmlb2;
 begin
 if MsgForm=nil then Application.CreateForm(TMsgForm, MsgForm);
@@ -188,6 +189,15 @@ repeat
     v:=stringreplace(v,',','.',[rfreplaceall]);
     v:=stringreplace(v,'""','''',[rfreplaceall]);
     v:=stringreplace(v,'"','',[rfreplaceall]);
+    if flipcoord then begin
+      if i=FLONGIN then begin
+        x:=StrToFloatDef(v,-9999.9);
+        if x>-9000 then begin
+          x:=rmod(720-x,360);
+          v:=FormatFloat(f5,x);
+        end;
+      end;
+    end;
     cmd:=cmd+'"'+v+'",';
   end;
   cmd:=copy(cmd,1,length(cmd)-1)+');';
@@ -230,6 +240,9 @@ if fileexists(buf) then database[2]:=buf
 buf:=Slash(appdir)+Slash('Database')+'Mars_Named_'+uplanguage+'.csv';
 if fileexists(buf) then database[4]:=buf
    else database[4]:=Slash(appdir)+Slash('Database')+'Mars_Named_EN.csv';
+buf:=Slash(appdir)+Slash('Database')+'Jupiter_Named_'+uplanguage+'.csv';
+if fileexists(buf) then database[5]:=buf
+   else database[5]:=Slash(appdir)+Slash('Database')+'Jupiter_Named_EN.csv';
 CreateDB(dbm);
 for i:=1 to maxpla do begin
      if i=3 then continue; // no Earth for now.
@@ -239,7 +252,7 @@ for i:=1 to maxpla do begin
        PlanetInstalled[i]:=true;
        if (db_age<fileage(database[i])) then begin
           dbjournal(extractfilename(dbm.database),'LOAD DATABASE PLANETN='+inttostr(i)+' FROM FILE: '+database[i]+' FILE DATE: '+ DateTimeToStr(FileDateToDateTime(fileage(database[i]))) );
-          convertDB(dbm,database[i],inttostr(i));
+          convertDB(dbm,database[i],inttostr(i),(i>4));
           needvacuum:=true;
        end;
      end
