@@ -34,21 +34,19 @@ uses
 {$endif}
 {$IFDEF LCLgtk2}
   Gtk2Proc,
-{$endif}    GLScene,
-  u_translation_database, u_translation,
-  u_constant, u_util, cu_planet, u_projection, cu_tz, pu_planet,
-  LCLIntf, Forms, StdCtrls, ExtCtrls, Graphics, Grids,
-  mlb2, PrintersDlgs, Printers, Controls,
-  Messages, SysUtils, Classes, Dialogs, FileUtil,
-  ComCtrls, Menus, Buttons, dynlibs, BigIma,
-  EnhEdits, IniFiles, passql, passqlite,
-  Math, CraterList, LResources, IpHtml, UniqueInstance, GLViewer, GLLCLViewer;
+{$endif}    GLScene, u_translation_database, u_translation, u_constant, u_util,
+cu_planet, u_projection, cu_tz, pu_planet, LCLIntf, Forms, StdCtrls, ExtCtrls,
+Graphics, Grids, mlb2, PrintersDlgs, Printers, Controls, Messages, SysUtils,
+Classes, Dialogs, FileUtil, ComCtrls, Menus, Buttons, dynlibs, BigIma, EnhEdits,
+IniFiles, passql, passqlite, Math, CraterList, LResources, EditBtn, IpHtml,
+UniqueInstance, jdcalendar, GLViewer, GLLCLViewer;
 
 type
 
   { Tf_avpmain }
 
   Tf_avpmain = class(TForm)
+    BitBtn37: TBitBtn;
     Button12: TButton;
     Button13: TButton;
     Button21: TButton;
@@ -58,12 +56,18 @@ type
     CheckBox4: TCheckBox;
     ComboBox2: TComboBox;
     ComboBox6: TComboBox;
+    GRSDateEdit: TDateEdit;
     Desc1:   TIpHtmlPanel;
     FilePopup: TPopupMenu;
     DoNotRemove: TGLSceneViewer;
+    GRS: TFloatEdit;
+    GRSdrift: TFloatEdit;
     HelpPopup: TPopupMenu;
     Label17: TLabel;
     Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
     Label22: TLabel;
     Label27: TLabel;
     Label29: TLabel;
@@ -85,6 +89,8 @@ type
     FullScreen1: TMenuItem;
     DecreaseFont1: TMenuItem;
     IncreaseFont1: TMenuItem;
+    GRSPanel: TPanel;
+    SelectJupiter: TMenuItem;
     Menuwebpage: TMenuItem;
     SelectPlanet1: TMenuItem;
     SelectMercury: TMenuItem;
@@ -248,6 +254,7 @@ type
     CheckBox8: TCheckBox;
     ImageList1: TImageList;
     ToolButton12: TToolButton;
+    procedure BitBtn37Click(Sender: TObject);
     procedure Button21Click(Sender: TObject);
     procedure Button3MouseLeave(Sender: TObject);
     procedure CheckBox3Click(Sender: TObject);
@@ -263,6 +270,9 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure DecreaseFont1Click(Sender: TObject);
+    procedure GRSChange(Sender: TObject);
+    procedure GRSDateEditChange(Sender: TObject);
+    procedure GRSdriftChange(Sender: TObject);
     procedure IncreaseFont1Click(Sender: TObject);
     procedure MenuwebpageClick(Sender: TObject);
     procedure Quitter1Click(Sender: TObject);
@@ -718,6 +728,13 @@ begin
   LongSystem[1]:=E360;
   LongSystem[2]:=W360;
   LongSystem[4]:=W360;
+  LongSystem[5]:=W360;
+  LongSystem[6]:=W360;
+  LongSystem[7]:=W360;
+  LongSystem[8]:=W360;
+  GRSlongitude:=208.0;
+  GRSjd:=jd(2014,1,31,0);
+  GRSDailydrift:=16.5/365.25;
   for k:=1 to maxpla do  begin
     wantbump[k] := false;
     showoverlay[k] := False;
@@ -725,14 +742,11 @@ begin
        1: DefaultTexture:='Messenger';
        2: DefaultTexture:='Magellan';
        4: DefaultTexture:='Viking_Color';
+       5: DefaultTexture:='Hubble2016'
+       else DefaultTexture:='NONE';
     end;
     for j:=0 to 5 do begin
-      texturefiles[k][0]:=DefaultTexture;
-      texturefiles[k][1]:=DefaultTexture;
-      texturefiles[k][2]:=DefaultTexture;
-      texturefiles[k][3]:=DefaultTexture;
-      texturefiles[k][4]:=DefaultTexture;
-      texturefiles[k][5]:=DefaultTexture;
+      texturefiles[k][j]:=DefaultTexture;
     end;
   end;
   inif := Tmeminifile.Create(ConfigFile);
@@ -2078,6 +2092,28 @@ except
 end;
 end;
 
+procedure Tf_avpmain.GRSChange(Sender: TObject);
+begin
+GRSlongitude:=grs.value;
+end;
+
+procedure Tf_avpmain.GRSDateEditChange(Sender: TObject);
+var y,m,d: word;
+begin
+  DecodeDate(GRSDateEdit.Date,y,m,d);
+  GRSjd:=jd(y,m,d,0);
+end;
+
+procedure Tf_avpmain.GRSdriftChange(Sender: TObject);
+begin
+GRSDailydrift := GRSdrift.Value/365.25;
+end;
+
+procedure Tf_avpmain.BitBtn37Click(Sender: TObject);
+begin
+  ExecuteFile(URL_GRS);
+end;
+
 procedure Tf_avpmain.IncreaseFont1Click(Sender: TObject);
 var i:integer;
 begin
@@ -2113,10 +2149,11 @@ end;
 procedure Tf_avpmain.RefreshplanetImage;
 var
   planetrise, planetset, planettransit, azimuthrise, azimuthset, eph: string;
-  jd0, st0, q, hh, az, ah,magn,dp,xp,yp,zp,vel: double;
+  jd0, st0, q, hh, az, ah,magn,dp,xp,yp,zp,vel,h: double;
   v1, v2, v3, v4, v5, v6, v7, v8, v9: double;
   De,Ds,w1,w2,w3: double;
   aa, mm, dd, i, j: integer;
+  y,m,d: integer;
 const
   b = ' ';
 begin
@@ -2147,6 +2184,14 @@ begin
   end;
   apparent_equatorial(ra,Dec,ecl,sunl,abp,abe,nutl,nuto,true);
   precession(jd2000, CurrentJD, ra, dec);
+
+  if CurrentPlanet=5 then begin
+    GRS.Value:=GRSLongitude;
+    GRSdrift.Value:=GRSDailydrift*365.25;
+    Djd(GRSjd,y,m,d,h);
+    GRSDateEdit.Date:=EncodeDate(y,m,d);
+    GRSL:=Fplanet.JupGRS(GRSLongitude,GRSDailydrift,GRSjd,CurrentJD);
+  end;
 
   StatusBar1.Panels[2].Text := rsm_51 + ': ' + date2str(curyear, currentmonth, currentday) +
     '   ' + rsm_50 + ': ' + timtostr(currenttime);
@@ -2198,7 +2243,18 @@ begin
   Stringgrid1.Cells[1, i] := formatfloat(f1, magn);
   Inc(i);
   Stringgrid1.Cells[0, i] := rsCentralMerid;
-  Stringgrid1.Cells[1, i] := FormatLongitude(w1)+' ('+LongitudeSystemName+')';
+  Stringgrid1.Cells[1, i] := FormatLongitude(w1)+' (L1'+LongitudeSystemName+')';
+  if CurrentPlanet=5 then begin
+    Inc(i);
+    Stringgrid1.Cells[0, i] := rsCentralMerid;
+    Stringgrid1.Cells[1, i] := FormatLongitude(w2)+' (L2'+LongitudeSystemName+')';
+    Inc(i);
+    Stringgrid1.Cells[0, i] := rsCentralMerid;
+    Stringgrid1.Cells[1, i] := FormatLongitude(w3)+' (L3'+LongitudeSystemName+')';
+    Inc(i);
+    Stringgrid1.Cells[0, i] := 'GRS longitude';
+    Stringgrid1.Cells[1, i] := DEmToStr(GRSL)+' (L2'+rsWest0360+')';
+  end;
   Inc(i);
   Stringgrid1.Cells[0, i] := rsPoleInclinat;
   Stringgrid1.Cells[1, i] := formatfloat(f2, De) + ldeg ;
@@ -2285,7 +2341,13 @@ begin
     Stringgrid1.Cells[1, i] := b;
   end;
   activeplanet.PoleIncl := deg2rad*De;
-  activeplanet.CentralMeridian := deg2rad*w1;
+  if CurrentPlanet=5 then begin
+    activeplanet.MeridianOffset:=rmod(deg2rad*GRSL+pi+pi2,pi2);
+    activeplanet.CentralMeridian := deg2rad*w2;
+  end else begin
+    activeplanet.MeridianOffset:=0;
+    activeplanet.CentralMeridian := deg2rad*w1;
+  end;
   if (CurrentPlanet<=2)and(illum<0.5) then CentralMeridian.Caption :=rst_51
      else CentralMeridian.Caption := rsCentralMerid;
   if phase < 180 then
@@ -2374,6 +2436,7 @@ planet1.Bumpmap:=false;
 CurrentPlanet:=p;
 InitNotes;
 planet1.texture:=texturefiles[CurrentPlanet];
+planet1.GLSpherePlanet.Scale.Y:=RPplanet[CurrentPlanet]/REplanet[CurrentPlanet];
 LoadOverlay(overlayname[CurrentPlanet], overlaytr[CurrentPlanet]);
 {if planet1.CanBump then
    planet1.BumpPath:=slash(appdir)+slash('Bumpmap')+slash(epla[CurrentPlanet]);
@@ -2381,6 +2444,7 @@ if phaseeffect and wantbump[CurrentPlanet] and planet1.CanBump then
    planet1.Bumpmap:=true
 else
    planet1.Bumpmap:=false;  }
+GRSPanel.Visible:=(CurrentPlanet=5);
 currentid := '';
 RefreshplanetImage;
 SelectMedirian;
@@ -2442,7 +2506,7 @@ begin
   lockchart := False;
   StartedByDS := False;
   distancestart := False;
-  zoom      := 1;
+  zoom      := 1.2;
   useDBN    := 9;
   compresstexture := false;
   antialias := false;
@@ -2586,6 +2650,7 @@ try
   planet1.BumpMipmap:=BumpMipmap;
   planet1.TextureCompression:=compresstexture;
   planet1.TextureBW:=TextureBW;
+  planet1.GLSpherePlanet.Scale.Y:=RPplanet[CurrentPlanet]/REplanet[CurrentPlanet];
   try
   if notexture
      then planet1.texture:=texturenone
@@ -2605,11 +2670,6 @@ try
   planet1.Labelcolor:=autolabelcolor;
   AsMultiTexture:=planet1.AsMultiTexture;
   planet1.SetMark(0, 0, '');
-  // initial zoom
-  i:=min(Panelplanet.Width,Panelplanet.Height);
-  if i>500 then begin
-    zoom:=0.8*i/500;
-  end;
   planet1.zoom:=zoom;
   planet1.GridSpacing:=gridspacing;
   ReadParam;
@@ -2636,6 +2696,7 @@ try
     Trackbar5.position := 1
   else
     Trackbar5.position := 1;
+  GRSPanel.Visible:=(CurrentPlanet=5);
   LabelAltitude.Caption:=inttostr(TrackBar6.Position) + blank + rsm_18;
   LabelIncl.Caption:=inttostr(TrackBar7.Position)+ ldeg;
   PhaseButton.Down := phaseeffect;

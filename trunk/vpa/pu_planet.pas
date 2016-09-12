@@ -163,6 +163,7 @@ type
     FPhase: single;
     FSunIncl: single;
     FCentralMeridian: single;
+    FMeridianOffset: single;
     FTerminator : single;
     FPoleIncl: single;
     FOrientation: single;
@@ -195,6 +196,7 @@ type
     procedure SetPhase(value:single);
     procedure SetSunIncl(value:single);
     procedure SetCentralMeridian(value:single);
+    procedure SetMeridianOffset(value:single);
     procedure SetPoleIncl(value:single);
     procedure SetLabelFont(f:Tfont);
     function  GetLabelFont : Tfont;
@@ -298,6 +300,7 @@ type
     property CurrentB : single read MarkB;
     property SunIncl : single read FSunIncl write SetSunIncl;
     property CentralMeridian : single read FCentralMeridian write SetCentralMeridian;
+    property MeridianOffset : single read FMeridianOffset write SetMeridianOffset;
     property Terminator : single read FTerminator write FTerminator;
     property PoleIncl : single read FPoleIncl write SetPoleIncl;
     property RaCentre: single read FRaCentre write FRaCentre;
@@ -1068,7 +1071,7 @@ var qr,l,b,xx,yy,zz: single;
     v : TAffineVector;
 begin
   qr:=0.5;
-  l:=-pi/2-lon;
+  l:=-pi/2-lon-FMeridianOffset;
   b:=lat;
   xx:=qr*cos(b)*cos(l);
   yy:=qr*cos(b)*sin(l);
@@ -1094,7 +1097,7 @@ begin
   x:=v.V[0];
   z:=v.V[1];
   y:=v.V[2];
-  lon:=rmod(pi2+pi+pi/2-arctan2(y,x),pi2);
+  lon:=rmod(pi2+pi+pi/2-arctan2(y,x)-FMeridianOffset,pi2);
   qr:=sqrt(x*x+y*y);
   if qr<>0 then begin
      lat:=arctan(z/qr);
@@ -1834,7 +1837,7 @@ var cl,sl,cb,sb,ci,si,cc,sc,x,y,z: single;
 begin
   // new position after deltatime
   satlc:=satlc+deg2rad*FRotation*deltaTime;
-  satr:=0.5*(Rplanet[CurrentPlanet]+FSatAltitude)/Rplanet[CurrentPlanet];
+  satr:=0.5*(REplanet[CurrentPlanet]+FSatAltitude)/REplanet[CurrentPlanet];
   // convert to long, lat
   sincos(FSatInclination,si,ci);
   sincos(satlc,sc,cc);
@@ -1953,16 +1956,19 @@ procedure Tf_planet.Orientplanet;
 begin
   GLScene1.BeginUpdate;
   Resetplanet;
-  if FShowPhase then begin
-    GLSphereplanet.PitchAngle := rad2deg*FPoleIncl;
-    GLSphereplanet.TurnAngle := -rad2deg*FCentralMeridian;
-    GLSphereplanet.up.x := 0;
-  end else begin
-    GLSphereplanet.PitchAngle := rad2deg*FPoleIncl;
-    GLSphereplanet.TurnAngle := -rad2deg*FCentralMeridian;
-    GLSphereplanet.up.x := 0;
-  end;
+  GLSphereplanet.PitchAngle := rad2deg*FPoleIncl;
+  if FMeridianOffset=0 then
+     GLSphereplanet.TurnAngle := -rad2deg*FCentralMeridian
+  else
+     GLSphereplanet.TurnAngle := -rad2deg*(FCentralMeridian+FMeridianOffset);
+  GLSphereplanet.up.x := 0;
   GLScene1.EndUpdate;
+end;
+
+procedure Tf_planet.SetMeridianOffset(value:single);
+begin
+FMeridianOffset:=value;
+Orientplanet;
 end;
 
 procedure Tf_planet.SetCentralMeridian(value:single);
@@ -2402,7 +2408,7 @@ var
 begin
  if Screen2planet(x,y,l,b) then begin
   d  := angulardistance(l, b, startl, startb);
-  m1 := formatfloat(f1, d * Rplanet[CurrentPlanet]);
+  m1 := formatfloat(f1, d * REplanet[CurrentPlanet]);
   planet2World(l,b,xx,yy,zz);
   xx := startxx - xx;
   yy := startyy - yy;
@@ -2656,7 +2662,7 @@ if FShowScale then begin
   if VisibleSideLock then
      valkm:=''
   else
-     valkm:=formatfloat('0',tan(n*s*u*deg2rad)*(FPlanetDistance-Rplanet[CurrentPlanet]))+rsm_18;
+     valkm:=formatfloat('0',tan(n*s*u*deg2rad)*(FPlanetDistance-REplanet[CurrentPlanet]))+rsm_18;
   y:=yp+8;
   GLHUDTextScalekm.BeginUpdate;
   GLHUDTextScalekmShadow.BeginUpdate;
