@@ -1,0 +1,48 @@
+#
+# source : http://astrogeology.usgs.gov/
+#
+
+# use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
+# cat stretch.txt 
+# 0.0:0.0 1.3:255.0
+
+# stretch dynamic
+stretch from=Europa_Voyager_GalileoSSI_global_mosaic_500m.cub to=str.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=255 hrs=255
+
+# enlarge to L3 size
+enlarge from=str.cub to=l3.cub mode=total ons=20000 onl=10000 
+
+# make l3 png
+isis2std from=l3.cub to=l3.png mode=gray format=png stretch=manual minimum=0 maximum=255
+
+# make L3 slice 
+mkdir L3
+convert l3.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/%d.jpg
+convert l3.png +gravity -crop 20000x1000 R%d.png
+convert R0.png -resize 3000x1000\!  RS0.jpg
+convert R9.png -resize 3000x1000\!  RS9.jpg
+convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/1000%d.jpg
+convert RS9.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L3/2000%d.jpg
+rm R[0-9].png RS[0-9].jpg
+
+# resize to 10000x5000
+convert l3.png -resize 10000x5000 l2.png
+# make L2 slice 
+mkdir L2
+convert l2.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/%d.jpg
+convert l2.png +gravity -crop 10000x1000 R%d.png
+convert R0.png -resize 3000x1000\!  RS0.jpg
+convert R4.png -resize 3000x1000\!  RS4.jpg
+convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/1000%d.jpg
+convert RS4.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/2000%d.jpg
+rm R[0-4].png RS[0-4].jpg
+
+# resize to 4000x2000
+convert l3.png -resize 4000x2000 l1.png
+# make L1 slice 
+mkdir L1
+convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L1/%d.jpg
+
+
+rm str.cub
+rm l3.cub 

@@ -1,0 +1,36 @@
+ 
+#
+# source : http://astrogeology.usgs.gov/
+#
+
+# use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
+# cat stretch.txt 
+# 0.0:0.0 1.0:255.0
+
+# stretch dynamic
+stretch from=Ganymede_Voyager_GalileoSSI_Global_ColorMosaic_1435m.cub to=str.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=255 hrs=255
+
+# reduce to L2 size
+reduce from=str.cub to=l2.cub mode=total ons=10000 onl=5000 
+
+# make l2 png
+isis2std red=l2.cub+1 green=l2.cub+2 blue=l2.cub+3 to=l2.png mode=rgb format=png stretch=manual rmin=0 rmax=255 gmin=0 gmax=255 bmin=0 bmax=255
+
+# make L2 slice 
+mkdir L2
+convert l2.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/%d.jpg
+convert l2.png +gravity -crop 10000x1000 R%d.png
+convert R0.png -resize 3000x1000\!  RS0.jpg
+convert R4.png -resize 3000x1000\!  RS4.jpg
+convert RS0.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/1000%d.jpg
+convert RS4.jpg +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L2/2000%d.jpg
+rm R[0-4].png RS[0-4].jpg
+
+# resize to 4000x2000
+convert l2.png -resize 4000x2000 l1.png
+# make L1 slice 
+mkdir L1
+convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L1/%d.jpg
+
+rm str.cub
+rm l2.cub 
