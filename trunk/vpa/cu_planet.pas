@@ -26,9 +26,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 interface
 
 uses
-  uDE,
+  uDE, cu_plansat,
   u_translation, u_constant, u_util, u_projection,
   Classes, Sysutils, passql, pasmysql, passqlite, Forms, Math;
+
+type bool20=array[1..20] of boolean;
 
 type
   TPlanet = class(TComponent)
@@ -43,7 +45,6 @@ type
     CurrentStep,CurrentPlanet,n_com,n_ast : integer;
   protected
     { Protected declarations }
-     Procedure JupSatInt(jde : double;var P : double; var xsat,ysat : array of double; var supconj : array of boolean);
   public
     { Public declarations }
      constructor Create(AOwner:TComponent); override;
@@ -55,6 +56,13 @@ type
      Procedure SunRect(t0 : double ; astrometric : boolean; var x,y,z : double;barycenter:boolean=true);
      Procedure Sun(t0 : double; var alpha,delta,dist,diam : double);
      Procedure SunEcl(t0 : double ; var l,b : double);
+     procedure PlanSat(isat:integer; jde:double; var alpha,delta,distance: double; var supconj:boolean);
+     Function MarSat(jde,lighttime,xp,yp,zp : double; var xsat,ysat : double20; var supconj: bool20):integer;
+     Function JupSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj: bool20):integer;
+     Function SatSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj : array of boolean):integer;
+     Function UraSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj : array of boolean):integer;
+     Function NepSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj : array of boolean):integer;
+     Function PluSat(jde,lighttime,xp,yp,zp : double; var xsat,ysat : double20; var supconj : array of boolean):integer;
      Procedure SatRing(jde : double; var P,a,b,be : double);
      Function JupGRS(lon,drift,jdref,jdnow: double):double;
      Procedure Moon(t0 : double; var alpha,delta,dist,dkm,diam,phase,illum : double);
@@ -299,115 +307,44 @@ begin
 result:=rmod(x+3600000000,360);
 end;
 
-Procedure TPlanet.JupSatInt(jde : double;var P : double; var xsat,ysat : array of double; var supconj : array of boolean);
-var pl :TPlanData;
-    d,V1,M1,N1,J1,A1,B1,K1,Re,Rj,pha : double;
-    d2,T0,T1,A0,D0,l0,b0,r0,l,b,r,x,y,z,del,eps,ceps,seps,u,v,aa,dd,DE : double;
-    u1,u2,u3,u4,G,H,r1,r2,r3,r4,sDe : double;
-begin
-//  meeus 42.low
-d := jde - 2451545.0;
-V1 := to360(172.74 + 0.00111588 * d);
-M1 := to360(357.529 + 0.9856003 * d);
-N1 := to360(20.020 + 0.0830853 * d + 0.329 * sin(degtorad(V1)));
-J1 := to360(66.115 + 0.9025179 * d - 0.329 * sin(degtorad(V1)));
-A1 := to360(1.915 * sin(degtorad(M1)) + 0.020 * sin(degtorad(2*M1)));
-B1 := to360(5.555 * sin(degtorad(N1)) + 0.168 * sin(degtorad(2*N1)));
-K1 := J1 + A1 - B1;
-Re := 1.00014 - 0.01671 * cos(degtorad(M1)) - 0.00014 * cos(degtorad(2*M1));
-Rj := 5.20872 - 0.25208 * cos(degtorad(N1)) - 0.00611 * cos(degtorad(2*N1));
-del := sqrt(Rj*Rj + Re*Re - 2*Rj*Re * cos(degtorad(K1)));
-pha := radtodeg(arcsin(Re * sin(degtorad(K1)) / del));
-//  meeus 42.
-d2 := jde - 2433282.5;
-T1 := d2/36525;
-T0 := (jde - 2451545.0)/36525;
-A0 := 268.00 + 0.1061 * T1;
-D0 := 64.50 - 0.0164 * T1;
-//WW1 := to360(17.710 + 877.90003539 * d2);
-//WW2 := to360(16.838 + 870.27003539 * d2);
-Plan(3,jde,pl);
-l0:=pl.l; b0:=pl.b; r0:=pl.r;
-Plan(5,jde,pl);
-l:=pl.l; b:=pl.b; r:=pl.r;
-x := r * cos(b) * cos(l) - r0 * cos(l0);
-y := r * cos(b) * sin(l) - r0 * sin(l0);
-z := r * sin(b) - r0 * sin(b0);
-del := sqrt( x*x + y*y + z*z);
-l := l - degtorad(0.012990 * del / (r*r) );
-x := r * cos(b) * cos(l) - r0 * cos(l0);
-y := r * cos(b) * sin(l) - r0 * sin(l0);
-z := r * sin(b) - r0 * sin(b0);
-del := sqrt( x*x + y*y + z*z);
-eps := 23.439291111 - 0.0130042 * T0 - 1.64e-7 * T0*T0 + 5.036e-7 *T0*T0*T0;
-ceps := cos(degtorad(eps));
-seps := sin(degtorad(eps));
-//AlpS := radtodeg(arctan2(ceps*sin(l)-seps*tan(b),cos(l)));
-//DelS := radtodeg(arcsin(ceps*sin(b)+seps*cos(b)*sin(l)));
-//DS := radtodeg(arcsin(-sin(degtorad(D0))*sin(degtorad(DelS))-cos(degtorad(D0))*cos(degtorad(DelS))*cos(degtorad(A0-AlpS))));
-u := y * ceps - z * seps;
-v := y * seps + z * ceps;
-aa := radtodeg(arctan2(u,x));
-dd := radtodeg(arctan(v/sqrt(x*x+u*u)));
-//k := radtodeg(arctan2(sin(degtorad(D0))*cos(degtorad(dd))*cos(degtorad(A0-aa))-sin(degtorad(dd))*cos(degtorad(D0)),cos(degtorad(dd))*sin(degtorad(A0-aa))));
-DE := radtodeg(arcsin(-sin(degtorad(D0))*sin(degtorad(dd))-cos(degtorad(d0))*cos(degtorad(dd))*cos(degtorad(A0-aa))));
-//w1 := to360(WW1 - k - 5.07033 * del);
-//w2 := to360(WW2 - k - 5.02626 * del);
-P := radtodeg(arctan2(cos(degtorad(D0))*sin(degtorad(A0-aa)),sin(degtorad(D0))*cos(degtorad(dd))-cos(degtorad(D0))*sin(degtorad(dd))*cos(degtorad(A0-aa))));
-// meeus 43.low
-u1 := to360(163.8067 + 203.4058643 * (d-del/173) + pha - B1);
-u2 := to360(358.4108 + 101.2916334 * (d-del/173) + pha - B1);
-u3 := to360(5.7129 + 50.2345179 * (d-del/173) + pha - B1);
-u4 := to360(224.8151 + 21.4879801 * (d-del/173) + pha - B1);
-G := to360(331.18 + 50.310482 * (d -del/173));
-H := to360(87.40 + 21.569231 * (d -del/173));
-r1 := 5.9073 - 0.0244 * cos(degtorad(2*(u1-u2)));
-r2 := 9.3991 - 0.0882 * cos(degtorad(2*(u2-u3)));
-r3 := 14.9924 - 0.0216 * cos(degtorad(G));
-r4 := 26.3699 - 0.1935 * cos(degtorad(H));
-u1 := degtorad(u1 + 0.473 * sin(degtorad(2*(u1-u2))));
-u2 := degtorad(u2 + 1.0653 * sin(degtorad(2*(u2-u3))));
-u3 := degtorad(u3 + 0.165 * sin(degtorad(G)));
-u4 := degtorad(u4 + 0.841 * sin(degtorad(H)));
-sDe:=sin(degtorad(De));
-xsat[0] := r1 * sin(u1);
-ysat[0] := -r1 * cos(u1)*sDe;
-xsat[1] := r2 * sin(u2);
-ysat[1] := -r2 * cos(u2)*sDe;
-xsat[2] := r3 * sin(u3);
-ysat[2] := -r3 * cos(u3)*sDe;
-xsat[3] := r4 * sin(u4);
-ysat[3] := -r4 * cos(u4)*sDe;
-supconj[0] := (u1>(pi/2))and(u1<(3*pi/2));
-supconj[1] := (u2>(pi/2))and(u2<(3*pi/2));
-supconj[2] := (u3>(pi/2))and(u3<(3*pi/2));
-supconj[3] := (u4>(pi/2))and(u4<(3*pi/2));
-end;
-
 Procedure TPlanet.PlanetOrientation(jde:double; ipla:integer; var P,De,Ds,w1,w2,w3 : double);
-const VP : array[1..10,1..4] of double = (
-          (281.01,-0.033,61.54,-0.005),   //mercure
-          (272.6,0,67.16,0),              //venus
+// Report of the IAU Working Group on Cartographic
+// Coordinates and Rotational Elements: 2009
+// + 2011 Erratum
+const VP : array[1..15,1..4] of double = (
+          (281.0097,-0.0328,61.4143,-0.0049), //mercure
+          (272.76,0,67.16,0),             //venus
           (0,-0.641,90,-0.557),           //earth
-          (317.681,-0.108,52.886,-0.061), //mars
-          (268.05,-0.009,64.49,0.003),    //jupiter
+          (317.68143,-0.1061,52.88650,-0.0609), //mars
+          (268.056595,-0.006499,64.495303,0.002413), //jupiter
           (40.589,-0.036,83.537,-0.004),  //saturn
           (257.311,0,-15.175,0),          //uranus
           (299.36,0.70,43.46,-0.51),      //neptune !
-          (313.02,0,9.09,0),              //pluto
-          (286.13,0,63.87,0));            //sun
-      W : array[1..10,1..2] of double =(
-          (329.68,6.1385025),
+          (132.993,0,-6.163,0),           //pluto
+          (286.13,0,63.87,0),             //sun
+          (0,0,0,0),                      //moon not computed here
+          (268.05,-0.009,64.50,0.003),    //Io
+          (268.08,-0.009,64.51,0.003),    //Europa
+          (268.20,-0.009,64.57,0.003),    //Ganymede
+          (268.72,-0.009,64.83,0.003));   //Callisto
+      W : array[1..15,1..2] of double =(
+          (329.5469,6.1385025),
           (160.20,-1.4813688),
-          (190.16,360.9856235),
-          (176.901,350.8919830),
-          (67.1,877.90003539),
-          (38.90,810.7939024),
+          (190.147,360.9856235),
+          (176.630,350.89198226),
+          (67.1,877.90003539),   //System I
+          (227.2037,844.3),      //System I
           (203.81,-501.1600928),
           (253.18,536.3128492),
-          (236.77,-56.3623195),
-          (84.10,14.1844000));
+          (302.695,56.3625225),
+          (84.176,14.1844000),  //sun
+          (0,0),                //moon not computed here
+          (200.39,203.4889538), //Io
+          (36.022,101.3747235), //Europa
+          (44.064,50.3176081),  //Ganymede
+          (259.51,21.5710715)); //Callisto
 var d,T,N,a0,d0,l0,b0,r0,l1,b1,r1,x,y,z,del,eps,als,des,u,v,al,dl,f,th,k,i : double;
+    M1,M2,M3,M4,M5,Ja,Jb,Jc,Jd,Je,J1,J2,J3,J4,J5,J6,J7,J8 : double;
     pl :TPlanData;
 begin
 d := (jde-jd2000);
@@ -427,32 +364,94 @@ if ipla=10 then begin  // sun
   n:=arctan2(-sin(l0-k)*cos(i),-cos(l0-k));
   w1:=to360(rad2deg*n-th);
 end else begin
-if ipla=8 then N:=sin(357.85+52.316*T)  // Neptune
+if ipla=8 then N:=cos(deg2rad*(357.85+52.316*T))   // Neptune
+          else N:=T;
+// coordinates of the pole
+d0:=deg2rad*(VP[ipla,3]+VP[ipla,4]*N);
+if ipla=8 then N:=sin(deg2rad*(357.85+52.316*T))
           else N:=T;
 a0:=deg2rad*(VP[ipla,1]+VP[ipla,2]*N);
-if ipla=8 then N:=cos(357.85+52.316*T)
-          else N:=T;
-d0:=deg2rad*(VP[ipla,3]+VP[ipla,4]*N);
+if ipla=5 then begin                        //jupiter
+  Ja:=deg2rad*(99.360714+4850.4046*T);
+  Jb:=deg2rad*(175.895369+1191.9605*T);
+  Jc:=deg2rad*(300.323162+262.5475*T);
+  Jd:=deg2rad*(114.012305+6070.2476*T);
+  Je:=deg2rad*(49.511251+64.3000*T);
+  a0:=a0+0.000117*sin(Ja)+0.000938*sin(Jb)+0.001432*sin(Jc)+0.000030*sin(Jd)+0.002150*sin(Je);
+  d0:=d0+0.000050*cos(Ja)+0.000404*cos(Jb)+0.000617*cos(Jc)-0.000013*cos(Jd)+0.000926*cos(Je);
+end;
+if (ipla>=12)and(ipla<=15) then begin
+  J1:=deg2rad*(73.32+91472.9*T);
+  J2:=deg2rad*(24.62+45137.2*T);
+  J3:=deg2rad*(283.90+4850.7*T);
+  J4:=deg2rad*(355.80+1191.3*T);
+  J5:=deg2rad*(119.90+262.1*T);
+  J6:=deg2rad*(229.80+64.3*T);
+  J7:=deg2rad*(352.25+2382.6*T);
+  J8:=deg2rad*(113.35+6070.0*T);
+end;
+if ipla=12 then begin    // Io
+  a0:=a0+0.094*sin(J3)+0.024*sin(J4);
+  d0:=d0+0.040*cos(J3)+0.011*cos(J4);
+end;
+if ipla=13 then begin    // Europa
+  a0:=a0+1.086*sin(J4)+0.060*sin(J5)+0.015*sin(J6)+0.009*sin(J7);
+  d0:=d0+0.468*cos(J4)+0.026*cos(J5)+0.007*cos(J6)+0.002*cos(J7);
+end;
+if ipla=14 then begin    // Ganymede
+  a0:=a0-0.037*sin(J4)+0.431*sin(J5)+0.091*sin(J6);
+  d0:=d0-0.016*cos(J4)+0.186*cos(J5)+0.039*cos(J6);
+end;
+if ipla=15 then begin    // Callisto
+  a0:=a0-0.068*sin(J5)+0.590*sin(J6)+0.010*sin(J8);
+  d0:=d0-0.029*cos(J5)+0.254*cos(J6)-0.004*cos(J8);
+end;
 precession(jd2000,jde,a0,d0);
+// rotation
 w1:=W[ipla,1]+W[ipla,2]*d;
+if ipla=1 then begin
+  M1:=deg2rad*(174.791086+4.092335*d);
+  M2:=deg2rad*(349.582171+8.184670*d);
+  M3:=deg2rad*(164.373257+12.277005*d);
+  M4:=deg2rad*(339.164343+16.369340*d);
+  M5:=deg2rad*(153.955429+20.461675*d);
+  w1:=w1+0.00993822*sin(M1)-0.00104581*sin(M2)-0.00010280*sin(M3)-0.00002364*sin(M4)-0.00000532*sin(M5);
+end;
+if ipla=8 then w1:=w1-0.48*N;  // N=sin(..)
 if ipla=5 then begin
    w2:=43.3+870.27003539*d;
    w3:=284.95+870.5360000*d;
+end else if ipla=6 then begin
+    w2:=105.4857+812.0*d;
+    w3:=38.90+810.7939024*d;
 end else begin
    w2:=-999;
    w3:=-999;
 end;
+if ipla=12 then begin    // Io
+  w1:=w1-0.085*sin(J3)-0.022*sin(J4);
+end;
+if ipla=13 then begin    // Europa
+  w1:=w1-0.980*sin(J4)-0.054*sin(J5)-0.014*sin(J6)-0.008*sin(J7);
+end;
+if ipla=14 then begin    // Ganymede
+  w1:=w1+0.033*sin(J4)-0.389*sin(J5)-0.082*sin(J6);
+end;
+if ipla=15 then begin    // Callisto
+  w1:=w1+0.061*sin(J5)-0.533*sin(J6)-0.009*sin(J8);
+end;
+// view from Earth
 Plan(3,jde,pl);
 PrecessionEcl(jd2000,jde,pl.l,pl.b);
 l0:=pl.l; b0:=pl.b; r0:=pl.r;
-Plan(ipla,jde,pl);
+Plan(CentralPlanet[ipla],jde,pl);
 PrecessionEcl(jd2000,jde,pl.l,pl.b);
 l1:=pl.l; b1:=pl.b; r1:=pl.r;
 x := r1 * cos(b1) * cos(l1) - r0 * cos(l0);
 y := r1 * cos(b1) * sin(l1) - r0 * sin(l0);
 z := r1 * sin(b1) - r0 * sin(b0);
 del := sqrt( x*x + y*y + z*z);
-Plan(ipla,jde-del*tlight,pl);
+Plan(CentralPlanet[ipla],jde-del*tlight,pl);
 PrecessionEcl(jd2000,jde,pl.l,pl.b);
 l1:=pl.l; b1:=pl.b; r1:=pl.r;
 x := r1 * cos(b1) * cos(l1) - r0 * cos(l0);
@@ -469,10 +468,14 @@ al:=arctan2(u,x);
 dl:=arctan(v/sqrt(x*x+u*u));
 f:=rad2deg*(arctan2(sin(d0)*cos(dl)*cos(a0-al)-sin(dl)*cos(d0),cos(dl)*sin(a0-al)));
 De:=rad2deg*(arcsin(-sin(d0)*sin(dl)-cos(d0)*cos(dl)*cos(a0-al)));
-w1:=to360(w1-f-del*tlight*W[ipla,2]);
+w1:=to360((w1-f-del*tlight*W[ipla,2])*sgn(W[ipla,2]));
 if ipla=5 then begin
    w2:=to360(w2-f-del*tlight*870.27003539);
    w3:=to360(w3-f-del*tlight*870.5360000);
+end;
+if ipla=6 then begin
+   w2:=to360(w2-f-del*tlight*812.0);
+   w3:=to360(w3-f-del*tlight*810.7939024);
 end;
 P:=to360(rad2deg*(arctan2(cos(d0)*sin(a0-al),sin(d0)*cos(dl)-cos(d0)*sin(dl)*cos(a0-al))));
 end;
@@ -518,6 +521,226 @@ end;
 Function TPlanet.JupGRS(lon,drift,jdref,jdnow: double):double;
 begin
 result:=rmod(360000+lon+(jdnow-jdref)*drift,360);
+end;
+
+procedure TPlanet.PlanSat(isat:integer; jde:double; var alpha,delta,distance: double; var supconj:boolean);
+var ipl,ix:integer;
+    pra,pdec,dist,illum,phase,diam,magn,rp,xp,yp,zp,vel: double;
+    satx,saty,satz,xs,ys,zs,x,y,z,d1,d2,qr,lighttime : double;
+begin
+case isat of
+   12..15 : begin ipl:=5; ix:=isat-11; end;
+   16..23 : begin ipl:=6; ix:=isat-15; end;
+   24..28 : begin ipl:=7; ix:=isat-23; end;
+   29..30 : begin ipl:=4; ix:=isat-28; end;
+   33     : begin ipl:=6; ix:=9; end;
+   34..35 : begin ipl:=8; ix:=isat-33; end;
+   36     : begin ipl:=9; ix:=1; end;
+   37..40 : begin ipl:=5; ix:=isat-36+4; end;
+   41..50 : begin ipl:=6; ix:=isat-40+9; end;
+   51..63 : begin ipl:=7; ix:=isat-50+5; end;
+   64..69 : begin ipl:=8; ix:=isat-63+2; end;
+   else ipl:=0;
+end;
+if ipl<>0 then begin
+   Planet(ipl,jde,pra,pdec,dist,illum,phase,diam,magn,rp,xp,yp,zp,vel);
+   lighttime:=dist*tlight;
+   case ipl of
+      4: MarSatOne(jde-lighttime,ix,satx,saty,satz);
+      5: JupSatOne(jde-lighttime,ix,satx,saty,satz);
+      6: SatSatOne(jde-lighttime,ix,satx,saty,satz);
+      7: UraSatOne(jde-lighttime,ix,satx,saty,satz);
+      8: NepSatOne(jde-lighttime,ix,satx,saty,satz);
+      9: PluSatOne(jde-lighttime,ix,satx,saty,satz);
+   end;
+   SunRect(jde,false,xs,ys,zs);
+   x:=xp+xs;
+   y:=yp+ys;
+   z:=zp+zs;
+   d1:=sqrt(x*x+y*y+z*z);
+   x:=x+satx;
+   y:=y+saty;
+   z:=z+satz;
+   d2:=sqrt(x*x+y*y+z*z);
+   alpha:=arctan2(y,x);
+   if (alpha<0) then alpha:=alpha+2*pi;
+   qr:=sqrt(x*x+y*y);
+   if qr<>0 then delta:=arctan(z/qr);
+   supconj:=(d2>d1);
+   distance:=d2;
+end;
+end;
+
+Function TPlanet.MarSat(jde,lighttime,xp,yp,zp : double; var xsat,ysat : double20; var supconj: bool20):integer;
+var i : integer;
+    xs,ys,zs,x,y,z,alpha,delta,qr,d1,d2 : double;
+    xst,yst,zst : double20;
+begin
+result:=MarSatAll(jde-lighttime,xst,yst,zst);
+if result=0 then begin
+  SunRect(jde,false,xs,ys,zs);
+  x:=xp+xs;
+  y:=yp+ys;
+  z:=zp+zs;
+  d1:=sqrt(x*x+y*y+z*z);
+  for i:=1 to 2 do begin
+    x:=xp+xst[i]+xs;
+    y:=yp+yst[i]+ys;
+    z:=zp+zst[i]+zs;
+    d2:=sqrt(x*x+y*y+z*z);
+    alpha:=arctan2(y,x);
+    if (alpha<0) then alpha:=alpha+2*pi;
+    qr:=sqrt(x*x+y*y);
+    if qr<>0 then delta:=arctan(z/qr);
+    xsat[i]:=alpha;
+    ysat[i]:=delta;
+    supconj[i]:=(d2>d1);
+  end;
+end;
+end;
+
+Function TPlanet.JupSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj: bool20):integer;
+var i,n : integer;
+    xs,ys,zs,x,y,z,alpha,delta,qr,d1,d2 : double;
+    xst,yst,zst : double20;
+begin
+if smallsat then n:=8 else n:=4;
+result:=JupSatAll(jde-lighttime,smallsat, xst,yst,zst);
+if result=0 then begin
+  SunRect(jde,false,xs,ys,zs);
+  x:=xp+xs;
+  y:=yp+ys;
+  z:=zp+zs;
+  d1:=sqrt(x*x+y*y+z*z);
+  for i:=1 to n do begin
+    x:=xp+xst[i]+xs;
+    y:=yp+yst[i]+ys;
+    z:=zp+zst[i]+zs;
+    d2:=sqrt(x*x+y*y+z*z);
+    alpha:=arctan2(y,x);
+    if (alpha<0) then alpha:=alpha+2*pi;
+    qr:=sqrt(x*x+y*y);
+    if qr<>0 then delta:=arctan(z/qr);
+    xsat[i]:=alpha;
+    ysat[i]:=delta;
+    supconj[i]:=(d2>d1);
+  end;
+end;
+end;
+
+Function TPlanet.SatSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj : array of boolean):integer;
+var i,n : integer;
+    xs,ys,zs,x,y,z,alpha,delta,qr,d1,d2 : double;
+    xst,yst,zst : double20;
+begin
+if smallsat then n:=19 else n:=9;
+result:=SatSatAll(jde-lighttime,smallsat,xst,yst,zst);
+if result=0 then begin
+  SunRect(jde,false,xs,ys,zs);
+  x:=xp+xs;
+  y:=yp+ys;
+  z:=zp+zs;
+  d1:=sqrt(x*x+y*y+z*z);
+  for i:=1 to n do begin
+    x:=xp+xst[i]+xs;
+    y:=yp+yst[i]+ys;
+    z:=zp+zst[i]+zs;
+    d2:=sqrt(x*x+y*y+z*z);
+    alpha:=arctan2(y,x);
+    if (alpha<0) then alpha:=alpha+2*pi;
+    qr:=sqrt(x*x+y*y);
+    if qr<>0 then delta:=arctan(z/qr);
+    xsat[i]:=alpha;
+    ysat[i]:=delta;
+    supconj[i]:=(d2>d1);
+  end;
+end;
+end;
+
+Function TPlanet.UraSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj : array of boolean):integer;
+var i,n : integer;
+    xs,ys,zs,x,y,z,alpha,delta,qr,d1,d2 : double;
+    xst,yst,zst : double20;
+begin
+if smallsat then n:=18 else n:=5;
+result:=UraSatAll(jde-lighttime,smallsat,xst,yst,zst);
+if result=0 then begin
+  SunRect(jde,false,xs,ys,zs);
+  x:=xp+xs;
+  y:=yp+ys;
+  z:=zp+zs;
+  d1:=sqrt(x*x+y*y+z*z);
+  for i:=1 to n do begin
+    x:=xp+xst[i]+xs;
+    y:=yp+yst[i]+ys;
+    z:=zp+zst[i]+zs;
+    d2:=sqrt(x*x+y*y+z*z);
+    alpha:=arctan2(y,x);
+    if (alpha<0) then alpha:=alpha+2*pi;
+    qr:=sqrt(x*x+y*y);
+    if qr<>0 then delta:=arctan(z/qr);
+    xsat[i]:=alpha;
+    ysat[i]:=delta;
+    supconj[i]:=(d2>d1);
+  end;
+end;
+end;
+
+Function TPlanet.NepSat(jde,lighttime,xp,yp,zp : double; smallsat: boolean; var xsat,ysat : double20; var supconj : array of boolean):integer;
+var i,n : integer;
+    xs,ys,zs,x,y,z,alpha,delta,qr,d1,d2 : double;
+    xst,yst,zst : double20;
+begin
+if smallsat then n:=8 else n:=2;
+result:=NepSatAll(jde-lighttime,smallsat,xst,yst,zst);
+if result=0 then begin
+  SunRect(jde,false,xs,ys,zs);
+  x:=xp+xs;
+  y:=yp+ys;
+  z:=zp+zs;
+  d1:=sqrt(x*x+y*y+z*z);
+  for i:=1 to n do begin
+    x:=xp+xst[i]+xs;
+    y:=yp+yst[i]+ys;
+    z:=zp+zst[i]+zs;
+    d2:=sqrt(x*x+y*y+z*z);
+    alpha:=arctan2(y,x);
+    if (alpha<0) then alpha:=alpha+2*pi;
+    qr:=sqrt(x*x+y*y);
+    if qr<>0 then delta:=arctan(z/qr);
+    xsat[i]:=alpha;
+    ysat[i]:=delta;
+    supconj[i]:=(d2>d1);
+  end;
+end;
+end;
+
+Function TPlanet.PluSat(jde,lighttime,xp,yp,zp : double; var xsat,ysat : double20; var supconj : array of boolean):integer;
+var i : integer;
+    xs,ys,zs,x,y,z,alpha,delta,qr,d1,d2 : double;
+    xst,yst,zst : double20;
+begin
+result:=PluSatAll(jde-lighttime,xst,yst,zst);
+if result=0 then begin
+  SunRect(jde,false,xs,ys,zs);
+  x:=xp+xs;
+  y:=yp+ys;
+  z:=zp+zs;
+  d1:=sqrt(x*x+y*y+z*z);
+  for i:=1 to 1 do begin
+    x:=xp+xst[i]+xs;
+    y:=yp+yst[i]+ys;
+    z:=zp+zst[i]+zs;
+    d2:=sqrt(x*x+y*y+z*z);
+    alpha:=arctan2(y,x);
+    if (alpha<0) then alpha:=alpha+2*pi;
+    qr:=sqrt(x*x+y*y);
+    if qr<>0 then delta:=arctan(z/qr);
+    xsat[i]:=alpha;
+    ysat[i]:=delta;
+    supconj[i]:=(d2>d1);
+  end;
+end;
 end;
 
 Procedure TPlanet.SatRing(jde : double; var P,a,b,be : double);

@@ -41,9 +41,9 @@ const crlf = chr(10)+chr(13);
       km_au = 149597870.691 ;
       clight = 299792.458 ;
       tlight = km_au/clight/3600/24;
-      maxpla = 8;
-      REplanet: array [1..maxpla] of single = (2439.7,6051.8,0,3396.19,71492,60268,25559,24764);  // planet equatorial radius Km
-      RPplanet: array [1..maxpla] of single = (2439.7,6051.8,0,3376.20,66854,54364,24973,24341);  // planet polar radius Km
+      maxpla = 15;
+      REplanet: array [1..maxpla] of single = (2439.7,6051.8,0,3396.19,71492,60268,25559,24764,1187,0,0,1829.4,1562.6,2631.2,2410.3);  // planet equatorial radius Km
+      RPplanet: array [1..maxpla] of single = (2439.7,6051.8,0,3376.20,66854,54364,24973,24341,1187,0,0,1815.7,1559.5,2631.2,2410.3);  // planet polar radius Km
       footpermeter = 0.3048;
       secday=3600*24;
       eps2000 = 23.43928111111111111111; // 23d 26m 21.412s
@@ -102,6 +102,19 @@ const crlf = chr(10)+chr(13);
         'Rhea    ', 'Titan   ', 'Hyperion', 'Iapetus ', 'Miranda ', 'Ariel   ',
         'Umbriel ', 'Titania ',
         'Oberon  ', 'Phobos  ', 'Deimos  ', 'Sat.Ring', 'E.Shadow');
+      CentralPlanet: array[1..32]of integer=(1,2,3,4,5,6,7,8,9,10,11,5,5,5,5,6,6,6,6,6,6,6,6,7,7,7,7,7,4,4,6,3);
+      V0mar: array [1..2] of double = (11.80, 12.89);
+      V0jup: array [1..8] of double = (-1.68, -1.41, -2.09, -1.05,7.4,9.0,12.4,10.8);
+      V0sat: array [1..19] of double = (3.30, 2.10, 0.60, 0.80, 0.10, -1.28, 4.63, 1.50, 6.7,4.9,6.1,8.8,9.1,9.4,9.5,6.2,6.9,12,13);
+      V0ura: array [1..18] of double = (3.60, 1.45, 2.10, 1.02, 1.23,11.4,11.1,10.3,9.5,9.8,8.8,8.3,9.8,9.4,7.5,15,15,15);
+      V0nep: array [1..8] of double = (-1.22, 4.0,10.0,9.1,7.9,7.6,7.3,5.6);
+      V0plu: array [1..1] of double = (1.0);
+      D0mar: array [1..2] of double = (11, 6);
+      D0jup: array [1..8] of double = (1821, 1565, 2634, 2403,125,58,10,20);
+      D0sat: array [1..19] of double = (199, 249, 530, 560, 764, 2575, 143, 718, 110,97,69,16,15,15,18.5,74,55,10,4);
+      D0ura: array [1..18] of double = (236, 581, 585, 789, 761,13,16,22,33,29,42,55,29,34,77,5,5,5);
+      D0nep: array [1..8] of double = (1350, 170,29,40,74,79,104,218);
+      D0plu: array [1..1] of double = (605);
       blank15='               ';
       blank=' ';
       tab=#09;
