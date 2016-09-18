@@ -48,6 +48,14 @@ install -v -m 644 Database/Mars_Named_EN.csv $destdir/share/virtualplanet/Databa
 install -v -m 644 Database/Mars_Named_FR.csv $destdir/share/virtualplanet/Database/
 install -v -m 644 Database/Jupiter_Named_EN.csv $destdir/share/virtualplanet/Database/
 install -v -m 644 Database/Jupiter_Named_FR.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Io_Named_EN.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Io_Named_FR.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Ganymede_Named_EN.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Ganymede_Named_FR.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Europa_Named_EN.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Europa_Named_FR.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Callisto_Named_EN.csv $destdir/share/virtualplanet/Database/
+install -v -m 644 Database/Callisto_Named_FR.csv $destdir/share/virtualplanet/Database/
 
 # big data
 InstData VPA_Base_JPLeph $destdir
@@ -55,4 +63,8 @@ InstData VPA_Base_Texture_Mars $destdir
 InstData VPA_Base_Texture_Mercury $destdir
 InstData VPA_Base_Texture_Venus $destdir
 InstData VPA_Base_Texture_Jupiter $destdir
+InstData VPA_Base_Texture_Io $destdir
+InstData VPA_Base_Texture_Ganymede $destdir
+InstData VPA_Base_Texture_Europa $destdir
+InstData VPA_Base_Texture_Callisto $destdir
 

@@ -24,7 +24,7 @@ object f_avpmain: Tf_avpmain
   OnKeyUp = FormKeyUp
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.1.0'
   Visible = False
   object Memo2: TMemo
     Left = 64
@@ -328,6 +328,10 @@ object f_avpmain: Tf_avpmain
         PrintSettings.MarginTop = 0.5
         PrintSettings.MarginRight = 0.5
         PrintSettings.MarginBottom = 0.5
+        PrintSettings.Preview.Left = 480
+        PrintSettings.Preview.Top = 300
+        PrintSettings.Preview.Width = 1440
+        PrintSettings.Preview.Height = 900
         MarginHeight = 5
         MarginWidth = 5
         TabOrder = 1
@@ -799,8 +803,6 @@ object f_avpmain: Tf_avpmain
             Top = 57
             Width = 109
             CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-            OKCaption = 'OK'
-            CancelCaption = 'Cancel'
             DateOrder = doNone
             DateFormat = 'yyyy"-"mm"-"dd"'
             ButtonWidth = 23
@@ -1634,6 +1636,26 @@ object f_avpmain: Tf_avpmain
       object SelectJupiter: TMenuItem
         Tag = 5
         Caption = 'Jupiter'
+        OnClick = SelectPlanet
+      end
+      object SelectIo: TMenuItem
+        Tag = 12
+        Caption = 'Io'
+        OnClick = SelectPlanet
+      end
+      object SelectEuropa: TMenuItem
+        Tag = 13
+        Caption = 'Europa'
+        OnClick = SelectPlanet
+      end
+      object SelectGanymede: TMenuItem
+        Tag = 14
+        Caption = 'Ganymede'
+        OnClick = SelectPlanet
+      end
+      object SelectCallisto: TMenuItem
+        Tag = 15
+        Caption = 'Callisto'
         OnClick = SelectPlanet
       end
     end

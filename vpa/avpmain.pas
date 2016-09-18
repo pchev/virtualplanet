@@ -90,6 +90,10 @@ type
     DecreaseFont1: TMenuItem;
     IncreaseFont1: TMenuItem;
     GRSPanel: TPanel;
+    SelectEuropa: TMenuItem;
+    SelectGanymede: TMenuItem;
+    SelectCallisto: TMenuItem;
+    SelectIo: TMenuItem;
     SelectJupiter: TMenuItem;
     Menuwebpage: TMenuItem;
     SelectPlanet1: TMenuItem;
@@ -725,13 +729,8 @@ begin
   rotdirection := -1;
   rotstep  := 1;
   smooth   := 360;
+  for i:=1 to maxpla do LongSystem[i]:=W360;
   LongSystem[1]:=E360;
-  LongSystem[2]:=W360;
-  LongSystem[4]:=W360;
-  LongSystem[5]:=W360;
-  LongSystem[6]:=W360;
-  LongSystem[7]:=W360;
-  LongSystem[8]:=W360;
   GRSlongitude:=208.0;
   GRSjd:=jd(2014,1,31,0);
   GRSDailydrift:=16.5/365.25;
@@ -742,7 +741,8 @@ begin
        1: DefaultTexture:='Messenger';
        2: DefaultTexture:='Magellan';
        4: DefaultTexture:='Viking_Color';
-       5: DefaultTexture:='Hubble2016'
+       5: DefaultTexture:='Hubble2016';
+       12..15: DefaultTexture:='Voyager_Galileo'
        else DefaultTexture:='NONE';
     end;
     for j:=0 to 5 do begin
@@ -2149,10 +2149,11 @@ end;
 procedure Tf_avpmain.RefreshplanetImage;
 var
   planetrise, planetset, planettransit, azimuthrise, azimuthset, eph: string;
-  jd0, st0, q, hh, az, ah,magn,dp,xp,yp,zp,vel,h: double;
+  jd0, st0, q, hh, az, ah,magn,dp,xp,yp,zp,vel,h,pha: double;
   v1, v2, v3, v4, v5, v6, v7, v8, v9: double;
   De,Ds,w1,w2,w3: double;
-  aa, mm, dd, i, j: integer;
+  supconj: boolean;
+  aa, mm, dd, i, j,s: integer;
   y,m,d: integer;
 const
   b = ' ';
@@ -2164,7 +2165,18 @@ begin
   Fplanet.sunecl(CurrentJD,sunl,sunb);
   PrecessionEcl(jd2000,CurrentJD,sunl,sunb);
   Fplanet.aberration(CurrentJD,abe,abp);
-  Fplanet.planet(CurrentPlanet,CurrentJD, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
+  if CurrentPlanet<=9 then begin
+    Fplanet.planet(CurrentPlanet,CurrentJD, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
+  end else begin
+    Fplanet.planet(CentralPlanet[CurrentPlanet],CurrentJD, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
+    pha:=abs(phase);
+    Fplanet.PlanSat(CurrentPlanet,CurrentJD, ra, Dec, dist, supconj);
+    if (CurrentPlanet>=12)and((CurrentPlanet<=15)) then begin
+      s:=CurrentPlanet-11;
+      diam:=rad2deg*(2*D0jup[s]/km_au/dist)*3600;
+      magn:=V0jup[s]+5*log10(dp*dist)+0.005*pha;
+    end;
+  end;
   rag2000:=ra;
   deg2000:=dec;
   phase:=rmod(phase+360,360);

@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 interface
 
-Uses Forms, Dialogs, SysUtils, mlb2, passql, passqlite;
+Uses u_constant, Forms, Dialogs, SysUtils, mlb2, passql, passqlite;
 
 const
     DBversion=101;
@@ -86,7 +86,7 @@ const
       FLONGIN=19;
       FLATIN=21;
 var
-    database : array[1..9] of string;
+    database : array[1..maxpla] of string;
 
 Procedure LoadDB(dbm: TLiteDB);
 Procedure CreateDB(dbm: TLiteDB);
@@ -95,7 +95,7 @@ procedure DBjournal(dbname,txt:string);
 
 implementation
 
-Uses  u_constant, u_util, fmsg;
+Uses  u_util, fmsg;
 
 Procedure CreateDB(dbm: TLiteDB);
 var i,dbv: integer;
@@ -231,6 +231,7 @@ needvacuum:=false;
 buf:=Slash(DBdir)+'dbplanet'+uplanguage+'.dbl';
 dbm.Use(utf8encode(buf));
 try
+for i:=1 to maxpla do database[1]:=Slash(appdir)+Slash('Database')+'none.csv';
 buf:=Slash(appdir)+Slash('Database')+'Mercury_Named_'+uplanguage+'.csv';
 if fileexists(buf) then database[1]:=buf
    else database[1]:=Slash(appdir)+Slash('Database')+'Mercury_Named_EN.csv';
@@ -243,6 +244,18 @@ if fileexists(buf) then database[4]:=buf
 buf:=Slash(appdir)+Slash('Database')+'Jupiter_Named_'+uplanguage+'.csv';
 if fileexists(buf) then database[5]:=buf
    else database[5]:=Slash(appdir)+Slash('Database')+'Jupiter_Named_EN.csv';
+buf:=Slash(appdir)+Slash('Database')+'Io_Named_'+uplanguage+'.csv';
+if fileexists(buf) then database[12]:=buf
+   else database[12]:=Slash(appdir)+Slash('Database')+'Io_Named_EN.csv';
+buf:=Slash(appdir)+Slash('Database')+'Europa_Named_'+uplanguage+'.csv';
+if fileexists(buf) then database[13]:=buf
+   else database[13]:=Slash(appdir)+Slash('Database')+'Europa_Named_EN.csv';
+buf:=Slash(appdir)+Slash('Database')+'Ganymede_Named_'+uplanguage+'.csv';
+if fileexists(buf) then database[14]:=buf
+   else database[14]:=Slash(appdir)+Slash('Database')+'Ganymede_Named_EN.csv';
+buf:=Slash(appdir)+Slash('Database')+'Callisto_Named_'+uplanguage+'.csv';
+if fileexists(buf) then database[15]:=buf
+   else database[15]:=Slash(appdir)+Slash('Database')+'Callisto_Named_EN.csv';
 CreateDB(dbm);
 for i:=1 to maxpla do begin
      if i=3 then continue; // no Earth for now.
