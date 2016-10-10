@@ -2181,7 +2181,7 @@ begin
   deg2000:=dec;
   phase:=rmod(phase+360,360);
   eph:=Fplanet.eph_method;
-  Fplanet.planetOrientation(CurrentJD,CurrentPlanet, pa, De,Ds,w1,w2,w3);
+  Fplanet.planetOrientation(CurrentJD-dist*tlight,CurrentPlanet, pa, De,Ds,w1,w2,w3);
   w1 := rmod(360-w1+360,360); // from W360 to E360
   w2 := rmod(360-w2+360,360);
   w3 := rmod(360-w3+360,360);
@@ -2255,8 +2255,8 @@ begin
   Stringgrid1.Cells[1, i] := formatfloat(f1, magn);
   Inc(i);
   Stringgrid1.Cells[0, i] := rsCentralMerid;
-  Stringgrid1.Cells[1, i] := FormatLongitude(w1)+' (L1'+LongitudeSystemName+')';
   if CurrentPlanet=5 then begin
+    Stringgrid1.Cells[1, i] := FormatLongitude(w1)+' (L1'+LongitudeSystemName+')';
     Inc(i);
     Stringgrid1.Cells[0, i] := rsCentralMerid;
     Stringgrid1.Cells[1, i] := FormatLongitude(w2)+' (L2'+LongitudeSystemName+')';
@@ -2266,7 +2266,9 @@ begin
     Inc(i);
     Stringgrid1.Cells[0, i] := 'GRS longitude';
     Stringgrid1.Cells[1, i] := DEmToStr(GRSL)+' (L2'+rsWest0360+')';
-  end;
+  end
+  else
+      Stringgrid1.Cells[1, i] := FormatLongitude(w1)+' ('+LongitudeSystemName+')';
   Inc(i);
   Stringgrid1.Cells[0, i] := rsPoleInclinat;
   Stringgrid1.Cells[1, i] := formatfloat(f2, De) + ldeg ;

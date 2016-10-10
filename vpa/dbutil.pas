@@ -265,7 +265,7 @@ for i:=1 to maxpla do begin
        PlanetInstalled[i]:=true;
        if (db_age<fileage(database[i])) then begin
           dbjournal(extractfilename(dbm.database),'LOAD DATABASE PLANETN='+inttostr(i)+' FROM FILE: '+database[i]+' FILE DATE: '+ DateTimeToStr(FileDateToDateTime(fileage(database[i]))) );
-          convertDB(dbm,database[i],inttostr(i),(i>4));
+          convertDB(dbm,database[i],inttostr(i),(i=5)); // only jupiter with west coordinates in db
           needvacuum:=true;
        end;
      end
