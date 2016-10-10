@@ -1,6 +1,6 @@
  
 #
-# source : http://astrogeology.usgs.gov/
+# source : http://astrogeology.usgs.gov/search/map/Io/Voyager-Galileo/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km
 #
 
 # use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping

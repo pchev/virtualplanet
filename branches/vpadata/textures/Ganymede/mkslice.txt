@@ -1,14 +1,20 @@
  
 #
-# source : http://astrogeology.usgs.gov/
+# source : http://astrogeology.usgs.gov/search/map/Ganymede/Voyager-Galileo/Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m
 #
 
 # use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
 # cat stretch.txt 
 # 0.0:0.0 1.0:255.0
 
+# shift 180deg
+translate from=Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m.cub to=tr1.cub strans=5760 ltrans=0
+translate from=Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m.cub to=tr2.cub strans=-5760 ltrans=0
 # stretch dynamic
-stretch from=Ganymede_Voyager_GalileoSSI_Global_ColorMosaic_1435m.cub to=str.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=255 hrs=255
+stretch from=tr1.cub to=str1.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=255 hrs=255
+stretch from=tr2.cub to=str2.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=255 hrs=255
+#combine
+algebra from=str1.cub from2=str2.cub to=str.cub operator=add
 
 # reduce to L2 size
 reduce from=str.cub to=l2.cub mode=total ons=10000 onl=5000 
@@ -32,5 +38,9 @@ convert l2.png -resize 4000x2000 l1.png
 mkdir L1
 convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L1/%d.jpg
 
-rm str.cub
+rm str.cub str1.cub str2.cub tr1.cub tr2.cub
 rm l2.cub 
+
+# mkdir share/virtualplanet/Textures/Ganymede/Voyager_Galileo/
+# cp L1 L2 share/virtualplanet/Textures/Ganymede/Voyager_Galileo/
+# tar czf VPA_Base_Texture_Ganymede.tgz share
