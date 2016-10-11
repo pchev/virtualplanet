@@ -2181,7 +2181,7 @@ begin
   deg2000:=dec;
   phase:=rmod(phase+360,360);
   eph:=Fplanet.eph_method;
-  Fplanet.planetOrientation(CurrentJD-dist*tlight,CurrentPlanet, pa, De,Ds,w1,w2,w3);
+  Fplanet.planetOrientation(CurrentJD,CurrentJD-dist*tlight,CurrentPlanet, pa, De,Ds,w1,w2,w3);
   w1 := rmod(360-w1+360,360); // from W360 to E360
   w2 := rmod(360-w2+360,360);
   w3 := rmod(360-w3+360,360);

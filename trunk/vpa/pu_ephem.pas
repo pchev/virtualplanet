@@ -81,13 +81,14 @@ var startljd,endljd,stepjd,ijd: extended;
     jd0, st0, q, cphase, colong, hh, az, ah: double;
     v1, v2, v3, v4, v5, v6, v7, v8, v9: double;
     gpa, glibrb, gsunincl, glibrl: double;
-    aa, mm, dd, i, j: integer;
-    ecl,nutl,nuto,sunl,sunb,abe,abp, ra, Dec, dist, diam, phase, illum : double;
+    aa, mm, dd, i, j,s: integer;
+    ecl,nutl,nuto,sunl,sunb,abe,abp, ra, Dec, dist, diam, phase, illum,pha : double;
     magn,dp,xp,yp,zp,vel,De,Ds,w1,w2,w3: double;
     rad,ded, pa, librb, sunincl, librl,tphase, nmjd, fqjd, fmjd, lqjd,lunaison: double;
     CYear, CMonth, CDay,LastDay: integer;
     f: textfile;
     buf: string;
+    supconj: boolean;
 const sep='","';
       b = ' ';
   function  GetJDTimeZone(jdt: double): double;
@@ -134,9 +135,20 @@ begin
     Fplanet.sunecl(curjd,sunl,sunb);
     PrecessionEcl(jd2000,curjd,sunl,sunb);
     Fplanet.aberration(curjd,abe,abp);
-    Fplanet.planet(CurrentPlanet,curjd, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
+    if CurrentPlanet<=9 then begin
+      Fplanet.planet(CurrentPlanet,curjd, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
+    end else begin
+      Fplanet.planet(CentralPlanet[CurrentPlanet],curjd, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
+      pha:=abs(phase);
+      Fplanet.PlanSat(CurrentPlanet,CurrentJD, ra, Dec, dist, supconj);
+      if (CurrentPlanet>=12)and((CurrentPlanet<=15)) then begin
+        s:=CurrentPlanet-11;
+        diam:=rad2deg*(2*D0jup[s]/km_au/dist)*3600;
+        magn:=V0jup[s]+5*log10(dp*dist)+0.005*pha;
+      end;
+    end;
     eph:=Fplanet.eph_method;
-    Fplanet.planetOrientation(curjd,CurrentPlanet, pa, De,Ds,w1,w2,w3);
+    Fplanet.planetOrientation(curjd,curjd-dist*tlight,CurrentPlanet, pa, De,Ds,w1,w2,w3);
     sunincl:=Ds;
     if not geocentric then
     begin

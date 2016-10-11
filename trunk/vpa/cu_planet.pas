@@ -70,7 +70,7 @@ type
      Function MoonMag(phase:double):double;
      Function MoonPhase(k: double):double;
      Procedure MoonPhases(year:double; var nm,fq,fm,lq : double);
-     Procedure PlanetOrientation(jde:double; ipla:integer; var P,De,Ds,w1,w2,w3 : double);
+     Procedure PlanetOrientation(jde,jdetl:double; ipla:integer; var P,De,Ds,w1,w2,w3 : double);
      Procedure MoonOrientation(jde,ra,dec,d:double; var P,llat,lats,llong : double);
      procedure PlanetRiseSet(pla:integer; jd0:double; AzNorth:boolean; var thr,tht,ths,tazr,tazs: string; var jdr,jdt,jds,rar,der,rat,det,ras,des:double ; var i: integer);
      procedure PlanetAltitude(pla: integer; jd0,hh:double; var har,sina: double);
@@ -307,7 +307,7 @@ begin
 result:=rmod(x+3600000000,360);
 end;
 
-Procedure TPlanet.PlanetOrientation(jde:double; ipla:integer; var P,De,Ds,w1,w2,w3 : double);
+Procedure TPlanet.PlanetOrientation(jde,jdetl:double; ipla:integer; var P,De,Ds,w1,w2,w3 : double);
 // Report of the IAU Working Group on Cartographic
 // Coordinates and Rotational Elements: 2009
 // + 2011 Erratum
@@ -343,17 +343,18 @@ const VP : array[1..15,1..4] of double = (
           (36.022,101.3747235), //Europa
           (44.064,50.3176081),  //Ganymede
           (259.51,21.5710715)); //Callisto
-var d,T,N,a0,d0,l0,b0,r0,l1,b1,r1,x,y,z,del,eps,als,des,u,v,al,dl,f,th,k,i : double;
+var d,T,N,a0,d0,l0,b0,r0,l1,b1,r1,x,y,z,del,eps,als,des,u,v,al,dl,f,th,k,i,aps,dps : double;
     M1,M2,M3,M4,M5,Ja,Jb,Jc,Jd,Je,J1,J2,J3,J4,J5,J6,J7,J8 : double;
     pl :TPlanData;
+    sup:boolean;
 begin
-d := (jde-jd2000);
+d := (jdetl-jd2000);
 T := d/36525;
 if ipla=10 then begin  // sun
-  th:=(jde-2398220)*360/25.38;
+  th:=(jdetl-2398220)*360/25.38;
   i:=deg2rad*7.25;
-  k:=deg2rad*(73.6667+1.3958333*(jde-2396758)/36525);
-  Plan(3,jde,pl);
+  k:=deg2rad*(73.6667+1.3958333*(jdetl-2396758)/36525);
+  Plan(3,jdetl,pl);
   PrecessionEcl(jd2000,jde,pl.l,pl.b);
   l0:=pl.l+pi;
   eps := deg2rad*(23.439291111 - 0.0130042 * T - 1.64e-7 * T*T + 5.036e-7 *T*T*T);
@@ -444,14 +445,7 @@ end;
 Plan(3,jde,pl);
 PrecessionEcl(jd2000,jde,pl.l,pl.b);
 l0:=pl.l; b0:=pl.b; r0:=pl.r;
-Plan(CentralPlanet[ipla],jde,pl);
-PrecessionEcl(jd2000,jde,pl.l,pl.b);
-l1:=pl.l; b1:=pl.b; r1:=pl.r;
-x := r1 * cos(b1) * cos(l1) - r0 * cos(l0);
-y := r1 * cos(b1) * sin(l1) - r0 * sin(l0);
-z := r1 * sin(b1) - r0 * sin(b0);
-del := sqrt( x*x + y*y + z*z);
-Plan(CentralPlanet[ipla],jde-del*tlight,pl);
+Plan(CentralPlanet[ipla],jdetl,pl);
 PrecessionEcl(jd2000,jde,pl.l,pl.b);
 l1:=pl.l; b1:=pl.b; r1:=pl.r;
 x := r1 * cos(b1) * cos(l1) - r0 * cos(l0);
@@ -468,15 +462,9 @@ al:=arctan2(u,x);
 dl:=arctan(v/sqrt(x*x+u*u));
 f:=rad2deg*(arctan2(sin(d0)*cos(dl)*cos(a0-al)-sin(dl)*cos(d0),cos(dl)*sin(a0-al)));
 De:=rad2deg*(arcsin(-sin(d0)*sin(dl)-cos(d0)*cos(dl)*cos(a0-al)));
-w1:=to360((w1-f-del*tlight*W[ipla,2])*sgn(W[ipla,2]));
-if ipla=5 then begin
-   w2:=to360(w2-f-del*tlight*870.27003539);
-   w3:=to360(w3-f-del*tlight*870.5360000);
-end;
-if ipla=6 then begin
-   w2:=to360(w2-f-del*tlight*812.0);
-   w3:=to360(w3-f-del*tlight*810.7939024);
-end;
+w1:=to360(w1-f);
+w2:=to360(w2-f);
+w3:=to360(w3-f);
 P:=to360(rad2deg*(arctan2(cos(d0)*sin(a0-al),sin(d0)*cos(dl)-cos(d0)*sin(dl)*cos(a0-al))));
 end;
 end;
