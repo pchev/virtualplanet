@@ -324,6 +324,14 @@ object f_avpmain: Tf_avpmain
         DefaultFontSize = 8
         FlagErrors = False
         PopupMenu = PopupMenu2
+        PrintSettings.MarginLeft = 0.5
+        PrintSettings.MarginTop = 0.5
+        PrintSettings.MarginRight = 0.5
+        PrintSettings.MarginBottom = 0.5
+        PrintSettings.Preview.Left = 480
+        PrintSettings.Preview.Top = 300
+        PrintSettings.Preview.Width = 1440
+        PrintSettings.Preview.Height = 900
         MarginHeight = 5
         MarginWidth = 5
         TabOrder = 1
@@ -337,9 +345,9 @@ object f_avpmain: Tf_avpmain
       ImageIndex = 6
       object Memo1: TMemo
         Left = 0
-        Height = 426
+        Height = 433
         Top = 58
-        Width = 336
+        Width = 338
         Align = alClient
         OnChange = Memo1Change
         PopupMenu = PopupMenu2
@@ -351,14 +359,14 @@ object f_avpmain: Tf_avpmain
         Left = 0
         Height = 58
         Top = 0
-        Width = 336
+        Width = 338
         Align = alTop
         ClientHeight = 58
-        ClientWidth = 336
+        ClientWidth = 338
         TabOrder = 1
         object notes_name: TLabel
           Left = 8
-          Height = 14
+          Height = 13
           Top = 8
           Width = 16
           Caption = '    '
