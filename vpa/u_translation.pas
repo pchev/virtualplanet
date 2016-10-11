@@ -219,7 +219,6 @@ rsUnnamedForma = 'Unnamed Formation';
 rsHistorical = 'Historical';
 rsNoTextureToU = 'No texture (to use with an overlay alone)';
 rsLocalZenithO = 'Local zenith on top';
-rsPlanetSelect = 'Planet selection';
 rsApparent = 'Apparent';
 rsAU = 'AU';
 rsCentralMerid = 'Central meridian';
