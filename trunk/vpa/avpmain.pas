@@ -90,13 +90,13 @@ type
     DecreaseFont1: TMenuItem;
     IncreaseFont1: TMenuItem;
     GRSPanel: TPanel;
+    PlanetPopup: TPopupMenu;
     SelectEuropa: TMenuItem;
     SelectGanymede: TMenuItem;
     SelectCallisto: TMenuItem;
     SelectIo: TMenuItem;
     SelectJupiter: TMenuItem;
     Menuwebpage: TMenuItem;
-    SelectPlanet1: TMenuItem;
     SelectMercury: TMenuItem;
     SelectVenus: TMenuItem;
     SelectMars: TMenuItem;
@@ -134,6 +134,7 @@ type
     SetFPSTimer: TTimer;
     ToolButton13: TToolButton;
     ToolButton14: TToolButton;
+    ToolButton7: TToolButton;
     TrackBar6: TTrackBar;
     TrackBar7: TTrackBar;
     TrackBar8: TTrackBar;
@@ -250,7 +251,6 @@ type
     NewWindowButton: TToolButton;
     PhaseButton: TToolButton;
     Button10: TButton;
-    N4:      TMenuItem;
     ToolButton4: TToolButton;
     ToolButton6: TToolButton;
     ToolButton11: TToolButton;
@@ -294,6 +294,7 @@ type
     procedure ToolButton12Click(Sender: TObject);
     procedure ToolButton14Click(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
+    procedure ToolButton7Click(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
@@ -640,7 +641,6 @@ begin
     bldb[9] := rsb_9;
     if f_ephem<>nil then f_ephem.Setlang;
     Label7.Caption:=rsMinimalLengt;
-    SelectPlanet1.Caption:=rsPlanetSelect;
     pla[1]:=rsMercury;
     pla[2]:=rsVenus;
     pla[4]:=rsMars;
@@ -3018,6 +3018,15 @@ begin
   FilePopup.PopUp(p.x,p.y);
 end;
 
+procedure Tf_avpmain.ToolButton7Click(Sender: TObject);
+var p: TPoint;
+begin
+  activeplanet.SatelliteRotation:=0;
+  p:=Point(ToolButton1.Left,ToolButton7.Top+ToolButton7.Height);
+  p:=ToolBar2.ClientToScreen(p);
+  PlanetPopup.PopUp(p.x,p.y);
+end;
+
 procedure Tf_avpmain.ToolButton8Click(Sender: TObject);
 var p: TPoint;
 begin
@@ -4172,7 +4181,7 @@ if planet2=nil then begin
  planet2.Initialized:=true;
 end;
 if NewWindowButton.Down then begin
-  SelectPlanet1.Enabled:=false;
+  ToolButton7.Enabled:=false;
   SplitSize:=0.5;
   Panelplanet2.Width:=Panelplanet.Width div 2;
   Splitter2.Visible:=true;
@@ -4185,7 +4194,7 @@ if NewWindowButton.Down then begin
   planet2.Assignplanet(planet1);
   planet2.GLSceneViewer1.Camera.DepthOfView:=cdo;
 end else begin
-  SelectPlanet1.Enabled:=true;
+  ToolButton7.Enabled:=true;
 //  wantbump:=planet1.Bumpmap;
   planet2.Enabled:=false;
   Panelplanet2.Width:=0;

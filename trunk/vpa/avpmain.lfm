@@ -24,7 +24,7 @@ object f_avpmain: Tf_avpmain
   OnKeyUp = FormKeyUp
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '1.6.1.0'
+  LCLVersion = '1.6.0.4'
   Visible = False
   object Memo2: TMemo
     Left = 64
@@ -75,7 +75,7 @@ object f_avpmain: Tf_avpmain
       Width = 240
       Align = alNone
       ButtonHeight = 21
-      ButtonWidth = 70
+      ButtonWidth = 50
       Caption = 'ToolBar2'
       Color = clBtnFace
       DragMode = dmAutomatic
@@ -92,16 +92,22 @@ object f_avpmain: Tf_avpmain
         OnClick = ToolButton1Click
       end
       object ToolButton2: TToolButton
-        Left = 71
+        Left = 101
         Top = 0
         Caption = 'Configuration'
         OnClick = Configuration1Click
       end
       object ToolButton8: TToolButton
-        Left = 155
+        Left = 185
         Top = 0
         Caption = 'Aide'
         OnClick = ToolButton8Click
+      end
+      object ToolButton7: TToolButton
+        Left = 51
+        Top = 0
+        Caption = 'Planet'
+        OnClick = ToolButton7Click
       end
     end
     object ToolBar1: TToolBar
@@ -324,6 +330,10 @@ object f_avpmain: Tf_avpmain
         DefaultFontSize = 8
         FlagErrors = False
         PopupMenu = PopupMenu2
+        PrintSettings.MarginLeft = 0.5
+        PrintSettings.MarginTop = 0.5
+        PrintSettings.MarginRight = 0.5
+        PrintSettings.MarginBottom = 0.5
         MarginHeight = 5
         MarginWidth = 5
         TabOrder = 1
@@ -795,6 +805,8 @@ object f_avpmain: Tf_avpmain
             Top = 57
             Width = 109
             CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+            OKCaption = 'OK'
+            CancelCaption = 'Cancel'
             DateOrder = doNone
             DateFormat = 'yyyy"-"mm"-"dd"'
             ButtonWidth = 23
@@ -1608,52 +1620,6 @@ object f_avpmain: Tf_avpmain
   object FilePopup: TPopupMenu
     left = 16
     top = 64
-    object SelectPlanet1: TMenuItem
-      Caption = 'Select planet'
-      object SelectMercury: TMenuItem
-        Tag = 1
-        Caption = 'Mercury'
-        OnClick = SelectPlanet
-      end
-      object SelectVenus: TMenuItem
-        Tag = 2
-        Caption = 'Venus'
-        OnClick = SelectPlanet
-      end
-      object SelectMars: TMenuItem
-        Tag = 4
-        Caption = 'Mars'
-        OnClick = SelectPlanet
-      end
-      object SelectJupiter: TMenuItem
-        Tag = 5
-        Caption = 'Jupiter'
-        OnClick = SelectPlanet
-      end
-      object SelectIo: TMenuItem
-        Tag = 12
-        Caption = 'Io'
-        OnClick = SelectPlanet
-      end
-      object SelectEuropa: TMenuItem
-        Tag = 13
-        Caption = 'Europa'
-        OnClick = SelectPlanet
-      end
-      object SelectGanymede: TMenuItem
-        Tag = 14
-        Caption = 'Ganymede'
-        OnClick = SelectPlanet
-      end
-      object SelectCallisto: TMenuItem
-        Tag = 15
-        Caption = 'Callisto'
-        OnClick = SelectPlanet
-      end
-    end
-    object N4: TMenuItem
-      Caption = '-'
-    end
     object Enregistrersous1: TMenuItem
       Caption = 'Enregistrer sous'
       object BMP1: TMenuItem
@@ -2470,5 +2436,49 @@ object f_avpmain: Tf_avpmain
     OnTimer = SetFPSTimerTimer
     left = 384
     top = 192
+  end
+  object PlanetPopup: TPopupMenu
+    left = 152
+    top = 64
+    object SelectMercury: TMenuItem
+      Tag = 1
+      Caption = 'Mercury'
+      OnClick = SelectPlanet
+    end
+    object SelectVenus: TMenuItem
+      Tag = 2
+      Caption = 'Venus'
+      OnClick = SelectPlanet
+    end
+    object SelectMars: TMenuItem
+      Tag = 4
+      Caption = 'Mars'
+      OnClick = SelectPlanet
+    end
+    object SelectJupiter: TMenuItem
+      Tag = 5
+      Caption = 'Jupiter'
+      OnClick = SelectPlanet
+    end
+    object SelectIo: TMenuItem
+      Tag = 12
+      Caption = 'Io'
+      OnClick = SelectPlanet
+    end
+    object SelectEuropa: TMenuItem
+      Tag = 13
+      Caption = 'Europa'
+      OnClick = SelectPlanet
+    end
+    object SelectGanymede: TMenuItem
+      Tag = 14
+      Caption = 'Ganymede'
+      OnClick = SelectPlanet
+    end
+    object SelectCallisto: TMenuItem
+      Tag = 15
+      Caption = 'Callisto'
+      OnClick = SelectPlanet
+    end
   end
 end
