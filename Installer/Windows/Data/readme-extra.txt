@@ -1,5 +1,5 @@
 Virtual Planet Atlas Extra Data
-version 1.0
+version 1.3
 Free software for the planet observation or survey
 For Windows XP/Vista/7/8/10
 

@@ -2,7 +2,7 @@
 
 # script to build virtualplanet on a Linux system
 
-version=1.0
+version=1.3
 
 arch=$(arch)
 unset extratarget
