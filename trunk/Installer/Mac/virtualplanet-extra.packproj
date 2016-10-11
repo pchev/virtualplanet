@@ -538,7 +538,7 @@
 						<key>IFPkgDescriptionTitle</key>
 						<string>virtualplanet extra data</string>
 						<key>IFPkgDescriptionVersion</key>
-						<string>1.0</string>
+						<string>1.3</string>
 					</dict>
 				</dict>
 				<key>Display Information</key>
@@ -554,7 +554,7 @@
 					<key>CFBundleName</key>
 					<string>virtualplanet extra data</string>
 					<key>CFBundleShortVersionString</key>
-					<string>1.0</string>
+					<string>1.3</string>
 				</dict>
 				<key>Options</key>
 				<dict>
@@ -582,7 +582,7 @@
 					<key>IFMajorVersion</key>
 					<integer>1</integer>
 					<key>IFMinorVersion</key>
-					<integer>0</integer>
+					<integer>3</integer>
 				</dict>
 			</dict>
 		</dict>

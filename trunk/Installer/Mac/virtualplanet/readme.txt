@@ -1,5 +1,5 @@
 Virtual Planet Atlas
-version 1.0
+version 1.3
 Free software for planet observation or survey
 For Mac OS X
 
