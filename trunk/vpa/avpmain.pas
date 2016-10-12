@@ -35,7 +35,7 @@ uses
 {$IFDEF LCLgtk2}
   Gtk2Proc,
 {$endif}    GLScene, u_translation_database, u_translation, u_constant, u_util,
-cu_planet, u_projection, cu_tz, pu_planet, LCLIntf, Forms, StdCtrls, ExtCtrls,
+cu_planet, u_projection, cu_tz, pu_planet, cu_plansat, LCLIntf, Forms, StdCtrls, ExtCtrls,
 Graphics, Grids, mlb2, PrintersDlgs, Printers, Controls, Messages, SysUtils,
 Classes, Dialogs, FileUtil, ComCtrls, Menus, Buttons, dynlibs, BigIma, EnhEdits,
 IniFiles, passql, passqlite, Math, CraterList, LResources, EditBtn, IpHtml,
@@ -425,6 +425,7 @@ type
     procedure GetSkychartInfo;
     procedure SetActiveplanet(mf: Tf_planet);
     procedure SetPlanet(p:integer);
+    procedure SetSatellites(cp:integer);
     procedure planetClickEvent(Sender: TObject; Button: TMouseButton;
                      Shift: TShiftState; X, Y: Integer;
                      Onplanet: boolean; Lon, Lat: Single);
@@ -2150,6 +2151,7 @@ procedure Tf_avpmain.RefreshplanetImage;
 var
   planetrise, planetset, planettransit, azimuthrise, azimuthset, eph: string;
   jd0, st0, q, hh, az, ah,magn,dp,xp,yp,zp,vel,h,pha: double;
+  xsat1,ysat1,zsat1,xsat2,ysat2,zsat2,xsat3,ysat3,zsat3,xsat4,ysat4,zsat4,cpl,cpb: double;
   v1, v2, v3, v4, v5, v6, v7, v8, v9: double;
   De,Ds,w1,w2,w3: double;
   supconj: boolean;
@@ -2157,6 +2159,18 @@ var
   y,m,d: integer;
 const
   b = ' ';
+  Procedure SatPos(cpla:integer; var x,y,z: double);
+  var xe,ye,ze: double;
+  begin
+    // to ecliptic
+    xe:=-x;
+    ye:= coseps2k*y + sineps2k*z;
+    ze:= -sineps2k*y + coseps2k*z;
+    // scale to planet radius
+    x:=xe*km_au/(2*REplanet[cpla]);
+    y:=ye*km_au/(2*REplanet[cpla]);
+    z:=ze*km_au/(2*REplanet[cpla]);
+  end;
 begin
   st0 := 0;
   ecl:=ecliptic(CurrentJD);
@@ -2167,6 +2181,7 @@ begin
   Fplanet.aberration(CurrentJD,abe,abp);
   if CurrentPlanet<=9 then begin
     Fplanet.planet(CurrentPlanet,CurrentJD, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
+    Eq2Ecl(ra,dec,deg2rad*eps2000,cpl,cpb);
   end else begin
     Fplanet.planet(CentralPlanet[CurrentPlanet],CurrentJD, ra, Dec, dist, illum,phase,diam,magn,dp,xp,yp,zp,vel);
     pha:=abs(phase);
@@ -2203,6 +2218,10 @@ begin
     Djd(GRSjd,y,m,d,h);
     GRSDateEdit.Date:=EncodeDate(y,m,d);
     GRSL:=Fplanet.JupGRS(GRSLongitude,GRSDailydrift,GRSjd,CurrentJD);
+    JupSatOne(CurrentJD-dist*tlight,1,xsat1,ysat1,zsat1);
+    JupSatOne(CurrentJD-dist*tlight,2,xsat2,ysat2,zsat2);
+    JupSatOne(CurrentJD-dist*tlight,3,xsat3,ysat3,zsat3);
+    JupSatOne(CurrentJD-dist*tlight,4,xsat4,ysat4,zsat4);
   end;
 
   StatusBar1.Panels[2].Text := rsm_51 + ': ' + date2str(curyear, currentmonth, currentday) +
@@ -2387,6 +2406,19 @@ begin
   activeplanet.ShowPhase:=phaseeffect;
   activeplanet.Phase:=deg2rad*phase;
   activeplanet.SunIncl:=deg2rad*sunincl;
+  if CurrentPlanet=5 then begin
+    SatPos(5,xsat1,ysat1,zsat1);
+    SatPos(5,xsat2,ysat2,zsat2);
+    SatPos(5,xsat3,ysat3,zsat3);
+    SatPos(5,xsat4,ysat4,zsat4);
+    activeplanet.GLDummyCubeEcliptic.ResetRotations;
+    activeplanet.GLDummyCubeEcliptic.Turn(rad2deg*cpl-90);
+    activeplanet.GLDummyCubeEcliptic.Roll(rad2deg*cpb);
+    activeplanet.GLSphereSat1.Position.SetPoint(xsat1,zsat1,ysat1);
+    activeplanet.GLSphereSat2.Position.SetPoint(xsat2,zsat2,ysat2);
+    activeplanet.GLSphereSat3.Position.SetPoint(xsat3,zsat3,ysat3);
+    activeplanet.GLSphereSat4.Position.SetPoint(xsat4,zsat4,ysat4);
+  end;
   activeplanet.RefreshAll;
 end;
 
@@ -2442,6 +2474,26 @@ begin
   end
 end;
 
+procedure Tf_avpmain.SetSatellites(cp:integer);
+begin
+if cp=5 then begin
+  planet1.GLSphereSat1.Visible:=true;
+  planet1.GLSphereSat2.Visible:=true;
+  planet1.GLSphereSat3.Visible:=true;
+  planet1.GLSphereSat4.Visible:=true;
+  planet1.GLSphereSat1.Radius:=0.5*REplanet[12]/REplanet[5];
+  planet1.GLSphereSat2.Radius:=0.5*REplanet[13]/REplanet[5];;
+  planet1.GLSphereSat3.Radius:=0.5*REplanet[14]/REplanet[5];;
+  planet1.GLSphereSat4.Radius:=0.5*REplanet[15]/REplanet[5];;
+end
+else begin
+  planet1.GLSphereSat1.Visible:=false;
+  planet1.GLSphereSat2.Visible:=false;
+  planet1.GLSphereSat3.Visible:=false;
+  planet1.GLSphereSat4.Visible:=false;
+end;
+end;
+
 procedure Tf_avpmain.SetPlanet(p:integer);
 begin
 if notesedited then UpdNotesClick(nil);
@@ -2452,6 +2504,7 @@ InitNotes;
 planet1.texture:=texturefiles[CurrentPlanet];
 planet1.GLSpherePlanet.Scale.Y:=RPplanet[CurrentPlanet]/REplanet[CurrentPlanet];
 LoadOverlay(overlayname[CurrentPlanet], overlaytr[CurrentPlanet]);
+SetSatellites(CurrentPlanet);
 {if planet1.CanBump then
    planet1.BumpPath:=slash(appdir)+slash('Bumpmap')+slash(epla[CurrentPlanet]);
 if phaseeffect and wantbump[CurrentPlanet] and planet1.CanBump then
@@ -2665,6 +2718,7 @@ try
   planet1.TextureCompression:=compresstexture;
   planet1.TextureBW:=TextureBW;
   planet1.GLSpherePlanet.Scale.Y:=RPplanet[CurrentPlanet]/REplanet[CurrentPlanet];
+  SetSatellites(CurrentPlanet);
   try
   if notexture
      then planet1.texture:=texturenone

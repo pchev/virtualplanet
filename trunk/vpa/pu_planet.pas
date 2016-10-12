@@ -62,9 +62,14 @@ type
     GLBumpShader1: TGLBumpShader;
     GLCameraSatellite: TGLCamera;
     BaseCube: TGLDummyCube;
+    GLDummyCubeEcliptic: TGLDummyCube;
     GLDummyCubeSatellite: TGLDummyCube;
     GLDummyCubeCoord: TGLDummyCube;
     GLFreeFormSatelite: TGLFreeForm;
+    GLSphereSat1: TGLSphere;
+    GLSphereSat2: TGLSphere;
+    GLSphereSat3: TGLSphere;
+    GLSphereSat4: TGLSphere;
     LabelGroup: TGLHUDSprite;
     GLHUDTextScaleShadow: TGLHUDText;
     GLHUDTextScalekmShadow: TGLHUDText;
@@ -116,7 +121,7 @@ type
     marktext: string;
     markl,markb: single;
     MaxTextureSize: integer;
-    MaxZoom: single;
+    MaxZoom,MinZoom: single;
     mx,my, zone, maxzone,curlabel,cursprite, lastyzoom : integer;
     maps2, newmaps: array[0..8] of integer;
     pmaps2 : array[0..2] of integer;
@@ -1129,7 +1134,7 @@ try
     if zoom<2 then zoom:=2;
     if zoom>6 then zoom:=6;
   end else begin
-    if zoom<1 then zoom:=1;
+    if zoom<MinZoom then zoom:=MinZoom;
     if zoom>MaxZoom then zoom:=MaxZoom;
   end;
   newzone:=1;
@@ -1194,7 +1199,9 @@ begin
     end;
  end;
  if not FBumpmap then begin
-   maxzoom:=ZoomByZone[maxzone];
+   MaxZoom:=ZoomByZone[maxzone];
+   if CurrentPlanet=5 then MinZoom:=0.01
+      else MinZoom:=1;
    ClearSlice(2);
    LoadSlice(1);
    if zone<>1 then LoadSlice(zone);
@@ -1251,6 +1258,7 @@ begin
  TextureCompression:=true;
  FTextureBW:=false;
  MaxZoom:=3;
+ MinZoom:=1;
  MaxTextureSize:=1024;
  Flabelcolor:=clWhite;
  FMeasuringDistance := False;
@@ -1476,6 +1484,7 @@ begin
  GLSphereplanet.PitchAngle  := Source.GLSphereplanet.PitchAngle;
  GLSphereplanet.TurnAngle   := Source.GLSphereplanet.TurnAngle;
  GLSphereplanet.up  := Source.GLSphereplanet.Up;
+ MinZoom:=source.MinZoom;
  if Source.Bumpmap then begin   // no bumpmap by default on second copy
     LoadSlice(zone);
     GLSphereplanet.Material.MaterialLibrary:=GLMultiMaterialLibrary;
