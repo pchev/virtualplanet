@@ -95,6 +95,81 @@ object f_planet: Tf_planet
         SpotCutOff = 180
         SpotExponent = 0
       end
+      object GLDummyCubeEcliptic: TGLDummyCube
+        TagFloat = 0
+        PitchAngle = 0
+        RollAngle = 0
+        TurnAngle = 0
+        CubeSize = 1
+        object GLSphereSat1: TGLSphere
+          TagFloat = 0
+          Material.Texture.ImageClassName = 'TGLBlankImage'
+          Material.Texture.Image.Width = 64
+          Material.Texture.Image.Height = 64
+          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.MagFilter = maNearest
+          Material.Texture.MinFilter = miNearest
+          Material.Texture.Compression = tcNone
+          PitchAngle = 0
+          Position.Coordinates = {
+            9A99193F00000000000000000000803F
+          }
+          RollAngle = 0
+          TurnAngle = 0
+          Radius = 0.00499999988824129
+        end
+        object GLSphereSat2: TGLSphere
+          TagFloat = 0
+          Material.Texture.ImageClassName = 'TGLBlankImage'
+          Material.Texture.Image.Width = 64
+          Material.Texture.Image.Height = 64
+          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.MagFilter = maNearest
+          Material.Texture.MinFilter = miNearest
+          Material.Texture.Compression = tcNone
+          PitchAngle = 0
+          Position.Coordinates = {
+            6666263F00000000000000000000803F
+          }
+          RollAngle = 0
+          TurnAngle = 0
+          Radius = 0.00499999988824129
+        end
+        object GLSphereSat3: TGLSphere
+          TagFloat = 0
+          Material.Texture.ImageClassName = 'TGLBlankImage'
+          Material.Texture.Image.Width = 64
+          Material.Texture.Image.Height = 64
+          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.MagFilter = maNearest
+          Material.Texture.MinFilter = miNearest
+          Material.Texture.Compression = tcNone
+          PitchAngle = 0
+          Position.Coordinates = {
+            3333333F00000000000000000000803F
+          }
+          RollAngle = 0
+          TurnAngle = 0
+          Radius = 0.00499999988824129
+        end
+        object GLSphereSat4: TGLSphere
+          TagFloat = 0
+          Material.Texture.ImageClassName = 'TGLBlankImage'
+          Material.Texture.Image.Width = 64
+          Material.Texture.Image.Height = 64
+          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.MagFilter = maNearest
+          Material.Texture.MinFilter = miNearest
+          Material.Texture.Compression = tcNone
+          PitchAngle = 0
+          Position.Coordinates = {
+            0000403F00000000000000000000803F
+          }
+          RollAngle = 0
+          TurnAngle = 0
+          Radius = 0.00499999988824129
+        end
+      end
     end
     object GLArrowLine1: TGLArrowLine
       TagFloat = 0
