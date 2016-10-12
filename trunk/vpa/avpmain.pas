@@ -994,7 +994,9 @@ begin
     Tf_planet(Sender).GetBounds(lmin,lmax,bmin,bmax);
   // minimal feature size
     LabelDensity := maxintvalue([100, LabelDensity]);
-    if (Tf_planet(Sender).Zoom >= 30) and (Tf_planet(Sender).Zoom >= (Tf_planet(Sender).ZoomMax-5)) then
+    if (Tf_planet(Sender).Zoom < 0.5) then
+      wmin:=9999999
+    else if (Tf_planet(Sender).Zoom >= 30) and (Tf_planet(Sender).Zoom >= (Tf_planet(Sender).ZoomMax-5)) then
       wmin := -1
     else
       wmin := MinValue([200.0, LabelDensity / (Tf_planet(Sender).Zoom * Tf_planet(Sender).Zoom)]);
