@@ -267,6 +267,7 @@ type
     procedure CenterMark;
     procedure KeyEvent(event: TplanetKeyClass; key: word);
     function AddLabel(lon,lat:single; txt:string; notcenter:boolean):boolean;
+    function AddSatLabel(sat:integer; txt:string):boolean;
     function AddSprite(lon,lat:single):boolean;
     procedure RefreshAll;
     procedure RenderToBitmap(var bmp: TBitmap; size: integer; white: boolean);
@@ -2149,6 +2150,65 @@ if (x > 0) and (y > 0) and (x < GLSceneViewer1.Width) and
     end;
     inc(curlabel);
 end;
+end;
+
+function Tf_planet.AddSatLabel(sat:integer; txt:string):boolean;
+var x,y: integer;
+    sx,sy,sz: single;
+    v : TAffineVector;
+begin
+  result:=false;
+  if curlabel>=MaxLabel then exit;
+  case sat of
+    1 : begin
+        sx:=GLSphereSat1.AbsolutePosition.X;
+        sy:=GLSphereSat1.AbsolutePosition.Y;
+        sz:=GLSphereSat1.AbsolutePosition.Z;
+        end;
+    2 : begin
+        sx:=GLSphereSat2.AbsolutePosition.X;
+        sy:=GLSphereSat2.AbsolutePosition.Y;
+        sz:=GLSphereSat2.AbsolutePosition.Z;
+        end;
+    3 : begin
+        sx:=GLSphereSat3.AbsolutePosition.X;
+        sy:=GLSphereSat3.AbsolutePosition.Y;
+        sz:=GLSphereSat3.AbsolutePosition.Z;
+        end;
+    4 : begin
+        sx:=GLSphereSat4.AbsolutePosition.X;
+        sy:=GLSphereSat4.AbsolutePosition.Y;
+        sz:=GLSphereSat4.AbsolutePosition.Z;
+        end;
+    else exit;
+  end;
+  v.V[0]:=sx;
+  v.V[1]:=sy;
+  v.V[2]:=sz;
+  v:=GLSceneViewer1.Buffer.WorldToScreen(v);
+  if (v.V[0]>=0)and(v.V[0]<=GLSceneViewer1.Width)and(v.V[1]>=0)and(v.V[1]<=GLSceneViewer1.Height) then begin
+    x:=round(v.V[0]);
+    y:=GLSceneViewer1.Height-round(v.V[1]);
+    if (x > 0) and (y > 0) and (x < GLSceneViewer1.Width) and
+      (y < GLSceneViewer1.Height)
+      then begin
+        with LabelGroup.Children[2*curlabel] as TGLHUDText do begin
+          Position.SetPoint(x+ShadowOffset,y+ShadowOffset,0);
+          Text      := '  -' + txt;
+          Alignment := taLeftJustify;
+          Visible:=true;
+          tag:=1;
+        end;
+        with LabelGroup.Children[2*curlabel+1] as TGLHUDText do begin
+          Position.SetPoint(x,y,0);
+          Text      := '  -' + txt;
+          Alignment := taLeftJustify;
+          Visible:=true;
+          tag:=1;
+        end;
+        inc(curlabel);
+    end;
+  end;
 end;
 
 procedure Tf_planet.SetShowGrid(value:boolean);

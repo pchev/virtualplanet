@@ -392,6 +392,7 @@ type
     nutl,nuto,abe,abp,sunl,sunb,ecl:double;
     firstuse,CanCloseDatlun,CanClosePhotlun,CanCloseWeblun,CanCloseCDC,StartDatlun,StartWeblun,StartPhotlun,StartCDC: boolean;
     Desctxt: string;
+    xsat1,ysat1,zsat1,xsat2,ysat2,zsat2,xsat3,ysat3,zsat3,xsat4,ysat4,zsat4: double;
     {$ifdef windows}
     savetop,saveleft,savewidth,saveheight: integer;
     {$endif}
@@ -1025,7 +1026,13 @@ begin
       IsPUN:=(nom=pun);
       nom:=capitalize(nom);
       Tf_planet(Sender).AddLabel(deg2rad*l1,deg2rad*b1,nom,IsPUN);
-     end;
+    end;
+    if CurrentPlanet=5 then begin
+      Tf_planet(Sender).AddSatLabel(1,pla[12]);
+      Tf_planet(Sender).AddSatLabel(2,pla[13]);
+      Tf_planet(Sender).AddSatLabel(3,pla[14]);
+      Tf_planet(Sender).AddSatLabel(4,pla[15]);
+    end;
   end;
 end;
 
@@ -2153,7 +2160,7 @@ procedure Tf_avpmain.RefreshplanetImage;
 var
   planetrise, planetset, planettransit, azimuthrise, azimuthset, eph: string;
   jd0, st0, q, hh, az, ah,magn,dp,xp,yp,zp,vel,h,pha: double;
-  xsat1,ysat1,zsat1,xsat2,ysat2,zsat2,xsat3,ysat3,zsat3,xsat4,ysat4,zsat4,cpl,cpb: double;
+  cpl,cpb: double;
   v1, v2, v3, v4, v5, v6, v7, v8, v9: double;
   De,Ds,w1,w2,w3: double;
   supconj: boolean;
