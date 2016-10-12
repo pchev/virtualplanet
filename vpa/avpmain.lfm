@@ -932,7 +932,7 @@ object f_avpmain: Tf_avpmain
         Top = -1000
         Width = 253
         Caption = 'Satellisation'
-        ClientHeight = 312
+        ClientHeight = 307
         ClientWidth = 251
         TabOrder = 5
         Visible = False

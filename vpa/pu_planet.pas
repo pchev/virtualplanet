@@ -1203,7 +1203,7 @@ begin
  end;
  if not FBumpmap then begin
    MaxZoom:=ZoomByZone[maxzone];
-   if CurrentPlanet=5 then MinZoom:=0.01
+   if CurrentPlanet=5 then MinZoom:=0.05
       else MinZoom:=1;
    ClearSlice(2);
    LoadSlice(1);
