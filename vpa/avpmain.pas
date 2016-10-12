@@ -2482,9 +2482,17 @@ if cp=5 then begin
   planet1.GLSphereSat3.Visible:=true;
   planet1.GLSphereSat4.Visible:=true;
   planet1.GLSphereSat1.Radius:=0.5*REplanet[12]/REplanet[5];
-  planet1.GLSphereSat2.Radius:=0.5*REplanet[13]/REplanet[5];;
-  planet1.GLSphereSat3.Radius:=0.5*REplanet[14]/REplanet[5];;
-  planet1.GLSphereSat4.Radius:=0.5*REplanet[15]/REplanet[5];;
+  planet1.GLSphereSat2.Radius:=0.5*REplanet[13]/REplanet[5];
+  planet1.GLSphereSat3.Radius:=0.5*REplanet[14]/REplanet[5];
+  planet1.GLSphereSat4.Radius:=0.5*REplanet[15]/REplanet[5];
+  planet1.GLSphereSat1.Material.Texture.Disabled:=false;
+  planet1.GLSphereSat2.Material.Texture.Disabled:=false;
+  planet1.GLSphereSat3.Material.Texture.Disabled:=false;
+  planet1.GLSphereSat4.Material.Texture.Disabled:=false;
+  planet1.GLSphereSat1.Material.Texture.Image.LoadFromFile(slash(appdir)+slash('Textures')+slash(epla[12])+'t0.jpg');
+  planet1.GLSphereSat2.Material.Texture.Image.LoadFromFile(slash(appdir)+slash('Textures')+slash(epla[13])+'t0.jpg');
+  planet1.GLSphereSat3.Material.Texture.Image.LoadFromFile(slash(appdir)+slash('Textures')+slash(epla[14])+'t0.jpg');
+  planet1.GLSphereSat4.Material.Texture.Image.LoadFromFile(slash(appdir)+slash('Textures')+slash(epla[15])+'t0.jpg');
 end
 else begin
   planet1.GLSphereSat1.Visible:=false;

@@ -1115,7 +1115,7 @@ end;
 
 Procedure Tf_planet.GetZoomInfo;
 begin
-  if assigned(FOnGetMsg)and(FRaCentre>-9999) then begin
+  if assigned(FOnGetMsg)and(FRaCentre>-9999)and(Fzoom>0) then begin
     if RotationCadencer.Enabled then
 //       FOnGetMsg(self,MsgZoom,rsm_43+inttostr(round(GLCameraSatellite.GetFieldOfView(GLSceneViewer1.Width)/Fzoom))+ldeg+' '+rst_4+formatfloat('0.0',Fzoom)+'  '+rsLevel+inttostr(zone))
     else
@@ -1421,7 +1421,6 @@ blankjp.Free;
 GLSceneViewer1.Buffer.DestroyRC;
 GLBitmapFont1.Ranges.Clear;
 end;
-
 
 procedure Tf_planet.Assignplanet(Source: Tf_planet);
 begin

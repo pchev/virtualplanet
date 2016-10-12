@@ -103,12 +103,9 @@ object f_planet: Tf_planet
         CubeSize = 1
         object GLSphereSat1: TGLSphere
           TagFloat = 0
-          Material.Texture.ImageClassName = 'TGLBlankImage'
-          Material.Texture.Image.Width = 64
-          Material.Texture.Image.Height = 64
-          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.ImageAlpha = tiaOpaque
           Material.Texture.MagFilter = maNearest
-          Material.Texture.MinFilter = miNearest
+          Material.Texture.MinFilter = miLinear
           Material.Texture.Compression = tcNone
           PitchAngle = 0
           Position.Coordinates = {
@@ -116,16 +113,13 @@ object f_planet: Tf_planet
           }
           RollAngle = 0
           TurnAngle = 0
-          Radius = 0.00499999988824129
+          Radius = 0.100000001490116
         end
         object GLSphereSat2: TGLSphere
           TagFloat = 0
-          Material.Texture.ImageClassName = 'TGLBlankImage'
-          Material.Texture.Image.Width = 64
-          Material.Texture.Image.Height = 64
-          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.ImageAlpha = tiaOpaque
           Material.Texture.MagFilter = maNearest
-          Material.Texture.MinFilter = miNearest
+          Material.Texture.MinFilter = miLinear
           Material.Texture.Compression = tcNone
           PitchAngle = 0
           Position.Coordinates = {
@@ -137,12 +131,9 @@ object f_planet: Tf_planet
         end
         object GLSphereSat3: TGLSphere
           TagFloat = 0
-          Material.Texture.ImageClassName = 'TGLBlankImage'
-          Material.Texture.Image.Width = 64
-          Material.Texture.Image.Height = 64
-          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.ImageAlpha = tiaOpaque
           Material.Texture.MagFilter = maNearest
-          Material.Texture.MinFilter = miNearest
+          Material.Texture.MinFilter = miLinear
           Material.Texture.Compression = tcNone
           PitchAngle = 0
           Position.Coordinates = {
@@ -154,12 +145,9 @@ object f_planet: Tf_planet
         end
         object GLSphereSat4: TGLSphere
           TagFloat = 0
-          Material.Texture.ImageClassName = 'TGLBlankImage'
-          Material.Texture.Image.Width = 64
-          Material.Texture.Image.Height = 64
-          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.ImageAlpha = tiaOpaque
           Material.Texture.MagFilter = maNearest
-          Material.Texture.MinFilter = miNearest
+          Material.Texture.MinFilter = miLinear
           Material.Texture.Compression = tcNone
           PitchAngle = 0
           Position.Coordinates = {
