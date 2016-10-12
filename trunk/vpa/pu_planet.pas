@@ -32,8 +32,8 @@ uses u_translation, u_util, u_constant, u_projection, Graphics, GLGraphics,
   GLTexture, GLCadencer, GLViewer, GLCrossPlatform, GLLCLViewer, LResources,
   GLScene, GLMultiMaterialShader, GLBumpShader, GLPhongShader, GLHUDObjects,
   OpenGLTokens, GLWindowsFont, GLGeomObjects, GLMirror, GLMesh,
-  GLVectorFileObjects, FPImage, FileUtil, LCLType, IntfGraphics, SysUtils,
-  Classes, Controls, Forms, Menus, Dialogs, Math ;
+  GLVectorFileObjects, GLShadowVolume, FPImage, FileUtil, LCLType, IntfGraphics,
+  SysUtils, Classes, Controls, Forms, Menus, Dialogs, Math ;
 
 const
    MaxLabel=500;
@@ -66,6 +66,7 @@ type
     GLDummyCubeSatellite: TGLDummyCube;
     GLDummyCubeCoord: TGLDummyCube;
     GLFreeFormSatelite: TGLFreeForm;
+    GLShadowVolume1: TGLShadowVolume;
     GLSphereSat1: TGLSphere;
     GLSphereSat2: TGLSphere;
     GLSphereSat3: TGLSphere;
@@ -994,11 +995,13 @@ if value<>FShowPhase then begin
         GLLightSource1.LightStyle:=lsParallel;
      GLLightSource1.Position.SetPoint(0,0,-100);
      GLLightSource1.SpotDirection.SetVector(GLLightSource1.Position.X,GLLightSource1.Position.Y,GLLightSource1.Position.Z);
+     GLShadowVolume1.Active:=true;
      SetPhase(FPhase);
   end else begin
      GLLightSource1.LightStyle:=lsParallel;
      GLLightSource1.Position:=GLCamera1.Position;
      GLLightSource1.SpotDirection.SetVector(GLLightSource1.Position.X,GLLightSource1.Position.Y,GLLightSource1.Position.Z);
+     GLShadowVolume1.Active:=false;
   end;
   Orientplanet;
   GLSceneViewer1.Refresh;

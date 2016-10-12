@@ -2418,6 +2418,10 @@ begin
     activeplanet.GLSphereSat2.Position.SetPoint(xsat2,zsat2,ysat2);
     activeplanet.GLSphereSat3.Position.SetPoint(xsat3,zsat3,ysat3);
     activeplanet.GLSphereSat4.Position.SetPoint(xsat4,zsat4,ysat4);
+    activeplanet.GLSphereSat1.Direction.SetVector(xsat1,zsat1,ysat1);
+    activeplanet.GLSphereSat2.Direction.SetVector(xsat2,zsat2,ysat2);
+    activeplanet.GLSphereSat3.Direction.SetVector(xsat3,zsat3,ysat3);
+    activeplanet.GLSphereSat4.Direction.SetVector(xsat4,zsat4,ysat4);
   end;
   activeplanet.RefreshAll;
 end;
