@@ -1113,7 +1113,7 @@ var lmin,lmax,bmin,bmax: single;
     IsPUN:    boolean;
     cmd,nom, pun:  string;
     j: integer;
-const wfact: array[1..9] of single = (1,10,1,5,1,1,1,1,1);
+const wfact: array[1..maxpla] of single = (1,10,1,5,1,1,1,1,1,1,1,1,1,1,1);
 begin
 // Labels
   if showlabel then
