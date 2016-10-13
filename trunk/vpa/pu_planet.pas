@@ -58,6 +58,7 @@ type
   TBumpMapCapabilities = set of TBumpMapCapability;
 
   Tf_planet = class(TForm)
+    GLAnnulus1: TGLAnnulus;
     GLArrowLine1: TGLArrowLine;
     GLBumpShader1: TGLBumpShader;
     GLCameraSatellite: TGLCamera;
@@ -66,6 +67,10 @@ type
     GLDummyCubeSatellite: TGLDummyCube;
     GLDummyCubeCoord: TGLDummyCube;
     GLFreeFormSatelite: TGLFreeForm;
+    GLHUDSpriteCCD3: TGLHUDSprite;
+    GLHUDSpriteCCD4: TGLHUDSprite;
+    GLHUDSpriteCCD1: TGLHUDSprite;
+    GLHUDSpriteCCD2: TGLHUDSprite;
     GLShadowVolume1: TGLShadowVolume;
     GLSphereSat1: TGLSphere;
     GLSphereSat2: TGLSphere;
@@ -163,6 +168,8 @@ type
     FGridSpacing: integer;
     FShowGrid: Boolean;
     FShowScale: Boolean;
+    FShowCCD: Boolean;
+    FCCDw,FCCDh,FCCDr: single;
     FMirror: Boolean;
     FVisibleSideLock: Boolean;
     FRotation: single;
@@ -178,6 +185,7 @@ type
     FZenithOnTop: Boolean;
     Fzoom : single;
     Flabelcolor: TColor;
+    FEyepiece: single;
     perfdeltay: double;
     FShowFPS: Boolean;
     FTextureCompression: Boolean;
@@ -209,6 +217,7 @@ type
     procedure SetShowFPS(value:boolean);
     procedure SetPopUp(value:TPopupMenu);
     function  GetPopUp : TPopupMenu;
+    procedure SetEyepiece(value:single);
     procedure SetTextureCompression(value:boolean);
     procedure SetMeasuringDistance(value:boolean);
     procedure MeasureDistance(x, y: integer);
@@ -228,6 +237,7 @@ type
     Procedure SetZoomLevel(zoom:single);
     procedure SetShowGrid(value:boolean);
     procedure SetShowScale(value:boolean);
+    procedure SetShowCCD(value:boolean);
     procedure SetGridSpacing(value:integer);
     function  GetBumpMethod:TBumpMapCapability;
     procedure SetBumpMethod(bm:TBumpMapCapability);
@@ -253,6 +263,7 @@ type
     procedure Resetplanet;
     function GetCurrentName : string;
     Procedure SetScale;
+    Procedure SetCCDfield;
   public
     { Declarations publiques }
     procedure Assignplanet(Source: Tf_planet);
@@ -278,6 +289,7 @@ type
     procedure SatDirection(x,y,z:single);
     procedure SatUp(x,y,z:single);
     procedure SatPos(x,y,z:single);
+    procedure SetCCD(w,h,r: single);
     property Initialized: boolean read FInitialized write FInitialized;
     property TexturePath : String read FtexturePath write FTexturePath;
     property Texture : TStringList read Ftexture write SetTexture;
@@ -326,11 +338,14 @@ type
     property GridSpacing: integer read FGridSpacing write SetGridSpacing;
     property ShowGrid : Boolean read FShowGrid write SetShowGrid;
     property ShowScale: Boolean read FShowScale write SetShowScale;
+    property ShowCCD: Boolean read FShowCCD write SetShowCCD;
     property VisibleSideLock : Boolean read FVisibleSideLock write SetVisibleSideLock;
     property LabelFont : TFont read GetLabelFont write SetLabelFont;
     property LabelColor : TColor read FLabelColor write SetLabelColor;
     property ShowFPS: Boolean read FShowFPS write SetShowFPS;
     property PopUp: TPopupMenu read GetPopUp write SetPopUp;
+    // Eyepiece field of vision in planet apparent diameter unit.
+    property Eyepiece : single read FEyepiece write SetEyepiece;
     property TextureCompression: Boolean read FTextureCompression write SetTextureCompression;
     property MeasuringDistance: Boolean read FMeasuringDistance write SetMeasuringDistance;
     property Acceleration: integer read GetAcceleration;
@@ -1204,8 +1219,7 @@ begin
  end;
  if not FBumpmap then begin
    MaxZoom:=ZoomByZone[maxzone];
-   if CurrentPlanet=5 then MinZoom:=0.05
-      else MinZoom:=1;
+   MinZoom:=0.01;
    ClearSlice(2);
    LoadSlice(1);
    if zone<>1 then LoadSlice(zone);
@@ -2444,6 +2458,25 @@ begin
   result:=GLSceneViewer1.PopupMenu;
 end;
 
+procedure Tf_planet.SetEyepiece(value:single);
+begin
+if not VisibleSideLock then value:=0;
+if FEyepiece<>value then begin
+   FEyepiece:=value;
+   if FEyepiece=0 then begin
+     GLAnnulus1.Visible:=false;
+   end else begin
+     GLAnnulus1.Position.x := GLCamera1.Position.x;
+     GLAnnulus1.Position.y := GLCamera1.Position.y;
+     GLAnnulus1.BottomRadius:=1000;
+     GLAnnulus1.BottomInnerRadius:=GLSpherePlanet.Radius*FEyepiece*abs(90/GLCamera1.Position.Z);
+     GLAnnulus1.Visible:=true;
+     SetZoomLevel(1.3/FEyepiece);
+   end;
+   RefreshAll;
+end;
+end;
+
 procedure Tf_planet.SetTextureCompression(value:boolean);
 begin
 FTextureCompression:=value;
@@ -2754,6 +2787,65 @@ end else begin
   GLHUDTextScalekmShadow.visible:=false;
 end;
 end;
+
+procedure Tf_planet.SetCCD(w,h,r: single);
+begin
+  FCCDw:=w;
+  FCCDh:=h;
+  FCCDr:=r;
+end;
+
+procedure Tf_planet.SetShowCCD(value:boolean);
+begin
+FShowCCD:=value and (VisibleSideLock) and (FCCDw>0) and (FCCDh>0);
+SetCCDfield;
+end;
+
+Procedure Tf_planet.SetCCDfield;
+var i: integer;
+    sinr,cosr: extended;
+    fv,bx,u: double;
+    x,y,xc,yc,wc,hc: single;
+begin
+if FShowCCD then begin
+  fv:=0.119*GLCamera1.GetFieldOfView(GLSceneViewer1.Width)/Fzoom;
+  bx:=GLSceneViewer1.Width/fv;
+  u:=1/60;
+  wc:=FCCDw*u*bx;
+  hc:=FCCDh*u*bx;
+  SinCos(deg2rad*FCCDr,sinr,cosr);
+  GLHUDSpriteCCD1.Width:=wc;
+  GLHUDSpriteCCD3.Width:=wc;
+  GLHUDSpriteCCD2.Width:=hc;
+  GLHUDSpriteCCD4.Width:=hc;
+  xc:=GLSceneViewer1.Width/2;
+  yc:=GLSceneViewer1.Height/2;
+  x:=xc-(hc/2)*sinr;
+  y:=yc-(hc/2)*cosr;
+  GLHUDSpriteCCD1.Position.SetPoint(x,y,0);
+  GLHUDSpriteCCD1.Rotation:=FCCDr;
+  x:=xc+(hc/2)*sinr;
+  y:=yc+(hc/2)*cosr;
+  GLHUDSpriteCCD3.Position.SetPoint(x,y,0);
+  GLHUDSpriteCCD3.Rotation:=FCCDr;
+  x:=xc+(wc/2)*cosr;
+  y:=yc-(wc/2)*sinr;
+  GLHUDSpriteCCD2.Position.SetPoint(x,y,0);
+  GLHUDSpriteCCD2.Rotation:=90+FCCDr;
+  x:=xc-(wc/2)*cosr;
+  y:=yc+(wc/2)*sinr;
+  GLHUDSpriteCCD4.Position.SetPoint(x,y,0);
+  GLHUDSpriteCCD4.Rotation:=90+FCCDr;
+  GLHUDSpriteCCD1.Material.FrontProperties.Emission.AsWinColor := markcolor;
+  GLHUDSpriteCCD2.Material.FrontProperties.Emission.AsWinColor := markcolor;
+  GLHUDSpriteCCD3.Material.FrontProperties.Emission.AsWinColor := markcolor;
+  GLHUDSpriteCCD4.Material.FrontProperties.Emission.AsWinColor := markcolor;
+  GLHUDSpriteCCD1.Visible:=true;
+end else begin
+  GLHUDSpriteCCD1.Visible:=false;
+end;
+end;
+
 
 initialization
 

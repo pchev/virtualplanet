@@ -256,7 +256,7 @@ Var  Splashversion, compile_time, compile_version: string;
 {$endif}
      // to move to pu_moon properties:
      labelcenter,showlabel,showmark: boolean;
-     marksize: integer;
+     CurrentEyepiece,marksize, CurrentCCD: integer;
      marklabelcolor, markcolor, SpriteColor: Tcolor;
 
 // Text formating constant

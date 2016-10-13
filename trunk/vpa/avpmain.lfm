@@ -1725,6 +1725,120 @@ object f_avpmain: Tf_avpmain
         OnClick = x41Click
       end
     end
+    object Eyepiece1: TMenuItem
+      Caption = 'Eyepiece'
+      object e00: TMenuItem
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e01: TMenuItem
+        Tag = 1
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e02: TMenuItem
+        Tag = 2
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e03: TMenuItem
+        Tag = 3
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e04: TMenuItem
+        Tag = 4
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e05: TMenuItem
+        Tag = 5
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e06: TMenuItem
+        Tag = 6
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e07: TMenuItem
+        Tag = 7
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e08: TMenuItem
+        Tag = 8
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e09: TMenuItem
+        Tag = 9
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+      object e10: TMenuItem
+        Tag = 10
+        Caption = 'none'
+        OnClick = ZoomEyepieceClick
+      end
+    end
+    object CCD1: TMenuItem
+      Caption = 'CCD'
+      object c00: TMenuItem
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c01: TMenuItem
+        Tag = 1
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c02: TMenuItem
+        Tag = 2
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c03: TMenuItem
+        Tag = 3
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c04: TMenuItem
+        Tag = 4
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c05: TMenuItem
+        Tag = 5
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c06: TMenuItem
+        Tag = 6
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c07: TMenuItem
+        Tag = 7
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c08: TMenuItem
+        Tag = 8
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c09: TMenuItem
+        Tag = 9
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+      object c10: TMenuItem
+        Tag = 10
+        Caption = 'none'
+        OnClick = ZoomCCDClick
+      end
+    end
     object Distance1: TMenuItem
       Caption = 'Distance'
       OnClick = Distance1Click

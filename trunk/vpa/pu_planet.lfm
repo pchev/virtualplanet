@@ -92,6 +92,49 @@ object f_planet: Tf_planet
         RollAngle = 0
         TurnAngle = 0
         CubeSize = 1
+        object GLAnnulus1: TGLAnnulus
+          TagFloat = 0
+          Material.FrontProperties.Ambient.Color = {
+            0000000000000000000000000000803F
+          }
+          Material.FrontProperties.Diffuse.Color = {
+            0000000000000000000000009A99593F
+          }
+          Material.FrontProperties.Emission.Color = {
+            9A99193E9A99193E9A99193E0000803F
+          }
+          Material.BlendingMode = bmTransparency
+          Material.Texture.ImageClassName = 'TGLBlankImage'
+          Material.Texture.Image.Width = 64
+          Material.Texture.Image.Height = 64
+          Material.Texture.Image.ColorFormat = 6408
+          Material.Texture.MagFilter = maNearest
+          Material.Texture.MinFilter = miNearest
+          Material.Texture.Compression = tcNone
+          Material.FaceCulling = fcCull
+          ObjectsSorting = osRenderBlendedLast
+          Direction.Coordinates = {
+            0000803F000000000000000000000000
+          }
+          PitchAngle = 0
+          Position.Coordinates = {
+            0000000000000000000020C10000803F
+          }
+          RollAngle = 0
+          TurnAngle = 0
+          Up.Coordinates = {
+            00000080000000000000803F00000000
+          }
+          Visible = False
+          BottomRadius = 20
+          Height = 0.100000001490116
+          Slices = 64
+          Stacks = 1
+          BottomInnerRadius = 0.600000023841858
+          TopInnerRadius = 2
+          TopRadius = 5
+          Parts = [anBottom]
+        end
         object GLSpherePlanet: TGLSphere
           TagFloat = 0
           Material.MaterialLibrary = GLMultiMaterialLibrary
@@ -450,6 +493,103 @@ object f_planet: Tf_planet
       ModulateColor.Color = {
         0000803F0000803F000000000000803F
       }
+    end
+    object GLHUDSpriteCCD1: TGLHUDSprite
+      TagFloat = 0
+      Material.FrontProperties.Ambient.Color = {
+        0000000000000000000000000000803F
+      }
+      Material.FrontProperties.Diffuse.Color = {
+        0000000000000000000000000000803F
+      }
+      Material.FrontProperties.Emission.Color = {
+        0000803F00000000000000000000803F
+      }
+      Material.Texture.ImageClassName = 'TGLBlankImage'
+      Material.Texture.Image.Width = 64
+      Material.Texture.Image.Height = 64
+      Material.Texture.Image.ColorFormat = 6408
+      Material.Texture.MagFilter = maNearest
+      Material.Texture.MinFilter = miNearest
+      Material.Texture.Compression = tcNone
+      PitchAngle = 0
+      RollAngle = 0
+      TurnAngle = 0
+      Width = 16
+      Height = 2
+      Rotation = 0
+      object GLHUDSpriteCCD2: TGLHUDSprite
+        TagFloat = 0
+        Material.FrontProperties.Ambient.Color = {
+          0000000000000000000000000000803F
+        }
+        Material.FrontProperties.Diffuse.Color = {
+          0000000000000000000000000000803F
+        }
+        Material.FrontProperties.Emission.Color = {
+          0000803F00000000000000000000803F
+        }
+        Material.Texture.ImageClassName = 'TGLBlankImage'
+        Material.Texture.Image.Width = 64
+        Material.Texture.Image.Height = 64
+        Material.Texture.Image.ColorFormat = 6408
+        Material.Texture.MagFilter = maNearest
+        Material.Texture.MinFilter = miNearest
+        Material.Texture.Compression = tcNone
+        PitchAngle = 0
+        RollAngle = 0
+        TurnAngle = 0
+        Width = 16
+        Height = 2
+        Rotation = 0
+      end
+      object GLHUDSpriteCCD3: TGLHUDSprite
+        TagFloat = 0
+        Material.FrontProperties.Ambient.Color = {
+          0000000000000000000000000000803F
+        }
+        Material.FrontProperties.Diffuse.Color = {
+          0000000000000000000000000000803F
+        }
+        Material.FrontProperties.Emission.Color = {
+          0000803F00000000000000000000803F
+        }
+        Material.Texture.ImageClassName = 'TGLBlankImage'
+        Material.Texture.Image.Width = 64
+        Material.Texture.Image.Height = 64
+        Material.Texture.Image.ColorFormat = 6408
+        Material.Texture.MagFilter = maNearest
+        Material.Texture.MinFilter = miNearest
+        Material.Texture.Compression = tcNone
+        PitchAngle = 0
+        RollAngle = 0
+        TurnAngle = 0
+        Width = 16
+        Height = 2
+        Rotation = 0
+      end
+      object GLHUDSpriteCCD4: TGLHUDSprite
+        TagFloat = 0
+        Material.FrontProperties.Diffuse.Color = {
+          0000000000000000000000000000803F
+        }
+        Material.FrontProperties.Emission.Color = {
+          0000803F00000000000000000000803F
+        }
+        Material.Texture.ImageClassName = 'TGLBlankImage'
+        Material.Texture.Image.Width = 64
+        Material.Texture.Image.Height = 64
+        Material.Texture.Image.ColorFormat = 6408
+        Material.Texture.MagFilter = maNearest
+        Material.Texture.MinFilter = miNearest
+        Material.Texture.Compression = tcNone
+        PitchAngle = 0
+        RollAngle = 0
+        TurnAngle = 0
+        Width = 16
+        Height = 2
+        Rotation = 0
+      end
     end
     object LabelGroup: TGLHUDSprite
       TagFloat = 0
