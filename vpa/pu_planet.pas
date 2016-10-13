@@ -1742,6 +1742,7 @@ if Enabled then begin
   GLCamera1.Position.X:=GLCamera1.Position.X-0.001;
   GLCamera1.Position.X:=GLCamera1.Position.X+0.001;
   SetScale;
+  SetCCDfield;
   if marked then SetMark(markl,markb,marktext);
   if not RotationCadencer.Enabled then begin
     if assigned(FOnGetSprite) then FOnGetSprite(self);
@@ -2808,7 +2809,7 @@ var i: integer;
     x,y,xc,yc,wc,hc: single;
 begin
 if FShowCCD then begin
-  fv:=0.119*GLCamera1.GetFieldOfView(GLSceneViewer1.Width)/Fzoom;
+  fv:=2*rad2deg*FDiameter/Fzoom ;
   bx:=GLSceneViewer1.Width/fv;
   u:=1/60;
   wc:=FCCDw*u*bx;
