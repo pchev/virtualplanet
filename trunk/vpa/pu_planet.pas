@@ -2794,6 +2794,7 @@ begin
   FCCDw:=w;
   FCCDh:=h;
   FCCDr:=r;
+  SetZoomLevel(2*rad2deg*FDiameter/(FCCDw/60));
 end;
 
 procedure Tf_planet.SetShowCCD(value:boolean);
