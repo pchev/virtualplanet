@@ -42,7 +42,45 @@ type
     Button1: TButton;
     Button4: TButton;
     Button5: TButton;
+    Button6: TButton;
+    Button9: TButton;
     CheckBox10: TCheckBox;
+    Edit10: TEdit;
+    Edit11: TEdit;
+    Edit12: TEdit;
+    Edit13: TEdit;
+    Edit14: TEdit;
+    Edit15: TEdit;
+    Edit16: TEdit;
+    Edit17: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
+    Edit9: TEdit;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
+    Label55: TLabel;
+    Label56: TLabel;
+    Label57: TLabel;
+    Label58: TLabel;
+    Label59: TLabel;
+    Label60: TLabel;
+    Label8: TLabel;
+    StringGrid2: TStringGrid;
+    StringGrid3: TStringGrid;
+    TabSheet2: TTabSheet;
+    TabSheet5: TTabSheet;
     TextureBW: TCheckBox;
     ColorDialog1: TColorDialog;
     ComboBox6: TComboBox;
@@ -146,6 +184,8 @@ type
     TrackBar5: TTrackBar;
     procedure BumpRadioGroupClick(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
     procedure ComboBox6Change(Sender: TObject);
     procedure ComboBoxCountryChange(Sender: TObject);
     procedure ComboBoxTZChange(Sender: TObject);
@@ -163,6 +203,10 @@ type
       Rect: TRect; State: TGridDrawState);
     procedure ComboBox5Change(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure StringGrid2MouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure StringGrid2SelectCell(Sender: TObject; aCol, aRow: Integer;
+      var CanSelect: Boolean);
     procedure TextureBWClick(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure TrackBar3Change(Sender: TObject);
@@ -437,6 +481,24 @@ if FontDialog1.Execute then begin
 end;
 end;
 
+procedure Tf_config.Button6Click(Sender: TObject);
+begin
+edit10.Text:=inttostr(round((strtofloat(edit6.text)/strtofloat(edit7.text)) ));
+edit9.Text:=inttostr(round(60* strtofloat(edit8.text)/(strtofloat(edit6.text)/strtofloat(edit7.text)) ));
+end;
+
+procedure Tf_config.Button9Click(Sender: TObject);
+var f,px,py,cx,cy: single;
+begin
+f:=strtofloat(edit11.text);
+px:=strtofloat(edit12.text)/1000;
+py:=strtofloat(edit13.text)/1000;
+cx:=strtofloat(edit15.text);
+cy:=strtofloat(edit16.text);
+Edit14.Text:=FormatFloat(f2,arctan(px/f)*cx*rad2deg*60);
+Edit17.Text:=FormatFloat(f2,arctan(py/f)*cy*rad2deg*60);
+end;
+
 procedure Tf_config.BumpRadioGroupClick(Sender: TObject);
 begin
 TexturePanel.Visible:=(BumpRadioGroup.ItemIndex=0);
@@ -450,6 +512,26 @@ countrycode.Free;
 TextureList.Free;
 Texturefn.Free;
 ov.Free;
+end;
+
+procedure Tf_config.StringGrid2MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var col,row,i:integer;
+begin
+StringGrid2.MouseToCell(X, Y, Col, Row);
+if row=0 then exit;
+if col>=2 then begin
+    i:=strtointdef(stringgrid2.Cells[col,row],-1);
+    inc(i);
+    if i>2 then i:=0;
+    stringgrid2.Cells[col,row]:=inttostr(i);
+end;
+end;
+
+procedure Tf_config.StringGrid2SelectCell(Sender: TObject; aCol, aRow: Integer;
+  var CanSelect: Boolean);
+begin
+if Acol>=2 then canselect:=false else canselect:=true;
 end;
 
 procedure Tf_config.TextureBWClick(Sender: TObject);

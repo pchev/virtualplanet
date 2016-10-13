@@ -90,6 +90,30 @@ type
     DecreaseFont1: TMenuItem;
     IncreaseFont1: TMenuItem;
     GRSPanel: TPanel;
+    Eyepiece1: TMenuItem;
+    e01: TMenuItem;
+    e02: TMenuItem;
+    e03: TMenuItem;
+    e04: TMenuItem;
+    e05: TMenuItem;
+    e06: TMenuItem;
+    e07: TMenuItem;
+    e08: TMenuItem;
+    e09: TMenuItem;
+    e10: TMenuItem;
+    CCD1: TMenuItem;
+    c01: TMenuItem;
+    c10: TMenuItem;
+    c02: TMenuItem;
+    c03: TMenuItem;
+    c04: TMenuItem;
+    c05: TMenuItem;
+    c06: TMenuItem;
+    c07: TMenuItem;
+    c08: TMenuItem;
+    c09: TMenuItem;
+    e00: TMenuItem;
+    c00: TMenuItem;
     PlanetPopup: TPopupMenu;
     SelectEuropa: TMenuItem;
     SelectGanymede: TMenuItem;
@@ -376,6 +400,8 @@ type
     procedure RemoveMark1Click(Sender: TObject);
     procedure PopupMenu1Popup(Sender: TObject);
     procedure CheckBox8Click(Sender: TObject);
+    procedure ZoomCCDClick(Sender: TObject);
+    procedure ZoomEyepieceClick(Sender: TObject);
     procedure ZoomTimerTimer(Sender: TObject);
   private
     UniqueInstance1: TCdCUniqueInstance;
@@ -399,6 +425,8 @@ type
     procedure OpenCDC(objname,otherparam:string);
     procedure OtherInstance(Sender : TObject; ParamCount: Integer; Parameters: array of String);
     procedure InstanceRunning(Sender : TObject);
+    procedure SetEyepieceMenu;
+    procedure SetCCDMenu;
     procedure SetLang1;
     procedure SetLang;
     procedure InitObservatoire;
@@ -462,6 +490,11 @@ type
     overlaytr: array[1..maxpla] of single;
     showoverlay: array[1..maxpla] of boolean;
     wantbump: array[1..maxpla] of boolean;
+    eyepiecename: array[1..10] of string;
+    eyepiecefield, eyepiecemirror, eyepiecerotation: array[1..10] of integer;
+    CCDname: array[1..10] of string;
+    CCDw, CCDh, CCDr: array[1..10] of single;
+    EyepieceRatio: double;
     CielHnd: Thandle;
     lockchart: boolean;
     StartedByDS: boolean;
@@ -505,6 +538,68 @@ implementation
 uses
   config, splashunit, pu_ephem,
   fmsg, dbutil, LCLProc;
+
+procedure Tf_avpmain.SetEyepieceMenu;
+var
+  i: integer;
+
+  procedure setmenuitem(mi: Tmenuitem; i: integer);
+  begin
+    if (trim(eyepiecename[i]) > '') and (eyepiecefield[i] > 0) then
+    begin
+      mi.Visible := True;
+      mi.Caption := eyepiecename[i];
+    end
+    else
+      mi.Visible := False;
+  end;
+
+begin
+  for i := 1 to 10 do
+    case i of
+      1: setmenuitem(e01, i);
+      2: setmenuitem(e02, i);
+      3: setmenuitem(e03, i);
+      4: setmenuitem(e04, i);
+      5: setmenuitem(e05, i);
+      6: setmenuitem(e06, i);
+      7: setmenuitem(e07, i);
+      8: setmenuitem(e08, i);
+      9: setmenuitem(e09, i);
+      10: setmenuitem(e10, i);
+    end;
+end;
+
+procedure Tf_avpmain.SetCCDMenu;
+var
+  i: integer;
+
+  procedure setmenuitem(mi: Tmenuitem; i: integer);
+  begin
+    if (trim(CCDname[i]) > '') and (CCDw[i] > 0)and (CCDh[i] > 0) then
+    begin
+      mi.Visible := True;
+      mi.Caption := CCDname[i];
+    end
+    else
+      mi.Visible := False;
+  end;
+
+begin
+  for i := 1 to 10 do
+    case i of
+      1: setmenuitem(c01, i);
+      2: setmenuitem(c02, i);
+      3: setmenuitem(c03, i);
+      4: setmenuitem(c04, i);
+      5: setmenuitem(c05, i);
+      6: setmenuitem(c06, i);
+      7: setmenuitem(c07, i);
+      8: setmenuitem(c08, i);
+      9: setmenuitem(c09, i);
+      10: setmenuitem(c10, i);
+    end;
+end;
 
 procedure Tf_avpmain.SetLang1;
 var
@@ -614,6 +709,10 @@ begin
     Notes.Caption    := rst_115;
     Notes1.Caption   := Notes.Caption;
     label3.Caption   := rst_116;
+    Eyepiece1.Caption := rst_109;
+    e00.Caption      := rst_117;
+    CCD1.Caption := rsCCDField;
+    c00.Caption      := rst_117;
     groupbox2.Caption := rst_125;
     label1.Caption   := rst_153;
     label2.Caption   := rst_154;
@@ -728,6 +827,12 @@ begin
   PrintChart := True;
   PrintEph := True;
   PrintDesc := True;
+  eyepiecename[1] := 'SCT 8" + Plossl 4mm';
+  eyepiecefield[1] := 6;
+  CCDname[1]:='SCT 8" + barlow x2 + 1/3" ccd';
+  CCDw[1]:=3.1;
+  CCDh[1]:=2.3;
+  CCDr[1]:=0;
   rotdirection := -1;
   rotstep  := 1;
   smooth   := 360;
@@ -845,6 +950,17 @@ begin
     planet1.LabelFont:=labf;
 //    labf.Free;
     Desc1.DefaultFontSize:=ReadInteger(section, 'DescFontSize', Desc1.DefaultFontSize);
+    for j := 1 to 10 do
+    begin
+      eyepiecename[j]     := ReadString(section, 'eyepiecename' + IntToStr(j), eyepiecename[j]);
+      eyepiecefield[j]    := ReadInteger(section, 'eyepiecefield' + IntToStr(j), eyepiecefield[j]);
+      eyepiecemirror[j]   := ReadInteger(section, 'eyepiecemirror' + IntToStr(j), eyepiecemirror[j]);
+      eyepiecerotation[j] := ReadInteger(section, 'eyepiecerotation' + IntToStr(j), eyepiecerotation[j]);
+      CCDname[j]     := ReadString(section, 'CCDname' + IntToStr(j), CCDname[j]);
+      CCDw[j] := ReadFloat(section, 'CCDw' + IntToStr(j), CCDw[j]);
+      CCDh[j] := ReadFloat(section, 'CCDh' + IntToStr(j), CCDh[j]);
+      CCDr[j] := ReadFloat(section, 'CCDr' + IntToStr(j), CCDr[j]);
+    end;
     for k:=1 to maxpla do begin
       overlayname[k] := ReadString(section, 'overlayname_'+IntToStr(k), '');
       overlaytr[k]  := ReadFloat(section, 'overlaytr_'+IntToStr(k), 0);
@@ -932,6 +1048,17 @@ begin
       WriteInteger(section, 'LabelFontSize', planet1.LabelFont.Size);
       WriteBool(section, 'LabelFontBold', fsBold in planet1.LabelFont.Style);
       WriteBool(section, 'LabelFontItalic', fsItalic in planet1.LabelFont.Style);
+      for i := 1 to 10 do
+      begin
+        WriteString(section, 'eyepiecename' + IntToStr(i), eyepiecename[i]);
+        WriteInteger(section, 'eyepiecefield' + IntToStr(i), eyepiecefield[i]);
+        WriteInteger(section, 'eyepiecemirror' + IntToStr(i), eyepiecemirror[i]);
+        WriteInteger(section, 'eyepiecerotation' + IntToStr(i), eyepiecerotation[i]);
+        WriteString(section, 'CCDname' + IntToStr(i), CCDname[i]);
+        WriteFloat(section, 'CCDw' + IntToStr(i), CCDw[i]);
+        WriteFloat(section, 'CCDh' + IntToStr(i), CCDh[i]);
+        WriteFloat(section, 'CCDr' + IntToStr(i), CCDr[i]);
+      end;
       WriteInteger(section, 'DescFontSize', Desc1.DefaultFontSize);
       WriteInteger(section, 'AmbientLight', planet1.AmbientColor);
       WriteInteger(section, 'DiffuseLight', planet1.DiffuseColor);
@@ -2594,6 +2721,8 @@ begin
   lockchart := False;
   StartedByDS := False;
   distancestart := False;
+  CurrentEyepiece := 0;
+  EyepieceRatio := 1;
   zoom      := 1.2;
   useDBN    := 9;
   compresstexture := false;
@@ -2720,7 +2849,6 @@ begin
 end;
 
 procedure Tf_avpmain.Init;
-var i: integer;
 begin
 try
   Setlang;
@@ -2797,6 +2925,8 @@ try
     firstsearch := True;
     searchname(currentname, False);
   end;
+  SetEyepieceMenu;
+  SetCCDMenu;
   planet1.Mirror:=checkbox2.Checked;
   GridButton.Visible:=AsMultiTexture;
 except
@@ -2914,6 +3044,17 @@ begin
     else
       f_config.ComboBox4.Text      := IntToStr(saveimagesize);
     f_config.CheckBox7.Checked := saveimagewhite;
+    for i := 1 to 10 do
+    begin
+      f_config.StringGrid2.Cells[0, i] := eyepiecename[i];
+      f_config.StringGrid2.Cells[1, i] := IntToStr(eyepiecefield[i]);
+      f_config.StringGrid2.Cells[2, i] := IntToStr(eyepiecemirror[i]);
+      f_config.StringGrid2.Cells[3, i] := IntToStr(eyepiecerotation[i]);
+      f_config.StringGrid3.Cells[0, i] := CCDname[i];
+      f_config.StringGrid3.Cells[1, i] := FormatFloat(f2,CCDw[i]);
+      f_config.StringGrid3.Cells[2, i] := FormatFloat(f2,CCDh[i]);
+      f_config.StringGrid3.Cells[3, i] := FormatFloat(f1,CCDr[i]);
+    end;
     f_config.LongEdit1.Value    := LeftMargin;
     f_config.TrackBar1.Position := PrintTextWidth;
     f_config.CheckBox13.Checked := PrintChart;
@@ -3013,6 +3154,46 @@ begin
       val(f_config.ComboBox4.Text, saveimagesize, i);
       if i <> 0 then
         saveimagesize := 0;
+      for i := 1 to 10 do
+      begin
+        eyepiecename[i]     := trim(f_config.StringGrid2.Cells[0, i]);
+        eyepiecefield[i]    := strtointdef(f_config.StringGrid2.Cells[1, i], 0);
+        eyepiecemirror[i]   := strtointdef(f_config.StringGrid2.Cells[2, i], 0);
+        eyepiecerotation[i] := strtointdef(f_config.StringGrid2.Cells[3, i], 0);
+        CCDname[i] := trim(f_config.StringGrid3.Cells[0, i]);
+        CCDw[i]    := StrToFloatDef(f_config.StringGrid3.Cells[1, i],0);
+        CCDh[i]    := StrToFloatDef(f_config.StringGrid3.Cells[2, i],0);
+        CCDr[i]    := StrToFloatDef(f_config.StringGrid3.Cells[3, i],0);
+      end;
+      SetEyepieceMenu;
+      if CurrentEyepiece > 0 then begin
+        activeplanet.Eyepiece:=eyepiecefield[CurrentEyepiece]/(diam/60);
+        case eyepiecerotation[CurrentEyepiece] of
+          1:begin
+            RadioGroup2.ItemIndex := 0;
+            RadioGroup2click(self);
+          end;
+          2:begin
+            RadioGroup2.ItemIndex := 1;
+            RadioGroup2click(self);
+          end;
+        end;
+        case eyepiecemirror[CurrentEyepiece] of
+          1: begin
+            checkbox2.Checked := False;
+            Checkbox2click(self);
+          end;
+          2: begin
+            checkbox2.Checked := True;
+            Checkbox2click(self);
+          end;
+        end;
+      end;
+      SetCCDMenu;
+      if CurrentCCD > 0 then begin
+        activeplanet.SetCCD(CCDw[CurrentCCD],CCDh[CurrentCCD],CCDr[CurrentCCD]);
+        activeplanet.ShowCCD:=true;
+      end;
       LeftMargin := f_config.LongEdit1.Value;
       PrintTextWidth := f_config.TrackBar1.Position;
       memo2.Width := PrintTextWidth;
@@ -3024,6 +3205,7 @@ begin
       if reload then
       begin
         application.ProcessMessages;
+        activeplanet.Eyepiece := 0;
         LoadOverlay(overlayname[CurrentPlanet], overlaytr[CurrentPlanet]);
         if notexture
            then activeplanet.Texture:=texturenone
@@ -4234,6 +4416,62 @@ end;
 procedure Tf_avpmain.CheckBox8Click(Sender: TObject);
 begin
   compresstexture := CheckBox8.Checked;
+end;
+
+procedure Tf_avpmain.ZoomCCDClick(Sender: TObject);
+begin
+with Sender as TMenuItem do
+  CurrentCCD := tag;
+if CurrentCCD = 0 then
+begin
+  activeplanet.ShowCCD:=false;
+end
+else
+begin
+  activeplanet.SetCCD(CCDw[CurrentCCD],CCDh[CurrentCCD],CCDr[CurrentCCD]);
+  activeplanet.ShowCCD:=true;
+end;
+end;
+
+procedure Tf_avpmain.ZoomEyepieceClick(Sender: TObject);
+begin
+with Sender as TMenuItem do
+  CurrentEyepiece := tag;
+if CurrentEyepiece = 0 then
+begin
+  activeplanet.Eyepiece:=0;
+end
+else
+begin
+  if activeplanet.VisibleSideLock then begin
+  activeplanet.Eyepiece:=eyepiecefield[CurrentEyepiece]/(diam/60);
+  case eyepiecerotation[CurrentEyepiece] of
+    1:
+    begin
+      RadioGroup2.ItemIndex := 0;
+      RadioGroup2click(self);
+    end;
+    2:
+    begin
+      RadioGroup2.ItemIndex := 1;
+      RadioGroup2click(self);
+    end;
+  end;
+  case eyepiecemirror[CurrentEyepiece] of
+    1:
+    begin
+      checkbox2.Checked := False;
+      Checkbox2click(self);
+    end;
+    2:
+    begin
+      checkbox2.Checked := True;
+      Checkbox2click(self);
+    end;
+  end;
+ end;
+end;
+
 end;
 
 procedure Tf_avpmain.NewWindowButtonClick(Sender: TObject);
