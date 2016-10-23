@@ -114,6 +114,7 @@ type
     c09: TMenuItem;
     e00: TMenuItem;
     c00: TMenuItem;
+    Panel2: TPanel;
     PlanetPopup: TPopupMenu;
     SelectEuropa: TMenuItem;
     SelectGanymede: TMenuItem;
@@ -162,6 +163,7 @@ type
     TrackBar6: TTrackBar;
     TrackBar7: TTrackBar;
     TrackBar8: TTrackBar;
+    TrackBarLabel: TTrackBar;
     ZoomTimer: TTimer;
     UpDown1: TUpDown;
     UpDown2: TUpDown;
@@ -351,6 +353,7 @@ type
     procedure TrackBar6Change(Sender: TObject);
     procedure TrackBar7Change(Sender: TObject);
     procedure TrackBar8Change(Sender: TObject);
+    procedure TrackBarLabelChange(Sender: TObject);
     procedure x21Click(Sender: TObject);
     procedure x41Click(Sender: TObject);
     procedure Button12MouseUp(Sender: TObject; Button: TMouseButton;
@@ -2972,6 +2975,7 @@ try
   Application.ProcessMessages;
   PhaseButtonClick(nil);
   SetZoomBar;
+  TrackBarLabel.Position:=-LabelDensity;
   planet1.Initialized:=true;
   planet1.RefreshAll;
   screen.cursor := crDefault;
@@ -3030,7 +3034,7 @@ begin
     f_config.Shape1.Brush.Color := marklabelcolor;
     f_config.Shape2.Brush.Color := markcolor;
     f_config.Shape3.Brush.Color := autolabelcolor;
-    f_config.TrackBar2.Position := -LabelDensity;
+    f_config.TrackBarLabel.Position := -LabelDensity;
     f_config.newlang := language;
     {if wantbump[CurrentPlanet] or activeplanet.Bumpmap then
        f_config.BumpRadioGroup.ItemIndex:=1
@@ -3110,7 +3114,8 @@ begin
       spritecolor:=markcolor;
       marklabelcolor    := f_config.Shape1.Brush.Color;
       autolabelcolor := f_config.Shape3.Brush.Color;
-      LabelDensity  := abs(f_config.TrackBar2.Position);
+      LabelDensity  := abs(f_config.TrackBarLabel.Position);
+      TrackBarLabel.Position:=-LabelDensity;
       showlabel     := f_config.checkbox5.Checked;
       showmark      := f_config.checkbox6.Checked;
       labelcenter   := f_config.checkbox17.Checked;
@@ -3911,6 +3916,12 @@ end;
 procedure Tf_avpmain.TrackBar8Change(Sender: TObject);
 begin
   activeplanet.SatViewDistance:=TrackBar8.Position/4;
+end;
+
+procedure Tf_avpmain.TrackBarLabelChange(Sender: TObject);
+begin
+LabelDensity:=abs(TrackBarLabel.Position);
+activeplanet.RefreshAll;
 end;
 
 procedure Tf_avpmain.ComboBox2Change(Sender: TObject);

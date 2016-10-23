@@ -166,7 +166,7 @@ type
     Label16: TLabel;
     Shape3: TShape;
     Label17: TLabel;
-    TrackBar2: TTrackBar;
+    TrackBarLabel: TTrackBar;
     Label18: TLabel;
     TabSheet4: TTabSheet;
     CheckBox17: TCheckBox;
@@ -594,8 +594,8 @@ begin
   OverlayPanel.visible:=AsMultiTexture;
   panel2.Visible:=not AsMultiTexture;
   TexturePanel.Visible:=(BumpRadioGroup.ItemIndex=0);
-  TrackBar2.Min:=-1000;
-  TrackBar2.Max:=-100;
+  TrackBarLabel.Min:=-1000;
+  TrackBarLabel.Max:=-100;
   TextureChanged:=false;
   showtexture;
   LabelGrid.Caption:=inttostr(TrackBar3.Position)+ldeg;
