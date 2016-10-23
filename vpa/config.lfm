@@ -21,10 +21,10 @@ object f_config: Tf_config
     Height = 429
     Top = 0
     Width = 454
-    ActivePage = TabSheet2
+    ActivePage = TabSheet3
     Align = alClient
     MultiLine = True
-    TabIndex = 5
+    TabIndex = 1
     TabOrder = 0
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
@@ -203,9 +203,9 @@ object f_config: Tf_config
         Width = 396
         Shape = bsFrame
       end
-      object TrackBar2: TTrackBar
+      object TrackBarLabel: TTrackBar
         Left = 155
-        Height = 37
+        Height = 40
         Top = 344
         Width = 193
         Frequency = 100
@@ -245,7 +245,7 @@ object f_config: Tf_config
       end
       object Label6: TLabel
         Left = 51
-        Height = 14
+        Height = 13
         Top = 198
         Width = 72
         Caption = 'Identification'
@@ -260,7 +260,7 @@ object f_config: Tf_config
       end
       object Label7: TLabel
         Left = 199
-        Height = 14
+        Height = 13
         Top = 198
         Width = 42
         Caption = 'Marque'
@@ -268,7 +268,7 @@ object f_config: Tf_config
       end
       object Label5: TLabel
         Left = 32
-        Height = 14
+        Height = 13
         Top = 170
         Width = 44
         Caption = 'Couleur'
@@ -283,7 +283,7 @@ object f_config: Tf_config
       end
       object Label17: TLabel
         Left = 335
-        Height = 14
+        Height = 13
         Top = 198
         Width = 30
         Caption = 'Label'
@@ -291,7 +291,7 @@ object f_config: Tf_config
       end
       object Label18: TLabel
         Left = 24
-        Height = 14
+        Height = 13
         Top = 352
         Width = 99
         Caption = 'Densite de labels'
@@ -299,8 +299,8 @@ object f_config: Tf_config
       end
       object LabelFont: TLabel
         Left = 157
-        Height = 14
-        Top = 310
+        Height = 13
+        Top = 311
         Width = 54
         Anchors = [akLeft, akBottom]
         Caption = 'LabelFont'
@@ -308,7 +308,7 @@ object f_config: Tf_config
       end
       object Label40: TLabel
         Left = 146
-        Height = 14
+        Height = 13
         Top = 351
         Width = 4
         Caption = '-'
@@ -316,7 +316,7 @@ object f_config: Tf_config
       end
       object Label42: TLabel
         Left = 356
-        Height = 14
+        Height = 13
         Top = 351
         Width = 9
         Caption = '+'
@@ -324,33 +324,33 @@ object f_config: Tf_config
       end
       object CheckBox1: TCheckBox
         Left = 24
-        Height = 23
+        Height = 21
         Top = 24
-        Width = 121
+        Width = 120
         Caption = 'Afficher la phase'
         TabOrder = 0
       end
       object CheckBox6: TCheckBox
         Left = 24
-        Height = 23
+        Height = 21
         Top = 286
-        Width = 125
+        Width = 124
         Caption = 'Affiche la marque'
         TabOrder = 2
       end
       object CheckBox5: TCheckBox
         Left = 24
-        Height = 23
+        Height = 21
         Top = 245
-        Width = 122
+        Width = 121
         Caption = 'Affiche les labels'
         TabOrder = 1
       end
       object CheckBox17: TCheckBox
         Left = 24
-        Height = 23
+        Height = 21
         Top = 266
-        Width = 191
+        Width = 190
         Caption = 'Label centre sur la formation'
         TabOrder = 4
       end
