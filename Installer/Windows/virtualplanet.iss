@@ -18,6 +18,7 @@ SolidCompression=true
 UseSetupLdr=true
 ShowLanguageDialog=yes
 UsePreviousAppDir=false
+DirExistsWarning=no
 WizardImageFile=setup_pict\WizPlanetImage.bmp
 WizardSmallImageFile=setup_pict\WizPlanetSmallImage.bmp
 UninstallLogMode=append
