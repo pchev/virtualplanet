@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: pch <pch@ap-i.net>\n"
-"PO-Revision-Date: 2016-10-24 11:54+0100\n"
+"PO-Revision-Date: 2016-10-24 14:26+0100\n"
 "Project-Id-Version: maplun.fr\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -412,9 +412,9 @@ msgstr "Nombre de pixel"
 msgid "Pixel size"
 msgstr "Taille des pixels"
 
-#: u_translation.rsplanet
-msgid "Planet"
-msgstr "Planète"
+#: u_translation.rsplanets
+msgid "Planets"
+msgstr "Planètes"
 
 #: u_translation.rspluto
 msgid "Pluto"
@@ -539,6 +539,14 @@ msgstr "Centre"
 #: u_translation.rst_117
 msgid "none"
 msgstr "aucun"
+
+#: u_translation.rst_118
+msgid "Eyepiece Name"
+msgstr "Nom de l'oculaire"
+
+#: u_translation.rst_119
+msgid "Field in minutes"
+msgstr "Champ en minute"
 
 #: u_translation.rst_120
 msgid "Center label on the formation"

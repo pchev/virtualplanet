@@ -24,7 +24,8 @@ object splash: Tsplash
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.6.0.4'
+  Visible = False
   object Panel1: TPanel
     Left = 0
     Height = 368
@@ -492,7 +493,7 @@ object splash: Tsplash
     end
     object Label1: TLabel
       Left = 0
-      Height = 33
+      Height = 32
       Top = 0
       Width = 432
       Align = alTop

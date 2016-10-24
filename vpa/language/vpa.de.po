@@ -422,8 +422,8 @@ msgstr ""
 msgid "Pixel size"
 msgstr ""
 
-#: u_translation.rsplanet
-msgid "Planet"
+#: u_translation.rsplanets
+msgid "Planets"
 msgstr ""
 
 #: u_translation.rspluto
@@ -551,6 +551,14 @@ msgstr "Mittelpunkt"
 #: u_translation.rst_117
 msgid "none"
 msgstr "keines"
+
+#: u_translation.rst_118
+msgid "Eyepiece Name"
+msgstr ""
+
+#: u_translation.rst_119
+msgid "Field in minutes"
+msgstr ""
 
 #: u_translation.rst_120
 msgid "Center label on the formation"

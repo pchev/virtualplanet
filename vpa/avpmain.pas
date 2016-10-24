@@ -649,7 +649,7 @@ begin
     Caption  := rstitle;
     helpprefix := rshelp_prefix;
     ToolButton1.Caption := rst_1;
-    ToolButton7.Caption:=rsPlanet;
+    ToolButton7.Caption:=rsPlanets;
     TrackBarLabel.Hint:=rst_104;
     quitter1.Caption := rst_2;
     ToolButton2.Caption := rst_3;
