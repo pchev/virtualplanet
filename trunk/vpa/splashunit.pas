@@ -68,7 +68,7 @@ const nlin=54;
       trlin=48;
 var
 cpylst: array[1..2,1..nlin]of string=((
-'Copyright © 2015  Christian Legrand, Patrick Chevalley,',
+'Copyright © 2016  Christian Legrand, Patrick Chevalley,',
 'All rights reserved',
 'This program is free software; you can redistribute it and/or',
 'modify it under the terms of the GNU General Public License.',
@@ -122,7 +122,7 @@ cpylst: array[1..2,1..nlin]of string=((
 'OCTROI DES LICENSES : Christian LEGRAND & Patrick CHEVALLEY ',
 'GESTION DES LICENSES : Christian LEGRAND',
 ''),(
-'Copyright © 2015  Christian Legrand, Patrick Chevalley,',
+'Copyright © 2016  Christian Legrand, Patrick Chevalley,',
 'All rights reserved',
 'This program is free software; you can redistribute it and/or',
 'modify it under the terms of the GNU General Public License.',
