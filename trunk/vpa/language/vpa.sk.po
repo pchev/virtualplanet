@@ -24,6 +24,14 @@ msgstr ""
 msgid "Caption"
 msgstr ""
 
+#: u_translation.rsccdfield
+msgid "CCD field"
+msgstr ""
+
+#: u_translation.rsccdname
+msgid "CCD name"
+msgstr ""
+
 #: u_translation.rscentralmerid
 msgid "Central meridian"
 msgstr ""
@@ -72,6 +80,14 @@ msgstr ""
 msgid "Ephemeris:"
 msgstr "Efemeridy:"
 
+#: u_translation.rseyepieceappa
+msgid "Eyepiece apparent field of vision"
+msgstr ""
+
+#: u_translation.rseyepiecefoca
+msgid "Eyepiece focal length"
+msgstr ""
+
 #: u_translation.rsfirstusesett
 msgid "First use setting"
 msgstr "Najprv použiť nastavenie"
@@ -87,6 +103,14 @@ msgstr "Celá obrazovka (Esc)"
 #: u_translation.rsgrid
 msgid "Grid"
 msgstr "Sieť"
+
+#: u_translation.rsgrslongitude
+msgid "GRS longitude"
+msgstr ""
+
+#: u_translation.rsheight
+msgid "Height"
+msgstr ""
 
 #: u_translation.rshelp_prefix
 #, fuzzy
@@ -108,6 +132,10 @@ msgstr ""
 
 #: u_translation.rsjupiter
 msgid "Jupiter"
+msgstr ""
+
+#: u_translation.rsjuposmeasure
+msgid "JUPOS measurement"
 msgstr ""
 
 #: u_translation.rslabelsfont
@@ -388,8 +416,16 @@ msgstr "Fáza s dynamickým reliefom"
 msgid "Phase without relief"
 msgstr "Fáza bez reliefu"
 
-#: u_translation.rsplanetselect
-msgid "Planet selection"
+#: u_translation.rspixelcount
+msgid "Pixel count"
+msgstr ""
+
+#: u_translation.rspixelsize
+msgid "Pixel size"
+msgstr ""
+
+#: u_translation.rsplanet
+msgid "Planet"
 msgstr ""
 
 #: u_translation.rspluto
@@ -398,6 +434,10 @@ msgstr ""
 
 #: u_translation.rspoleinclinat
 msgid "Pole inclination"
+msgstr ""
+
+#: u_translation.rspower
+msgid "Power"
 msgstr ""
 
 #: u_translation.rsquitfull
@@ -442,6 +482,10 @@ msgstr ""
 msgid "Steps"
 msgstr ""
 
+#: u_translation.rstelescopefoc
+msgid "Telescope focal length"
+msgstr ""
+
 #: u_translation.rstitle
 #, fuzzy
 #| msgid "Virtual Moon Atlas"
@@ -483,6 +527,10 @@ msgstr "Označenie"
 #: u_translation.rst_104
 msgid "Label density"
 msgstr "Hustota menoviek"
+
+#: u_translation.rst_109
+msgid "Eyepieces"
+msgstr ""
 
 #: u_translation.rst_11
 #, fuzzy
@@ -945,6 +993,14 @@ msgstr ""
 
 #: u_translation.rswest180180
 msgid "+West -180..+180"
+msgstr ""
+
+#: u_translation.rswidth
+msgid "Width"
+msgstr ""
+
+#: u_translation.rsyearlydrift
+msgid "Yearly drift"
 msgstr ""
 
 #: u_translation.rsyoucandownlo

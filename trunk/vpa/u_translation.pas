@@ -249,6 +249,14 @@ rsMagnitude = 'Magnitude';
 rsPoleInclinat = 'Pole inclination';
 rsVPAWebPage = 'VPA web page';
 rsConvertColor = 'Convert color texture to grayscale';
+rsPlanet = 'Planet';
+rsTelescopeFoc = 'Telescope focal length';
+rsEyepieceFoca = 'Eyepiece focal length';
+rsEyepieceAppa = 'Eyepiece apparent field of vision';
+rsPower = 'Power';
+rsGRSLongitude = 'GRS longitude';
+rsYearlyDrift = 'Yearly drift';
+rsJUPOSMeasure = 'JUPOS measurement';
 
 implementation
 

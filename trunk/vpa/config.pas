@@ -306,6 +306,18 @@ begin
       RadioGroupLong.Items[2]:=rsWest0360;
       RadioGroupLong.Items[3]:=rsWest180180;
       TextureBW.Caption:=rsConvertColor;
+      TabSheet5.Caption := rst_109;
+      Label24.Caption:=rsTelescopeFoc;
+      Label25.Caption:=rsEyepieceFoca;
+      Label26.Caption:=rsEyepieceAppa;
+      Label28.Caption:=rsPower;
+      Button6.Caption:=rst_113;
+      TabSheet5.Caption := rsCCDField;
+      Label49.Caption:=rsTelescopeFoc;
+      Label50.Caption:=rsPixelSize;
+      Label53.Caption:=rsPixelCount;
+      Button9.Caption:=rst_113;
+
 end;
 
 Function GetLangCode(buf:string):string;

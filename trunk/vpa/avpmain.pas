@@ -649,6 +649,8 @@ begin
     Caption  := rstitle;
     helpprefix := rshelp_prefix;
     ToolButton1.Caption := rst_1;
+    ToolButton7.Caption:=rsPlanet;
+    TrackBarLabel.Hint:=rst_104;
     quitter1.Caption := rst_2;
     ToolButton2.Caption := rst_3;
     label10.Caption := rst_4;
@@ -656,6 +658,8 @@ begin
     ToolButton9.Hint:=rst_31+' 1:1';
     toolbutton5.hint := rst_5;
     centre1.Caption := toolbutton5.hint;
+    CCD1.Caption:=rsCCDField;
+    Eyepiece1.Caption:=rst_109;
     Position.Caption := rst_6;
     Position1.Caption := Position.Caption;
     Ephemerides.Caption := rst_7;
@@ -756,6 +760,15 @@ begin
     SelectMercury.Caption:=pla[1];
     SelectVenus.Caption:=pla[2];
     SelectMars.Caption:=pla[4];
+    SelectJupiter.Caption:=pla[5];
+    SelectIo.Caption:=pla[12];
+    SelectEuropa.Caption:=pla[13];
+    SelectGanymede.Caption:=pla[14];
+    SelectCallisto.Caption:=pla[15];
+    Label19.Caption:=rsGRSLongitude;
+    Label20.Caption:=rsYearlyDrift;
+    Label21.Caption:=rsm_51;
+    BitBtn37.Caption:=rsJUPOSMeasure;
 end;
 
 procedure Tf_avpmain.InitObservatoire;
@@ -839,8 +852,10 @@ begin
   rotdirection := -1;
   rotstep  := 1;
   smooth   := 360;
-  for i:=1 to maxpla do LongSystem[i]:=W360;
-  LongSystem[1]:=E360;
+  for i:=1 to maxpla do LongSystem[i]:=E360;
+  LongSystem[2]:=W360;
+  LongSystem[4]:=W360;
+  LongSystem[5]:=W360;
   GRSlongitude:=208.0;
   GRSjd:=jd(2014,1,31,0);
   GRSDailydrift:=16.5/365.25;
@@ -1889,14 +1904,14 @@ end;
 procedure Tf_avpmain.GetHTMLDetail(row: TResultRow; var txt: string);
 const
   b     = '&nbsp;';
-  t1    = '<center><font size=+1 color="#0000FF"><b>';
-  t1end = '</b></font></center>';
+  t1    = '<font size=+1 color="#0000FF"><b><center>';
+  t1end = '</center></b></font>';
   t2    = '<font size=+1>';
   t2end = '</font>';
   t3    = '<b>';
   t3end = '</b>';
 var
-  nom, txtbuf, buf: string;
+  nom, txtbuf, buf,colbg,coltxt: string;
   i,n: integer;
   v: double;
   function GetField(fn:string):string;
@@ -1918,7 +1933,9 @@ var
       if result='' then result:=' ';
   end;
 begin
-  txt := '<html> <body bgcolor="white">';
+  colbg:='#'+Copy(HexStr(ColorToRGB(clWindow),8),3,6);
+  coltxt:='#'+Copy(HexStr(ColorToRGB(clWindowText),8),3,6);
+  txt := '<html> <body bgcolor='+colbg+' text='+coltxt+'>';
   buf := GetField('BODY');
   nom := GetField('NAME');
   txt  := txt + t1 +buf+ '<br>' + nom + t1end + '<br>';
@@ -2952,10 +2969,15 @@ begin
       UpdCentralMeridian(40,true);
       SearchText  := trim(ListBox1.Items[0]);
     end;
-    Firstsearch := True;
-    SearchName(SearchText, false);
-    currentmeridian := -999;
-    planet1.CenterAt(99999, 99999);
+    if searchtext=trim(rsm_27) then begin
+      Combobox1.Text :='';
+      SetDescText('<html><body> '+'No formation selected'+' </body></html>');
+    end else begin
+      Firstsearch := True;
+      SearchName(SearchText, false);
+      currentmeridian := -999;
+      planet1.CenterAt(99999, 99999);
+    end;
   end;
 
 procedure Tf_avpmain.StartTimerTimer(Sender: TObject);
