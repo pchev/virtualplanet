@@ -21,10 +21,10 @@ object f_config: Tf_config
     Height = 429
     Top = 0
     Width = 454
-    ActivePage = TabSheet3
+    ActivePage = TabSheet2
     Align = alClient
     MultiLine = True
-    TabIndex = 1
+    TabIndex = 5
     TabOrder = 0
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
@@ -838,7 +838,7 @@ object f_config: Tf_config
       object Button6: TButton
         Left = 294
         Height = 25
-        Top = 58
+        Top = 56
         Width = 75
         Caption = 'Compute'
         OnClick = Button6Click
