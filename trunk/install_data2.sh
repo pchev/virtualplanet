@@ -31,4 +31,9 @@ install -m 755 -d $destdir/share/virtualplanet
 InstData VPA_Base_Overlay $destdir
 InstData VPA_Base_Texture_Mars_Historical $destdir
 InstData VPA_Base_Texture_Mercury_Historical $destdir
+InstData VPA_Base_Texture_Jupiter_Historical $destdir
+InstData VPA_Base_Texture_Io_Historical $destdir
+InstData VPA_Base_Texture_Europa_Historical $destdir
+InstData VPA_Base_Texture_Ganymede_Historical $destdir
+InstData VPA_Base_Texture_Callisto_Historical $destdir
 
