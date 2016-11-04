@@ -233,7 +233,7 @@ Var  Splashversion, compile_time, compile_version: string;
      CurYear,CurrentMonth,CurrentDay : integer;
      CurrentTime,TimeBias,CurrentST,DT_UT_val,CurrentSunH,CurrentMoonH,CurrentMoonIllum,diam : Double;
      PlanetParalaxe: boolean;
-     GRSL,GRSLongitude,GRSDailydrift,GRSjd: double;
+     GRSL,GRSLE,GRSLongitude,GRSDailydrift,GRSjd: double;
      ForceConfig, Configfile, CdCconfig, language, uplanguage : string;
      ldeg,lmin,lsec : string;
      PrinterResolution: integer;
