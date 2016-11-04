@@ -2305,7 +2305,7 @@ end;
 
 procedure Tf_avpmain.RefreshplanetImage;
 var
-  planetrise, planetset, planettransit, azimuthrise, azimuthset, eph: string;
+  planetrise, planetset, planettransit, azimuthrise, azimuthset, eph, cmd: string;
   jd0, st0, q, hh, az, ah,magn,dp,xp,yp,zp,vel,h,pha: double;
   cpl,cpb: double;
   v1, v2, v3, v4, v5, v6, v7, v8, v9: double;
@@ -2374,6 +2374,9 @@ begin
     Djd(GRSjd,y,m,d,h);
     GRSDateEdit.Date:=EncodeDate(y,m,d);
     GRSL:=Fplanet.JupGRS(GRSLongitude,GRSDailydrift,GRSjd,CurrentJD);
+    GRSLE:=rmod(720-GRSL,360);
+    cmd:='update planet set LONGIN='+FormatFloat(f1,GRSLE)+', LONGIC="'+DEmToStr(GRSLE)+'" where PLANETN = 5 and PUN = "JUCY2000S22500";';
+    dbm.Query(cmd);
     JupSatOne(CurrentJD-dist*tlight,1,xsat1,ysat1,zsat1);
     JupSatOne(CurrentJD-dist*tlight,2,xsat2,ysat2,zsat2);
     JupSatOne(CurrentJD-dist*tlight,3,xsat3,ysat3,zsat3);
