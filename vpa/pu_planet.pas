@@ -1263,6 +1263,8 @@ begin
  cap2:=-1;
  zone:=1;
  ShadowOffset:=1;
+ FShowPhase:=true;
+ GLShadowVolume1.Active:=true;
  FOverlay:='';
  FRotation:=0;
  FRaCentre:=-9999;
