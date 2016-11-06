@@ -31,9 +31,9 @@ uses
 
 const crlf = chr(10)+chr(13);
       cpyr = '(c)';//chr($a9)+chr($c2);  // ©
-      VPAversion = '1.0';
+      VPAversion = '2.0';
       VersionName = 'VPA';
-      vpacpy = 'Copyright '+cpyr+' 2015 Christian Legrand, Patrick Chevalley';
+      vpacpy = 'Copyright '+cpyr+' 2016 Christian Legrand, Patrick Chevalley';
       vpaurl='http://ap-i.net/avp';
       jd2000 =2451545.0 ;
       jd1950 =2433282.4235;
