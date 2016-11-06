@@ -2,7 +2,7 @@
 
 # script to build extra texture for virtualplanet on a Linux system
 
-version=1.3
+version=2.0
 
 arch=$(arch)
 unset extratarget

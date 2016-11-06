@@ -2,7 +2,7 @@
 
 # script to build virtualplanet on a Mac OS X system
 
-version=1.3
+version=2.0
 
 unset make_darwin_i386
 make_darwin_i386=1

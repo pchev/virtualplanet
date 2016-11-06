@@ -2,7 +2,7 @@
 
 # script to build virtualplanet Win upgrade on a Linux system
 
-version=1.3
+version=2.0
 
 arch=$(arch)
 unset extratarget
