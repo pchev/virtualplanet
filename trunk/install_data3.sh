@@ -29,4 +29,5 @@ install -m 755 -d $destdir/share/virtualplanet
 InstData VPA_Ext_Texture_Mercury $destdir 
 InstData VPA_Ext_Texture_Venus $destdir
 InstData VPA_Ext_Texture_Mars $destdir
+InstData VPA_Ext_Texture_Mars_Shaded $destdir
 
