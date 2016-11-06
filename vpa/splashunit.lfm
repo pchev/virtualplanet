@@ -567,7 +567,7 @@ object splash: Tsplash
       Align = alBottom
       Alignment = taCenter
       AutoSize = False
-      Caption = 'Copyright © 2015  Christian Legrand, Patrick Chevalley'
+      Caption = 'Copyright © 2016  Christian Legrand, Patrick Chevalley'
       Color = clBlack
       Font.Color = clSilver
       Font.Height = -11
