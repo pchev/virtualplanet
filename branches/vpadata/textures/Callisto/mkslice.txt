@@ -4,7 +4,7 @@
 
 # use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
 # cat stretch.txt 
-# 0.0:0.0 255.0:255.0
+# 0.0:0.0 20.0:40.0 50.0:90.0 100.0:160.0 255.0:255.0
 
 # shift 180deg
 translate from=Callisto_Voyager_GalileoSSI_global_mosaic_1km.cub to=tr1.cub strans=7569 ltrans=0
