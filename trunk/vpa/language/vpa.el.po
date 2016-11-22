@@ -19,6 +19,10 @@ msgstr ""
 msgid "AU"
 msgstr ""
 
+#: u_translation.rscallisto
+msgid "Callisto"
+msgstr ""
+
 #: u_translation.rscaption
 msgid "Caption"
 msgstr "Λεζάντα"
@@ -79,6 +83,10 @@ msgstr "Τελική ημερομηνία"
 msgid "Ephemeris:"
 msgstr "Εφημερίδα:"
 
+#: u_translation.rseuropa
+msgid "Europa"
+msgstr ""
+
 #: u_translation.rseyepieceappa
 msgid "Eyepiece apparent field of vision"
 msgstr ""
@@ -99,9 +107,21 @@ msgstr "0"
 msgid "Full screen (Esc)"
 msgstr "Πλήρης οθόνη (Esc)"
 
+#: u_translation.rsganymede
+msgid "Ganymede"
+msgstr ""
+
+#: u_translation.rsgreatredspot
+msgid "Great Red Spot reference position"
+msgstr ""
+
 #: u_translation.rsgrid
 msgid "Grid"
 msgstr "Πλέγμα"
+
+#: u_translation.rsgrs
+msgid "GRS"
+msgstr ""
 
 #: u_translation.rsgrslongitude
 msgid "GRS longitude"
@@ -128,6 +148,10 @@ msgstr "Ώρες"
 #: u_translation.rsincreasefont
 msgid "Increase font size"
 msgstr "Αύξηση μεγέθους γραμματοσειράς"
+
+#: u_translation.rsio
+msgid "Io"
+msgstr ""
 
 #: u_translation.rsjupiter
 msgid "Jupiter"
@@ -443,6 +467,14 @@ msgstr ""
 msgid "Quit full screen (Esc)"
 msgstr "Τερματισμός πλήρους οθόνης (Esc)"
 
+#: u_translation.rsreferencedat
+msgid "Reference date"
+msgstr ""
+
+#: u_translation.rsreferencelon
+msgid "Reference longitude"
+msgstr ""
+
 #: u_translation.rssaturn
 msgid "Saturn"
 msgstr ""
@@ -668,7 +700,9 @@ msgid "Use Computer Date and Time"
 msgstr "Χρήση ημερομηνίας και ζώνης ώρας του υπολογιστή"
 
 #: u_translation.rst_176
-msgid "Show Phase"
+#, fuzzy
+#| msgid "Show Phase"
+msgid "Show Phase and shadow"
 msgstr "Εμφάνιση φάσης"
 
 #: u_translation.rst_177
@@ -721,7 +755,9 @@ msgid "Time Zone"
 msgstr "Ζώνη ώρας"
 
 #: u_translation.rst_22
-msgid "Show the phase"
+#, fuzzy
+#| msgid "Show the phase"
+msgid "Show the phase and shadow"
 msgstr "Εμφάνιση φάσης"
 
 #: u_translation.rst_24
