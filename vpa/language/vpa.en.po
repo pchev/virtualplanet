@@ -19,6 +19,10 @@ msgstr ""
 msgid "AU"
 msgstr ""
 
+#: u_translation.rscallisto
+msgid "Callisto"
+msgstr ""
+
 #: u_translation.rscaption
 msgid "Caption"
 msgstr ""
@@ -79,6 +83,10 @@ msgstr ""
 msgid "Ephemeris:"
 msgstr ""
 
+#: u_translation.rseuropa
+msgid "Europa"
+msgstr ""
+
 #: u_translation.rseyepieceappa
 msgid "Eyepiece apparent field of vision"
 msgstr ""
@@ -99,8 +107,20 @@ msgstr ""
 msgid "Full screen (Esc)"
 msgstr ""
 
+#: u_translation.rsganymede
+msgid "Ganymede"
+msgstr ""
+
+#: u_translation.rsgreatredspot
+msgid "Great Red Spot reference position"
+msgstr ""
+
 #: u_translation.rsgrid
 msgid "Grid"
+msgstr ""
+
+#: u_translation.rsgrs
+msgid "GRS"
 msgstr ""
 
 #: u_translation.rsgrslongitude
@@ -125,6 +145,10 @@ msgstr ""
 
 #: u_translation.rsincreasefont
 msgid "Increase font size"
+msgstr ""
+
+#: u_translation.rsio
+msgid "Io"
 msgstr ""
 
 #: u_translation.rsjupiter
@@ -433,6 +457,14 @@ msgstr ""
 msgid "Quit full screen (Esc)"
 msgstr ""
 
+#: u_translation.rsreferencedat
+msgid "Reference date"
+msgstr ""
+
+#: u_translation.rsreferencelon
+msgid "Reference longitude"
+msgstr ""
+
 #: u_translation.rssaturn
 msgid "Saturn"
 msgstr ""
@@ -656,7 +688,7 @@ msgid "Use Computer Date and Time"
 msgstr ""
 
 #: u_translation.rst_176
-msgid "Show Phase"
+msgid "Show Phase and shadow"
 msgstr ""
 
 #: u_translation.rst_177
@@ -709,7 +741,7 @@ msgid "Time Zone"
 msgstr ""
 
 #: u_translation.rst_22
-msgid "Show the phase"
+msgid "Show the phase and shadow"
 msgstr ""
 
 #: u_translation.rst_24

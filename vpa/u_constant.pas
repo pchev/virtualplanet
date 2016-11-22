@@ -35,6 +35,12 @@ const crlf = chr(10)+chr(13);
       VersionName = 'VPA';
       vpacpy = 'Copyright '+cpyr+' 2016 Christian Legrand, Patrick Chevalley';
       vpaurl='http://ap-i.net/avp';
+      vpaurlfr='http://ap-i.net/avp/fr/start';
+      RefGRSLon=250.0;
+      RefGRSdrift=16.5;
+      RefGRSY=2016;
+      RefGRSM=7;
+      RefGRSD=1;
       jd2000 =2451545.0 ;
       jd1950 =2433282.4235;
       jd1900 =2415020.3135;
@@ -88,16 +94,16 @@ const crlf = chr(10)+chr(13);
       pla: array[1..32] of string =
         ('Mercury ', 'Venus   ', '*       ', 'Mars    ', 'Jupiter ',
         'Saturn  ', 'Uranus  ', 'Neptune ', 'Pluto   ', 'Sun     ', 'Moon    ',
-        'Io      ', 'Europa  ', 'Ganymede', 'Callisto', 'Mimas   ', 'Encelade',
+        'Io      ', 'Europa  ', 'Ganymede', 'Callisto', 'Mimas   ', 'Enceladus',
         'Tethys  ', 'Dione   ',
         'Rhea    ', 'Titan   ', 'Hyperion', 'Iapetus ', 'Miranda ', 'Ariel   ',
         'Umbriel ', 'Titania ',
         'Oberon  ', 'Phobos  ', 'Deimos  ', 'Sat.Ring', 'E.Shadow');
       // the same but always with English name
-      epla: array[1..32] of string[8] =
+      epla: array[1..32] of string =
         ('Mercury ', 'Venus   ', '*       ', 'Mars    ', 'Jupiter ',
         'Saturn  ', 'Uranus  ', 'Neptune ', 'Pluto   ', 'Sun     ', 'Moon    ',
-        'Io      ', 'Europa  ', 'Ganymede', 'Callisto', 'Mimas   ', 'Encelade',
+        'Io      ', 'Europa  ', 'Ganymede', 'Callisto', 'Mimas   ', 'Enceladus',
         'Tethys  ', 'Dione   ',
         'Rhea    ', 'Titan   ', 'Hyperion', 'Iapetus ', 'Miranda ', 'Ariel   ',
         'Umbriel ', 'Titania ',

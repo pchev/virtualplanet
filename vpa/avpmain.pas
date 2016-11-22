@@ -46,7 +46,6 @@ type
   { Tf_avpmain }
 
   Tf_avpmain = class(TForm)
-    BitBtn37: TBitBtn;
     Button12: TButton;
     Button13: TButton;
     Button21: TButton;
@@ -56,18 +55,12 @@ type
     CheckBox4: TCheckBox;
     ComboBox2: TComboBox;
     ComboBox6: TComboBox;
-    GRSDateEdit: TDateEdit;
     Desc1:   TIpHtmlPanel;
     FilePopup: TPopupMenu;
     DoNotRemove: TGLSceneViewer;
-    GRS: TFloatEdit;
-    GRSdrift: TFloatEdit;
     HelpPopup: TPopupMenu;
     Label17: TLabel;
     Label18: TLabel;
-    Label19: TLabel;
-    Label20: TLabel;
-    Label21: TLabel;
     Label22: TLabel;
     Label27: TLabel;
     Label29: TLabel;
@@ -89,7 +82,6 @@ type
     FullScreen1: TMenuItem;
     DecreaseFont1: TMenuItem;
     IncreaseFont1: TMenuItem;
-    GRSPanel: TPanel;
     Eyepiece1: TMenuItem;
     e01: TMenuItem;
     e02: TMenuItem;
@@ -284,7 +276,6 @@ type
     CheckBox8: TCheckBox;
     ImageList1: TImageList;
     ToolButton12: TToolButton;
-    procedure BitBtn37Click(Sender: TObject);
     procedure Button21Click(Sender: TObject);
     procedure Button3MouseLeave(Sender: TObject);
     procedure CheckBox3Click(Sender: TObject);
@@ -300,9 +291,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure DecreaseFont1Click(Sender: TObject);
-    procedure GRSChange(Sender: TObject);
-    procedure GRSDateEditChange(Sender: TObject);
-    procedure GRSdriftChange(Sender: TObject);
     procedure IncreaseFont1Click(Sender: TObject);
     procedure MenuwebpageClick(Sender: TObject);
     procedure Quitter1Click(Sender: TObject);
@@ -757,6 +745,10 @@ begin
     pla[7]:=rsUranus;
     pla[8]:=rsNeptune;
     pla[9]:=rsPluto;
+    pla[12]:=rsIo;
+    pla[13]:=rsEuropa;
+    pla[14]:=rsGanymede;
+    pla[15]:=rsCallisto;
     SelectMercury.Caption:=pla[1];
     SelectVenus.Caption:=pla[2];
     SelectMars.Caption:=pla[4];
@@ -765,10 +757,6 @@ begin
     SelectEuropa.Caption:=pla[13];
     SelectGanymede.Caption:=pla[14];
     SelectCallisto.Caption:=pla[15];
-    Label19.Caption:=rsGRSLongitude;
-    Label20.Caption:=rsYearlyDrift;
-    Label21.Caption:=rsm_51;
-    BitBtn37.Caption:=rsJUPOSMeasure;
 end;
 
 procedure Tf_avpmain.InitObservatoire;
@@ -856,9 +844,9 @@ begin
   LongSystem[2]:=W360;
   LongSystem[4]:=W360;
   LongSystem[5]:=W360;
-  GRSlongitude:=208.0;
-  GRSjd:=jd(2014,1,31,0);
-  GRSDailydrift:=16.5/365.25;
+  GRSlongitude:=RefGRSLon;
+  GRSjd:=jd(RefGRSY,RefGRSM,RefGRSD,0);
+  GRSDailydrift:=RefGRSdrift/365.25;
   for k:=1 to maxpla do  begin
     wantbump[k] := false;
     showoverlay[k] := False;
@@ -994,6 +982,10 @@ begin
       begin
         combobox1.Items.add(ReadString(section, 'List_' + IntToStr(j), ''));
       end;
+    section     := 'GRS';
+    GRSjd := ReadFloat(section, 'GRSjd', GRSjd);
+    GRSlongitude := ReadFloat(section, 'GRSlongitude', GRSlongitude);
+    GRSDailydrift := ReadFloat(section, 'GRSDailydrift', GRSDailydrift);
   end;
   inif.Free;
   chdir(appdir);
@@ -1096,6 +1088,10 @@ begin
       WriteBool(section, 'PrintChart', PrintChart);
       WriteBool(section, 'PrintEph', PrintEph);
       WriteBool(section, 'PrintDesc', PrintDesc);
+      section := 'GRS';
+      WriteFloat(section, 'GRSjd', GRSjd);
+      WriteFloat(section, 'GRSlongitude', GRSlongitude);
+      WriteFloat(section, 'GRSDailydrift', GRSDailydrift);
       inif.UpdateFile;
     end;
   finally
@@ -2249,28 +2245,6 @@ except
 end;
 end;
 
-procedure Tf_avpmain.GRSChange(Sender: TObject);
-begin
-GRSlongitude:=grs.value;
-end;
-
-procedure Tf_avpmain.GRSDateEditChange(Sender: TObject);
-var y,m,d: word;
-begin
-  DecodeDate(GRSDateEdit.Date,y,m,d);
-  GRSjd:=jd(y,m,d,0);
-end;
-
-procedure Tf_avpmain.GRSdriftChange(Sender: TObject);
-begin
-GRSDailydrift := GRSdrift.Value/365.25;
-end;
-
-procedure Tf_avpmain.BitBtn37Click(Sender: TObject);
-begin
-  ExecuteFile(URL_GRS);
-end;
-
 procedure Tf_avpmain.IncreaseFont1Click(Sender: TObject);
 var i:integer;
 begin
@@ -2289,6 +2263,9 @@ end;
 
 procedure Tf_avpmain.MenuwebpageClick(Sender: TObject);
 begin
+ if language='fr' then
+  OpenURL(vpaurlfr)
+ else
   OpenURL(vpaurl);
 end;
 
@@ -2369,10 +2346,6 @@ begin
   precession(jd2000, CurrentJD, ra, dec);
 
   if CurrentPlanet=5 then begin
-    GRS.Value:=GRSLongitude;
-    GRSdrift.Value:=GRSDailydrift*365.25;
-    Djd(GRSjd,y,m,d,h);
-    GRSDateEdit.Date:=EncodeDate(y,m,d);
     GRSL:=Fplanet.JupGRS(GRSLongitude,GRSDailydrift,GRSjd,CurrentJD);
     GRSLE:=rmod(720-GRSL,360);
     cmd:='update planet set LONGIN='+FormatFloat(f1,GRSLE)+', LONGIC="'+DEmToStr(GRSLE)+'" where PLANETN = 5 and PUN = "JUCY2000S22500";';
@@ -2442,7 +2415,7 @@ begin
     Stringgrid1.Cells[0, i] := rsCentralMerid;
     Stringgrid1.Cells[1, i] := FormatLongitude(w3)+' (L3'+LongitudeSystemName+')';
     Inc(i);
-    Stringgrid1.Cells[0, i] := 'GRS longitude';
+    Stringgrid1.Cells[0, i] := rsGRSLongitude;
     Stringgrid1.Cells[1, i] := DEmToStr(GRSL)+' (L2'+rsWest0360+')';
   end
   else
@@ -2682,7 +2655,6 @@ if phaseeffect and wantbump[CurrentPlanet] and planet1.CanBump then
    planet1.Bumpmap:=true
 else
    planet1.Bumpmap:=false;  }
-GRSPanel.Visible:=(CurrentPlanet=5);
 currentid := '';
 RefreshplanetImage;
 SelectMedirian;
@@ -2936,7 +2908,6 @@ try
     Trackbar5.position := 1
   else
     Trackbar5.position := 1;
-  GRSPanel.Visible:=(CurrentPlanet=5);
   LabelAltitude.Caption:=inttostr(TrackBar6.Position) + blank + rsm_18;
   LabelIncl.Caption:=inttostr(TrackBar7.Position)+ ldeg;
   PhaseButton.Down := phaseeffect;
@@ -3021,6 +2992,9 @@ end;
 procedure Tf_avpmain.Configuration1Click(Sender: TObject);
 var
   reload, reloaddb, systemtimechange: boolean;
+  y,m,d: integer;
+  yw,mw,dw: word;
+  h : double;
   i : integer;
   p: TPoint;
 begin
@@ -3106,6 +3080,10 @@ begin
     f_config.LabelFont.Font.Color:=clWindowText;
     f_config.obstz:=ObsTZ;
     f_config.SetObsCountry(ObsCountry);
+    f_config.GRS.Value:=GRSLongitude;
+    f_config.GRSdrift.Value:=GRSDailydrift*365.25;
+    Djd(GRSjd,y,m,d,h);
+    f_config.GRSDateEdit.Date:=EncodeDate(y,m,d);
     FormPos(f_config,p.x,p.y);
     f_config.showmodal;
     if f_config.ModalResult = mrOk then
@@ -3119,6 +3097,10 @@ begin
       overlayname[CurrentPlanet] := f_config.combobox5.Text + '.jpg';
       overlaytr[CurrentPlanet]  := f_config.trackbar5.position/100;
       showoverlay[CurrentPlanet] := f_config.checkbox11.Checked;
+      GRSlongitude:=f_config.GRS.value;
+      DecodeDate(f_config.GRSDateEdit.Date,yw,mw,dw);
+      GRSjd:=jd(yw,mw,dw,0);
+      GRSDailydrift := f_config.GRSdrift.Value/365.25;
       GridButton.Down:=f_config.checkbox10.Checked;
       gridspacing:=f_config.TrackBar3.Position;
       TextureBW:=f_config.TextureBW.Checked;

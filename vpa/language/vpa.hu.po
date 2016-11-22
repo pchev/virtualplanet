@@ -19,6 +19,10 @@ msgstr ""
 msgid "AU"
 msgstr ""
 
+#: u_translation.rscallisto
+msgid "Callisto"
+msgstr ""
+
 #: u_translation.rscaption
 msgid "Caption"
 msgstr ""
@@ -79,6 +83,10 @@ msgstr ""
 msgid "Ephemeris:"
 msgstr "Efemerisz:"
 
+#: u_translation.rseuropa
+msgid "Europa"
+msgstr ""
+
 #: u_translation.rseyepieceappa
 msgid "Eyepiece apparent field of vision"
 msgstr ""
@@ -99,9 +107,21 @@ msgstr "0"
 msgid "Full screen (Esc)"
 msgstr "Teljes képernyő (Esc)"
 
+#: u_translation.rsganymede
+msgid "Ganymede"
+msgstr ""
+
+#: u_translation.rsgreatredspot
+msgid "Great Red Spot reference position"
+msgstr ""
+
 #: u_translation.rsgrid
 msgid "Grid"
 msgstr "Háló"
+
+#: u_translation.rsgrs
+msgid "GRS"
+msgstr ""
 
 #: u_translation.rsgrslongitude
 msgid "GRS longitude"
@@ -127,6 +147,10 @@ msgstr ""
 
 #: u_translation.rsincreasefont
 msgid "Increase font size"
+msgstr ""
+
+#: u_translation.rsio
+msgid "Io"
 msgstr ""
 
 #: u_translation.rsjupiter
@@ -443,6 +467,14 @@ msgstr ""
 msgid "Quit full screen (Esc)"
 msgstr "Teljes képernyő kikapcs (Esc)"
 
+#: u_translation.rsreferencedat
+msgid "Reference date"
+msgstr ""
+
+#: u_translation.rsreferencelon
+msgid "Reference longitude"
+msgstr ""
+
 #: u_translation.rssaturn
 msgid "Saturn"
 msgstr ""
@@ -670,7 +702,9 @@ msgid "Use Computer Date and Time"
 msgstr "A számítógép dátumának, idejének használata"
 
 #: u_translation.rst_176
-msgid "Show Phase"
+#, fuzzy
+#| msgid "Show Phase"
+msgid "Show Phase and shadow"
 msgstr "Fázis mutatása"
 
 #: u_translation.rst_177
@@ -725,7 +759,9 @@ msgid "Time Zone"
 msgstr "Időzóna"
 
 #: u_translation.rst_22
-msgid "Show the phase"
+#, fuzzy
+#| msgid "Show the phase"
+msgid "Show the phase and shadow"
 msgstr "Fázis mutatása"
 
 #: u_translation.rst_24

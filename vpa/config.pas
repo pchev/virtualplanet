@@ -32,14 +32,16 @@ uses
   Math, u_constant, cu_tz,
   Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, Buttons, ExtCtrls, Inifiles, Grids, EnhEdits,
-  CheckLst, LResources;
+  CheckLst, LResources, EditBtn;
 
 type
 
   { Tf_config }
 
   Tf_config = class(TForm)
+    BitBtn37: TBitBtn;
     Button1: TButton;
+    Button3: TButton;
     Button4: TButton;
     Button5: TButton;
     Button6: TButton;
@@ -57,13 +59,19 @@ type
     Edit7: TEdit;
     Edit8: TEdit;
     Edit9: TEdit;
+    GRS: TFloatEdit;
+    GRSDateEdit: TDateEdit;
+    GRSdrift: TFloatEdit;
     Label20: TLabel;
     Label21: TLabel;
+    Label22: TLabel;
     Label24: TLabel;
     Label25: TLabel;
     Label26: TLabel;
     Label27: TLabel;
     Label28: TLabel;
+    Label31: TLabel;
+    Label33: TLabel;
     Label49: TLabel;
     Label50: TLabel;
     Label51: TLabel;
@@ -77,6 +85,9 @@ type
     Label59: TLabel;
     Label60: TLabel;
     Label8: TLabel;
+    Label9: TLabel;
+    OverlayPanel: TPanel;
+    GRSPanel: TPanel;
     StringGrid2: TStringGrid;
     StringGrid3: TStringGrid;
     TabSheet2: TTabSheet;
@@ -175,14 +186,16 @@ type
     Label23: TLabel;
     CheckBox16: TCheckBox;
     Bevel9: TBevel;
-    OverlayPanel: TPanel;
+    OverlayPanelTop: TPanel;
     CheckBox11: TCheckBox;
     ComboBox5: TComboBox;
     Image1: TImage;
     Label30: TLabel;
     Label32: TLabel;
     TrackBar5: TTrackBar;
+    procedure BitBtn37Click(Sender: TObject);
     procedure BumpRadioGroupClick(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button9Click(Sender: TObject);
@@ -325,7 +338,11 @@ begin
       Label50.Caption:=rsPixelSize;
       Label53.Caption:=rsPixelCount;
       Button9.Caption:=rst_113;
-
+      Label9.Caption:=rsGreatRedSpot;
+      Label33.Caption:=rsReferenceDat;
+      Label22.Caption:=rsReferenceLon;
+      Label31.Caption:=rsYearlyDrift;
+      BitBtn37.Caption:=rsJUPOSMeasure;
 end;
 
 Function GetLangCode(buf:string):string;
@@ -526,6 +543,18 @@ TextureChanged:=true;
 if BumpRadioGroup.ItemIndex=1 then CheckBox11.Checked:=true;
 end;
 
+procedure Tf_config.Button3Click(Sender: TObject);
+begin
+  GRS.Value:=RefGRSLon;
+  GRSdrift.Value:=RefGRSdrift;
+  GRSDateEdit.Date:=EncodeDate(RefGRSY,RefGRSM,RefGRSD);
+end;
+
+procedure Tf_config.BitBtn37Click(Sender: TObject);
+begin
+  ExecuteFile(URL_GRS);
+end;
+
 procedure Tf_config.FormDestroy(Sender: TObject);
 begin
 countrycode.Free;
@@ -611,8 +640,18 @@ var
     i,k:integer;
 begin
   memo1.Text:=rst_184;
-  OverlayPanel.visible:=AsMultiTexture;
+  OverlayPanelTop.visible:=AsMultiTexture;
   panel2.Visible:=not AsMultiTexture;
+  if CurrentPlanet=5 then begin
+     OverlayPanel.Visible:=false;
+     GRSPanel.Visible:=true;
+     TabSheet6.Caption:=rsGRS;
+  end
+  else begin
+     OverlayPanel.Visible:=true;
+     GRSPanel.Visible:=false;
+     TabSheet6.Caption:=rst_169;
+  end;
   TexturePanel.Visible:=(BumpRadioGroup.ItemIndex=0);
   TrackBarLabel.Min:=-1000;
   TrackBarLabel.Max:=-100;
