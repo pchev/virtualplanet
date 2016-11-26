@@ -5,10 +5,11 @@
 
 # use qview stretch manual mode to make the file, be sure to include mini and maxi above to avoid clipping
 # cat stretch.txt 
-# 0.0:0.0 1.0:255.0
+# 0.0:0.0 15.0:0.0 230.0:255.0 255.0:255.0
 
-# shift 180deg
-translate from=Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m.cub to=tr1.cub strans=5760 ltrans=0
+# shift 180deg and remove bad first two column
+translate from=Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m.cub to=tr.cub strans=-2 ltrans=0
+translate from=tr.cub to=tr1.cub strans=5760 ltrans=0
 translate from=Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m.cub to=tr2.cub strans=-5760 ltrans=0
 # stretch dynamic
 stretch from=tr1.cub to=str1.cub readfile=true inputfile=stretch.txt null=0 lis=0 lrs=0 his=255 hrs=255
@@ -41,10 +42,10 @@ convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -qualit
 # 512x256 for sat over main planet
 convert l1.png -resize 512x256 t0.jpg
 
-rm str.cub str1.cub str2.cub tr1.cub tr2.cub
+rm str.cub str1.cub str2.cub tr.cub tr1.cub tr2.cub
 rm l2.cub 
 
-mkdir share/virtualplanet/Textures/Ganymede/Voyager_Galileo/
+mkdir -p share/virtualplanet/Textures/Ganymede/Voyager_Galileo/
 mv L1 L2 share/virtualplanet/Textures/Ganymede/Voyager_Galileo/
 mv t0.jpg share/virtualplanet/Textures/Ganymede/
 tar czf VPA_Base_Texture_Ganymede.tgz share

@@ -22,4 +22,8 @@ grspos=$2
 convert $jupimg -roll -$grspos+0 -resize 4000x2000 -fill "$polecolor" -fuzz 25% -draw "color 1,1 floodfill" -draw "color 1,1998 floodfill" l1.png
 
 mkdir L1
-convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 65% L1/%d.jpg
+convert l1.png +gravity -crop 1000x1000 -bordercolor white -border 12x12 -quality 100% L1/%d.jpg
+
+mkdir -p share/virtualplanet/Textures/Jupiter/Hubble2016/
+mv L1 share/virtualplanet/Textures/Jupiter/Hubble2016/
+tar czf VPA_Base_Texture_Jupiter.tgz share
