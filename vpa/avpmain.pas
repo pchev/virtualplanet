@@ -527,6 +527,7 @@ implementation
 {$R avpmain.lfm}
 
 uses
+  LazFileUtils, LazUTF8,
   config, splashunit, pu_ephem,
   fmsg, dbutil, LCLProc;
 
@@ -1489,16 +1490,19 @@ begin
   CdCconfig  := ExpandFileName(DefaultCdCconfig);
 {$endif}
 {$ifdef mswindows}
+  buf:=systoutf8(appdir);
+  buf:=trim(buf);
+  appdir:=SafeUTF8ToSys(buf);
   buf:='';
   SHGetSpecialFolderLocation(0, CSIDL_LOCAL_APPDATA, PIDL);
   SHGetPathFromIDList(PIDL, Folder);
-  buf:=systoutf8(Folder);
+  buf:=WinCPToUTF8(Folder);
   buf:=trim(buf);
   buf:=SafeUTF8ToSys(buf);
   if buf='' then begin  // old windows version
      SHGetSpecialFolderLocation(0, CSIDL_APPDATA, PIDL);
      SHGetPathFromIDList(PIDL, Folder);
-     buf:=trim(Folder);
+     buf:=trim(WinCPToUTF8(Folder));
   end;
   if buf='' then begin
      MessageDlg('Unable to create '+privatedir,
