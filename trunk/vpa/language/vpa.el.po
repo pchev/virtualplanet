@@ -157,10 +157,6 @@ msgstr ""
 msgid "Jupiter"
 msgstr ""
 
-#: u_translation.rsjuposmeasure
-msgid "JUPOS measurement"
-msgstr ""
-
 #: u_translation.rslabelsfont
 msgid "Labels font"
 msgstr "Γραμματοσ. επιγραφών"
@@ -1013,6 +1009,14 @@ msgstr "Άκυρο"
 #: u_translation.rsunnamedforma
 msgid "Unnamed Formation"
 msgstr "Ανώνυμος σχηματισμός"
+
+#: u_translation.rsupdated
+msgid "Updated!"
+msgstr ""
+
+#: u_translation.rsupdatefromin
+msgid "Update from Internet"
+msgstr ""
 
 #: u_translation.rsuranus
 msgid "Uranus"

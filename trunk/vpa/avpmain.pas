@@ -39,7 +39,7 @@ cu_planet, u_projection, cu_tz, pu_planet, cu_plansat, LCLIntf, Forms, StdCtrls,
 Graphics, Grids, mlb2, PrintersDlgs, Printers, Controls, Messages, SysUtils,
 Classes, Dialogs, FileUtil, ComCtrls, Menus, Buttons, dynlibs, BigIma, EnhEdits,
 IniFiles, passql, passqlite, Math, CraterList, LResources, EditBtn, IpHtml,
-UniqueInstance, GLViewer, GLLCLViewer;
+UniqueInstance, downloaddialog, GLViewer, GLLCLViewer;
 
 type
 
