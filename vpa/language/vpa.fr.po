@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: pch <pch@ap-i.net>\n"
-"PO-Revision-Date: 2016-11-22 15:59+0100\n"
+"PO-Revision-Date: 2016-12-05 09:44+0100\n"
 "Project-Id-Version: maplun.fr\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -155,10 +155,6 @@ msgstr "Io"
 #: u_translation.rsjupiter
 msgid "Jupiter"
 msgstr "Jupiter"
-
-#: u_translation.rsjuposmeasure
-msgid "JUPOS measurement"
-msgstr "Mesure JUPOS"
 
 #: u_translation.rslabelsfont
 msgid "Labels font"
@@ -685,7 +681,6 @@ msgid "Use Computer Date and Time"
 msgstr "Utiliser la date et l'heure de l'ordinateur"
 
 #: u_translation.rst_176
-#| msgid "Show Phase"
 msgid "Show Phase and shadow"
 msgstr "Montre la phase et les ombres"
 
@@ -745,7 +740,6 @@ msgid "Time Zone"
 msgstr "Zone horaire"
 
 #: u_translation.rst_22
-#| msgid "Show the phase"
 msgid "Show the phase and shadow"
 msgstr "Afficher la phase et les ombres"
 
@@ -1002,6 +996,14 @@ msgstr "Abandon"
 #: u_translation.rsunnamedforma
 msgid "Unnamed Formation"
 msgstr "Formations non nommées"
+
+#: u_translation.rsupdated
+msgid "Updated!"
+msgstr "Mis à jour!"
+
+#: u_translation.rsupdatefromin
+msgid "Update from Internet"
+msgstr "Mise à jour Internet"
 
 #: u_translation.rsuranus
 msgid "Uranus"

@@ -28,23 +28,21 @@ uses
 {$ifdef mswindows}
   LCLIntf,
 {$endif}
-  u_translation,
-  Math, u_constant, cu_tz,
-  Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ComCtrls, Buttons, ExtCtrls, Inifiles, Grids, EnhEdits,
-  CheckLst, LResources, EditBtn;
+  u_translation, Math, u_constant, cu_tz, Messages, SysUtils, Classes, Graphics,
+  Controls, Forms, Dialogs, StdCtrls, ComCtrls, Buttons, ExtCtrls, Inifiles,
+  Grids, EnhEdits, downloaddialog, CheckLst, LResources, EditBtn;
 
 type
 
   { Tf_config }
 
   Tf_config = class(TForm)
-    BitBtn37: TBitBtn;
     Button1: TButton;
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
     Button6: TButton;
+    BtnUpdGRS: TButton;
     Button9: TButton;
     CheckBox10: TCheckBox;
     Edit10: TEdit;
@@ -193,7 +191,7 @@ type
     Label30: TLabel;
     Label32: TLabel;
     TrackBar5: TTrackBar;
-    procedure BitBtn37Click(Sender: TObject);
+    procedure BtnUpdGRSClick(Sender: TObject);
     procedure BumpRadioGroupClick(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
@@ -342,7 +340,7 @@ begin
       Label33.Caption:=rsReferenceDat;
       Label22.Caption:=rsReferenceLon;
       Label31.Caption:=rsYearlyDrift;
-      BitBtn37.Caption:=rsJUPOSMeasure;
+      BtnUpdGRS.Caption:=rsUpdateFromIn;
 end;
 
 Function GetLangCode(buf:string):string;
@@ -550,9 +548,41 @@ begin
   GRSDateEdit.Date:=EncodeDate(RefGRSY,RefGRSM,RefGRSD);
 end;
 
-procedure Tf_config.BitBtn37Click(Sender: TObject);
+procedure Tf_config.BtnUpdGRSClick(Sender: TObject);
+var dl:TDownloadDialog;
+    inif: TMeminifile;
+    fn,section: string;
+    y,m,d: word;
 begin
-  ExecuteFile(URL_GRS);
+ dl:=TDownloadDialog.Create(self);
+ dl.SocksProxy:='';
+ dl.SocksType:='';
+ dl.HttpProxy:='';
+ dl.HttpProxyPort:='';
+ dl.HttpProxyUser:='';
+ dl.HttpProxyPass:='';
+ dl.ConfirmDownload:=false;
+ dl.QuickCancel:=true;
+ dl.URL:='http://www.ap-i.net/pub/virtualplanet/grs.txt';
+ fn:=slash(TempDir)+'grs.txt';
+ dl.SaveToFile:=fn;
+ if dl.Execute and FileExists(fn) then begin
+   inif:=TMeminifile.create(fn);
+   try
+   section:='grs';
+   DecodeDate(GRSDateEdit.Date,y,m,d);
+   GRS.Value:=inif.ReadFloat(section,'RefGRSLon',GRS.Value);
+   GRSdrift.Value:=inif.ReadFloat(section,'RefGRSdrift',GRSdrift.Value);
+   y:=inif.ReadInteger(section,'RefGRSY',y);
+   m:=inif.ReadInteger(section,'RefGRSM',m);
+   d:=inif.ReadInteger(section,'RefGRSD',d);
+   GRSDateEdit.Date:=EncodeDate(y,m,d);
+   ShowMessage(rsUpdated);
+   finally
+    inif.Free;
+   end;
+ end;
+ dl.free;
 end;
 
 procedure Tf_config.FormDestroy(Sender: TObject);

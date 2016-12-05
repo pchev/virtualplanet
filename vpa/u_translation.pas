@@ -263,10 +263,11 @@ rsPower = 'Power';
 rsGRS = 'GRS';
 rsGRSLongitude = 'GRS longitude';
 rsYearlyDrift = 'Yearly drift';
-rsJUPOSMeasure = 'JUPOS measurement';
 rsGreatRedSpot = 'Great Red Spot reference position';
 rsReferenceDat = 'Reference date';
 rsReferenceLon = 'Reference longitude';
+rsUpdateFromIn = 'Update from Internet';
+rsUpdated = 'Updated!';
 
 implementation
 

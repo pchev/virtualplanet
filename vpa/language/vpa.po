@@ -998,10 +998,6 @@ msgstr ""
 msgid "Yearly drift"
 msgstr ""
 
-#: u_translation:rsjuposmeasure
-msgid "JUPOS measurement"
-msgstr ""
-
 #: u_translation:rsgreatredspot
 msgid "Great Red Spot reference position"
 msgstr ""
@@ -1012,5 +1008,13 @@ msgstr ""
 
 #: u_translation:rsreferencelon
 msgid "Reference longitude"
+msgstr ""
+
+#: u_translation:rsupdatefromin
+msgid "Update from Internet"
+msgstr ""
+
+#: u_translation:rsupdated
+msgid "Updated!"
 msgstr ""
 

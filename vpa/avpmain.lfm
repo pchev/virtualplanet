@@ -237,7 +237,7 @@ object f_avpmain: Tf_avpmain
         TabOrder = 0
         object TrackBarLabel: TTrackBar
           Left = 0
-          Height = 40
+          Height = 37
           Top = 0
           Width = 80
           Max = -100
@@ -270,8 +270,8 @@ object f_avpmain: Tf_avpmain
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Height = 20
-    Top = 550
+    Height = 17
+    Top = 553
     Width = 885
     Panels = <    
       item
@@ -790,7 +790,7 @@ object f_avpmain: Tf_avpmain
         Top = -1000
         Width = 253
         Caption = 'Satellisation'
-        ClientHeight = 307
+        ClientHeight = 310
         ClientWidth = 251
         TabOrder = 5
         Visible = False
