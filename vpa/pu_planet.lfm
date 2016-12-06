@@ -11,7 +11,7 @@ object f_planet: Tf_planet
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.2.0'
   Visible = False
   object Planet: TPanel
     Left = 200
@@ -786,6 +786,17 @@ object f_planet: Tf_planet
     Font.Color = clWhite
     Font.Height = -11
     Font.Name = 'Default'
+    Ranges = <    
+      item
+        StartASCII = ' '
+        StopASCII = '}'
+        StartGlyphIdx = 0
+      end    
+      item
+        StartASCII = #224
+        StopASCII = #239
+        StartGlyphIdx = 94
+      end>
     left = 128
     top = 16
   end
