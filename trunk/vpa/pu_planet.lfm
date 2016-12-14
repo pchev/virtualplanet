@@ -18,6 +18,7 @@ object f_planet: Tf_planet
     Height = 500
     Top = 0
     Width = 500
+    BevelInner = bvSpace
     BevelOuter = bvNone
     ClientHeight = 500
     ClientWidth = 500
@@ -26,17 +27,17 @@ object f_planet: Tf_planet
     TabOrder = 0
     OnResize = PlanetResize
     object GLSceneViewer1: TGLSceneViewer
-      Left = 0
-      Height = 500
-      Top = 0
-      Width = 500
+      Left = 1
+      Height = 498
+      Top = 1
+      Width = 498
       Camera = GLCamera1
       Buffer.BackgroundColor = clBlack
       Buffer.AmbientColor.Color = {
         0000000000000000000000000000803F
       }
       Buffer.ContextOptions = [roDoubleBuffer, roStencilBuffer, roRenderToWindow]
-      FieldOfView = 157.380142211914
+      FieldOfView = 157.291656494141
       Align = alClient
       OnMouseDown = GLSceneViewer1MouseDown
       OnMouseMove = GLSceneViewer1MouseMove
