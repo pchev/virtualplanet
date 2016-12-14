@@ -1503,6 +1503,33 @@ begin
  GLSphereplanet.PitchAngle  := Source.GLSphereplanet.PitchAngle;
  GLSphereplanet.TurnAngle   := Source.GLSphereplanet.TurnAngle;
  GLSphereplanet.up  := Source.GLSphereplanet.Up;
+ GLSphereplanet.Scale.Y := Source.GLSphereplanet.Scale.Y;
+ GLShadowVolume1.Active:=Source.GLShadowVolume1.Active;
+ GLDummyCubeEcliptic.ResetRotations;
+ GLDummyCubeEcliptic.TurnAngle:=Source.GLDummyCubeEcliptic.TurnAngle;
+ GLDummyCubeEcliptic.RollAngle:=Source.GLDummyCubeEcliptic.RollAngle;
+ GLSphereSat1.Visible:=Source.GLSphereSat1.Visible;
+ GLSphereSat2.Visible:=Source.GLSphereSat2.Visible;
+ GLSphereSat3.Visible:=Source.GLSphereSat3.Visible;
+ GLSphereSat4.Visible:=Source.GLSphereSat4.Visible;
+ if CurrentPlanet=5 then begin
+   GLSphereSat1.Radius:=Source.GLSphereSat1.Radius;
+   GLSphereSat2.Radius:=Source.GLSphereSat2.Radius;
+   GLSphereSat3.Radius:=Source.GLSphereSat3.Radius;
+   GLSphereSat4.Radius:=Source.GLSphereSat4.Radius;
+   GLSphereSat1.Material.Texture.Assign(Source.GLSphereSat1.Material.Texture);
+   GLSphereSat2.Material.Texture.Assign(Source.GLSphereSat2.Material.Texture);
+   GLSphereSat3.Material.Texture.Assign(Source.GLSphereSat3.Material.Texture);
+   GLSphereSat4.Material.Texture.Assign(Source.GLSphereSat4.Material.Texture);
+   GLSphereSat1.Position:=Source.GLSphereSat1.Position;
+   GLSphereSat2.Position:=Source.GLSphereSat2.Position;
+   GLSphereSat3.Position:=Source.GLSphereSat3.Position;
+   GLSphereSat4.Position:=Source.GLSphereSat4.Position;
+   GLSphereSat1.Direction:=Source.GLSphereSat1.Direction;
+   GLSphereSat2.Direction:=Source.GLSphereSat2.Direction;
+   GLSphereSat3.Direction:=Source.GLSphereSat3.Direction;
+   GLSphereSat4.Direction:=Source.GLSphereSat4.Direction;
+ end;
  MinZoom:=source.MinZoom;
  if Source.Bumpmap then begin   // no bumpmap by default on second copy
     LoadSlice(zone);

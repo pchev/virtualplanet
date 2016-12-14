@@ -4528,6 +4528,7 @@ if NewWindowButton.Down then begin
   planet2.GLSceneViewer1.Camera.DepthOfView:=0;
   planet2.Assignplanet(planet1);
   planet2.GLSceneViewer1.Camera.DepthOfView:=cdo;
+  SetActiveplanet(planet2);
 end else begin
   ToolButton7.Enabled:=true;
 //  wantbump:=planet1.Bumpmap;
@@ -4535,6 +4536,8 @@ end else begin
   Panelplanet2.Width:=0;
   Splitter2.Visible:=false;
   Panelplanet2.Visible:=false;
+  SetActiveplanet(planet1);
+  activeplanet.planet.Color:=clBlack;
 end;
 end;
 
@@ -4584,6 +4587,9 @@ begin
 ToolButton14.Enabled:=mf.SatelliteRotation=0;
 if mf<>activeplanet then begin
   activeplanet:=Tf_planet(mf);
+  planet1.planet.Color:=clBlack;
+  planet2.planet.Color:=clBlack;
+  activeplanet.planet.Color:=clLime;
   checkbox2.Checked:=activeplanet.Mirror;
   ToolButton3.Down:=not activeplanet.VisibleSideLock;
   if ToolButton3.Down then
