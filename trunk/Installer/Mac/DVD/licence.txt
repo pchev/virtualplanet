@@ -1,5 +1,5 @@
 Virtual Planet Atlas
-Copyright (C) 2015 Christian Legrand & Patrick Chevalley
+Copyright (C) 2017 Christian Legrand & Patrick Chevalley
 http://www.ap-i.net/avp
 
 The "Virtual Planet Atlas" is free software as described by the 

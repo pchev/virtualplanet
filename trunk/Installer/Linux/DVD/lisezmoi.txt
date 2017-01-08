@@ -1,5 +1,5 @@
 Atlas Virtuel des Planètes
-version 1.0
+version 2.0
 Programme gratuit d'étude et d'observation des planètes.
 Pour Linux
 

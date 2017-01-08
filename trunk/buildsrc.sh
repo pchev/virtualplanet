@@ -2,9 +2,9 @@
 
 # Script to make the full source tar for release
 
-version=1.0
+version=2.0
 #pkg=trunk
-pkg=tags/V10
+pkg=tags/V20
 repo=http://svn.code.sf.net/p/virtualplanet/code
 
 builddir=/tmp/virtualplanet-src  # Be sure this is set to a non existent directory, it is removed after the run!
