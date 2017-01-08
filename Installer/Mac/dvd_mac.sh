@@ -12,9 +12,9 @@ hdiutil detach mnt
 
 cp Installer/Mac/DVD/* tmp/
 
-hdiutil create -anyowners -volname virtualplanet-1.0-macosx -format UDTO -srcfolder ./tmp virtualplanet-1.0-macosx.cdr
-hdiutil makehybrid -o virtualplanet-1.0-macosx.iso virtualplanet-1.0-macosx.cdr -iso -joliet   
+hdiutil create -anyowners -volname virtualplanet-2.0-macosx -format UDTO -srcfolder ./tmp virtualplanet-2.0-macosx.cdr
+hdiutil makehybrid -o virtualplanet-2.0-macosx.iso virtualplanet-2.0-macosx.cdr -iso -joliet   
 
-rm virtualplanet-1.0-macosx.cdr
+rm virtualplanet-2.0-macosx.cdr
 rmdir mnt
 rm -rf tmp
