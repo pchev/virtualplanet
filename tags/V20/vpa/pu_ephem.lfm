@@ -1,0 +1,249 @@
+object f_ephem: Tf_ephem
+  Left = 554
+  Height = 240
+  Top = 99
+  Width = 320
+  ActiveControl = annee
+  Caption = 'f_ephem'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnShow = FormShow
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object Label9: TLabel
+    Left = 16
+    Height = 18
+    Top = 12
+    Width = 60
+    Caption = 'Start Date'
+    ParentColor = False
+    ParentFont = False
+  end
+  object annee: TLongEdit
+    Left = 110
+    Height = 24
+    Hint = '-2999..2999'
+    Top = 8
+    Width = 45
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 0
+    Value = 2002
+    MinValue = -2999
+    MaxValue = 2999
+  end
+  object UpDown1: TUpDown
+    Left = 155
+    Height = 24
+    Top = 8
+    Width = 13
+    Associate = annee
+    Max = 2999
+    Min = -2999
+    Position = 2002
+    TabOrder = 1
+    Thousands = False
+    Wrap = False
+  end
+  object mois: TLongEdit
+    Left = 166
+    Height = 24
+    Hint = '0..12'
+    Top = 8
+    Width = 28
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    Value = 1
+    MaxValue = 12
+  end
+  object UpDown2: TUpDown
+    Left = 194
+    Height = 24
+    Top = 8
+    Width = 13
+    Associate = mois
+    Max = 12
+    Min = 1
+    Position = 1
+    TabOrder = 3
+    Wrap = True
+  end
+  object jour: TLongEdit
+    Left = 208
+    Height = 24
+    Hint = '0..31'
+    Top = 8
+    Width = 28
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 4
+    Value = 31
+    MaxValue = 31
+  end
+  object UpDown3: TUpDown
+    Left = 236
+    Height = 24
+    Top = 8
+    Width = 13
+    Associate = jour
+    Max = 31
+    Min = 1
+    Position = 31
+    TabOrder = 5
+    Wrap = True
+  end
+  object Label10: TLabel
+    Left = 16
+    Height = 18
+    Top = 56
+    Width = 54
+    Caption = 'End Date'
+    ParentColor = False
+    ParentFont = False
+  end
+  object annee1: TLongEdit
+    Left = 110
+    Height = 24
+    Hint = '-2999..2999'
+    Top = 52
+    Width = 45
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 6
+    Value = 2002
+    MinValue = -2999
+    MaxValue = 2999
+  end
+  object UpDown4: TUpDown
+    Left = 155
+    Height = 24
+    Top = 52
+    Width = 13
+    Associate = annee1
+    Max = 2999
+    Min = -2999
+    Position = 2002
+    TabOrder = 7
+    Thousands = False
+    Wrap = False
+  end
+  object mois1: TLongEdit
+    Left = 166
+    Height = 24
+    Hint = '0..12'
+    Top = 52
+    Width = 28
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 8
+    Value = 1
+    MaxValue = 12
+  end
+  object UpDown5: TUpDown
+    Left = 194
+    Height = 24
+    Top = 52
+    Width = 13
+    Associate = mois1
+    Max = 12
+    Min = 1
+    Position = 1
+    TabOrder = 9
+    Wrap = True
+  end
+  object jour1: TLongEdit
+    Left = 208
+    Height = 24
+    Hint = '0..31'
+    Top = 52
+    Width = 28
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 10
+    Value = 31
+    MaxValue = 31
+  end
+  object UpDown6: TUpDown
+    Left = 236
+    Height = 24
+    Top = 52
+    Width = 13
+    Associate = jour1
+    Max = 31
+    Min = 1
+    Position = 31
+    TabOrder = 11
+    Wrap = True
+  end
+  object step: TLongEdit
+    Left = 110
+    Height = 24
+    Hint = '1..999999'
+    Top = 92
+    Width = 56
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 12
+    Value = 1
+    MinValue = 1
+    MaxValue = 999999
+  end
+  object Compute1: TButton
+    Left = 232
+    Height = 25
+    Top = 192
+    Width = 75
+    Caption = 'Compute'
+    Default = True
+    OnClick = Compute1Click
+    TabOrder = 13
+  end
+  object FileNameEdit1: TFileNameEdit
+    Left = 110
+    Height = 24
+    Top = 136
+    Width = 176
+    DialogOptions = []
+    FilterIndex = 0
+    HideDirectories = False
+    ButtonWidth = 23
+    NumGlyphs = 1
+    MaxLength = 0
+    TabOrder = 14
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 18
+    Top = 95
+    Width = 27
+    Caption = 'Step'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 178
+    Height = 18
+    Top = 95
+    Width = 37
+    Caption = 'Hours'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 15
+    Height = 18
+    Top = 139
+    Width = 20
+    Caption = 'File'
+    ParentColor = False
+  end
+  object Button1: TButton
+    Left = 110
+    Height = 25
+    Top = 192
+    Width = 75
+    Cancel = True
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 15
+  end
+end

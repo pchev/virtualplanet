@@ -1,0 +1,10 @@
+Atlas Virtuel des Planètes
+version 2.0
+Programme gratuit d'étude et d'observation dees planètes.
+Pour Windows XP/Vista/7/8/10
+
+Ce fichier installe les textures haute résolution pour l'Atlas Virtuel des Planètes.
+Vous devez avoir installé le programme principal virtualplanet_pro avant de continuer.
+
+Vous souhaitez nous soutenir ?
+http://www.ap-i.net/avp/fr/support

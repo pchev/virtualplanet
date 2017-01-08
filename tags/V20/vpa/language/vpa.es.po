@@ -1,0 +1,1063 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Juan Carlos Garrido Elvira <neuma@arrakis.es>\n"
+"PO-Revision-Date: 2009-12-17 14:59+0200\n"
+"Project-Id-Version: \n"
+"Language-Team: Français <kde-i18n-doc@kde.org>\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: u_translation.rsapparent
+msgid "Apparent"
+msgstr ""
+
+#: u_translation.rsau
+msgid "AU"
+msgstr ""
+
+#: u_translation.rscallisto
+msgid "Callisto"
+msgstr ""
+
+#: u_translation.rscaption
+msgid "Caption"
+msgstr ""
+
+#: u_translation.rsccdfield
+msgid "CCD field"
+msgstr ""
+
+#: u_translation.rsccdname
+msgid "CCD name"
+msgstr ""
+
+#: u_translation.rscentralmerid
+msgid "Central meridian"
+msgstr ""
+
+#: u_translation.rscheckforopti
+msgid "Check for optional features"
+msgstr "Comprobar características opcionales"
+
+#: u_translation.rsconvertcolor
+msgid "Convert color texture to grayscale"
+msgstr ""
+
+#: u_translation.rscountry
+msgid "Country"
+msgstr "País"
+
+#: u_translation.rsdecreasefont
+msgid "Decrease font size"
+msgstr ""
+
+#: u_translation.rsdefault
+msgid "Default"
+msgstr "Por defecto"
+
+#: u_translation.rsdegree
+msgid "d"
+msgstr ""
+
+#: u_translation.rsdownload
+msgid "Download"
+msgstr "Descargar"
+
+#: u_translation.rseast0360
+msgid "+East 0..360"
+msgstr ""
+
+#: u_translation.rseast180180
+msgid "+East -180..+180"
+msgstr ""
+
+#: u_translation.rsenddate
+msgid "End date"
+msgstr ""
+
+#: u_translation.rsephemeris
+msgid "Ephemeris:"
+msgstr "Efemérides:"
+
+#: u_translation.rseuropa
+msgid "Europa"
+msgstr ""
+
+#: u_translation.rseyepieceappa
+msgid "Eyepiece apparent field of vision"
+msgstr ""
+
+#: u_translation.rseyepiecefoca
+msgid "Eyepiece focal length"
+msgstr ""
+
+#: u_translation.rsfirstusesett
+msgid "First use setting"
+msgstr "Configuración de primer uso"
+
+#: u_translation.rsformat
+msgid "0"
+msgstr "1"
+
+#: u_translation.rsfullscreen
+msgid "Full screen (Esc)"
+msgstr "Pantalla completa (Esc)"
+
+#: u_translation.rsganymede
+msgid "Ganymede"
+msgstr ""
+
+#: u_translation.rsgreatredspot
+msgid "Great Red Spot reference position"
+msgstr ""
+
+#: u_translation.rsgrid
+msgid "Grid"
+msgstr "Cuadrícula"
+
+#: u_translation.rsgrs
+msgid "GRS"
+msgstr ""
+
+#: u_translation.rsgrslongitude
+msgid "GRS longitude"
+msgstr ""
+
+#: u_translation.rsheight
+msgid "Height"
+msgstr ""
+
+#: u_translation.rshelp_prefix
+#, fuzzy
+#| msgid "UK"
+msgid "EN"
+msgstr "ES"
+
+#: u_translation.rshistorical
+msgid "Historical"
+msgstr ""
+
+#: u_translation.rshours
+msgid "Hours"
+msgstr ""
+
+#: u_translation.rsincreasefont
+msgid "Increase font size"
+msgstr ""
+
+#: u_translation.rsio
+msgid "Io"
+msgstr ""
+
+#: u_translation.rsjupiter
+msgid "Jupiter"
+msgstr ""
+
+#: u_translation.rslabelsfont
+msgid "Labels font"
+msgstr "Etiquetas de fuentes"
+
+#: u_translation.rslanguage
+msgid "English"
+msgstr "Español"
+
+#: u_translation.rslevel
+msgid "Level:"
+msgstr "Nivel:"
+
+#: u_translation.rslocalzenitho
+msgid "Local zenith on top"
+msgstr ""
+
+#: u_translation.rslongitudesys
+msgid "Longitude system"
+msgstr ""
+
+#: u_translation.rsmagnitude
+msgid "Magnitude"
+msgstr ""
+
+#: u_translation.rsmars
+msgid "Mars"
+msgstr ""
+
+#: u_translation.rsmercury
+msgid "Mercury"
+msgstr ""
+
+#: u_translation.rsminimallengt
+msgid "Minimal length (km)"
+msgstr ""
+
+#: u_translation.rsminute
+#, fuzzy
+#| msgid "m"
+msgctxt "u_translation.rsminute"
+msgid "'"
+msgstr "'"
+
+#: u_translation.rsm_1
+msgid "from"
+msgstr "desde"
+
+#: u_translation.rsm_10
+msgid "Longitude:"
+msgstr "Longitud:"
+
+#: u_translation.rsm_11
+msgid "Latitude:"
+msgstr "Latitud:"
+
+#: u_translation.rsm_12
+msgid "Quadrant:"
+msgstr "Cuadrante:"
+
+#: u_translation.rsm_13
+msgid "Area:"
+msgstr "Área:"
+
+#: u_translation.rsm_17
+msgid "Dimension:"
+msgstr "Dimensión:"
+
+#: u_translation.rsm_18
+msgid "Km"
+msgstr "Km"
+
+#: u_translation.rsm_19
+msgid "Mi"
+msgstr "Mi"
+
+#: u_translation.rsm_2
+#, fuzzy
+#| msgid "born in"
+msgid "of"
+msgstr "nacido en"
+
+#: u_translation.rsm_20
+msgid "Height:"
+msgstr "Altura:"
+
+#: u_translation.rsm_21
+msgctxt "u_translation.rsm_21"
+msgid "m"
+msgstr "m'"
+
+#: u_translation.rsm_22
+msgid "ft"
+msgstr "pies"
+
+#: u_translation.rsm_23
+msgid "Height/Wide ratio:"
+msgstr "Relación Alto/Ancho:"
+
+#: u_translation.rsm_26
+msgid "or"
+msgstr "o"
+
+#: u_translation.rsm_27
+#, fuzzy
+#| msgid "No formation actually near the central meridian"
+msgid "No formation match the criteria"
+msgstr "Ninguna formación cerca del terminador actualmente"
+
+#: u_translation.rsm_29
+msgid "Right Ascension:"
+msgstr "Arcensión recta:"
+
+#: u_translation.rsm_3
+#, fuzzy
+#| msgid "Born at:"
+msgid "Born:"
+msgstr "Nacido en:"
+
+#: u_translation.rsm_30
+msgid "Declination:"
+msgstr "Declinación:"
+
+#: u_translation.rsm_31
+msgid "Distance:"
+msgstr "Distancia:"
+
+#: u_translation.rsm_32
+msgid "Phase:"
+msgstr "Fase:"
+
+#: u_translation.rsm_35
+msgid "Illumination:"
+msgstr "Iluminación:"
+
+#: u_translation.rsm_36
+msgid "Apparent diameter:"
+msgstr "Diámetro aparente:"
+
+#: u_translation.rsm_37
+msgid "Position angle:"
+msgstr "Ángulo de posición"
+
+#: u_translation.rsm_38
+msgid "Rise:"
+msgstr "Orto:"
+
+#: u_translation.rsm_39
+msgid "Transit:"
+msgstr "Tránsito:"
+
+#: u_translation.rsm_4
+msgid "in"
+msgstr "en"
+
+#: u_translation.rsm_40
+msgid "Set:"
+msgstr "Ocaso:"
+
+#: u_translation.rsm_41
+msgid "Rise azimuth:"
+msgstr "Azimut del orto:"
+
+#: u_translation.rsm_42
+msgid "Set azimuth:"
+msgstr "Azimut del ocaso:"
+
+#: u_translation.rsm_43
+msgid "Field:"
+msgstr "Campo:"
+
+#: u_translation.rsm_44
+msgid "Refresh rate"
+msgstr "Frecuencia de refresco"
+
+#: u_translation.rsm_45
+msgid "Sub-solar latitude:"
+msgstr "Latitud sub-solar:"
+
+#: u_translation.rsm_5
+#, fuzzy
+#| msgid "Dead at:"
+msgid "Dead:"
+msgstr "Murió en:"
+
+#: u_translation.rsm_50
+msgctxt "u_translation.rsm_50"
+msgid "Time"
+msgstr "Hora"
+
+#: u_translation.rsm_51
+msgctxt "u_translation.rsm_51"
+msgid "Date"
+msgstr "Fecha"
+
+#: u_translation.rsm_52
+msgid "Measure the distance"
+msgstr "Medir la distancia"
+
+#: u_translation.rsm_53
+msgid "Standard cursor mode"
+msgstr "Modo de cursor estándar"
+
+#: u_translation.rsm_55
+msgid "Transit Altitude:"
+msgstr "Altitud del tránsito:"
+
+#: u_translation.rsm_56
+msgid "Type:"
+msgstr "Tipo:"
+
+#: u_translation.rsm_57
+msgid "Size:"
+msgstr "Tamaño:"
+
+#: u_translation.rsm_58
+msgid "Description:"
+msgstr "Descripción:"
+
+#: u_translation.rsm_59
+msgid "Observation:"
+msgstr "Observación:"
+
+#: u_translation.rsm_6
+msgid "Name Author:"
+msgstr "Nombre del autor:"
+
+#: u_translation.rsm_60
+msgid "Position:"
+msgstr "Posición:"
+
+#: u_translation.rsm_62
+msgid "Name Origine:"
+msgstr "Nombre original:"
+
+#: u_translation.rsm_63
+msgid "Detailed Name:"
+msgstr "Nombre detallado."
+
+#: u_translation.rsm_64
+msgid "Important Facts:"
+msgstr "Hechos relevantes:"
+
+#: u_translation.rsm_73
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: u_translation.rsm_74
+msgid "Altitude"
+msgstr "Altitud"
+
+#: u_translation.rsm_75
+msgid "From Database:"
+msgstr "De la base de datos:"
+
+#: u_translation.rsnametype
+msgid "Name type:"
+msgstr ""
+
+#: u_translation.rsneptune
+msgid "Neptune"
+msgstr ""
+
+#: u_translation.rsnotappliable
+msgid "Not appliable"
+msgstr ""
+
+#: u_translation.rsnotexturetou
+msgid "No texture (to use with an overlay alone)"
+msgstr ""
+
+#: u_translation.rsphasewithdyn
+msgid "Phase with dynamic relief"
+msgstr "Fase con realce dinámico"
+
+#: u_translation.rsphasewithout
+msgid "Phase without relief"
+msgstr "Fase sin realce dinámico"
+
+#: u_translation.rspixelcount
+msgid "Pixel count"
+msgstr ""
+
+#: u_translation.rspixelsize
+msgid "Pixel size"
+msgstr ""
+
+#: u_translation.rsplanets
+msgid "Planets"
+msgstr ""
+
+#: u_translation.rspluto
+msgid "Pluto"
+msgstr ""
+
+#: u_translation.rspoleinclinat
+msgid "Pole inclination"
+msgstr ""
+
+#: u_translation.rspower
+msgid "Power"
+msgstr ""
+
+#: u_translation.rsquitfull
+msgid "Quit full screen (Esc)"
+msgstr "Salir del modo pantalla completa (Esc)"
+
+#: u_translation.rsreferencedat
+msgid "Reference date"
+msgstr ""
+
+#: u_translation.rsreferencelon
+msgid "Reference longitude"
+msgstr ""
+
+#: u_translation.rssaturn
+msgid "Saturn"
+msgstr ""
+
+#: u_translation.rssaveephemeri
+msgid "Save ephemeris to file"
+msgstr ""
+
+#: u_translation.rssecond
+#, fuzzy
+#| msgid "s"
+msgid "\""
+msgstr "\""
+
+#: u_translation.rsshowgrid
+msgid "Show grid"
+msgstr "Mostrar cuadrícula"
+
+#: u_translation.rsshowlabels
+msgid "Show labels"
+msgstr "Mostrar eteiquetas"
+
+#: u_translation.rsshowscale
+msgid "Show scale"
+msgstr "Mostrar escala"
+
+#: u_translation.rsstandardtext
+msgid "(standard texture selection)"
+msgstr ""
+
+#: u_translation.rsstartdate
+msgid "Start date"
+msgstr ""
+
+#: u_translation.rssteps
+msgid "Steps"
+msgstr ""
+
+#: u_translation.rstelescopefoc
+msgid "Telescope focal length"
+msgstr ""
+
+#: u_translation.rstitle
+#, fuzzy
+#| msgid "Virtual Moon Atlas"
+msgid "Virtual Planets Atlas"
+msgstr "Atlas Virtual de la Luna"
+
+#: u_translation.rstopocentric
+msgid "Topocentric"
+msgstr "Topocéntrico"
+
+#: u_translation.rstranslator
+msgid "Translation: P. Chevalley / C. Legrand"
+msgstr "Traducción: Juan Carlos Garrido Elvira"
+
+#: u_translation.rst_1
+msgid "File"
+msgstr "Archivo"
+
+#: u_translation.rst_10
+msgid "Find"
+msgstr "Encontrar"
+
+#: u_translation.rst_100
+msgid "Observatory"
+msgstr "Observatorio"
+
+#: u_translation.rst_101
+msgid "Display"
+msgstr "Pantalla"
+
+#: u_translation.rst_102
+msgid "Mark the point of maximum libration"
+msgstr "Marcar el punto de máxima libración"
+
+#: u_translation.rst_103
+msgid "Identification"
+msgstr "Identificación"
+
+#: u_translation.rst_104
+msgid "Label density"
+msgstr "Densidad de las etiquetas"
+
+#: u_translation.rst_109
+msgid "Eyepieces"
+msgstr ""
+
+#: u_translation.rst_11
+#, fuzzy
+#| msgid "Find Next"
+msgid "Next"
+msgstr "Siguiente"
+
+#: u_translation.rst_113
+msgid "Compute"
+msgstr "Calcular"
+
+#: u_translation.rst_114
+msgid "Update"
+msgstr "Actualizar"
+
+#: u_translation.rst_115
+msgid "Notes"
+msgstr "Notas"
+
+#: u_translation.rst_116
+msgid "Centre"
+msgstr "Centrar"
+
+#: u_translation.rst_117
+msgid "none"
+msgstr "ninguno"
+
+#: u_translation.rst_118
+msgid "Eyepiece Name"
+msgstr ""
+
+#: u_translation.rst_119
+msgid "Field in minutes"
+msgstr ""
+
+#: u_translation.rst_120
+msgid "Center label on the formation"
+msgstr "Centrar la etiqueta sobre la formación"
+
+#: u_translation.rst_125
+msgid "Options valid at next startup"
+msgstr "Opciones válidas en el siguiente reinicio"
+
+#: u_translation.rst_134
+msgid "Full Globe"
+msgstr "Globo completo"
+
+#: u_translation.rst_14
+msgid "Outline"
+msgstr "Perfil"
+
+#: u_translation.rst_144
+msgid "Select Texture"
+msgstr "Seleccionar textura"
+
+#: u_translation.rst_145
+msgid "OpenGL Info"
+msgstr "Info OpenGl"
+
+#: u_translation.rst_146
+msgid "Positive East"
+msgstr "Este positivo"
+
+#: u_translation.rst_147
+msgid "N"
+msgstr "N"
+
+#: u_translation.rst_148
+msgid "S"
+msgstr "S"
+
+#: u_translation.rst_149
+msgid "E"
+msgstr "E"
+
+#: u_translation.rst_15
+msgid "Help"
+msgstr "Ayuda"
+
+#: u_translation.rst_150
+msgid "W"
+msgstr "O"
+
+#: u_translation.rst_152
+msgid "Texture"
+msgstr "Textura"
+
+#: u_translation.rst_153
+msgid "L"
+msgstr "L"
+
+#: u_translation.rst_154
+msgid "B"
+msgstr "B"
+
+#: u_translation.rst_155
+msgid "mm."
+msgstr "mm"
+
+#: u_translation.rst_16
+msgid "About"
+msgstr "Acerca de"
+
+#: u_translation.rst_164
+msgid "Historical Sites"
+msgstr "Sitios históricos"
+
+#: u_translation.rst_166
+msgid "2nd Window"
+msgstr "2ª ventana"
+
+#: u_translation.rst_169
+msgid "Overlay"
+msgstr "Revestimiento"
+
+#: u_translation.rst_17
+msgid "Now"
+msgstr "Ahora"
+
+#: u_translation.rst_170
+msgid "Show overlay"
+msgstr "Mostrar revestimiento"
+
+#: u_translation.rst_171
+msgid "Overlay :"
+msgstr "Revestimiento"
+
+#: u_translation.rst_172
+msgid "Transparency:"
+msgstr "Transparencia"
+
+#: u_translation.rst_173
+msgid "Date / Time"
+msgstr "Fecha / Hora"
+
+#: u_translation.rst_174
+msgid "Use Computer Date and Time"
+msgstr "Usar fecha y hora del ordenador"
+
+#: u_translation.rst_176
+#, fuzzy
+#| msgid "Show Phase"
+msgid "Show Phase and shadow"
+msgstr "Mostrar fase"
+
+#: u_translation.rst_177
+#, fuzzy
+#| msgid "Flip N-S"
+msgid "Rotate N-S"
+msgstr "Voltear N-S"
+
+#: u_translation.rst_178
+msgid "Flip E-W"
+msgstr "Voltear E-O"
+
+#: u_translation.rst_18
+msgid "OK"
+msgstr "OK"
+
+#: u_translation.rst_180
+msgid "Remove Selection Mark"
+msgstr "Quitar la marca de selección"
+
+#: u_translation.rst_181
+msgid "Mark size"
+msgstr "Tamaño de la marca"
+
+#: u_translation.rst_182
+msgid "Force texture compression"
+msgstr "Forzar la compresión de textura"
+
+#: u_translation.rst_183
+msgid "Label Color"
+msgstr "Color de la etiqueta"
+
+#: u_translation.rst_184
+msgid "Your graphic card do not support to display more than one texture for the same object. Be sure that hardware acceleration is activated or change the graphic card. The require function is GL_ARB_MULTITEXTURE "
+msgstr "Su tarjeta gráfica no soporta mostrar más de una textura para el mismo objeto. Asegúrese de que la aceleración de hardware está activada o cambie la tarjeta gráfica. La función requerida es GL_ARB_MULTITEXTURE"
+
+#: u_translation.rst_185
+msgid "Look here for a list of supported graphic card"
+msgstr "Mire aquí para ver una lista de tarjetas gráficas soportadas"
+
+#: u_translation.rst_19
+msgctxt "u_translation.rst_19"
+msgid "Latitude"
+msgstr "Latitud"
+
+#: u_translation.rst_2
+msgid "Quit"
+msgstr "Cerrar"
+
+#: u_translation.rst_21
+msgid "Time Zone"
+msgstr "Zona horaria"
+
+#: u_translation.rst_22
+#, fuzzy
+#| msgid "Show the phase"
+msgid "Show the phase and shadow"
+msgstr "Mostrar la fase"
+
+#: u_translation.rst_24
+msgid "Language"
+msgstr "Lenguage"
+
+#: u_translation.rst_25
+msgid "Picture"
+msgstr "Imagen"
+
+#: u_translation.rst_26
+msgid "Geocentric"
+msgstr "Geocéntrico"
+
+#: u_translation.rst_28
+msgid "Color"
+msgstr "Color"
+
+#: u_translation.rst_29
+msgid "Label"
+msgstr "Etiqueta"
+
+#: u_translation.rst_3
+msgid "Configuration"
+msgstr "Configuración"
+
+#: u_translation.rst_30
+msgid "Close"
+msgstr "Cerrar"
+
+#: u_translation.rst_31
+msgid "Zoom"
+msgstr "Aumentar"
+
+#: u_translation.rst_32
+msgid "Lighting"
+msgstr "Iluminación"
+
+#: u_translation.rst_33
+msgid "Penumbra"
+msgstr "Penumbra"
+
+#: u_translation.rst_34
+msgid "Diffuse"
+msgstr "Difuso"
+
+#: u_translation.rst_35
+msgid "Specular"
+msgstr "Especular"
+
+#: u_translation.rst_36
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: u_translation.rst_37
+msgid "Smoothness"
+msgstr "Suavidad"
+
+#: u_translation.rst_4
+msgid "Zoom:"
+msgstr "Aumentar:"
+
+#: u_translation.rst_46
+msgid "Sort"
+msgstr "Ordenar"
+
+#: u_translation.rst_47
+msgctxt "u_translation.rst_47"
+msgid "Name"
+msgstr "Nombre"
+
+#: u_translation.rst_5
+msgctxt "u_translation.rst_5"
+msgid "Center"
+msgstr "Centrar"
+
+#: u_translation.rst_51
+msgid "Terminator"
+msgstr "Terminador"
+
+#: u_translation.rst_52
+msgid "Mark"
+msgstr "Marca"
+
+#: u_translation.rst_53
+msgid "Show label"
+msgstr "Mostrar etiqueta"
+
+#: u_translation.rst_54
+msgid "Show mark"
+msgstr "Mostrar marca"
+
+#: u_translation.rst_55
+msgid "Setup"
+msgstr "Configurar"
+
+#: u_translation.rst_56
+msgid "Sky Chart"
+msgstr "Carta celeste"
+
+#: u_translation.rst_57
+msgid "General"
+msgstr "General"
+
+#: u_translation.rst_6
+msgid "Information"
+msgstr "Información"
+
+#: u_translation.rst_62
+msgid "Folder"
+msgstr "Carpeta"
+
+#: u_translation.rst_63
+msgid "Tools"
+msgstr "Herramientas"
+
+#: u_translation.rst_64
+msgid "Rotation"
+msgstr "Rotación"
+
+#: u_translation.rst_65
+msgid "West"
+msgstr "Oeste"
+
+#: u_translation.rst_66
+msgid "East"
+msgstr "Este"
+
+#: u_translation.rst_67
+msgid "Default Orientation"
+msgstr "Orientación por defecto"
+
+#: u_translation.rst_68
+msgid "Celestial Pole on top"
+msgstr "Polo celeste arriba"
+
+#: u_translation.rst_69
+msgid "Distance"
+msgstr "Distancia"
+
+#: u_translation.rst_7
+msgid "Ephemeris"
+msgstr "Efemérides"
+
+#: u_translation.rst_70
+msgid "Real Distance"
+msgstr "Distancia real"
+
+#: u_translation.rst_71
+msgid "Apparent Distance"
+msgstr "Distancia aparente"
+
+#: u_translation.rst_72
+msgid "North"
+msgstr "Norte"
+
+#: u_translation.rst_73
+msgid "South"
+msgstr "Sur"
+
+#: u_translation.rst_74
+msgid "Mirror"
+msgstr "Espejo"
+
+#: u_translation.rst_75
+msgid "Save Map"
+msgstr "Guardar mapa"
+
+#: u_translation.rst_76
+msgid "Saved Map size"
+msgstr "Tamaño del mapa guardado"
+
+#: u_translation.rst_77
+msgid "As on screen"
+msgstr "Igual que en pantalla"
+
+#: u_translation.rst_78
+msgid "Save As"
+msgstr "Guardar como"
+
+#: u_translation.rst_79
+msgid "Print"
+msgstr "Imprimir"
+
+#: u_translation.rst_8
+msgid "Zoom+"
+msgstr "Aumentar+"
+
+#: u_translation.rst_80
+msgid "White background"
+msgstr "Fondo blanco"
+
+#: u_translation.rst_81
+msgid "Neighbor"
+msgstr "Vecino"
+
+#: u_translation.rst_82
+msgid "Print Setup..."
+msgstr "Configurar impresora..."
+
+#: u_translation.rst_84
+msgid "Select All"
+msgstr "Seleccionar todo"
+
+#: u_translation.rst_85
+msgid "Copy"
+msgstr "Copiar"
+
+#: u_translation.rst_86
+msgid "Measure"
+msgstr "Medir"
+
+#: u_translation.rst_9
+msgid "Zoom-"
+msgstr "Disminuir-"
+
+#: u_translation.rst_90
+msgid "Printing"
+msgstr "Impresión"
+
+#: u_translation.rst_91
+msgid "Printer"
+msgstr "Impresora"
+
+#: u_translation.rst_92
+msgid "Left Margin"
+msgstr "Margen izquierdo"
+
+#: u_translation.rst_93
+msgid "Millimeters"
+msgstr "Milímetros"
+
+#: u_translation.rst_94
+msgid "Print the ephemeris"
+msgstr "Imprimir las efemérides"
+
+#: u_translation.rst_95
+msgid "Print the information"
+msgstr "Imprimir la información"
+
+#: u_translation.rst_96
+msgid "Print the map"
+msgstr "Imprimir el mapa"
+
+#: u_translation.rst_97
+msgid "Information text width"
+msgstr "Ancho del texto de información"
+
+#: u_translation.rst_99
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: u_translation.rsunnamedforma
+msgid "Unnamed Formation"
+msgstr ""
+
+#: u_translation.rsupdated
+msgid "Updated!"
+msgstr ""
+
+#: u_translation.rsupdatefromin
+msgid "Update from Internet"
+msgstr ""
+
+#: u_translation.rsuranus
+msgid "Uranus"
+msgstr ""
+
+#: u_translation.rsvenus
+msgid "Venus"
+msgstr ""
+
+#: u_translation.rsvpawebpage
+msgid "VPA web page"
+msgstr ""
+
+#: u_translation.rswest0360
+msgid "+West 0..360"
+msgstr ""
+
+#: u_translation.rswest180180
+msgid "+West -180..+180"
+msgstr ""
+
+#: u_translation.rswidth
+msgid "Width"
+msgstr ""
+
+#: u_translation.rsyearlydrift
+msgid "Yearly drift"
+msgstr ""
+
+#: u_translation.rsyoucandownlo
+msgid "You can download and install the following optional features:"
+msgstr "Puede descargar e instalar las siguientes características opcionales."
+
+#: u_translation.rsyourinstalla
+msgid "Your installation is already complete with all the features installed."
+msgstr "Su instalación está ya completa con todas las características instaladas."
+
+#: u_translation.rszoomlevel
+msgid "Zoom level"
+msgstr "Nivel de aumento"
+

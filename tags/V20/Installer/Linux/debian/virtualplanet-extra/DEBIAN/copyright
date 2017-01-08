@@ -1,0 +1,16 @@
+
+Copyright: GPL
+
+Information :
+Name        : virtualplanet-extra
+Version     : 1.0
+Release     : 1
+Group       : Sciences/Astronomy
+License     : GPL
+Packager    : Patrick Chevalley
+URL         : http://ap-i.net/avp
+Summary     : Virtual Planet Atlas - extra data files
+Description :
+This software can visualize the planet aspect for every location, date and hour. 
+ It permits also to study the formations with a unique database.
+
