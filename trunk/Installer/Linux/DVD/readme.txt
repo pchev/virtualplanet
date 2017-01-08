@@ -10,7 +10,7 @@ INSTALLATION:
 
 Depending on your Linux system you must use the files in the DEB or RPM directory.
 
-Install first the file virtualplanet corresponding to your processor architecture and virtualplanet_data with the basic textures.
+Install first the file libpasastro, then virtualplanet corresponding to your processor architecture and virtualplanet_data with the basic textures.
 
 Then you can install virtualplanet-extra to add the high resolution textures.
 

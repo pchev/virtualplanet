@@ -10,7 +10,7 @@ INSTALLATION:
 
 Selon votre système Linux vous devez utiliser les fichiers dans le répertoire DEB ou RPM.
 
-Installez tout d'abord le fichier virtualplanet selon le type de processeur que vous utilisez et virtualplanet_data avec les textures de base.
+Installez tout d'abord le fichier libpasastro, ensuite virtualplanet selon le type de processeur que vous utilisez et virtualplanet_data avec les textures de base.
 
 Ensuite vous pouvez installer virtualplanet-extra qui ajoute les textures haute résolution des planètes 
 
