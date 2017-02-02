@@ -2649,6 +2649,11 @@ SetActiveplanet(planet1);
 planet1.Bumpmap:=false;
 CurrentPlanet:=p;
 InitNotes;
+{$ifdef darwin}
+planet1.GLShadowVolume1.Active:=false;
+{$else}
+planet1.GLShadowVolume1.Active:=CurrentPlanet=5;
+{$endif}
 planet1.texture:=texturefiles[CurrentPlanet];
 planet1.GLSpherePlanet.Scale.Y:=RPplanet[CurrentPlanet]/REplanet[CurrentPlanet];
 LoadOverlay(overlayname[CurrentPlanet], overlaytr[CurrentPlanet]);

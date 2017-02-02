@@ -1011,7 +1011,11 @@ if value<>FShowPhase then begin
         GLLightSource1.LightStyle:=lsParallel;
      GLLightSource1.Position.SetPoint(0,0,-100);
      GLLightSource1.SpotDirection.SetVector(GLLightSource1.Position.X,GLLightSource1.Position.Y,GLLightSource1.Position.Z);
-     GLShadowVolume1.Active:=true;
+     {$ifdef darwin}
+     GLShadowVolume1.Active:=false;
+     {$else}
+     GLShadowVolume1.Active:=CurrentPlanet=5;
+     {$endif}
      SetPhase(FPhase);
   end else begin
      GLLightSource1.LightStyle:=lsParallel;
@@ -1264,7 +1268,7 @@ begin
  zone:=1;
  ShadowOffset:=1;
  FShowPhase:=true;
- GLShadowVolume1.Active:=true;
+ GLShadowVolume1.Active:=false;
  FOverlay:='';
  FRotation:=0;
  FRaCentre:=-9999;
