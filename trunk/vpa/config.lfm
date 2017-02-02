@@ -1,7 +1,7 @@
 object f_config: Tf_config
-  Left = 711
+  Left = 439
   Height = 470
-  Top = 145
+  Top = 135
   Width = 454
   ActiveControl = PageControl1
   BorderStyle = bsSizeToolWin
@@ -14,8 +14,7 @@ object f_config: Tf_config
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '1.6.2.0'
-  Visible = False
+  LCLVersion = '1.4.0.4'
   object PageControl1: TPageControl
     Left = 0
     Height = 429
@@ -172,7 +171,7 @@ object f_config: Tf_config
       end
       object ComboBoxCountry: TComboBox
         Left = 125
-        Height = 26
+        Height = 20
         Top = 220
         Width = 182
         ItemHeight = 0
@@ -182,7 +181,7 @@ object f_config: Tf_config
       end
       object ComboBoxTZ: TComboBox
         Left = 125
-        Height = 26
+        Height = 20
         Top = 252
         Width = 181
         ItemHeight = 0
@@ -377,8 +376,8 @@ object f_config: Tf_config
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 66
-        ClientWidth = 378
+        ClientHeight = 57
+        ClientWidth = 372
         Columns = 2
         Items.Strings = (
           '+East  0 ... 360'
@@ -409,8 +408,8 @@ object f_config: Tf_config
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 86
-        ClientWidth = 450
+        ClientHeight = 81
+        ClientWidth = 444
         Items.Strings = (
           'Phase sans reliefeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
           'Phase avec relief dynamiqueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -434,12 +433,12 @@ object f_config: Tf_config
           Height = 253
           Top = 40
           Width = 242
-          ClientHeight = 251
-          ClientWidth = 240
+          ClientHeight = 246
+          ClientWidth = 234
           TabOrder = 0
           object ComboBox6: TComboBox
             Left = 105
-            Height = 26
+            Height = 20
             Top = 56
             Width = 135
             ItemHeight = 0
@@ -571,8 +570,8 @@ object f_config: Tf_config
     end
     object TabSheet6: TTabSheet
       Caption = 'Overlay'
-      ClientHeight = 408
-      ClientWidth = 452
+      ClientHeight = 390
+      ClientWidth = 448
       ImageIndex = 6
       object Panel2: TPanel
         Left = 14
@@ -608,14 +607,14 @@ object f_config: Tf_config
           Top = 284
           Width = 367
           Caption = 'Grid'
-          ClientHeight = 59
-          ClientWidth = 365
+          ClientHeight = 50
+          ClientWidth = 359
           TabOrder = 1
           object Label45: TLabel
             Left = 134
             Height = 13
             Top = 21
-            Width = 4
+            Width = 6
             Caption = '-'
             ParentColor = False
           end
@@ -654,9 +653,9 @@ object f_config: Tf_config
           end
           object CheckBox10: TCheckBox
             Left = 4
-            Height = 21
+            Height = 18
             Top = 23
-            Width = 88
+            Width = 84
             Caption = 'Show Grid'
             TabOrder = 0
           end
@@ -682,7 +681,7 @@ object f_config: Tf_config
             Left = 19
             Height = 13
             Top = 44
-            Width = 51
+            Width = 47
             Caption = 'Overlay :'
             ParentColor = False
           end
@@ -690,7 +689,7 @@ object f_config: Tf_config
             Left = 19
             Height = 13
             Top = 254
-            Width = 79
+            Width = 75
             Caption = 'Transparency:'
             ParentColor = False
           end
@@ -698,7 +697,7 @@ object f_config: Tf_config
             Left = 156
             Height = 13
             Top = 248
-            Width = 4
+            Width = 6
             Caption = '-'
             ParentColor = False
           end
@@ -712,9 +711,9 @@ object f_config: Tf_config
           end
           object CheckBox11: TCheckBox
             Left = 19
-            Height = 21
+            Height = 18
             Top = 10
-            Width = 199
+            Width = 191
             Caption = 'Show overlayyyyyyyyyyyyyy'
             TabOrder = 0
           end
@@ -754,7 +753,7 @@ object f_config: Tf_config
           Visible = False
           object GRS: TFloatEdit
             Left = 168
-            Height = 19
+            Height = 22
             Hint = '0..360'
             Top = 114
             Width = 46
@@ -768,7 +767,7 @@ object f_config: Tf_config
           end
           object GRSdrift: TFloatEdit
             Left = 168
-            Height = 19
+            Height = 22
             Hint = '-90..90'
             Top = 160
             Width = 46
@@ -785,7 +784,7 @@ object f_config: Tf_config
             Left = 27
             Height = 13
             Top = 118
-            Width = 113
+            Width = 107
             Caption = 'Reference longitude'
             ParentColor = False
           end
@@ -793,7 +792,7 @@ object f_config: Tf_config
             Left = 27
             Height = 13
             Top = 164
-            Width = 61
+            Width = 59
             Caption = 'Yearly drift'
             ParentColor = False
           end
@@ -801,18 +800,19 @@ object f_config: Tf_config
             Left = 27
             Height = 13
             Top = 68
-            Width = 86
+            Width = 79
             Caption = 'Reference date'
             ParentColor = False
           end
           object GRSDateEdit: TDateEdit
             Left = 168
-            Height = 20
+            Height = 22
             Top = 64
             Width = 109
             CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+            OKCaption = 'OK'
+            CancelCaption = 'Cancel'
             DateOrder = doNone
-            DateFormat = 'yyyy"-"mm"-"dd"'
             ButtonWidth = 23
             NumGlyphs = 1
             MaxLength = 0
@@ -822,7 +822,7 @@ object f_config: Tf_config
             Left = 27
             Height = 13
             Top = 16
-            Width = 195
+            Width = 180
             Caption = 'Great Red Spot reference position'
             ParentColor = False
           end

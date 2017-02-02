@@ -11,8 +11,7 @@ object f_planet: Tf_planet
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.2.0'
-  Visible = False
+  LCLVersion = '1.4.0.4'
   object Planet: TPanel
     Left = 200
     Height = 500
