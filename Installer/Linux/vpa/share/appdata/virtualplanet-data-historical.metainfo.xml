@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>virtualplanet-data-historical</id>
+  <extends>virtualplanet.desktop</extends>
+  <name>Historical textures</name>
+  <summary>Historical addon textures for Virtual Planets Atlas.
+  </summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Public Domain</project_license>
+</component>

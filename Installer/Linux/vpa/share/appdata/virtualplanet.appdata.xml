@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+ <id type="desktop">virtualplanet.desktop</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>GPL-3.0+</project_license>
+ <name>Virtualplanet</name>
+ <summary>An atlas for planets surface formations</summary>
+ <description>
+  <p>
+   Virtual Planets Atlas displays surface information for planets
+   Jupiter, Mars, Venus and Mercury and for the major moons
+   of Jupiter.
+  </p>
+  <p>
+   It is based on the interface of well known Virtual Moon Atlas.
+  </p>
+ </description>
+ <keywords>
+  <keyword>astronomy</keyword>
+  <keyword>atlas</keyword>
+  <keyword>planets</keyword>
+ </keywords>
+ <screenshots>
+  <screenshot type="default">
+      <image>http://ap-i.net/avp/_media/en/screenshot/frfullscreenwindow.jpg</image>
+      <caption>Mars “Viking colors” Zoom at minimum / “Full screen” display</caption>
+  </screenshot>
+ </screenshots>
+ <url type="homepage">http://ap-i.net/avp/</url>
+ <updatecontact>pch@ap-i.net</updatecontact>
+</application>
