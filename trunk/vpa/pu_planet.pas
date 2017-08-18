@@ -371,7 +371,7 @@ implementation
 
 {$R pu_planet.lfm}
 
-uses LCLProc, GLVectorGeometry, GLFile3DS, OpenGLAdapter;
+uses LazUTF8,LazFileUtils, LCLProc, GLVectorGeometry, GLFile3DS, OpenGLAdapter;
 
 { Tf_planet }
 

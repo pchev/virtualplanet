@@ -32,7 +32,7 @@ uses Math, SysUtils, Classes, u_constant, LCLType, FileUtil,
   {$ifdef unix}
     unix,baseunix,
   {$endif}
-    Controls, Process, IntfGraphics,FPImage,
+    Controls, Process, IntfGraphics,FPImage, LazUTF8,
     MaskEdit,Menus,Spin,CheckLst,Buttons, ExtCtrls,
     Forms,Graphics,StdCtrls,ComCtrls,Dialogs,Grids,PrintersDlgs,Printers;
 
