@@ -34,7 +34,9 @@ uses
 {$endif}
 {$IFDEF LCLgtk2}
   Gtk2Proc,
-{$endif}    GLScene, u_translation_database, u_translation, u_constant, u_util,
+{$endif}
+InterfaceBase, LCLVersion,  // version number
+GLScene, u_translation_database, u_translation, u_constant, u_util,
 cu_planet, u_projection, cu_tz, pu_planet, cu_plansat, LCLIntf, Forms, StdCtrls, ExtCtrls,
 Graphics, Grids, mlb2, PrintersDlgs, Printers, Controls, Messages, SysUtils,
 Classes, Dialogs, FileUtil, ComCtrls, Menus, Buttons, dynlibs, BigIma, EnhEdits,
@@ -527,6 +529,9 @@ implementation
 {$R avpmain.lfm}
 
 uses
+{$if (lcl_fullversion >= 1070000)}
+lclplatformdef,
+{$endif}
   LazFileUtils, LazUTF8,
   config, splashunit, pu_ephem,
   fmsg, dbutil, LCLProc;
@@ -2672,10 +2677,20 @@ end;
 procedure Tf_avpmain.FormCreate(Sender: TObject);
 var
   i,k: integer;
+  buf: String;
 begin
 //  Satellite model
 //  Label18.Visible:=true;
 //  ComboBox6.Visible:=true;
+
+  buf := LCLPlatformDirNames[WidgetSet.LCLPlatform];
+
+  if buf = 'win32' then
+    buf := 'mswindows';
+
+  compile_time := {$I %DATE%}+' '+{$I %TIME%};
+  compile_version := 'Lazarus '+lcl_version+' Free Pascal '+{$I %FPCVERSION%}+' '+{$I %FPCTARGETOS%}+'-'+{$I %FPCTARGETCPU%}+'-'+buf;
+
   DefaultFormatSettings.DecimalSeparator := '.';
   DefaultFormatSettings.ThousandSeparator:=' ';
   UniqueInstance1:=TCdCUniqueInstance.Create(self);

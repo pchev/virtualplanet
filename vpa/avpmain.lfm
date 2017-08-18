@@ -24,7 +24,8 @@ object f_avpmain: Tf_avpmain
   OnKeyUp = FormKeyUp
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.8.0.4'
+  Visible = False
   object Memo2: TMemo
     Left = 64
     Height = 41
@@ -42,6 +43,10 @@ object f_avpmain: Tf_avpmain
     Height = 100
     Top = 264
     Width = 100
+    Buffer.AmbientColor.Red = 0.200000002980232
+    Buffer.AmbientColor.Green = 0.200000002980232
+    Buffer.AmbientColor.Blue = 0.200000002980232
+    Buffer.AmbientColor.Alpha = 1
     FieldOfView = 0
     Visible = False
     TabOrder = 3
@@ -60,9 +65,9 @@ object f_avpmain: Tf_avpmain
     TabOrder = 2
     object Label10: TLabel
       Left = 240
-      Height = 15
+      Height = 13
       Top = 3
-      Width = 33
+      Width = 30
       Caption = 'Zoom:'
       Layout = tlCenter
       ParentColor = False
@@ -97,7 +102,7 @@ object f_avpmain: Tf_avpmain
         OnClick = Configuration1Click
       end
       object ToolButton8: TToolButton
-        Left = 180
+        Left = 171
         Top = 0
         Caption = 'Aide'
         OnClick = ToolButton8Click
@@ -116,6 +121,7 @@ object f_avpmain: Tf_avpmain
       Width = 448
       Align = alNone
       ButtonHeight = 23
+      ButtonWidth = 23
       Caption = 'ToolBar'
       Color = clBtnFace
       DragMode = dmAutomatic
@@ -139,40 +145,39 @@ object f_avpmain: Tf_avpmain
         Left = 24
         Height = 23
         Top = 0
-        Width = 10
         Caption = 'ToolButton11'
         ImageIndex = 0
         Style = tbsSeparator
       end
       object ToolButton12: TToolButton
-        Left = 195
+        Left = 193
         Top = 0
         ImageIndex = 9
         OnClick = ToolButton12Click
       end
       object ToolButton5: TToolButton
-        Left = 34
+        Left = 32
         Top = 0
         Caption = 'Centre'
         ImageIndex = 4
         OnClick = ToolButton5Click
       end
       object ToolButton4: TToolButton
-        Left = 57
+        Left = 55
         Top = 0
         Caption = 'N-S'
         ImageIndex = 3
         OnClick = ToolButton4Click
       end
       object ToolButton6: TToolButton
-        Left = 80
+        Left = 78
         Top = 0
         Caption = 'E-W'
         ImageIndex = 2
         OnClick = ToolButton6Click
       end
       object ToolButton3: TToolButton
-        Left = 103
+        Left = 101
         Top = 0
         Caption = 'Rotation'
         ImageIndex = 8
@@ -180,7 +185,7 @@ object f_avpmain: Tf_avpmain
         Style = tbsCheck
       end
       object PhaseButton: TToolButton
-        Left = 126
+        Left = 124
         Top = 0
         Caption = 'Phase'
         ImageIndex = 7
@@ -188,14 +193,14 @@ object f_avpmain: Tf_avpmain
         Style = tbsCheck
       end
       object ToolButton10: TToolButton
-        Left = 298
+        Left = 296
         Top = 0
         Caption = 'Voisinage'
         ImageIndex = 12
         OnClick = ToolButton10Click
       end
       object NewWindowButton: TToolButton
-        Left = 321
+        Left = 319
         Top = 0
         Caption = 'Window 2'
         ImageIndex = 0
@@ -203,7 +208,7 @@ object f_avpmain: Tf_avpmain
         Style = tbsCheck
       end
       object GridButton: TToolButton
-        Left = 149
+        Left = 147
         Top = 0
         Caption = 'GridButton'
         ImageIndex = 14
@@ -211,14 +216,14 @@ object f_avpmain: Tf_avpmain
         Style = tbsCheck
       end
       object ToolButton13: TToolButton
-        Left = 344
+        Left = 342
         Top = 0
         Caption = 'ToolButton13'
         ImageIndex = 15
         OnClick = FullScreen1Click
       end
       object ToolButton14: TToolButton
-        Left = 172
+        Left = 170
         Top = 0
         Caption = 'ToolButton14'
         ImageIndex = 16
@@ -226,7 +231,7 @@ object f_avpmain: Tf_avpmain
         Style = tbsCheck
       end
       object Panel2: TPanel
-        Left = 218
+        Left = 216
         Height = 23
         Top = 0
         Width = 80
@@ -269,8 +274,8 @@ object f_avpmain: Tf_avpmain
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Height = 15
-    Top = 555
+    Height = 23
+    Top = 547
     Width = 885
     Panels = <    
       item
@@ -302,16 +307,16 @@ object f_avpmain: Tf_avpmain
     Options = [nboMultiLine]
     object Position: TTabSheet
       Caption = 'Information'
-      ClientHeight = 473
-      ClientWidth = 334
+      ClientHeight = 468
+      ClientWidth = 332
       object Panel1: TPanel
         Left = 0
         Height = 46
         Top = 0
-        Width = 334
+        Width = 332
         Align = alTop
         ClientHeight = 46
-        ClientWidth = 334
+        ClientWidth = 332
         TabOrder = 0
         object Button1: TButton
           Left = 172
@@ -337,7 +342,7 @@ object f_avpmain: Tf_avpmain
           Top = 8
           Width = 161
           DropDownCount = 15
-          ItemHeight = 0
+          ItemHeight = 13
           OnKeyDown = Edit1KeyDown
           OnSelect = ComboBox1Select
           TabOrder = 0
@@ -345,9 +350,9 @@ object f_avpmain: Tf_avpmain
       end
       object Desc1: TIpHtmlPanel
         Left = 0
-        Height = 427
+        Height = 422
         Top = 46
-        Width = 334
+        Width = 332
         Align = alClient
         FixedTypeface = 'Courier New'
         DefaultTypeFace = 'Sans'
@@ -358,6 +363,10 @@ object f_avpmain: Tf_avpmain
         PrintSettings.MarginTop = 0.5
         PrintSettings.MarginRight = 0.5
         PrintSettings.MarginBottom = 0.5
+        PrintSettings.Preview.Left = 480
+        PrintSettings.Preview.Top = 300
+        PrintSettings.Preview.Width = 1440
+        PrintSettings.Preview.Height = 900
         MarginHeight = 5
         MarginWidth = 5
         TabOrder = 1
@@ -724,8 +733,8 @@ object f_avpmain: Tf_avpmain
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 2
-          ClientHeight = 33
-          ClientWidth = 240
+          ClientHeight = 38
+          ClientWidth = 244
           Columns = 2
           Items.Strings = (
             'Nom'
@@ -747,7 +756,7 @@ object f_avpmain: Tf_avpmain
           Height = 21
           Top = 78
           Width = 100
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 2
           Items.Strings = (
             '0'
@@ -783,8 +792,8 @@ object f_avpmain: Tf_avpmain
         Top = -1000
         Width = 253
         Caption = 'Satellisation'
-        ClientHeight = 303
-        ClientWidth = 245
+        ClientHeight = 308
+        ClientWidth = 249
         TabOrder = 5
         Visible = False
         object Label4: TLabel
@@ -942,7 +951,7 @@ object f_avpmain: Tf_avpmain
           Height = 21
           Top = 16
           Width = 97
-          ItemHeight = 0
+          ItemHeight = 13
           OnChange = ComboBox4Change
           TabOrder = 0
           Text = '5 ?/seconde'
@@ -979,7 +988,7 @@ object f_avpmain: Tf_avpmain
           Height = 21
           Top = 234
           Width = 105
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           Items.Strings = (
             'None'
@@ -1176,8 +1185,8 @@ object f_avpmain: Tf_avpmain
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 2
-          ClientHeight = 28
-          ClientWidth = 218
+          ClientHeight = 33
+          ClientWidth = 222
           Columns = 2
           Items.Strings = (
             'nnnnnnnnnnn'
@@ -1400,8 +1409,8 @@ object f_avpmain: Tf_avpmain
         Top = 372
         Width = 204
         Caption = 'Options valid at next startup'
-        ClientHeight = 49
-        ClientWidth = 196
+        ClientHeight = 54
+        ClientWidth = 200
         TabOrder = 4
         object CheckBox8: TCheckBox
           Left = 6
