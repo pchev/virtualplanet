@@ -202,9 +202,9 @@ const
   {$ELSE}
     {$IFDEF CPUARM}
        MaxRates = 19;  //UNIX ARM
-     {$ELSE}
+    {$ELSE}
        MaxRates = 30; //UNIX
-     {$ENDIF}  
+    {$ENDIF}  
   {$ENDIF}
 {$ELSE}
   MaxRates = 19;  //WIN
@@ -232,7 +232,7 @@ const
     (230400, B230400)
 {$IFNDEF BSD}
     ,(460800, B460800)
-   {$IFDEF UNIX}
+  {$IFDEF UNIX}
     {$IFNDEF CPUARM}
     ,(500000, B500000),
     (576000, B576000),
@@ -245,7 +245,7 @@ const
     (3000000, B3000000),
     (3500000, B3500000),
     (4000000, B4000000)
-   {$ENDIF}
+    {$ENDIF}
   {$ENDIF}
 {$ENDIF}
     );
