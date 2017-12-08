@@ -1,8 +1,8 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLIsosurface<p>
-  Polygonising a scalar field by construction of isosurfaces <p>
+{
+  Polygonising a scalar field by construction of isosurfaces 
 
 Algorithms
 ----------
@@ -25,10 +25,10 @@ Overall
  - Simple Data Structures to store Mesh. Vertices are calculated and stored twice
    or even more often.
 
-	<b>History : </b><font size=-1><ul>
-     <li>05/08/12 - PW - Adapted to use with GLScene v.1.2 and later
-	   <li>12/06/04 - Wolf Blecher - Created, first implementation (Blechwolf@myrealbox.com)
-	</ul></font>
+	 History :  
+      05/08/12 - PW - Adapted to use with GLScene v.1.2 and later
+	    12/06/04 - Wolf Blecher - Created, first implementation (Blechwolf@myrealbox.com)
+	 
 }
 
 unit GLIsosurface;
@@ -38,7 +38,7 @@ interface
 uses
   GLVectorGeometry;
 
-{$i GLScene.inc}
+{$I GLScene.inc}
   
 type
   TSingle3DArray = array of array of array of Single;
@@ -47,9 +47,9 @@ type
 
 // TIsoSurfaceExtractor
 //
-{: 3D Isosurface extractor class.<p>
+{ 3D Isosurface extractor class.
    This class allows to calculate and extract isosurfaces from scalar field
-   voxel models using a given isovalue.<p>
+   voxel models using a given isovalue.
 }
   TIsoSurfaceExtractor = class(TObject)
   private

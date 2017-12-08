@@ -1,21 +1,17 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : Eng
+{
   Language created to localize your application.
   In Delphi, the text is encoded using Ansi cp1251 and can not be encoded \ decoding.
   In Lazarus has the ability to upload text from any encoding.
-  Ru
-  TLanguage создан для локализации вашего приложения
-  В Delphi текст имеет кодировку Ansi cp1251 и не подлежит кодировке\декодировке.
-  В Lazarus можно загружать текст любой кодировки
 
-  <b>History : </b><font size=-1><ul>
-  <li>01/12/14 - PW - Fixed usage of IFDEF GLS_LOGGING in LoadLanguageFromFile
-  <li>04/11/10 - DaStr - Added Delphi5 and Delphi6 compatibility
-  <li>20/04/10 - Yar - Added to GLScene
+   History :  
+   01/12/14 - PW - Fixed usage of IFDEF GLS_LOGGING in LoadLanguageFromFile
+   04/11/10 - DaStr - Added Delphi5 and Delphi6 compatibility
+   20/04/10 - Yar - Added to GLScene
   (Created by Rustam Asmandiarov aka Predator)
-  </ul></font>
+   
 }
 unit GLSLanguage;
 
@@ -23,77 +19,62 @@ interface
 
 {$I GLScene.inc}
 {$H+} // use AnsiString instead of ShortString as String-type (default in Delphi)
-{$IFDEF GLS_DELPHI_XE2_UP}
-  {$WARN IMPLICIT_STRING_CAST OFF}
-  {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
-{$ENDIF}
 
 uses
   Classes, IniFiles, SysUtils;
 
 type
-{$IFNDEF FPC}
-  UTF8String = AnsiString;
-{$ENDIF}
-{$IFDEF FPC}
+
+
   TConvertEncodingList = (celAutomatic, celISO_8859_1ToUTF8,
     celISO_8859_2ToUTF8, celCP1250ToUTF8, celCP1251ToUTF8, celCP1252ToUTF8,
     celCP1253ToUTF8, celCP1254ToUTF8, celCP1255ToUTF8, celCP1256ToUTF8,
     celCP1257ToUTF8, celCP1258ToUTF8, celCP437ToUTF8, celCP850ToUTF8,
-    celCP866ToUTF8, celCP874ToUTF8, celKOI8ToUTF8, celUCS2LEToUTF8,
-    celUCS2BEToUTF8);
-{$ENDIF}
+    celCP866ToUTF8, celCP874ToUTF8, celKOI8ToUTF8, celUCS2LEToUTF8,celUCS2BEToUTF8);
 
-  TLanguageEntry = record
+  TGLLanguageEntry = record
     ID: AnsiString; // **< identifier (ASCII)
     Text: UTF8String; // **< translation (UTF-8)
   end;
 
-  TLanguageEntryArray = array of TLanguageEntry;
+  TGLLanguageEntryArray = array of TGLLanguageEntry;
 
-  { TLanguage }
-  { **
-    * Eng
-    *   Class TLanguage used interpretation to download and translation, as in the final product is no need for text  processing.
-    * Ru
-    *   Класс TLanguage используется толко для загрузки и перевода текста, так как в конечном
-    *   продукте нет необходимости в обработке текста.
+  { TGLLanguage }
+  { *
+    *   Class TGLLanguage used interpretation to download and translation, as in the final product is no need for text  processing.
     * }
-  TLanguage = class
+  TGLLanguage = class
   private
     FCurrentLanguageFile: UTF8String;
-    Entry: TLanguageEntryArray; // **< Entrys of Chosen Language
-{$IFDEF FPC}
+    Entry: TGLLanguageEntryArray; // **< Entrys of Chosen Language
+
     FConvertEncodingList: TConvertEncodingList;
-{$ENDIF}
+
     function EncodeToUTF8(aValue: AnsiString): UTF8String;
   public
     function FindID(const ID: AnsiString): integer;
     function Translate(const ID: AnsiString): UTF8String;
     procedure LoadLanguageFromFile(const Language: UTF8String);
     property CurrentLanguageFile: UTF8String read FCurrentLanguageFile;
-{$IFDEF FPC}
+
     property ConvertEncodingList: TConvertEncodingList read FConvertEncodingList
       write FConvertEncodingList default celAutomatic;
-{$ENDIF}
+
   end;
 
-  { **
-    * Eng
+  { *
     *   Advanced class is designed for loading and processing, will be useful for the editors of language.
-    * Ru
-    *   Расширенный класс созданный для загрузки и обработки текста, будет полезен для редакторов языка.
     * }
-  TLanguageExt = class(TLanguage)
+  TGLLanguageExt = class(TGLLanguage)
   private
-    function GetEntry(Index: integer): TLanguageEntry;
-    procedure SetEntry(Index: integer; aValue: TLanguageEntry);
+    function GetEntry(Index: integer): TGLLanguageEntry;
+    procedure SetEntry(Index: integer; aValue: TGLLanguageEntry);
     function GetCount: integer;
   public
     procedure AddConst(const ID: AnsiString; const Text: UTF8String);
     procedure AddConsts(aValues: TStrings);
     procedure ChangeConst(const ID: AnsiString; const Text: UTF8String);
-    property Items[Index: integer]: TLanguageEntry read GetEntry write SetEntry;
+    property Items[Index: integer]: TGLLanguageEntry read GetEntry write SetEntry;
     property Count: integer read GetCount;
     procedure SaveLanguageFromFile(const Language: UTF8String); overload;
     procedure SaveLanguageFromFile; overload;
@@ -101,17 +82,16 @@ type
 
   { TGLSLanguage }
 
-  { : Abstract class for control Language.<p> }
-  { : Абстрактный класс,  для палитры компонентов<p> }
+  { : Abstract class for control Language. }
   TGLSLanguage = class(TComponent)
   private
-    FLanguage: TLanguageExt;
+    FLanguage: TGLLanguageExt;
     FLanguageList: TStrings;
-{$IFDEF FPC}
+
     function GetEncodingList: TConvertEncodingList;
     procedure SetEncodingList(aList: TConvertEncodingList);
-{$ENDIF}
-    procedure SetLanguage(aValue: TLanguageExt);
+
+    procedure SetLanguage(aValue: TGLLanguageExt);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -119,28 +99,27 @@ type
     procedure SaveLanguageFromFile(const Language: UTF8String); overload;
     procedure SaveLanguageFromFile; overload;
     function Translate(const ID: AnsiString): UTF8String;
-    property Language: TLanguageExt read FLanguage write SetLanguage;
-{$IFDEF FPC}
+    property Language: TGLLanguageExt read FLanguage write SetLanguage;
+
   Published
     property ConvertEncodingList: TConvertEncodingList read GetEncodingList
       write SetEncodingList;
-{$ENDIF}
+
   end;
 
 implementation
 
 uses
-{$IFDEF FPC}
-  FileUtil, LConvEncoding,
-{$ENDIF}
+
+  LazFileUtils, LConvEncoding,
   GLCrossPlatform, GLSLog;
 
-{ TLanguage }
+{ TGLLanguage }
 
 { **
   * Load the specified LanguageFile
   * }
-procedure TLanguage.LoadLanguageFromFile(const Language: UTF8String);
+procedure TGLLanguage.LoadLanguageFromFile(const Language: UTF8String);
 var
   IniFile: TMemIniFile;
   E: integer; // entry
@@ -191,7 +170,7 @@ end;
   * Find the index of ID an array of language entry.
   * @returns the index on success, -1 otherwise.
   * }
-function TLanguage.FindID(const ID: AnsiString): integer;
+function TGLLanguage.FindID(const ID: AnsiString): integer;
 var
   Index: integer;
 begin
@@ -212,7 +191,7 @@ end;
   * setting. If Text is not a known ID, it will be returned as is.
   * @param Text either an ID or an UTF-8 encoded string
   * }
-function TLanguage.Translate(const ID: AnsiString): UTF8String;
+function TGLLanguage.Translate(const ID: AnsiString): UTF8String;
 var
   EntryIndex: integer;
 begin
@@ -229,7 +208,7 @@ begin
   end;
 end;
 
-function TLanguage.EncodeToUTF8(aValue: AnsiString): UTF8String;
+function TGLLanguage.EncodeToUTF8(aValue: AnsiString): UTF8String;
 begin
 {$IFDEF FPC}
   case ConvertEncodingList of
@@ -277,19 +256,19 @@ begin
 {$ENDIF}
 end;
 
-{ TLanguageExt }
+{ TGLLanguageExt }
 
-{ **
+{ *
   * Add a Constant ID that will be Translated but not Loaded from the LanguageFile
   * }
-procedure TLanguageExt.AddConst(const ID: AnsiString; const Text: UTF8String);
+procedure TGLLanguageExt.AddConst(const ID: AnsiString; const Text: UTF8String);
 begin
   SetLength(Entry, Length(Entry) + 1);
   Entry[high(Entry)].ID := ID;
   Entry[high(Entry)].Text := Text;
 end;
 
-procedure TLanguageExt.AddConsts(aValues: TStrings);
+procedure TGLLanguageExt.AddConsts(aValues: TStrings);
 var
   I: integer;
 begin
@@ -300,10 +279,10 @@ begin
           EncodeToUTF8(GetValueFromStringsIndex(aValues, I)));
 end;
 
-{ **
+{ *
   * Change a Constant Value by ID
   * }
-procedure TLanguageExt.ChangeConst(const ID: AnsiString;
+procedure TGLLanguageExt.ChangeConst(const ID: AnsiString;
   const Text: UTF8String);
 var
   I: integer;
@@ -318,25 +297,25 @@ begin
   end;
 end;
 
-function TLanguageExt.GetEntry(Index: integer): TLanguageEntry;
+function TGLLanguageExt.GetEntry(Index: integer): TGLLanguageEntry;
 begin
   Result := Entry[Index];
 end;
 
-procedure TLanguageExt.SetEntry(Index: integer; aValue: TLanguageEntry);
+procedure TGLLanguageExt.SetEntry(Index: integer; aValue: TGLLanguageEntry);
 begin
   Entry[Index] := aValue;
 end;
 
-function TLanguageExt.GetCount: integer;
+function TGLLanguageExt.GetCount: integer;
 begin
   Result := high(Entry) + 1;
 end;
 
-{ **
+{ *
   * Save Update Language File
   * }
-procedure TLanguageExt.SaveLanguageFromFile(const Language: UTF8String);
+procedure TGLLanguageExt.SaveLanguageFromFile(const Language: UTF8String);
 var
   IniFile: TMemIniFile;
   E: integer; // entry
@@ -354,7 +333,7 @@ begin
   IniFile.Free;
 end;
 
-procedure TLanguageExt.SaveLanguageFromFile;
+procedure TGLLanguageExt.SaveLanguageFromFile;
 begin
   SaveLanguageFromFile(CurrentLanguageFile);
 end;
@@ -364,7 +343,7 @@ end;
 constructor TGLSLanguage.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  FLanguage := TLanguageExt.Create;
+  FLanguage := TGLLanguageExt.Create;
   FLanguageList := TStringList.Create;
 end;
 
@@ -393,7 +372,7 @@ begin
 end;
 {$ENDIF}
 
-procedure TGLSLanguage.SetLanguage(aValue: TLanguageExt);
+procedure TGLSLanguage.SetLanguage(aValue: TGLLanguageExt);
 begin
   if aValue <> nil then
     FLanguage := aValue;

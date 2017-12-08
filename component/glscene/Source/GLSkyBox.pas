@@ -1,28 +1,27 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLSkyBox<p>
-
+{
    A TGLImmaterialSceneObject drawing 6 quads (plus another quad as "Cloud" plane)
-   for use as a skybox always centered on the camera.<p>
+   for use as a skybox always centered on the camera.
 
- <b>History : </b><font size=-1><ul>
-      <li>16/03/11 - Yar - Fixes after emergence of GLMaterialEx
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>26/03/09 - DanB - Skybox is now a TGLCameraInvariantObject
-      <li>10/10/08 - DanB - changed Skybox DoRender to use rci instead
+  History :  
+       16/03/11 - Yar - Fixes after emergence of GLMaterialEx
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       26/03/09 - DanB - Skybox is now a TGLCameraInvariantObject
+       10/10/08 - DanB - changed Skybox DoRender to use rci instead
                             of Scene.CurrentGLCamera
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>28/03/07 - DaStr - Renamed parameters in some methods
+       30/03/07 - DaStr - Added $I GLScene.inc
+       28/03/07 - DaStr - Renamed parameters in some methods
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678658)
-      <li>21/01/07 - DaStr - Added IGLMaterialLibrarySupported support
-      <li>12/04/04 - EG - Added Style property, multipass support
-      <li>27/11/03 - EG - Cleanup and fixes
-      <li>09/11/03 - MRQZZZ - mandatory changes suggested by Eric.
-      <li>02/09/03 - MRQZZZ - Creation
-   </ul></font>
+       21/01/07 - DaStr - Added IGLMaterialLibrarySupported support
+       12/04/04 - EG - Added Style property, multipass support
+       27/11/03 - EG - Cleanup and fixes
+       09/11/03 - MRQZZZ - mandatory changes suggested by Eric.
+       02/09/03 - MRQZZZ - Creation
+    
 }
 unit GLSkyBox;
 
@@ -51,7 +50,7 @@ type
   //
   TGLSkyBox = class(TGLCameraInvariantObject, IGLMaterialLibrarySupported)
   private
-    { Private Declarations }
+     
     FMatNameTop: string;
     FMatNameRight: string;
     FMatNameFront: string;
@@ -67,7 +66,7 @@ type
     //implementing IGLMaterialLibrarySupported
     function GetMaterialLibrary: TGLAbstractMaterialLibrary;
   protected
-    { Protected Declarations }
+     
     procedure SetMaterialLibrary(const Value: TGLMaterialLibrary);
     procedure SetMatNameBack(const Value: string);
     procedure SetMatNameBottom(const Value: string);
@@ -81,18 +80,18 @@ type
     procedure SetStyle(const value: TGLSkyBoxStyle);
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure DoRender(var ARci: TRenderContextInfo;
+    procedure DoRender(var ARci: TGLRenderContextInfo;
       ARenderSelf, ARenderChildren: Boolean); override;
-    procedure BuildList(var ARci: TRenderCOntextInfo); override;
+    procedure BuildList(var ARci: TGLRenderContextInfo); override;
     procedure Notification(AComponent: TComponent; Operation: TOperation);
       override;
 
   published
-    { Published Declarations }
+     
     property MaterialLibrary: TGLMaterialLibrary read FMaterialLibrary write
       SetMaterialLibrary;
     property MatNameTop: TGLLibMaterialName read FMatNameTop write
@@ -175,7 +174,7 @@ end;
 // DoRender
 //
 
-procedure TGLSkyBox.DoRender(var ARci: TRenderContextInfo; ARenderSelf,
+procedure TGLSkyBox.DoRender(var ARci: TGLRenderContextInfo; ARenderSelf,
   ARenderChildren: Boolean);
 begin
   // We want children of the sky box to appear far away too
@@ -190,7 +189,7 @@ end;
 // DoRender
 //
 
-procedure TGLSkyBox.BuildList(var ARci: TRenderCOntextInfo);
+procedure TGLSkyBox.BuildList(var ARci: TGLRenderContextInfo);
 var
   f, cps, cof1: Single;
   oldStates: TGLStates;

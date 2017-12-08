@@ -1,46 +1,45 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLPersistentClasses<p>
+{
+   Base persistence classes.
 
-   Base persistence classes.<p>
-
-   These classes are used in GLScene, but are designed for generic purpose.<br>
+   These classes are used in GLScene, but are designed for generic purpose. 
    They implement a slightly different persistence mechanism than that of the VCL,
    allowing for object-level versioning (100% backward compatibility) and full
-   polymorphic persistence.<p>
+   polymorphic persistence.
 
-   Internal Note: stripped down versions of XClasses & XLists.<p>
+   Internal Note: stripped down versions of XClasses & XLists.
 
- <b>History : </b><font size=-1><ul>
-      <li>10/12/14 - PW - Renamed PersistentClasses to GLPersistentClasses
-      <li>10/05/12 - Yar - Patched TBinaryReader.ReadFloat/WriteFloat for Win64 (thanks Massimo Zanoletti)
+  History :  
+       10/12/14 - PW - Renamed PersistentClasses to GLPersistentClasses
+       10/05/12 - Yar - Patched TBinaryReader.ReadFloat/WriteFloat for Win64 (thanks Massimo Zanoletti)
                            In future need to replase extended floating point type! 
-      <li>06/12/10 - DaStr - Added GUID to IPersistentObject
-      <li>19/08/10 - Yar - Fixed WriteWideString for empty strings
-      <li>20/05/10 - Yar - Fixes for Linux x64
-      <li>07/11/09 - DaStr - Improved FPC compatibility (BugtrackerID = 2893580)
-      <li>16/10/08 - UweR - Delphi 2009 compatibility fix for TPersistentObject, TTextReader and TTextWriter
-      <li>16/10/08 - DanB - Delphi 2009 compatibility fix for TBinaryReader.ReadString / WriteString
-      <li>10/04/08 - DaStr - Added classes TGLInterfacedPersistent and
+       06/12/10 - DaStr - Added GUID to IPersistentObject
+       19/08/10 - Yar - Fixed WriteWideString for empty strings
+       20/05/10 - Yar - Fixes for Linux x64
+       07/11/09 - DaStr - Improved FPC compatibility (BugtrackerID = 2893580)
+       16/10/08 - UweR - Delphi 2009 compatibility fix for TPersistentObject, TTextReader and TTextWriter
+       16/10/08 - DanB - Delphi 2009 compatibility fix for TBinaryReader.ReadString / WriteString
+       10/04/08 - DaStr - Added classes TGLInterfacedPersistent and
                               TGLInterfacedCollectionItem (BugTracker ID = 1938988)
-      <li>11/02/08 - DaStr - Bugfixed TPersistentObjectList.Move() once again
+       11/02/08 - DaStr - Bugfixed TPersistentObjectList.Move() once again
                              (BugTracker ID = 1857974)
                              (thanks Yann PAPOUIN and Burkhard Carstens)
-      <li>04/02/08 - DaStr - Bugfixed TPersistentObjectList.Move() (BugTracker ID = 1857974)
-      <li>06/03/07 - DaStr - Added TGLOwnedPersistent
-      <li>04/01/04 - EG - Fixed ReadString & ReadWideString for empty strings (thx Kenguru)
-      <li>28/06/04 - LR - Removed ..\ from the GLScene.inc
-      <li>08/12/03 - EG - TBinaryReader/Writer no longer rely on VCL TReader/TWriter
-      <li>26/12/03 - EG - Added sorting support to TPersistentObjectList + misc. changes
-      <li>04/09/03 - EG - Improved some TPersistentObjectList methods
-      <li>12/02/03 - EG - Added IPersistentObject
-      <li>09/09/01 - EG - Optimized Pack (x2.5)
-      <li>14/08/01 - EG - Added AfterObjectCreatedByReader
-      <li>03/08/01 - EG - Big update with addition of Virtual filers
-      <li>24/07/01 - EG - D6-related changes
-      <li>15/03/01 - EG - Creation
- </ul></font><p>
+       04/02/08 - DaStr - Bugfixed TPersistentObjectList.Move() (BugTracker ID = 1857974)
+       06/03/07 - DaStr - Added TGLOwnedPersistent
+       04/01/04 - EG - Fixed ReadString & ReadWideString for empty strings (thx Kenguru)
+       28/06/04 - LR - Removed ..\ from the GLScene.inc
+       08/12/03 - EG - TBinaryReader/Writer no longer rely on VCL TReader/TWriter
+       26/12/03 - EG - Added sorting support to TPersistentObjectList + misc. changes
+       04/09/03 - EG - Improved some TPersistentObjectList methods
+       12/02/03 - EG - Added IPersistentObject
+       09/09/01 - EG - Optimized Pack (x2.5)
+       14/08/01 - EG - Added AfterObjectCreatedByReader
+       03/08/01 - EG - Big update with addition of Virtual filers
+       24/07/01 - EG - D6-related changes
+       15/03/01 - EG - Creation
+  
 }
 unit GLPersistentClasses;
 
@@ -56,24 +55,23 @@ type
 
   PObject = ^TObject;
 
-{$IFDEF FPC}
   type TExtended80Rec = packed record
     case Integer of
     1: (Bytes: array[0..9] of Byte);
     2: (Float: Extended);
   end;
-{$ENDIF}
+
 
   // TVirtualReader
   //
-  {: Virtual layer similar to VCL's TReader (but reusable) }
+  { Virtual layer similar to VCL's TReader (but reusable) }
   TVirtualReader = class
   private
-    { Private Declarations }
+     
     FStream: TStream;
 
   public
-    { Public Declarations }
+     
     constructor Create(Stream: TStream); virtual;
 
     property Stream: TStream read FStream;
@@ -97,14 +95,14 @@ type
 
   // TVirtualWriter
   //
-  {: Virtual layer similar to VCL's TWriter (but reusable) }
+  { Virtual layer similar to VCL's TWriter (but reusable) }
   TVirtualWriter = class
   private
-    { Private Declarations }
+     
     FStream: TStream;
 
   public
-    { Public Declarations }
+     
     constructor Create(Stream: TStream); virtual;
 
     property Stream: TStream read FStream;
@@ -126,7 +124,7 @@ type
 
   // IPersistentObject
   //
-  {: Interface for persistent objects.<p>
+  { Interface for persistent objects.
      This interface does not really allow polymorphic persistence,
      but is rather intended as a way to unify persistence calls
      for iterators. }
@@ -138,23 +136,23 @@ type
 
   // TPersistentObject
   //
-    {: Base class for persistent objects.<p>
+    { Base class for persistent objects.
        The base requirement is implementation of ReadFromFiler & WriteToFiler
        in sub-classes, the immediate benefits are support of streaming (to stream,
-       file or string), assignment and cloning.<br>
+       file or string), assignment and cloning. 
        The other requirement being the use of a virtual constructor, which allows
-       polymorphic construction (don't forget to register your subclasses).<p>
+       polymorphic construction (don't forget to register your subclasses).
        Note that TPersistentObject implements IUnknown, but does *not* implement
        reference counting. }
   TPersistentObject = class(TPersistent, IPersistentObject)
   private
-    { Private Declarations }
+     
 
   protected
-    { Protected Declarations }
+     
     procedure RaiseFilerException(const archiveVersion: Integer);
 
-  {$IfDef FPC}
+
     {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -164,14 +162,9 @@ type
     function _AddRef: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     function _Release: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     {$IFEND}
-  {$Else}
-    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-    function _AddRef: Integer; stdcall;
-    function _Release: Integer; stdcall;
-  {$EndIf}
 
   public
-    { Public Declarations }
+     
     constructor Create; virtual;
     constructor CreateFromFiler(reader: TVirtualReader);
     destructor Destroy; override;
@@ -202,25 +195,25 @@ type
 
   // TPersistentObjectList
   //
-  {: A persistent Object list.<p>
+  { A persistent Object list.
      Similar to TList but works on TObject items and has facilities for
      persistence of contained data. Unlike the VCL's TObjectList, this one
      does NOT free its objects upon destruction or Clear, use Clean and CleanFree
-     for that, and as such can be used for object referral lists too.<br>
-     But only TPersistentObject items will be streamed appropriately.<p>
+     for that, and as such can be used for object referral lists too. 
+     But only TPersistentObject items will be streamed appropriately.
      The list can be used in a stack-like fashion with Push & Pop, and can
-     perform basic boolean set operations.<p>
+     perform basic boolean set operations.
      Note: the IndexOf implementation is up to 3 times faster than that of TList }
   TPersistentObjectList = class(TPersistentObject)
   private
-    { Private Declarations }
+     
     FList: PPointerObjectList;
     FCount: Integer;
     FCapacity: Integer;
     FGrowthDelta: integer;
 
   protected
-    { Protected Declarations }
+     
     procedure Error; virtual;
     function Get(Index: Integer): TObject;
     procedure Put(Index: Integer; Item: TObject);
@@ -231,12 +224,12 @@ type
     function GetLast: TObject;
     procedure SetLast(item: TObject);
 
-    //: Default event for ReadFromFiler
+    // Default event for ReadFromFiler
     procedure AfterObjectCreatedByReader(Sender: TObject); virtual;
     procedure DoClean;
 
   public
-    { Public Declarations }
+     
     constructor Create; override;
     destructor Destroy; override;
 
@@ -266,19 +259,19 @@ type
     property List: PPointerObjectList read FList;
 
     property Capacity: Integer read FCapacity write SetCapacity;
-    {: Makes sure capacity is at least aCapacity. }
+    { Makes sure capacity is at least aCapacity. }
     procedure RequiredCapacity(aCapacity: Integer);
 
-    {: Removes all "nil" from the list.<p>
+    { Removes all "nil" from the list.
        Note: Capacity is unchanged, no memory us freed, the list is just
        made shorter. This functions is orders of magnitude faster than
        its TList eponymous. }
     procedure Pack;
-    {: Empty the list without freeing the objects. }
+    { Empty the list without freeing the objects. }
     procedure Clear; dynamic;
-    {: Empty the list and free the objects. }
+    { Empty the list and free the objects. }
     procedure Clean; dynamic;
-    {: Empty the list, free the objects and Free self. }
+    { Empty the list, free the objects and Free self. }
     procedure CleanFree;
 
     function IndexOf(Item: TObject): Integer;
@@ -296,18 +289,18 @@ type
 
   // TBinaryReader
   //
-  {: Wraps a TReader-compatible reader. }
+  { Wraps a TReader-compatible reader. }
   TBinaryReader = class(TVirtualReader)
   private
-    { Private Declarations }
+     
 
   protected
-    { Protected Declarations }
+     
     function ReadValue: TValueType;
     function ReadWideString(vType: TValueType): WideString;
 
   public
-    { Public Declarations }
+     
     procedure Read(var Buf; Count: Longint); override;
     function NextValue: TValueType; override;
 
@@ -323,18 +316,18 @@ type
 
   // TBinaryWriter
   //
-  {: Wraps a TWriter-compatible writer. }
+  { Wraps a TWriter-compatible writer. }
   TBinaryWriter = class(TVirtualWriter)
   private
-    { Private Declarations }
+     
 
   protected
-    { Protected Declarations }
+     
     procedure WriteAnsiString(const aString: AnsiString); virtual;
     procedure WriteWideString(const aString: WideString); virtual;
 
   public
-    { Public Declarations }
+     
     procedure Write(const Buf; Count: Longint); override;
     procedure WriteInteger(anInteger: Integer); override;
     procedure WriteBoolean(aBoolean: Boolean); override;
@@ -347,19 +340,19 @@ type
 
   // TTextReader
   //
-  {: Reads object persistence in Text format. }
+  { Reads object persistence in Text format. }
   TTextReader = class(TVirtualReader)
   private
-    { Private Declarations }
+     
     FValueType: string;
     FData: string;
 
   protected
-    { Protected Declarations }
+     
     procedure ReadLine(const requestedType: string = '');
 
   public
-    { Public Declarations }
+     
     procedure Read(var Buf; Count: Longint); override;
     function NextValue: TValueType; override;
 
@@ -375,18 +368,18 @@ type
 
   // TTextWriter
   //
-  {: Writes object persistence in Text format. }
+  { Writes object persistence in Text format. }
   TTextWriter = class(TVirtualWriter)
   private
-    { Private Declarations }
+     
     FIndentLevel: Integer;
 
   protected
-    { Protected Declarations }
+     
     procedure WriteLine(const valueType, data: string);
 
   public
-    { Public Declarations }
+     
     constructor Create(aStream: TStream); override;
     destructor Destroy; override;
 
@@ -402,7 +395,7 @@ type
 
   // TGLOwnedPersistent
   //
-  {: TPersistent which has knowledge of its owner. }
+  { TPersistent which has knowledge of its owner. }
   TGLOwnedPersistent = class(TPersistent)
   private
     FOwner: TPersistent;
@@ -414,11 +407,11 @@ type
 
   // TGLInterfacedPersistent
   //
-  {: TPersistent thet inplements IInterface. }
+  { TPersistent thet inplements IInterface. }
   TGLInterfacedPersistent = class(TPersistent, IInterface)
   protected
     // Implementing IInterface.
-  {$IfDef FPC}
+
     {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -428,20 +421,16 @@ type
     function _AddRef: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     function _Release: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     {$IFEND}
-  {$Else}
-    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-    function _AddRef: Integer; stdcall;
-    function _Release: Integer; stdcall;
-  {$EndIf}
+
   end;
 
   // TGLInterfacedCollectionItem
   //
-  {: TCollectionItem thet inplements IInterface. }
+  { TCollectionItem thet inplements IInterface. }
   TGLInterfacedCollectionItem = class(TCollectionItem, IInterface)
   protected
     // Implementing IInterface.
-  {$IfDef FPC}
+
     {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
     function QueryInterface(const IID: TGUID; out Obj): HResult; virtual; stdcall;
     function _AddRef: Integer; virtual; stdcall;
@@ -451,22 +440,18 @@ type
     function _AddRef: Integer; virtual; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     function _Release: Integer; virtual; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     {$IFEND}
-  {$Else}
-    function QueryInterface(const IID: TGUID; out Obj): HResult; virtual; stdcall;
-    function _AddRef: Integer; virtual; stdcall;
-    function _Release: Integer; virtual; stdcall;
-  {$EndIf}
+
   end;
 
   // EInvalidFileSignature
   //
-  {: Triggered when file signature does not match. }
+  { Triggered when file signature does not match. }
   EInvalidFileSignature = class(Exception)
   end;
 
   // EFilerException
   //
-  {: Usually triggered when a filing error is detected. }
+  { Usually triggered when a filing error is detected. }
   EFilerException = class(Exception)
   end;
 
@@ -704,7 +689,7 @@ begin
   inherited Destroy;
 end;
 
-// Assign
+ 
 //
 
 procedure TPersistentObject.Assign(source: TPersistent);
@@ -782,7 +767,7 @@ end;
 
 procedure TPersistentObject.RaiseFilerException(const archiveVersion: Integer);
 begin
-  raise EFilerException.Create(ClassName + cUnknownArchiveVersion + IntToStr(archiveVersion)); //:IGNORE
+  raise EFilerException.Create(ClassName + cUnknownArchiveVersion + IntToStr(archiveVersion)); //IGNORE
 end;
 
 // QueryInterface
@@ -790,15 +775,13 @@ end;
 
 
 
-{$IfDef FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
   function TPersistentObject.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
   {$ELSE}
   function TPersistentObject.QueryInterface(constref IID: TGUID; out Obj): HResult; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
   {$IFEND}
-{$Else}
-  function TPersistentObject.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-{$EndIf}
+
 begin
   if GetInterface(IID, Obj) then
     Result := S_OK
@@ -826,15 +809,12 @@ end;
 // _Release
 //
 
-{$IfDef FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
   function TPersistentObject._Release: Integer; stdcall;
 {$ELSE}
   function TPersistentObject._Release: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
 {$IFEND}
-{$Else}
-  function TPersistentObject._Release: Integer; stdcall;
-{$EndIf}
 begin
   // ignore
   Result := 0;
@@ -905,7 +885,7 @@ begin
   end;
 end;
 
-// LoadFromFile
+ 
 //
 
 procedure TPersistentObject.LoadFromFile(const fileName: string; readerClass: TVirtualReaderClass = nil);
@@ -1827,11 +1807,7 @@ begin
   if ReadValue = vaExtended then
   begin
     Read(C, SizeOf(C));     // Load value into the temp variable
-    {$IFDEF FPC}
     Result := C.Float;
-    {$ELSE}
-    Result := Extended(C); // Typecast into an Extended: in a win64 application is a Double
-    {$ENDIF}
   end
   else
     ReadTypeError;
@@ -1999,11 +1975,7 @@ var
 begin
   {$IFDEF WIN64}
   str.typ := byte(vaExtended);
-  {$IFDEF FPC}
   str.val.Float := aFloat;
-  {$ELSE}
-  str.val := TExtended80Rec(aFloat);   // Typecast the float value (in a Win64 app the type is a Double) into the 10 bytes struct
-  {$ENDIF}
   Write(str, SizeOf(str));
   {$ELSE}
   str.typ := byte(vaExtended);
@@ -2388,16 +2360,12 @@ end;
 // QueryInterface
 //
 
-{$IfDef FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
   function TGLInterfacedPersistent.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
 {$ELSE}
   function TGLInterfacedPersistent.QueryInterface(constref IID: TGUID; out Obj): HResult; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
 {$IFEND}
-{$Else}
-  function TGLInterfacedPersistent.QueryInterface(const IID: TGUID;
-  out Obj): HResult; stdcall;
-{$EndIf}
 begin
   if GetInterface(IID, Obj) then
     Result := S_OK
@@ -2413,15 +2381,12 @@ end;
 // _AddRef
 //
 
-{$IfDef FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
 function TGLInterfacedCollectionItem._AddRef: Integer; stdcall;
 {$ELSE}
 function TGLInterfacedCollectionItem._AddRef: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
 {$IFEND}
-{$Else}
-function TGLInterfacedCollectionItem._AddRef: Integer; stdcall;
-{$EndIf}
 begin
   Result := -1; //ignore
 end;
@@ -2429,15 +2394,12 @@ end;
 // _Release
 //
 
-{$IfDef FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
 function TGLInterfacedCollectionItem._Release: Integer; stdcall;
 {$ELSE}
 function TGLInterfacedCollectionItem._Release: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
 {$IFEND}
-{$Else}
-  function TGLInterfacedCollectionItem._Release: Integer; stdcall;
-{$EndIf}
 begin
   Result := -1; //ignore
 end;
@@ -2445,16 +2407,12 @@ end;
 // QueryInterface
 //
 
-{$IfDef FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
   function TGLInterfacedCollectionItem.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
   {$ELSE}
   function TGLInterfacedCollectionItem.QueryInterface(constref IID: TGUID; out Obj): HResult; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
   {$IFEND}
-{$Else}
-  function TGLInterfacedCollectionItem.QueryInterface(const IID: TGUID;
-    out Obj): HResult; stdcall;
-{$EndIf}
 begin
   if GetInterface(IID, Obj) then
     Result := S_OK

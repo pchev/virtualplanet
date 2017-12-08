@@ -1,20 +1,19 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLTexLensFlare<p>
+{
+   Texture-based Lens flare object.
 
-   Texture-based Lens flare object.<p>
-
- <b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>23/03/07 - DaStr - Added missing parameters in procedure's implementation
+  History :  
+       10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       30/03/07 - DaStr - Added $I GLScene.inc
+       23/03/07 - DaStr - Added missing parameters in procedure's implementation
                              (thanks Burkhard Carstens) (Bugtracker ID = 1681409)
-      <li>25/09/03 - EG - Creation from GLLensFlare split
- </ul></font><p>
+       25/09/03 - EG - Creation from GLLensFlare split
+  
 }
 unit GLTexLensFlare;
 
@@ -23,16 +22,10 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes,
-  {$ELSE}
-    Classes,
-  {$ENDIF}
-
+  Classes,
   GLScene,  GLVectorGeometry,  GLObjects,  GLTexture, OpenGLTokens,
   GLContext,  GLRenderContextInfo,  GLBaseClasses,
-  GLState
-  , GLVectorTypes;
+  GLState, GLVectorTypes;
 
 type
 
@@ -40,7 +33,7 @@ type
   //
   TGLTextureLensFlare = class(TGLBaseSceneObject)
   private
-    { Private Declarations }
+     
     FSize: integer;
     FCurrSize: Single;
     FNumSecs: integer;
@@ -58,25 +51,25 @@ type
     procedure SetImgSecondaries(const Value: TGLTexture);
     procedure SetSeed(const Value: Integer);
   protected
-    { Protected Declarations }
+     
     procedure SetSize(aValue: integer);
     procedure SetNumSecs(aValue: integer);
     procedure SetAutoZTest(aValue: boolean);
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     procedure DoProgress(const progressTime: TProgressTimes); override;
   published
-    { Public Declarations }
-    //: MaxRadius of the flare.
+     
+    // MaxRadius of the flare.
     property Size: integer read FSize write SetSize default 50;
-    //: Random seed
+    // Random seed
     property Seed: Integer read FSeed write SetSeed;
-    //: Number of secondary flares.
+    // Number of secondary flares.
     property NumSecs: integer read FNumSecs write SetNumSecs default 8;
-    //: Number of segments used when rendering circles.
+    // Number of segments used when rendering circles.
     //property Resolution: integer read FResolution write SetResolution default 64;
     property AutoZTest: boolean read FAutoZTest write SetAutoZTest default True;
     // The Textures
@@ -152,7 +145,7 @@ end;
 // BuildList
 //
 
-procedure TGLTextureLensFlare.BuildList(var rci: TRenderContextInfo);
+procedure TGLTextureLensFlare.BuildList(var rci: TGLRenderContextInfo);
 var
   v, rv, screenPos, posVector: TAffineVector;
   depth, rnd: Single;

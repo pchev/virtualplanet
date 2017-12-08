@@ -1,14 +1,13 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLGeomObjects<p>
+{
+  Geometric objects.
 
-  Geometric objects.<p>
-
-  <b>History : </b><font size=-1><ul>
-  <li>03/02/13 - Yar - Object stack now dynamic array (thanks to  maverick)
-  <li>02/09/10 - Yar - Creation
-  </ul></font>
+   History :  
+   03/02/13 - Yar - Object stack now dynamic array (thanks to  maverick)
+   02/09/10 - Yar - Creation
+   
 }
 unit GLSelection;
 
@@ -18,7 +17,7 @@ interface
 
 uses
   SysUtils, Classes,
-  //GLS
+   
   OpenGLTokens, GLContext, GLVectorLists, GLVectorGeometry,
   GLBaseClasses, GLPersistentClasses;
 
@@ -40,19 +39,19 @@ type
 
   // TGLPickList
   //
-  {: List class for object picking.<p>
+  { List class for object picking.
      This list is used to store the results of a PickObjects call. }
   TGLPickList = class(TPersistentObjectList)
   private
-    { Private Declarations }
+     
     function GetFar(aValue: Integer): Single;
     function GetHit(aValue: Integer): TObject;
     function GetNear(aValue: Integer): Single;
     function GetSubObjects(aValue: Integer): TPickSubObjects;
   protected
-    { Protected Declarations }
+     
   public
-    { Public Declarations }
+     
     constructor Create(aSortType: TPickSortType); reintroduce;
 
     procedure AddHit(obj: TObject; const subObj: TPickSubObjects;

@@ -1,11 +1,10 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLSvdPAUAPI<p>
-
-  <b>History : </b><font size=-1><ul>
-  <li>23/10/10 - Yar - Creation
-  </ul></font>
+{
+   History :  
+   23/10/10 - Yar - Creation
+   
 }
 
 // {
@@ -38,9 +37,9 @@
 unit GLSvdPAUAPI;
 
 {$I GLScene.inc}
-{$IFDEF FPC}
+
 {$PACKRECORDS C}
-{$ENDIF}
+
 
 interface
 

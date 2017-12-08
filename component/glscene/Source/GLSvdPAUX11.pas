@@ -1,11 +1,10 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLSvdPAUX11<p>
-
-  <b>History : </b><font size=-1><ul>
-  <li>23/10/10 - Yar - Creation
-  </ul></font>
+{
+   History :  
+   23/10/10 - Yar - Creation
+   
 }
 
 //{
@@ -33,7 +32,7 @@
 //  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 //  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  * OTHER DEALINGS IN THE SOFTWARE.
-//}
+//}
 
 unit GLSvdPAUX11;
 

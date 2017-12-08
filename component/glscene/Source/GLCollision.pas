@@ -1,26 +1,25 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLCollision<p>
+{
+   Collision-detection management for GLScene
 
-	Collision-detection management for GLScene<p>
-
-	<b>Historique : </b><font size=-1><ul>
-      <li>17/11/14 - PW - Refactored TCollisionManager to TGLCollisionManager
-      <li>10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
-      <li>21/01/11 - DanB - Added "inherited" call to TGLBCollision.WriteToFiler
-      <li>03/04/07 - DaStr - Added "public" to TCollisionNode for FPC compatibility
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>19/10/06 - LC - Fixed memory leak in TCollisionManager.CheckCollisions. Bugtracker ID=1548618
-      <li>02/08/04 - LR, YHC - BCB corrections: use record instead array
-      <li>09/05/03 - DanB - fixed for collisions with bounding-box unproperly defined (min>max)
-      <li>09/05/03 - DanB - Added FastCheckCubeVsFace (Matheus Degiovani)
-      <li>13/02/03 - DanB - New collision code, and support for scaled objects
-      <li>22/02/01 - Egg - Included new collision code by Uwe Raabe
-      <li>08/08/00 - Egg - Fixed TGLBCollision.Assign
-      <li>16/07/00 - Egg - Added support for all bounding modes (most are un-tested)
-	    <li>23/05/00 - Egg - Creation
-	</ul></font>
+	History :  
+       17/11/14 - PW - Refactored TCollisionManager to TGLCollisionManager
+       10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
+       21/01/11 - DanB - Added "inherited" call to TGLBCollision.WriteToFiler
+       03/04/07 - DaStr - Added "public" to TCollisionNode for FPC compatibility
+       30/03/07 - DaStr - Added $I GLScene.inc
+       19/10/06 - LC - Fixed memory leak in TCollisionManager.CheckCollisions. Bugtracker ID=1548618
+       02/08/04 - LR, YHC - BCB corrections: use record instead array
+       09/05/03 - DanB - fixed for collisions with bounding-box unproperly defined (min>max)
+       09/05/03 - DanB - Added FastCheckCubeVsFace (Matheus Degiovani)
+       13/02/03 - DanB - New collision code, and support for scaled objects
+       22/02/01 - Egg - Included new collision code by Uwe Raabe
+       08/08/00 - Egg - Fixed TGLBCollision.Assign
+       16/07/00 - Egg - Added support for all bounding modes (most are un-tested)
+	     23/05/00 - Egg - Creation
+	 
 }
 unit GLCollision;
 
@@ -30,8 +29,8 @@ interface
 
 uses
   Classes, SysUtils,
-  //GLS
-  GLScene, XCollection, GLVectorGeometry, GLVectorLists, GLVectorFileObjects,
+   
+  GLScene, GLXCollection, GLVectorGeometry, GLVectorLists, GLVectorFileObjects,
   GLGeometryBB, GLCrossPlatform,
   GLManager , GLVectorTypes;
 
@@ -44,16 +43,16 @@ type
 
    // TCollisionBoundingMode
    //
-   {: Defines how fine collision bounding is for a particular object.<p>
-      Possible values are :<ul>
-      <li>cbmPoint : the object is punctual and may only collide with volumes
-      <li>cbmSphere : the object is defined by its bounding sphere (sphere radius
+   { Defines how fine collision bounding is for a particular object.
+      Possible values are : 
+       cbmPoint : the object is punctual and may only collide with volumes
+       cbmSphere : the object is defined by its bounding sphere (sphere radius
          is the max of axis-aligned dimensions)
-      <li>cbmEllipsoid the object is defined by its bounding axis-aligned ellipsoid
-      <li>cbmCube : the object is defined by a bounding axis-aligned "cube"
-      <li>cbmFaces : the object is defined by its faces (needs object-level support,
+       cbmEllipsoid the object is defined by its bounding axis-aligned ellipsoid
+       cbmCube : the object is defined by a bounding axis-aligned "cube"
+       cbmFaces : the object is defined by its faces (needs object-level support,
          if unavalaible, uses cbmCube code)
-      </ul> }
+        }
    TCollisionBoundingMode = (cbmPoint, cbmSphere, cbmEllipsoid, cbmCube, cbmFaces);
 
    TFastCollisionChecker = function (obj1, obj2 : TGLBaseSceneObject) : Boolean;
@@ -63,46 +62,46 @@ type
 	//
 	TGLCollisionManager = class (TComponent)
 	   private
-	      { Private Declarations }
+	       
          FClients : TList;
          FOnCollision : TObjectCollisionEvent;
 
 	   protected
-	      { Protected Declarations }
+	       
 	      procedure RegisterClient(aClient : TGLBCollision);
 	      procedure DeRegisterClient(aClient : TGLBCollision);
 	      procedure DeRegisterAllClients;
 
 	   public
-	      { Public Declarations }
+	       
 	      constructor Create(AOwner: TComponent); override;
          destructor Destroy; override;
 
 	      procedure CheckCollisions;
 
 		published
-			{ Published Declarations }
+			 
          property OnCollision : TObjectCollisionEvent read FOnCollision write FOnCollision;
 	end;
 
   	// TGLBCollision
 	//
-	{: Collision detection behaviour.<p>
+	{ Collision detection behaviour.
 		Allows an object to register to a TCollisionManager and be accounted for
-      in collision-detection and distance calculation mechanisms.<p>
+      in collision-detection and distance calculation mechanisms.
       An object may have multiple TGLBCollision, registered to multiple collision
       managers, however if multiple behaviours share the same manager, only one
       of them will be accounted for, others will be ignored. }
 	TGLBCollision = class (TGLBehaviour)
 		private
-			{ Private Declarations }
+			 
          FBoundingMode : TCollisionBoundingMode;
          FManager : TGLCollisionManager;
          FManagerName : String; // NOT persistent, temporarily used for persistence
          FGroupIndex : Integer;
 
 		protected
-			{ Protected Declarations }
+			 
          procedure SetGroupIndex(const value : Integer);
          procedure SetManager(const val : TGLCollisionManager);
 
@@ -111,8 +110,8 @@ type
          procedure Loaded; override;
 
 		public
-			{ Public Declarations }
-			constructor Create(aOwner : TXCollection); override;
+			 
+			constructor Create(aOwner : TGLXCollection); override;
 			destructor Destroy; override;
 
          procedure Assign(Source: TPersistent); override;
@@ -121,8 +120,8 @@ type
 			class function FriendlyDescription : String; override;
 
 		published
-			{ Published Declarations }
-         {: Refers the collision manager. }
+			 
+         { Refers the collision manager. }
          property Manager : TGLCollisionManager read FManager write SetManager;
          property BoundingMode : TCollisionBoundingMode read FBoundingMode write FBoundingMode;
          property GroupIndex : Integer read FGroupIndex write SetGroupIndex;
@@ -148,14 +147,14 @@ function FastCheckCubeVsFace(obj1, obj2 : TGLBaseSceneObject) : Boolean;   //exp
 function FastCheckFaceVsCube(obj1, obj2 : TGLBaseSceneObject) : Boolean;   //experimental
 function FastCheckFaceVsFace(obj1, obj2 : TGLBaseSceneObject) : Boolean;
 
-{: Returns true when the bounding box cubes does intersect the other.<p>
+{ Returns true when the bounding box cubes does intersect the other.
    Also true when the one cube does contain the other completely. }
 function IntersectCubes(obj1, obj2 : TGLBaseSceneObject) : Boolean; overload;
 
-{: Returns or creates the TGLBCollision within the given behaviours.<p>
+{ Returns or creates the TGLBCollision within the given behaviours.
 	This helper function is convenient way to access a TGLBCollision. }
 function GetOrCreateCollision(behaviours : TGLBehaviours) : TGLBCollision; overload;
-{: Returns or creates the TGLBCollision within the given object's behaviours.<p>
+{ Returns or creates the TGLBCollision within the given object's behaviours.
 	This helper function is convenient way to access a TGLBCollision. }
 function GetOrCreateCollision(obj : TGLBaseSceneObject) : TGLBCollision; overload;
 
@@ -830,7 +829,7 @@ end;
 
 // Create
 //
-constructor TGLBCollision.Create(aOwner : TXCollection);
+constructor TGLBCollision.Create(aOwner : TGLXCollection);
 begin
    inherited Create(aOwner);
 
@@ -844,7 +843,7 @@ begin
    inherited Destroy;
 end;
 
-// FriendlyName
+ 
 //
 class function TGLBCollision.FriendlyName : String;
 begin
@@ -910,7 +909,7 @@ begin
    end;
 end;
 
-// Assign
+ 
 //
 procedure TGLBCollision.Assign(Source: TPersistent);
 begin

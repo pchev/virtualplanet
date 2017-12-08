@@ -1,25 +1,24 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLFPSMovement<p>
+{
+   FPS-like movement behaviour and manager.
 
-  FPS-like movement behaviour and manager.<p>
-
-  <b>History : </b><font size=-1><ul>
-  <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-  <li>22/04/10 - Yar - Fixes after GLState revision
-  <li>05/03/10 - DanB - More state added to TGLStateCache
-  <li>03/04/07 - DaStr - Added "public" to TCollisionState for FPC compatibility
-  <li>30/03/07 - DaStr - Added $I GLScene.inc
-  <li>29/01/07 - DaStr - Moved registration to GLSceneRegister.pas
-  <li>08/03/06 - ur - Fixed warnigs for Delphi 2006
-  <li>02/12/04 - DB - Fixed memory leak, spotted by dikoe Kenguru
-  <li>03/07/04 - LR - Corrections for Linux compatibility
+   History :  
+   23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+   22/04/10 - Yar - Fixes after GLState revision
+   05/03/10 - DanB - More state added to TGLStateCache
+   03/04/07 - DaStr - Added "public" to TCollisionState for FPC compatibility
+   30/03/07 - DaStr - Added $I GLScene.inc
+   29/01/07 - DaStr - Moved registration to GLSceneRegister.pas
+   08/03/06 - ur - Fixed warnigs for Delphi 2006
+   02/12/04 - DB - Fixed memory leak, spotted by dikoe Kenguru
+   03/07/04 - LR - Corrections for Linux compatibility
   Replace GetTickCount by GLGetTickCount
-  <li>19/06/2004 -Mrqzzz - fixed SphereSweepAndSlide to work for scaled freeforms (SphereRadiusRel)
-  <li>14/06/04 - Mathx - Preventing repeated maps when adding through maps.addMap
-  <li>09/06/04 - Mathx - Creation
-  </ul></font>
+   19/06/2004 -Mrqzzz - fixed SphereSweepAndSlide to work for scaled freeforms (SphereRadiusRel)
+   14/06/04 - Mathx - Preventing repeated maps when adding through maps.addMap
+   09/06/04 - Mathx - Creation
+   
 }
 unit GLFPSMovement;
 
@@ -28,15 +27,13 @@ interface
 {$I GLScene.inc}
 
 uses
-{$IFDEF GLS_DELPHI_XE2_UP}
-  System.Classes, System.SysUtils, VCL.Graphics,
-{$ELSE}
-  Classes,  SysUtils, Graphics,
-{$ENDIF}
-  // GLScene
+  Classes,  
+  SysUtils, 
+  Graphics,
+   
   OpenGLTokens, GLContext, GLCrossPlatform,
   GLVectorGeometry, GLScene, GLVectorFileObjects,
-  GLVectorLists, XCollection, GLGeomObjects,
+  GLVectorLists, GLXCollection, GLGeomObjects,
   GLNavigator, GLRenderContextInfo, GLBaseClasses, GLManager, GLState;
 
 type
@@ -56,7 +53,7 @@ type
 
   TGLBFPSMovement = class;
 
-  TGLMapCollectionItem = class(TXCollectionItem)
+  TGLMapCollectionItem = class(TGLXCollectionItem)
   private
     FMap: TGLFreeForm;
     FMapName: string;
@@ -68,7 +65,7 @@ type
     procedure ReadFromFiler(reader: TReader); override;
     procedure Loaded; override;
   public
-    constructor Create(aOwner: TXCollection); override;
+    constructor Create(aOwner: TGLXCollection); override;
     class function FriendlyName: String; override;
   published
 
@@ -84,9 +81,9 @@ type
 
   TGLMapCollectionItemClass = class of TGLMapCollectionItem;
 
-  TGLMapCollection = class(TXCollection)
+  TGLMapCollection = class(TGLXCollection)
   public
-    class function ItemsClass: TXCollectionItemClass; override;
+    class function ItemsClass: TGLXCollectionItemClass; override;
     function addMap(Map: TGLFreeForm; CollisionGroup: integer = 0)
       : TGLMapCollectionItem;
     function findMap(mapFreeForm: TGLFreeForm): TGLMapCollectionItem;
@@ -121,8 +118,7 @@ type
     // limit iterations to 4 or 5 for now, may need to be higher for more complex maps or fast motion
     function SphereSweepAndSlide(freeform: TGLFreeForm;
       behaviour: TGLBFPSMovement; SphereStart: TVector;
-      var Velocity, newPosition: TVector; sphereRadius: single)
-      : boolean; overload;
+      var Velocity, newPosition: TVector; sphereRadius: single): boolean; overload;
 
     procedure SphereSweepAndSlide(behaviour: TGLBFPSMovement;
       SphereStart: TVector; var Velocity, newPosition: TVector;
@@ -133,7 +129,7 @@ type
     property Navigator: TGLNavigator read FNavigator write SetNavigator;
     property Scene: TGLScene read FScene write setScene;
 
-    { : Display Time for the arrow lines. }
+    { Display Time for the arrow lines. }
     property DisplayTime: integer read FDisplayTime write FDisplayTime;
     property MovementScale: single read FMovementScale write FMovementScale;
   end;
@@ -157,7 +153,7 @@ type
     FManagerName: string;
 
     procedure setShowArrows(value: boolean);
-    procedure RenderArrowLines(Sender: TObject; var rci: TRenderContextInfo);
+    procedure RenderArrowLines(Sender: TObject; var rci: TGLRenderContextInfo);
   protected
     procedure WriteToFiler(writer: TWriter); override;
     procedure ReadFromFiler(reader: TReader); override;
@@ -165,7 +161,7 @@ type
   public
     Velocity: TVector;
 
-    constructor Create(aOwner: TXCollection); override;
+    constructor Create(aOwner: TGLXCollection); override;
     destructor Destroy; override;
 
     procedure DoProgress(const progressTime: TProgressTimes); override;
@@ -202,10 +198,8 @@ type
 
 function GetFPSMovement(behaviours: TGLBehaviours): TGLBFPSMovement; overload;
 function GetFPSMovement(obj: TGLBaseSceneObject): TGLBFPSMovement; overload;
-function GetOrCreateFPSMovement(behaviours: TGLBehaviours)
-  : TGLBFPSMovement; overload;
-function GetOrCreateFPSMovement(obj: TGLBaseSceneObject)
-  : TGLBFPSMovement; overload;
+function GetOrCreateFPSMovement(behaviours: TGLBehaviours): TGLBFPSMovement; overload;
+function GetOrCreateFPSMovement(obj: TGLBaseSceneObject): TGLBFPSMovement; overload;
 
 
 implementation
@@ -226,8 +220,7 @@ begin
   Result := GetFPSMovement(obj.behaviours);
 end;
 
-function GetOrCreateFPSMovement(behaviours: TGLBehaviours)
-  : TGLBFPSMovement; overload;
+function GetOrCreateFPSMovement(behaviours: TGLBehaviours): TGLBFPSMovement; overload;
 var
   i: integer;
 begin
@@ -238,8 +231,7 @@ begin
     Result := TGLBFPSMovement.Create(behaviours);
 end;
 
-function GetOrCreateFPSMovement(obj: TGLBaseSceneObject)
-  : TGLBFPSMovement; overload;
+function GetOrCreateFPSMovement(obj: TGLBaseSceneObject): TGLBFPSMovement; overload;
 begin
   Result := GetOrCreateFPSMovement(obj.behaviours);
 end;
@@ -247,7 +239,7 @@ end;
 // ------------------
 // ------------------ TGLMapCollectionItem ------------------
 // ------------------
-constructor TGLMapCollectionItem.Create(aOwner: TXCollection);
+constructor TGLMapCollectionItem.Create(aOwner: TGLXCollection);
 begin
   inherited Create(aOwner);
 
@@ -310,7 +302,7 @@ end;
 // ------------------
 // ------------------ TGLMapCollection ------------------
 // ------------------
-class function TGLMapCollection.ItemsClass: TXCollectionItemClass;
+class function TGLMapCollection.ItemsClass: TGLXCollectionItemClass;
 begin
   Result := TGLMapCollectionItem;
 end;
@@ -621,7 +613,7 @@ end;
 // ------------------ TGLBFPSMovement ------------------
 // ------------------
 
-constructor TGLBFPSMovement.Create(aOwner: TXCollection);
+constructor TGLBFPSMovement.Create(aOwner: TGLXCollection);
 
   procedure setupArrow(arrow: TGLArrowLine; color: TDelphiColor);
   begin
@@ -889,7 +881,7 @@ begin
 end;
 
 procedure TGLBFPSMovement.RenderArrowLines(Sender: TObject;
-  var rci: TRenderContextInfo);
+  var rci: TGLRenderContextInfo);
 var
   x, y, z, t: single;
   i: integer;
@@ -920,11 +912,11 @@ begin
     GL.Vertex3f(CollisionState.Contact.intPoint.V[0],
       CollisionState.Contact.intPoint.V[1], CollisionState.Contact.intPoint.V[2]);
     GL.Vertex3f(CollisionState.Contact.intPoint.V[0] +
-      CollisionState.Contact.intNormal.V[0], // GLSphere4.Radius,
+      CollisionState.Contact.intNormal.V[0], // sphere4.Radius,
       CollisionState.Contact.intPoint.V[1] + CollisionState.Contact.intNormal.V[1],
-      // GLSphere4.Radius,
+      // sphere4.Radius,
       CollisionState.Contact.intPoint.V[2] + CollisionState.Contact.intNormal.V[2]);
-    // GLSphere4.Radius);
+    // sphere4.Radius);
   end;
   GL.End_();
 end;

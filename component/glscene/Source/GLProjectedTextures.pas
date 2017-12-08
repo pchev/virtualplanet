@@ -1,22 +1,21 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLProjectedTextures<p>
-
+{
    Implements projected textures through a GLScene object.
 
-   <b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPP compatibility: changed const cBase matrix
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>28/03/07 - DaStr - Renamed parameters in some methods
+    History :  
+       10/11/12 - PW - Added CPP compatibility: changed const cBase matrix
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       30/03/07 - DaStr - Added $I GLScene.inc
+       28/03/07 - DaStr - Renamed parameters in some methods
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678658)
-      <li>15/06/05 - Mathx - Added the Style property and inverse rendering
-      <li>07/05/05 - Mathx - Support for tmBlend textures (by Ruben Javier)
-      <li>01/10/04 - SG - Initial (by Matheus Degiovani)
-   </ul></font>
+       15/06/05 - Mathx - Added the Style property and inverse rendering
+       07/05/05 - Mathx - Support for tmBlend textures (by Ruben Javier)
+       01/10/04 - SG - Initial (by Matheus Degiovani)
+    
 }
 unit GLProjectedTextures;
 
@@ -35,93 +34,93 @@ uses
   GLState;
 
 type
-  {: Possible styles of texture projection. Possible values:<ul>
-     <li>ptsOriginal: Original projection method (first pass,
+  { Possible styles of texture projection. Possible values: 
+      ptsOriginal: Original projection method (first pass,
          is default scene render, second pass is texture
          projection).
-     <li>ptsInverse: Inverse projection method (first pass
+      ptsInverse: Inverse projection method (first pass
          is texture projection, sencond pass is regular scene
          render). This method is useful if you want to simulate
          lighting only through projected textures (the textures
          of the scene are "masked" into the white areas of
          the projection textures).
-     </ul> }
+       }
   TGLProjectedTexturesStyle = (ptsOriginal, ptsInverse);
 
   TGLProjectedTextures = class;
 
   // TGLTextureEmmiter
   //
-  {: A projected texture emmiter.<p>
+  { A projected texture emmiter.
      It's material property will be used as the projected texture.
      Can be places anywhere in the scene. }
   TGLTextureEmitter = class(TGLSceneObject)
   private
-    { Private Declarations }
+     
     FFOVy: single;
     FAspect: single;
 
   protected
-    { Protected Declarations }
-    {: Sets up the base texture matrix for this emitter<p>
+     
+    { Sets up the base texture matrix for this emitter
        Should be called whenever a change on its properties is made.}
-    procedure SetupTexMatrix(var ARci: TRenderContextInfo);
+    procedure SetupTexMatrix(var ARci: TGLRenderContextInfo);
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
 
   published
-    { Published Declarations }
-    {: Indicates the field-of-view of the projection frustum.}
+     
+    { Indicates the field-of-view of the projection frustum.}
     property FOVy: single read FFOVy write FFOVy;
 
-    {: x/y ratio. For no distortion, this should be set to
+    { x/y ratio. For no distortion, this should be set to
        texture.width/texture.height.}
     property Aspect: single read FAspect write FAspect;
   end;
 
   // TGLTextureEmitterItem
   //
-  {: Specifies an item on the TGLTextureEmitters collection. }
+  { Specifies an item on the TGLTextureEmitters collection. }
   TGLTextureEmitterItem = class(TCollectionItem)
   private
-    { Private Declarations }
+     
     FEmitter: TGLTextureEmitter;
 
   protected
-    { Protected Declarations }
+     
     procedure SetEmitter(const val: TGLTextureEmitter);
     procedure RemoveNotification(aComponent: TComponent);
     function GetDisplayName: string; override;
 
   public
-    { Public Declarations }
+     
     constructor Create(ACollection: TCollection); override;
     procedure Assign(Source: TPersistent); override;
 
   published
-    { Published Declarations }
+     
     property Emitter: TGLTextureEmitter read FEmitter write SetEmitter;
 
   end;
 
   // TGLTextureEmitters
   //
-  {: Collection of TGLTextureEmitter. }
+  { Collection of TGLTextureEmitter. }
   TGLTextureEmitters = class(TCollection)
   private
-    { Private Declarations }
+     
     FOwner: TGLProjectedTextures;
 
   protected
-    { Protected Declarations }
+     
     function GetOwner: TPersistent; override;
     function GetItems(index: Integer): TGLTextureEmitterItem;
     procedure RemoveNotification(aComponent: TComponent);
 
   public
-    { Public Declarations }
+     
     procedure AddEmitter(texEmitter: TGLTextureEmitter);
 
     property Items[index: Integer]: TGLTextureEmitterItem read GetItems; default;
@@ -130,29 +129,29 @@ type
 
   // TGLProjectedTexture
   //
-  {: Projected Textures Manager.<p>
+  { Projected Textures Manager.
      Specifies active texture Emitters (whose texture will be projected)
      and receivers (children of this object). }
   TGLProjectedTextures = class(TGLImmaterialSceneObject)
   private
-    { Private Declarations }
+     
     FEmitters: TGLTextureEmitters;
     FStyle: TGLProjectedTexturesStyle;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure DoRender(var ARci: TRenderContextInfo;
+    procedure DoRender(var ARci: TGLRenderContextInfo;
       ARenderSelf, ARenderChildren: Boolean); override;
 
   published
-    { Published Declarations }
+     
 
-    {: List of texture emitters. }
+    { List of texture emitters. }
     property Emitters: TGLTextureEmitters read FEmitters write FEmitters;
 
-    {: Indicates the style of the projected textures. }
+    { Indicates the style of the projected textures. }
     property Style: TGLProjectedTexturesStyle read FStyle write FStyle;
   end;
 
@@ -182,7 +181,7 @@ end;
 // SetupTexMatrix
 //
 
-procedure TGLTextureEmitter.SetupTexMatrix(var ARci: TRenderContextInfo);
+procedure TGLTextureEmitter.SetupTexMatrix(var ARci: TGLRenderContextInfo);
 const
   cBaseMat: TMatrix =
   (V:((X:0.5; Y:0;   Z:0; W:0),
@@ -211,7 +210,7 @@ begin
   inherited Create(ACollection);
 end;
 
-// Assign
+ 
 //
 
 procedure TGLTextureEmitterItem.Assign(Source: TPersistent);
@@ -326,7 +325,7 @@ end;
 // DoRender
 //
 
-procedure TGLProjectedTextures.DoRender(var ARci: TRenderContextInfo;
+procedure TGLProjectedTextures.DoRender(var ARci: TGLRenderContextInfo;
   ARenderSelf, ARenderChildren: boolean);
 const
   PS: array[0..3] of GLfloat = (1, 0, 0, 0);

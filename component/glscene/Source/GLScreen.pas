@@ -1,33 +1,32 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLScreen<p>
+{
+  Routines to interact with the screen/desktop.
 
-  Routines to interact with the screen/desktop.<p>
-
-  <b>Historique : </b><font size=-1><ul>
-  <li>04/11/10 - DaStr - Added Delphi5 and Delphi6 compatibility
-  <li>06/06/10 - Yar - Fixed warnings
-  <li>13/04/10 - Yar - Fixed conditional for delphi (thanks mif)
-  <li>07/01/10 - DaStr - Enhanced cross-platform compatibility (thanks Predator)
-  <li>17/12/09 - DaStr - Added screen utility functions from
+  History :  
+   04/11/10 - DaStr - Added Delphi5 and Delphi6 compatibility
+   06/06/10 - Yar - Fixed warnings
+   13/04/10 - Yar - Fixed conditional for delphi (thanks mif)
+   07/01/10 - DaStr - Enhanced cross-platform compatibility (thanks Predator)
+   17/12/09 - DaStr - Added screen utility functions from
   GLCrossPlatform.pas (thanks Predator)
-  <li>07/11/09 - DaStr - Improved FPC compatibility and moved to the /Source/Platform/
+   07/11/09 - DaStr - Improved FPC compatibility and moved to the /Source/Platform/
   directory (BugtrackerID = 2893580) (thanks Predator)
-  <li>23/03/07 - DaStr - Added explicit pointer dereferencing
+   23/03/07 - DaStr - Added explicit pointer dereferencing
   (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-  <li>03/07/04 - LR - Suppress CurrentScreenColorDepth because there are in GLCrossPlatform
-  <li>24/07/03 - EG - Video modes now read on request only, removed
+   03/07/04 - LR - Suppress CurrentScreenColorDepth because there are in GLCrossPlatform
+   24/07/03 - EG - Video modes now read on request only, removed
   the non-standard low-res video modes
-  <li>27/09/02 - EG - Added Ability to set display frequency
-  <li>27/07/01 - EG - Removed the "absolute" in RestoreDefaultMode
-  <li>08/02/00 - EG - TLowResMode & TVideoMode packed (wins 5 kb)
-  <li>06/02/00 - EG - Javadocisation, added "default"s to properties
-  </ul></font>
+   27/09/02 - EG - Added Ability to set display frequency
+   27/07/01 - EG - Removed the "absolute" in RestoreDefaultMode
+   08/02/00 - EG - TLowResMode & TVideoMode packed (wins 5 kb)
+   06/02/00 - EG - Javadocisation, added "default"s to properties
+   
 }
 unit GLScreen;
 
-// GLScreen    - This units contains routines to interact with the screen/desktop.
+ // screen    - This units contains routines to interact with the screen/desktop.
 // Version     - 0.0.8
 // Last Change - 30. September 1998
 // for more information see help file
@@ -39,14 +38,12 @@ interface
 uses
 {$IFDEF MSWINDOWS} Windows, {$ENDIF}
 {$IFDEF GLS_X11_SUPPORT} x, xlib, xf86vmode, {$ENDIF}
-{$IFDEF FPC} LCLVersion, {$ENDIF}
+ LCLVersion,
   Classes, GLVectorGeometry, GLCrossPlatform;
 
 const
   MaxVideoModes = 200;
-{$IFNDEF FPC}
-  lcl_release = 0;
-{$ENDIF}
+
 
 type
 
@@ -59,9 +56,9 @@ type
   // window-to-screen fitting
   TWindowFitting = (wfDefault, wfFitWindowToScreen, wfFitScreenToWindow);
 
-  // TDisplayOptions
+  // TGLDisplayOptions
   //
-  TDisplayOptions = class(TPersistent)
+  TGLDisplayOptions = class(TPersistent)
   private
     FFullScreen: Boolean;
     FScreenResolution: TResolution;
@@ -133,11 +130,7 @@ implementation
 // ------------------------------------------------------------------------------
 
 uses
-{$IFDEF GLS_DELPHI_XE2_UP}
-  VCL.Forms,
-{$ELSE}
   Forms,
-{$ENDIF}
   SysUtils;
 
 type
@@ -162,16 +155,16 @@ const
     ColorDepth: 24), (Width: 512; Height: 384; ColorDepth: 32));
 {$ENDIF}
 
-  // Assign
+   
   //
-procedure TDisplayOptions.Assign(Source: TPersistent);
+procedure TGLDisplayOptions.Assign(Source: TPersistent);
 begin
-  if Source is TDisplayOptions then
+  if Source is TGLDisplayOptions then
   begin
-    FFullScreen := TDisplayOptions(Source).FFullScreen;
-    FScreenResolution := TDisplayOptions(Source).FScreenResolution;
-    FWindowAttributes := TDisplayOptions(Source).FWindowAttributes;
-    FWindowFitting := TDisplayOptions(Source).FWindowFitting;
+    FFullScreen := TGLDisplayOptions(Source).FFullScreen;
+    FScreenResolution := TGLDisplayOptions(Source).FScreenResolution;
+    FWindowAttributes := TGLDisplayOptions(Source).FWindowAttributes;
+    FWindowFitting := TGLDisplayOptions(Source).FWindowFitting;
   end
   else
     inherited Assign(Source);

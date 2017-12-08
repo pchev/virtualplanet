@@ -1,20 +1,19 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLTree<p>
-
-   Dynamic tree generation in GLScene<p>
+{
+   Dynamic tree generation in GLScene
 
    This code was adapted from the nVidia Tree Demo:
-   http://developer.nvidia.com/object/Procedural_Tree.html<p>
+   http://developer.nvidia.com/object/Procedural_Tree.html
 
-   History:<ul>
-     <li>10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
-     <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-     <li>30/03/07 - DaStr - Added $I GLScene.inc
-     <li>28/03/07 - DaStr - Renamed parameters in some methods
+   History: 
+      10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
+      23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+      30/03/07 - DaStr - Added $I GLScene.inc
+      28/03/07 - DaStr - Renamed parameters in some methods
                             (thanks Burkhard Carstens) (Bugtracker ID = 1678658)
-     <li>13/01/07 - DaStr - Added changes proposed by Tim "Sivael" Kapuœciñski [sivael@gensys.pl]
+      13/01/07 - DaStr - Added changes proposed by Tim "Sivael" Kapuœciñski [sivael@gensys.pl]
                          Modified the code to create much more realistic trees -
                           added third branch for every node and modified constants
                           to make the tree look more "alive".
@@ -23,20 +22,20 @@
                           branches were much more "in order".
                          Added Center* declarations, CenterBranchConstant,
                          Added AutoRebuild flag.
-     <li>02/08/04 - LR, YHC - BCB corrections: use record instead array
-     <li>14/04/04 - SG - Added AutoCenter property.
-     <li>03/03/04 - SG - Added GetExtents and AxisAlignedDimensionsUnscaled.
-     <li>24/11/03 - SG - Creation.
-   </ul>
+      02/08/04 - LR, YHC - BCB corrections: use record instead array
+      14/04/04 - SG - Added AutoCenter property.
+      03/03/04 - SG - Added GetExtents and AxisAlignedDimensionsUnscaled.
+      24/11/03 - SG - Creation.
+    
 
    Some info:
-  <ul>CenterBranchConstant</ul> -
+   CenterBranchConstant  -
     Defines, how big the central branch is. When around 50%
     it makes a small branch inside the tree, for higher values
     much more branches and leaves are created, so either use it
     with low depth, or set it to zero, and have two-branched tree.
     Default : 0.5
-  <ul>"AutoRebuild" flag</ul> -
+   "AutoRebuild" flag  -
     Rebuild tree after property change.
     Default: True
 }
@@ -48,7 +47,7 @@ interface
 
 uses
    Classes, SysUtils,
-   //GLS
+    
    GLScene, GLMaterial, GLVectorGeometry, GLVectorLists,
    OpenGLTokens, GLVectorFileObjects, GLApplicationFileIO, GLRenderContextInfo,
    XOpenGL, GLContext , GLVectorTypes;
@@ -62,7 +61,7 @@ type
    //
    TGLTreeLeaves = class
       private
-         { Private Declarations }
+          
          FOwner : TGLTree;
          FCount : Integer;
          FVertices : TAffineVectorList;
@@ -70,11 +69,11 @@ type
          FTexCoords : TAffineVectorList;
 
       public
-         { Public Declarations }
+          
          constructor Create(AOwner : TGLTree);
          destructor Destroy; override;
 
-         procedure BuildList(var rci : TRenderContextInfo);
+         procedure BuildList(var rci : TGLRenderContextInfo);
          procedure AddNew(matrix : TMatrix);
          procedure Clear;
 
@@ -89,7 +88,7 @@ type
    //
    TGLTreeBranch = class
       private
-         { Private Declarations }
+          
          FOwner : TGLTreeBranches;
          FLeft : TGLTreeBranch;
          FCenter : TGLTreeBranch;
@@ -106,7 +105,7 @@ type
                                TexCoordY, Twist : Single; Level : Integer);
 
       public
-         { Public Declarations }
+          
          constructor Create(AOwner : TGLTreeBranches; AParent : TGLTreeBranch);
          destructor Destroy; override;
 
@@ -124,7 +123,7 @@ type
    //
    TGLTreeBranches = class
       private
-         { Private Declarations }
+          
          FOwner : TGLTree;
          FSinList : TSingleList;
          FCosList : TSingleList;
@@ -140,11 +139,11 @@ type
          procedure BuildBranches;
 
       public
-         { Public Declarations }
+          
          constructor Create(AOwner : TGLTree);
          destructor Destroy; override;
 
-         procedure BuildList(var rci : TRenderContextInfo);
+         procedure BuildList(var rci : TGLRenderContextInfo);
          procedure Clear;
 
          property Owner : TGLTree read FOwner;
@@ -160,7 +159,7 @@ type
    //
    TGLTreeBranchNoise = class
       private
-         { Private Declarations }
+          
          FBranchNoise : Single;
          FLeft, FRight, FCenter : TGLTreeBranchNoise;
 
@@ -169,7 +168,7 @@ type
          function GetRight : TGLTreeBranchNoise;
 
       public
-         { Public Declarations }
+          
          constructor Create;
          destructor Destroy; override;
 
@@ -183,7 +182,7 @@ type
    //
    TGLTree = class (TGLImmaterialSceneObject)
       private
-         { Private Declarations }
+          
          FDepth : Integer;
          FBranchFacets : Integer;
          FLeafSize : Single;
@@ -215,7 +214,7 @@ type
          FAxisAlignedDimensionsCache : TVector;
 
       protected
-         { Protected Declarations }
+          
          procedure SetDepth(const Value : Integer);
          procedure SetBranchFacets(const Value : Integer);
          procedure SetLeafSize(const Value : Single);
@@ -241,14 +240,14 @@ type
          procedure Loaded; override;
 
       public
-         { Public Declarations }
+          
          constructor Create(AOwner : TComponent); override;
          destructor Destroy; override;
 
          procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-         procedure DoRender(var ARci : TRenderContextInfo;
+         procedure DoRender(var ARci : TGLRenderContextInfo;
                             ARenderSelf, ARenderChildren : Boolean); override;
-         procedure BuildList(var rci : TRenderContextInfo); override;
+         procedure BuildList(var rci : TGLRenderContextInfo); override;
          procedure StructureChanged; override;
 
          procedure BuildMesh(GLBaseMesh : TGLBaseMesh);
@@ -269,39 +268,39 @@ type
          property Noise : TGLTreeBranchNoise read FNoise;
 
       published
-         { Published Declarations }
-         {: The depth of tree branch recursion. }
+          
+         { The depth of tree branch recursion. }
          property Depth : Integer read FDepth write SetDepth;
-         {: The number of facets for each branch in the tree. }
+         { The number of facets for each branch in the tree. }
          property BranchFacets : Integer read FBranchFacets write SetBranchFacets;
-         {: Leaf size modifier. Leaf size is also influenced by branch recursion
+         { Leaf size modifier. Leaf size is also influenced by branch recursion
             scale. }
          property LeafSize : Single read FLeafSize write SetLeafSize;
-         {: Branch length modifier. }
+         { Branch length modifier. }
          property BranchSize : Single read FBranchSize write SetBranchSize;
-         {: Overall branch noise influence. Relates to the 'fullness' of the tree. }
+         { Overall branch noise influence. Relates to the 'fullness' of the tree. }
          property BranchNoise : Single read FBranchNoise write SetBranchNoise;
-         {: Effects the habit of the tree. Values from 0 to 1 refer to Upright to
+         { Effects the habit of the tree. Values from 0 to 1 refer to Upright to
             Spreading respectively. }
          property BranchAngleBias : Single read FBranchAngleBias write SetBranchAngleBias;
-         {: Effects the balance of the tree. }
+         { Effects the balance of the tree. }
          property BranchAngle : Single read FBranchAngle write SetBranchAngle;
-         {: Effects the rotation of each sub branch in recursion. }
+         { Effects the rotation of each sub branch in recursion. }
          property BranchTwist : Single read FBranchTwist write SetBranchTwist;
-         {: Effects the thickness of the branches. }
+         { Effects the thickness of the branches. }
          property BranchRadius : Single read FBranchRadius write SetBranchRadius;
-         {: Determines how thin a branch can get before a leaf is substituted. }
+         { Determines how thin a branch can get before a leaf is substituted. }
          property LeafThreshold : Single read FLeafThreshold write SetLeafThreshold;
-         {: Determines how BranchAngle effects the central leader (CentralLeader must = True). }
+         { Determines how BranchAngle effects the central leader (CentralLeader must = True). }
          property CentralLeaderBias : Single read FCentralLeaderBias write SetCentralLeaderBias;
-         {: Does this tree have a central leader? }
+         { Does this tree have a central leader? }
          property CentralLeader : Boolean read FCentralLeader write SetCentralLeader;
          property Seed : Integer read FSeed write SetSeed;
-         {: Automatically center the tree's vertices after building them. }
+         { Automatically center the tree's vertices after building them. }
          property AutoCenter : Boolean read FAutoCenter write SetAutoCenter;
-         {: Automatically rebuild the tree after changing the settings }
+         { Automatically rebuild the tree after changing the settings }
          property AutoRebuild : Boolean read FAutoRebuild write SetAutoRebuild;
-         {: Central branch can be thinner(lower values)/thicker(->1) depending on this constant.
+         { Central branch can be thinner(lower values)/thicker(->1) depending on this constant.
             The effect also depends on the BranchAngle variable. }
          property CenterBranchConstant : Single read FCenterBranchConstant write SetCenterBranchConstant;
 
@@ -371,7 +370,7 @@ end;
 
 // BuildList
 //
-procedure TGLTreeLeaves.BuildList(var rci: TRenderContextInfo);
+procedure TGLTreeLeaves.BuildList(var rci: TGLRenderContextInfo);
 var
    i : integer;
    n : TAffineVector;
@@ -710,7 +709,7 @@ end;
 
 // BuildList
 //
-procedure TGLTreeBranches.BuildList(var rci: TRenderContextInfo);
+procedure TGLTreeBranches.BuildList(var rci: TGLRenderContextInfo);
 var
    i, stride : Integer;
    libMat : TGLLibMaterial;
@@ -860,7 +859,7 @@ end;
 
 // DoRender
 //
-procedure TGLTree.DoRender(var ARci : TRenderContextInfo;
+procedure TGLTree.DoRender(var ARci : TGLRenderContextInfo;
                            ARenderSelf, ARenderChildren : Boolean);
 begin
    MaterialLibrary.LibMaterialByName(BranchMaterialName).PrepareBuildList;
@@ -871,7 +870,7 @@ end;
 
 // BuildList
 //
-procedure TGLTree.BuildList(var rci: TRenderContextInfo);
+procedure TGLTree.BuildList(var rci: TGLRenderContextInfo);
 begin
    if FRebuildTree then begin
       FBranches.BuildBranches;
@@ -893,7 +892,7 @@ end;
 //
 procedure TGLTree.BuildMesh(GLBaseMesh : TGLBaseMesh);
 
-   procedure RecursBranches(Branch : TGLTreeBranch; bone : TSkeletonBone; Frame : TSkeletonFrame);
+   procedure RecursBranches(Branch : TGLTreeBranch; bone : TGLSkeletonBone; Frame : TGLSkeletonFrame);
    var
       trans : TTransformations;
       mat : TMatrix;
@@ -921,18 +920,18 @@ procedure TGLTree.BuildMesh(GLBaseMesh : TGLBaseMesh);
 
       // Recurse with child branches
       if Assigned(Branch.Left) then
-         RecursBranches(Branch.Left, TSkeletonBone.CreateOwned(bone), Frame);
+         RecursBranches(Branch.Left, TGLSkeletonBone.CreateOwned(bone), Frame);
       if Assigned(Branch.Right) then
-         RecursBranches(Branch.Right, TSkeletonBone.CreateOwned(bone), Frame);
+         RecursBranches(Branch.Right, TGLSkeletonBone.CreateOwned(bone), Frame);
    end;
 
 var
-   //SkelMesh : TSkeletonMeshObject;
+   //SkelMesh : TGLSkeletonMeshObject;
    fg : TFGVertexIndexList;
    fg2 : TFGVertexNormalTexIndexList;
    i,j,stride : integer;
    //parent_id : integer;
-   //bone : TSkeletonBone;
+   //bone : TGLSkeletonBone;
 begin
    if not Assigned(GLBaseMesh) then exit;
 
@@ -945,9 +944,9 @@ begin
    GLBaseMesh.Skeleton.Clear;
 
    //if GLBaseMesh is TGLActor then
-   //   TSkeletonMeshObject.CreateOwned(GLBaseMesh.MeshObjects)
+   //   TGLSkeletonMeshObject.CreateOwned(GLBaseMesh.MeshObjects)
    //else
-      TMeshObject.CreateOwned(GLBaseMesh.MeshObjects);
+      TGLMeshObject.CreateOwned(GLBaseMesh.MeshObjects);
    GLBaseMesh.MeshObjects[0].Mode:=momFaceGroups;
 
    // Branches
@@ -957,9 +956,9 @@ begin
    {if GLBaseMesh is TGLActor then begin
       TGLActor(GLBaseMesh).Reference:=aarSkeleton;
       RecursBranches(Branches.FRoot,
-                     TSkeletonBone.CreateOwned(GLBaseMesh.Skeleton.RootBones),
-                     TSkeletonFrame.CreateOwned(GLBaseMesh.Skeleton.Frames));
-      SkelMesh:=TSkeletonMeshObject(GLBaseMesh.MeshObjects[0]);
+                     TGLSkeletonBone.CreateOwned(GLBaseMesh.Skeleton.RootBones),
+                     TGLSkeletonFrame.CreateOwned(GLBaseMesh.Skeleton.Frames));
+      SkelMesh:=TGLSkeletonMeshObject(GLBaseMesh.MeshObjects[0]);
       SkelMesh.BonesPerVertex:=1;
       SkelMesh.VerticeBoneWeightCount:=Branches.FBranchIndices.Count;
       for i:=0 to Branches.FBranchIndices.Count-1 do
@@ -980,9 +979,9 @@ begin
 
    // Leaves
    //if GLBaseMesh is TGLActor then
-   //   TSkeletonMeshObject.CreateOwned(GLBaseMesh.MeshObjects)
+   //   TGLSkeletonMeshObject.CreateOwned(GLBaseMesh.MeshObjects)
    //else
-      TMeshObject.CreateOwned(GLBaseMesh.MeshObjects);
+      TGLMeshObject.CreateOwned(GLBaseMesh.MeshObjects);
    GLBaseMesh.MeshObjects[1].Mode:=momFaceGroups;
 
    GLBaseMesh.MeshObjects[1].Vertices.Add(Leaves.Vertices);
@@ -1319,7 +1318,7 @@ begin
    StrList.Free;
 end;
 
-// LoadFromFile
+ 
 //
 procedure TGLTree.LoadFromFile(aFileName: String);
 var

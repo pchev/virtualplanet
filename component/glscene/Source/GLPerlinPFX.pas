@@ -1,20 +1,19 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLPerlinPFX<p>
+{
+   PFX particle effects revolving around the use of Perlin noise.
 
-   PFX particle effects revolving around the use of Perlin noise.<p>
-
-   <b>History : </b><font size=-1><ul>
-      <li>04/11/10 - DaStr - Restored Delphi5 and Delphi6 compatibility   
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/01/10 - Yar  - Added bmp32.Blank:=false for memory allocation
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>16/03/07 - DaStr - Added explicit pointer dereferencing
+    History :  
+       04/11/10 - DaStr - Restored Delphi5 and Delphi6 compatibility   
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/01/10 - Yar  - Added bmp32.Blank:=false for memory allocation
+       30/03/07 - DaStr - Added $I GLScene.inc
+       16/03/07 - DaStr - Added explicit pointer dereferencing
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-      <li>15/04/04 - Mrqzzz - Fixed range check error suggested by Graham Kennedy
-      <li>15/04/04 - EG - Creation
-   </ul></font>
+       15/04/04 - Mrqzzz - Fixed range check error suggested by Graham Kennedy
+       15/04/04 - EG - Creation
+    
 }
 unit GLPerlinPFX;
 
@@ -24,7 +23,7 @@ interface
 
 uses
   Classes,
-  //GLS
+   
   GLParticleFX, GLGraphics, GLCrossPlatform,
   GLPerlinNoise3D, OpenGLTokens, GLVectorGeometry;
 
@@ -32,15 +31,15 @@ type
 
    // TGLPerlinPFXManager
    //
-   {: A sprite-based particles FX manager using perlin-based sprites.<p>
+   { A sprite-based particles FX manager using perlin-based sprites.
       This PFX manager is more suited for smoke or fire effects, and with proper
       tweaking of the texture and perlin parameters, may help render a convincing
-      effect with less particles.<p>
+      effect with less particles.
       The sprite generate by this manager is the composition of a distance-based
       intensity and a perlin noise. }
    TGLPerlinPFXManager = class (TGLBaseSpritePFXManager)
       private
-         { Private Declarations }
+          
          FTexMapSize : Integer;
          FNoiseSeed : Integer;
          FNoiseScale : Integer;
@@ -49,7 +48,7 @@ type
          FBrightness, FGamma : Single;
 
       protected
-         { Protected Declarations }
+          
          procedure PrepareImage(bmp32 : TGLBitmap32; var texFormat : Integer); override;
 
          procedure SetTexMapSize(const val : Integer);
@@ -61,36 +60,36 @@ type
          procedure SetGamma(const val : Single);
 
       public
-         { Public Declarations }
+          
          constructor Create(aOwner : TComponent); override;
          destructor Destroy; override;
 
 	   published
-	      { Published Declarations }
-         {: Underlying texture map size, as a power of two.<p>
+	       
+         { Underlying texture map size, as a power of two.
             Min value is 3 (size=8), max value is 9 (size=512). }
          property TexMapSize : Integer read FTexMapSize write SetTexMapSize default 6;
-         {: Smoothness of the distance-based intensity.<p>
+         { Smoothness of the distance-based intensity.
             This value is the exponent applied to the intensity in the texture,
             basically with a value of 1 (default) the intensity decreases linearly,
             with higher values, it will remain 'constant' in the center then
             fade-off more abruptly, and with values below 1, there will be a
             sharp spike in the center. }
          property Smoothness : Single read FSmoothness write SetSmoothness;
-         {: Brightness factor applied to the perlin texture intensity.<p>
-            Brightness acts as a scaling, non-saturating factor. Examples:<ul>
-            <li>Brightness = 1 : intensities in the [0; 1] range
-            <li>Brightness = 2 : intensities in the [0.5; 1] range
-            <li>Brightness = 0.5 : intensities in the [0; 0.5] range
-            </ul>Brightness is applied to the final texture (and thus affects
+         { Brightness factor applied to the perlin texture intensity.
+            Brightness acts as a scaling, non-saturating factor. Examples: 
+             Brightness = 1 : intensities in the [0; 1] range
+             Brightness = 2 : intensities in the [0.5; 1] range
+             Brightness = 0.5 : intensities in the [0; 0.5] range
+             Brightness is applied to the final texture (and thus affects
             the distance based intensity). }
          property Brightness : Single read FBrightness write SetBrightness;
          property Gamma : Single read FGamma write SetGamma;
-         {: Random seed to use for the perlin noise. }
+         { Random seed to use for the perlin noise. }
          property NoiseSeed : Integer read FNoiseSeed write SetNoiseSeed default 0;
-         {: Scale applied to the perlin noise (stretching). }
+         { Scale applied to the perlin noise (stretching). }
          property NoiseScale : Integer read FNoiseScale write SetNoiseScale default 100;
-         {: Amplitude applied to the perlin noise (intensity).<p>
+         { Amplitude applied to the perlin noise (intensity).
             This value represent the percentage of the sprite luminance affected by
             the perlin texture. }
          property NoiseAmplitude : Integer read FNoiseAmplitude write SetNoiseAmplitude default 50;
@@ -218,7 +217,8 @@ procedure TGLPerlinPFXManager.PrepareImage(bmp32 : TGLBitmap32; var texFormat : 
    procedure PrepareSubImage(dx, dy, s : Integer; noise : TGLPerlin3DNoise);
    var
       s2 : Integer;
-      x, y, d : Integer;
+      x, y : Integer;
+      d:longint;
       is2, f, fy, pf, nBase, nAmp, df, dfg : Single;
       invGamma : Single;
       scanLine : PGLPixel32Array;
@@ -229,7 +229,8 @@ procedure TGLPerlinPFXManager.PrepareImage(bmp32 : TGLBitmap32; var texFormat : 
       pf:=FNoiseScale*0.05*is2;
       nAmp:=FNoiseAmplitude*(0.01);
       nBase:=1-nAmp*0.5;
-
+      df:=0.0;
+      d:=0;
       if Gamma<0.1 then
          invGamma:=10
       else invGamma:=1/Gamma;
@@ -240,12 +241,14 @@ procedure TGLPerlinPFXManager.PrepareImage(bmp32 : TGLBitmap32; var texFormat : 
          scanLine:=bmp32.ScanLine[y+dy];
          for x:=0 to s-1 do begin
             f:=Sqr((x+0.5-s2)*is2)+fy;
-            if f<1 then begin
+            if f<1 then
+            begin
                df:=nBase+nAmp*noise.Noise(x*pf, y*pf);
-               if gotIntensityCorrection then
-                  df:=ClampValue(Power(df, InvGamma)*Brightness, 0, 1);
+               if gotIntensityCorrection then df:=ClampValue(Power(df, InvGamma)*Brightness, 0, 1);
                dfg:=Power((1-Sqrt(f)), FSmoothness);
-               d:=Trunc(df*255);
+               {$R-}
+               d:=trunc(df*255);
+
                if d > 255 then d:=255;
                with scanLine^[x+dx] do begin
                   r:=d;
@@ -253,6 +256,7 @@ procedure TGLPerlinPFXManager.PrepareImage(bmp32 : TGLBitmap32; var texFormat : 
                   b:=d;
                   a:=Trunc(dfg*255);
                end;
+               {$R+}
             end else PInteger(@scanLine[x+dx])^:=0;
          end;
       end;

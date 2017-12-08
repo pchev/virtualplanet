@@ -1,21 +1,20 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLPerlin<p>
-
-  Classes for generating perlin noise.<p>
+{
+  Classes for generating perlin noise.
 
   The components and classes in the unit are a base to generate textures and heightmaps from,
-  A Perlin Height Data Source have been included as an example. Use this combined with a terrain renderer for an infinite random landscape <p>
+  A Perlin Height Data Source have been included as an example. Use this combined with a terrain renderer for an infinite random landscape 
 
-  <b>History : </b><font size=-1><ul>
-  <li>20/05/10 - Yar - Fixes for Linux x64
-  <li>31/03/07 - DaStr - Added $I GLScene.inc
-  <li>28/03/07 - DaStr - Added explicit pointer dereferencing
+   History :  
+   20/05/10 - Yar - Fixes for Linux x64
+   31/03/07 - DaStr - Added $I GLScene.inc
+   28/03/07 - DaStr - Added explicit pointer dereferencing
   (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-  <li>08/07/04 - LR - Correction for Linux
-  <li>29/01/03 - JaJ - Submitted to GLScene.
-  </ul></font>
+   08/07/04 - LR - Correction for Linux
+   29/01/03 - JaJ - Submitted to GLScene.
+   
 }
 unit GLPerlin;
 
@@ -112,10 +111,10 @@ Type
     Procedure Generate; override;
     Function GetPerlinValue_2D(x, y: Double): Double;
     Procedure MakeBitmap(Param: TGLBitmap);
-    Procedure SetHeightData(heightData: THeightData);
+    Procedure SeTGLHeightData(heightData: TGLHeightData);
   End;
 
-  TGLPerlinHDS = class(THeightDataSource)
+  TGLPerlinHDS = class(TGLHeightDataSource)
   private
     FInterpolation: TGLPerlinInterpolation;
     FSmoothing: TGLPerlinInterpolation;
@@ -129,7 +128,7 @@ Type
     MaxValue, MinValue: Double;
     Stall: Boolean;
     Constructor Create(AOwner: TComponent); override;
-    procedure StartPreparingData(heightData: THeightData); override;
+    procedure StartPreparingData(heightData: TGLHeightData); override;
     procedure WaitFor;
     property Lines: TStrings read FLines;
     property LinesChanged: Boolean read FLinesChanged write FLinesChanged;
@@ -145,7 +144,7 @@ Type
     property YStart: Integer read FYStart write FYStart;
   End;
 
-  TGLPerlinHDSThread = class(THeightDataThread)
+  TGLPerlinHDSThread = class(TGLHeightDataThread)
     Perlin: TGL2DPerlin;
     PerlinSource: TGLPerlinHDS;
     Procedure OpdateOutSide;
@@ -598,7 +597,7 @@ Begin
   End;
 End;
 
-Procedure TGL2DPerlin.SetHeightData(heightData: THeightData);
+Procedure TGL2DPerlin.SeTGLHeightData(heightData: TGLHeightData);
 
 Var
   XC, YC: Integer;
@@ -663,7 +662,7 @@ Begin
   MaxThreads := 1;
 End;
 
-procedure TGLPerlinHDS.StartPreparingData(heightData: THeightData);
+procedure TGLPerlinHDS.StartPreparingData(heightData: TGLHeightData);
 
 Var
   Perlin: TGL2DPerlin;
@@ -702,7 +701,7 @@ Begin
   else
   Begin
     Perlin.Generate;
-    Perlin.SetHeightData(heightData);
+    Perlin.SeTGLHeightData(heightData);
     heightData.DataState := hdsReady;
 
     If MaxValue < Perlin.MaxValue then
@@ -722,7 +721,7 @@ procedure TGLPerlinHDS.WaitFor;
 
 Var
   HDList: TList;
-  HD: THeightData;
+  HD: TGLHeightData;
   XC: Integer;
 Begin
   Repeat
@@ -731,7 +730,7 @@ Begin
       HD := Nil;
       For XC := 0 to HDList.Count - 1 do
       Begin
-        HD := THeightData(HDList[XC]);
+        HD := TGLHeightData(HDList[XC]);
         If HD.DataState <> hdsReady then
           Break;
       End;
@@ -749,7 +748,7 @@ Procedure TGLPerlinHDSThread.Execute;
 
 Begin
   Perlin.Generate;
-  Perlin.SetHeightData(FHeightData);
+  Perlin.SeTGLHeightData(FHeightData);
   FHeightData.DataState := hdsReady;
 
   If PerlinSource.MaxValue < Perlin.MaxValue then

@@ -1,25 +1,24 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLPostEffects<p>
+{
+    A collection of components that generate post effects.
 
-  A collection of components that generate post effects.<p>
-
-	<b>History : </b><font size=-1><ul>
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>28/05/08 - DaStr - Fixed AV in TGLPostEffect.MakeDistortEffect()
+	 History :  
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       28/05/08 - DaStr - Fixed AV in TGLPostEffect.MakeDistortEffect()
                              Got rid of all R- hacks
-      <li>10/04/08 - DaStr - Added a Delpi 5 interface bug work-around to
+       10/04/08 - DaStr - Added a Delpi 5 interface bug work-around to
                               TGLPostShaderCollectionItem.SetShader()
                               (BugTracker ID = 1938988)
-      <li>16/08/07 - DaStr - Added pepBlur preset (by Paul van Dinther)
-      <li>25/03/07 - DaStr - Small fix for Delphi5 compatibility
-      <li>23/03/07 - DaStr - Added TGLPostShaderHolder.Assign
-      <li>20/03/07 - DaStr - Fixed TGLPostShaderHolder.DoRender
-      <li>09/03/07 - DaStr - Added pepNightVision preset (thanks Roman Ganz)
+       16/08/07 - DaStr - Added pepBlur preset (by Paul van Dinther)
+       25/03/07 - DaStr - Small fix for Delphi5 compatibility
+       23/03/07 - DaStr - Added TGLPostShaderHolder.Assign
+       20/03/07 - DaStr - Fixed TGLPostShaderHolder.DoRender
+       09/03/07 - DaStr - Added pepNightVision preset (thanks Roman Ganz)
                              Changed back all Trunc() calls to Round()
-      <li>07/03/07 - DaStr - Moved "Weird" effect to the demo
+       07/03/07 - DaStr - Moved "Weird" effect to the demo
                              Added "Distort" effect
                              Modified "RedNoise" to simple monochrome noise
                                                    (preset renamed to "Noise")
@@ -30,12 +29,12 @@
                              (All above changes were made by Michail Glukhov)
                              TGLPostEffect and TGLPostShaderHolder are not
                               rendered when DrawState=dsPicking (suggested by Riz)
-      <li>04/03/07 - DaStr - Added TGLPostShaderHolder
-      <li>02/03/07 - DaStr - TGLOnCustomPostEffectEvent now passes rci
+       04/03/07 - DaStr - Added TGLPostShaderHolder
+       02/03/07 - DaStr - TGLOnCustomPostEffectEvent now passes rci
                              pepNone preset does not call gl[Read/Draw]Pixels
-      <li>23/02/07 - DaStr - Initial version of TGLPostEffect
+       23/02/07 - DaStr - Initial version of TGLPostEffect
                                                 (based on OldCity demo by FedeX)
-    </ul></font>                                                
+                                                     
 
 }
 unit GLPostEffects;
@@ -48,7 +47,7 @@ uses
   // VCL
   Classes, SysUtils,
 
-  // GLScene
+
   GLScene, GLTexture, OpenGLTokens, GLGraphics, GLStrings, GLCustomShader,
   GLContext, GLVectorGeometry, GLRenderContextInfo, GLMaterial, GLTextureFormat;
 
@@ -82,7 +81,7 @@ type
     property Items[const Index: Integer]: TGLPostShaderCollectionItem read GetItems write SetItems; default;
   end;
 
-  {: A class that allows several post-shaders to be applied to the scene,
+  { A class that allows several post-shaders to be applied to the scene,
     one after another. It does not provide any optimizations related to
     multi-shader rendering, just a convenient interface. }
   TGLPostShaderHolder = class(TGLBaseSCeneObject)
@@ -98,13 +97,13 @@ type
     constructor Create(Owner: TComponent); override;
     destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
-    procedure DoRender(var rci : TRenderContextInfo;
+    procedure DoRender(var rci : TGLRenderContextInfo;
                        renderSelf, renderChildren : Boolean); override;
   published
     property TempTextureTarget: TGLTextureTarget read FTempTextureTarget write FTempTextureTarget default ttTexture2d;
     property Shaders: TGLPostShaderCollection read FShaders write SetShaders;
 
-    //: Publish some stuff from TGLBaseSceneObject.
+    // Publish some stuff from TGLBaseSceneObject.
     property Visible;
     property OnProgress;
   end;
@@ -116,9 +115,9 @@ type
 
   TGLPostEffectBuffer = array of TGLPostEffectColor;
 
-  TGLOnCustomPostEffectEvent = procedure(Sender: TObject; var rci : TRenderContextInfo; var Buffer: TGLPostEffectBuffer) of object;
+  TGLOnCustomPostEffectEvent = procedure(Sender: TObject; var rci : TGLRenderContextInfo; var Buffer: TGLPostEffectBuffer) of object;
 
-  {: Some presets for TGLPostEffect:
+  { Some presets for TGLPostEffect:
        pepNone - does nothing.
        pepGray - makes picture gray.
        pepNegative - inverts all colors.
@@ -131,7 +130,7 @@ type
   TGLPostEffectPreset = (pepNone, pepGray, pepNegative, pepDistort, pepNoise,
                          pepNightVision, pepBlur, pepCustom);
 
-  {: Provides a simple way to producing post-effects without shaders.<p>
+  { Provides a simple way to producing post-effects without shaders.
      It is slow as hell, but it's worth it in some cases.}
   TGLPostEffect = class(TGLBaseSCeneObject)
   private
@@ -139,23 +138,23 @@ type
     FPreset: TGLPostEffectPreset;
     FRenderBuffer: TGLPostEffectBuffer;
   protected
-    //: May be should be private...
+    // May be should be private...
     procedure MakeGrayEffect; virtual;
     procedure MakeNegativeEffect; virtual;
     procedure MakeDistortEffect; virtual;
     procedure MakeNoiseEffect; virtual;
     procedure MakeNightVisionEffect; virtual;
-    procedure MakeBlurEffect(var rci : TRenderContextInfo); virtual;
-    procedure DoOnCustomEffect(var rci : TRenderContextInfo; var Buffer: TGLPostEffectBuffer); virtual;
+    procedure MakeBlurEffect(var rci : TGLRenderContextInfo); virtual;
+    procedure DoOnCustomEffect(var rci : TGLRenderContextInfo; var Buffer: TGLPostEffectBuffer); virtual;
   public
-    procedure DoRender(var rci : TRenderContextInfo;
+    procedure DoRender(var rci : TGLRenderContextInfo;
                        renderSelf, renderChildren : Boolean); override;
     procedure Assign(Source: TPersistent); override;
   published
     property Preset: TGLPostEffectPreset read FPreset write FPreset default pepNone;
-    //: User creates this effect.
+    // User creates this effect.
     property OnCustomEffect: TGLOnCustomPostEffectEvent read FOnCustomEffect write FOnCustomEffect;
-    //: Publish some stuff from TGLBaseSCeneObject.
+    // Publish some stuff from TGLBaseSCeneObject.
     property Visible;
     property OnProgress;
   end;
@@ -174,13 +173,13 @@ begin
 end;
 
 procedure TGLPostEffect.DoOnCustomEffect(
-  var rci : TRenderContextInfo; var Buffer: TGLPostEffectBuffer);
+  var rci : TGLRenderContextInfo; var Buffer: TGLPostEffectBuffer);
 begin
   if Assigned(FOnCustomEffect) then
     FOnCustomEffect(Self, rci, Buffer);
 end;
 
-procedure TGLPostEffect.DoRender(var rci : TRenderContextInfo;
+procedure TGLPostEffect.DoRender(var rci : TGLRenderContextInfo;
                                       renderSelf, renderChildren : Boolean);
 var
   NewScreenSize: Integer;
@@ -294,7 +293,7 @@ begin
   end;
 end;
 
-procedure TGLPostEffect.MakeBlurEffect(var rci : TRenderContextInfo);
+procedure TGLPostEffect.MakeBlurEffect(var rci : TGLRenderContextInfo);
 const
   lOffset: Integer = 2;
 var
@@ -405,7 +404,7 @@ begin
   inherited;
 end;
 
-procedure TGLPostShaderHolder.DoRender(var rci: TRenderContextInfo;
+procedure TGLPostShaderHolder.DoRender(var rci: TGLRenderContextInfo;
   renderSelf, renderChildren: Boolean);
 var
   I: Integer;

@@ -1,24 +1,23 @@
-
+//
 // This unit is part of the GLScene Project, http://glscene.org
+//
+{
+  Standard TGLBehaviour subclasses for GLScene
 
-{: GLBehaviours<p>
-
-  Standard TGLBehaviour subclasses for GLScene<p>
-
-  <b>History : </b><font size=-1><ul>
-    <li>08/05/08 - DaStr - Added a global GetInertia() function
-    <li>19/12/06 - DaStr - TGLBAcceleration.Create - creates Inertia right away,
+   History :  
+     08/05/08 - DaStr - Added a global GetInertia() function
+     19/12/06 - DaStr - TGLBAcceleration.Create - creates Inertia right away,
                          thus displaying it in the XCollection Editor
                          TGLBAcceleration.DoProgress - raises an exception
                          when required Inertia component is deleted by user
-    <li>24/09/02 - Egg - Support for negative rotation speeds (Marco Chong)
-    <li>02/10/00 - Egg - Fixed TGLBInertia.DoProgress (DamplingEnabled bug)
-    <li>09/10/00 - Egg - Fixed ApplyTranslationAcceleration & ApplyForce
-    <li>11/08/00 - Egg - Fixed translation bug with root level objects & Inertia
-    <li>10/04/00 - Egg - Improved persistence logic
-    <li>06/04/00 - Egg - Added Damping stuff to inertia
-    <li>05/04/00 - Egg - Creation
-  </ul></font>
+     24/09/02 - Egg - Support for negative rotation speeds (Marco Chong)
+     02/10/00 - Egg - Fixed TGLBInertia.DoProgress (DamplingEnabled bug)
+     09/10/00 - Egg - Fixed ApplyTranslationAcceleration & ApplyForce
+     11/08/00 - Egg - Fixed translation bug with root level objects & Inertia
+     10/04/00 - Egg - Improved persistence logic
+     06/04/00 - Egg - Added Damping stuff to inertia
+     05/04/00 - Egg - Creation
+   
 }
 unit GLBehaviours;
 
@@ -27,16 +26,11 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils
-  {$ELSE}
-    Classes, SysUtils
-  {$ENDIF}
-  ,
+  Classes, SysUtils,
   GLVectorTypes,
   GLScene,
   GLVectorGeometry,
-  XCollection,
+  GLXCollection,
   GLBaseClasses,
   GLCoordinates;
 
@@ -44,30 +38,30 @@ type
 
   // TGLDamping
 
-  {: Holds parameters for TGLScene basic damping model.<p>
+  { Holds parameters for TGLScene basic damping model.
     Damping is modeled by calculating a force from the speed, this force
-    can then be transformed to an acceleration is you know the object's mass.<br>
-    Formulas :<ul>
-    <li>damping = constant + linear * Speed + quadratic * Speed^2
-    <li>accel = damping / Mass
-    </ul> That's just basic physics :). A note on the components :<ul>
-    <li>constant : use it for solid friction (will stop abruptly an object after
+    can then be transformed to an acceleration is you know the object's mass. 
+    Formulas : 
+     damping = constant + linear * Speed + quadratic * Speed^2
+     accel = damping / Mass
+      That's just basic physics :). A note on the components : 
+     constant : use it for solid friction (will stop abruptly an object after
       decreasing its speed.
-    <li>linear : linear friction damping.
-    <li>quadratic : expresses viscosity.
-    </ul>  }
+     linear : linear friction damping.
+     quadratic : expresses viscosity.
+       }
   TGLDamping = class(TGLUpdateAbleObject)
   private
-    { Private Declarations }
+     
     FConstant: single;
     FLinear: single;
     FQuadratic: single;
 
   protected
-    { Protected Declarations }
+     
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TPersistent); override;
     destructor Destroy; override;
 
@@ -75,18 +69,18 @@ type
     procedure ReadFromFiler(reader: TReader);
 
     procedure Assign(Source: TPersistent); override;
-      {: Calculates attenuated speed over deltaTime.<p>
+      { Calculates attenuated speed over deltaTime.
             Integration step is 0.01 sec, and the following formula is applied
             at each step: constant+linear*speed+quadratic*speed^2 }
     function Calculate(speed, deltaTime: double): double;
-    //: Returns a "[constant; linear; quadractic]" string
+    // Returns a "[constant; linear; quadractic]" string
     function AsString(const damping: TGLDamping): string;
-    {: Sets all damping parameters in a single call. }
+    { Sets all damping parameters in a single call. }
     procedure SetDamping(const constant: single = 0; const linear: single = 0;
       const quadratic: single = 0);
 
   published
-    { Published Declarations }
+     
     property Constant: single read FConstant write FConstant;
     property Linear: single read FLinear write FLinear;
     property Quadratic: single read FQuadratic write FQuadratic;
@@ -94,15 +88,15 @@ type
 
   // TGLBInertia
 
-  {: Simple translation and rotation Inertia behaviour.<p>
+  { Simple translation and rotation Inertia behaviour.
     Stores translation and rotation speeds, to which you can apply
-    accelerations.<p>
+    accelerations.
     Note that the rotation model is not physical, so feel free to contribute
     a "realworld" inertia class with realistic, axis-free, rotation inertia
     if this approximation does not suits your needs :). }
   TGLBInertia = class(TGLBehaviour)
   private
-    { Private Declarations }
+     
     FMass: single;
     FTranslationSpeed: TGLCoordinates;
     FTurnSpeed, FRollSpeed, FPitchSpeed: single;
@@ -110,7 +104,7 @@ type
     FDampingEnabled: boolean;
 
   protected
-    { Protected Declarations }
+     
     procedure SetTranslationSpeed(const val: TGLCoordinates);
     procedure SetTranslationDamping(const val: TGLDamping);
     procedure SetRotationDamping(const val: TGLDamping);
@@ -119,8 +113,8 @@ type
     procedure ReadFromFiler(reader: TReader); override;
 
   public
-    { Public Declarations }
-    constructor Create(aOwner: TXCollection); override;
+     
+    constructor Create(aOwner: TGLXCollection); override;
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
@@ -131,26 +125,26 @@ type
 
     procedure DoProgress(const progressTime: TProgressTimes); override;
 
-    {: Adds time-proportionned acceleration to the speed. }
+    { Adds time-proportionned acceleration to the speed. }
     procedure ApplyTranslationAcceleration(const deltaTime: double;
       const accel: TVector);
-      {: Applies a timed force to the inertia.<p>
+      { Applies a timed force to the inertia.
         If Mass is null, nothing is done. }
     procedure ApplyForce(const deltaTime: double; const force: TVector);
-      {: Applies a timed torque to the inertia (yuck!).<p>
+      { Applies a timed torque to the inertia (yuck!).
         This gets a "yuck!" because it is as false as the rest of the
         rotation  model. }
     procedure ApplyTorque(const deltaTime: double;
       const turnTorque, rollTorque, pitchTorque: single);
-    {: Inverts the translation vector.<p> }
+    { Inverts the translation vector. }
     procedure MirrorTranslation;
-         {: Bounce speed as if hitting a surface.<p>
+         { Bounce speed as if hitting a surface.
             restitution is the coefficient of restituted energy (1=no energy loss,
             0=no bounce). The normal is NOT assumed to be normalized. }
     procedure SurfaceBounce(const surfaceNormal: TVector; restitution: single);
 
   published
-    { Published Declarations }
+     
     property Mass: single read FMass write FMass;
     property TranslationSpeed: TGLCoordinates
       read FTranslationSpeed write SetTranslationSpeed;
@@ -158,19 +152,19 @@ type
     property RollSpeed: single read FRollSpeed write FRollSpeed;
     property PitchSpeed: single read FPitchSpeed write FPitchSpeed;
 
-      {: Enable/Disable damping (damping has a high cpu-cycle cost).<p>
+      { Enable/Disable damping (damping has a high cpu-cycle cost).
         Damping is enabled by default. }
     property DampingEnabled: boolean read FDampingEnabled write FDampingEnabled;
-      {: Damping applied to translation speed.<br>
+      { Damping applied to translation speed. 
         Note that it is not "exactly" applied, ie. if damping would stop
         your object after 0.5 time unit, and your progression steps are
         of 1 time unit, there will be an integration error of 0.5 time unit. }
     property TranslationDamping: TGLDamping read FTranslationDamping
       write SetTranslationDamping;
-      {: Damping applied to rotation speed (yuck!).<br>
+      { Damping applied to rotation speed (yuck!). 
         Well, this one is not "exact", like TranslationDamping, and neither
         it is "physical" since I'm reusing the mass and... and... well don't
-        show this to your science teacher 8).<br>
+        show this to your science teacher 8). 
         Anyway that's easier to use than the realworld formulas, calculated
         faster, and properly used can give a good illusion of reality. }
     property RotationDamping: TGLDamping read FRotationDamping write SetRotationDamping;
@@ -178,22 +172,22 @@ type
 
   // TGLBAcceleration
 
-  {: Applies a constant acceleration to a TGLBInertia.<p> }
+  { Applies a constant acceleration to a TGLBInertia. }
   TGLBAcceleration = class(TGLBehaviour)
   private
-    { Private Declarations }
+     
     FAcceleration: TGLCoordinates;
 
   protected
-    { Protected Declarations }
+     
     procedure SetAcceleration(const val: TGLCoordinates);
 
     procedure WriteToFiler(writer: TWriter); override;
     procedure ReadFromFiler(reader: TReader); override;
 
   public
-    { Public Declarations }
-    constructor Create(aOwner: TXCollection); override;
+     
+    constructor Create(aOwner: TGLXCollection); override;
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
@@ -205,17 +199,17 @@ type
     procedure DoProgress(const progressTime: TProgressTimes); override;
 
   published
-    { Published Declarations }
+     
     property Acceleration: TGLCoordinates read FAcceleration write FAcceleration;
   end;
 
-{: Returns or creates the TGLBInertia within the given behaviours.<p>
+{ Returns or creates the TGLBInertia within the given behaviours.
   This helper function is convenient way to access a TGLBInertia. }
 function GetInertia(const AGLSceneObject: TGLBaseSceneObject): TGLBInertia;
 function GetOrCreateInertia(behaviours: TGLBehaviours): TGLBInertia; overload;
 function GetOrCreateInertia(obj: TGLBaseSceneObject): TGLBInertia; overload;
 
-{: Returns or creates the TGLBAcceleration within the given behaviours.<p>
+{ Returns or creates the TGLBAcceleration within the given behaviours.
   This helper function is convenient way to access a TGLBAcceleration. }
 function GetOrCreateAcceleration(behaviours: TGLBehaviours): TGLBAcceleration;
   overload;
@@ -298,7 +292,7 @@ begin
   inherited Destroy;
 end;
 
-// Assign
+ 
 
 procedure TGLDamping.Assign(Source: TPersistent);
 begin
@@ -400,7 +394,7 @@ end;
 
 // Create
 
-constructor TGLBInertia.Create(aOwner: TXCollection);
+constructor TGLBInertia.Create(aOwner: TGLXCollection);
 begin
   inherited Create(aOwner);
   FTranslationSpeed := TGLCoordinates.CreateInitialized(Self, NullHmgVector, csVector);
@@ -420,7 +414,7 @@ begin
   inherited Destroy;
 end;
 
-// Assign
+ 
 
 procedure TGLBInertia.Assign(Source: TPersistent);
 begin
@@ -497,7 +491,7 @@ begin
   FRotationDamping.Assign(val);
 end;
 
-// FriendlyName
+ 
 
 class function TGLBInertia.FriendlyName: string;
 begin
@@ -644,7 +638,7 @@ end;
 
 // Create
 
-constructor TGLBAcceleration.Create(aOwner: TXCollection);
+constructor TGLBAcceleration.Create(aOwner: TGLXCollection);
 begin
   inherited;
   if aOwner <> nil then
@@ -661,7 +655,7 @@ begin
   FAcceleration.Free;
 end;
 
-// Assign
+ 
 
 procedure TGLBAcceleration.Assign(Source: TPersistent);
 begin
@@ -703,7 +697,7 @@ begin
   FAcceleration.Assign(val);
 end;
 
-// FriendlyName
+ 
 
 class function TGLBAcceleration.FriendlyName: string;
 begin

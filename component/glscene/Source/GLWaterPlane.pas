@@ -1,25 +1,24 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLWaterPlane<p>
+{
+   A plane simulating animated water
 
-   A plane simulating animated water<p>
+	 History :  
+       10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       30/03/07 - DaStr - Added $I GLScene.inc
+       22/09/04 - R.Cao - Added AxisAlignedDimensionsUnscaled to fix visibility culling
+       02/04/03 - EG - More optimizations, mask support
+       01/04/03 - EG - Cleanup and optimizations
+       14/11/03 - Mrqzzz - Tried "CreateRippleAtWorldPos" to work at any position/rotation, but need expert's help.. :(
+       13/11/03 - Mrqzzz - Tried to add timing indipendence (quite not precise yet)
+       12/11/03 - Mrqzzz - Added some properties & small optims added
+       01/01/03 - Sternas Stefanos - Original code
+    
 
-	<b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>22/09/04 - R.Cao - Added AxisAlignedDimensionsUnscaled to fix visibility culling
-      <li>02/04/03 - EG - More optimizations, mask support
-      <li>01/04/03 - EG - Cleanup and optimizations
-      <li>14/11/03 - Mrqzzz - Tried "CreateRippleAtWorldPos" to work at any position/rotation, but need expert's help.. :(
-      <li>13/11/03 - Mrqzzz - Tried to add timing indipendence (quite not precise yet)
-      <li>12/11/03 - Mrqzzz - Added some properties & small optims added
-      <li>01/01/03 - Sternas Stefanos - Original code
-   </ul></font>
-
-   <p>The Original Code is part of Cosmos4D<br>
-   http://users.hol.gr/~sternas/<br>
+   The Original Code is part of Cosmos4D 
+   http://users.hol.gr/~sternas/ 
    Sternas Stefanos 2003
 }
 unit GLWaterPlane;
@@ -29,12 +28,7 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes,
-  {$ELSE}
-    Classes,
-  {$ENDIF}
-
+  Classes,
   GLVectorGeometry, GLScene, OpenGLTokens, GLVectorLists,
   GLCrossPlatform, GLPersistentClasses, GLBaseClasses,
   GLContext, GLRenderContextInfo, GLVectorTypes;
@@ -55,7 +49,7 @@ type
    //
    TGLWaterPlane = class (TGLSceneObject)
 		private
-         { Private Declarations }
+          
          FLocks : packed array of ByteBool;
          FPositions, FVelocity : packed array of Single;
          FPlaneQuadIndices : TPersistentObjectList;
@@ -76,7 +70,7 @@ type
          FOptions : TGLWaterPlaneOptions;
 
       protected
-         { Protected Declarations }
+          
          procedure SetElastic(const value : Single);
          procedure SetResolution(const value : Integer);
          procedure SetRainTimeInterval(const val : Integer);
@@ -95,12 +89,12 @@ type
          procedure Iterate;
 
       public
-         { Public Declarations }
+          
          constructor Create(AOwner : TComponent); override;
          destructor Destroy; override;
 
          procedure DoProgress(const progressTime : TProgressTimes); override;
-         procedure BuildList(var rci : TRenderContextInfo); override;
+         procedure BuildList(var rci : TGLRenderContextInfo); override;
          procedure Assign(Source: TPersistent); override;
          function AxisAlignedDimensionsUnscaled : TVector; override;
 
@@ -111,15 +105,15 @@ type
          procedure CreateRippleRandom;
          procedure Reset;
 
-         {: CPU time (in seconds) taken by the last iteration step. }
+         { CPU time (in seconds) taken by the last iteration step. }
          property LastIterationStepTime : Single read FLastIterationStepTime;
 
       published
-         { Published Declarations }
+          
          
          property Active : Boolean read FActive write FActive default True;
 
-         {: Delay between raindrops in milliseconds (0 = no rain) }
+         { Delay between raindrops in milliseconds (0 = no rain) }
          property RainTimeInterval : Integer read FRainTimeInterval write SetRainTimeInterval default 500;
          property RainForce : Single read FRainForce write SetRainForce;
 
@@ -128,15 +122,15 @@ type
          property Resolution : Integer read FResolution write SetResolution default 64;
          property Options : TGLWaterPlaneOptions read FOptions write SetOptions default cDefaultWaterPlaneOptions;
 
-         {: A picture whose pixels determine what part of the waterplane is active.<p>
+         { A picture whose pixels determine what part of the waterplane is active.
             Pixels with a green/gray component beyond 128 are active, the others
-            are not (in short, white = active, black = inactive).<p>
+            are not (in short, white = active, black = inactive).
             The picture will automatically be stretched to match the resolution. }
          property Mask : TGLPicture read FMask write SetMask;
 
-         {: Maximum frequency (in Hz) at which simulation iterations happen. }
+         { Maximum frequency (in Hz) at which simulation iterations happen. }
          property SimulationFrequency : Single read FSimulationFrequency write SetSimulationFrequency;
-         {: Maximum number of simulation iterations during catchups.<p>
+         { Maximum number of simulation iterations during catchups.
             Catchups happen when for a reason or another, the DoProgress doesn't
             happen as fast SimulationFrequency. }
          property MaximumCatchupIterations : Integer read FMaximumCatchupIterations write FMaximumCatchupIterations default 1;
@@ -466,7 +460,7 @@ end;
 
 // BuildList
 //
-procedure TGLWaterPlane.BuildList(var rci : TRenderContextInfo);
+procedure TGLWaterPlane.BuildList(var rci : TGLRenderContextInfo);
 var
    i : Integer;
    il : TIntegerList;
@@ -496,7 +490,7 @@ begin
    GL.PopClientAttrib;
 end;
 
-// Assign
+ 
 //
 procedure TGLWaterPlane.Assign(Source: TPersistent);
 begin

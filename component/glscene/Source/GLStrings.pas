@@ -1,19 +1,18 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLStrings<p>
+{
+    String constants that are used in many GLScene units
 
-	String constants that are used in many GLScene units<p>
-
-	<b>History :</b><font size=-1><ul>
-      <li>16/09/10 - YP - Added glsUnknownParam
-      <li>23/02/07 - DaStr - Added glsDot, glsUnsupportedType, glsUncompatibleTypes,
+	 History : 
+       16/09/10 - YP - Added glsUnknownParam
+       23/02/07 - DaStr - Added glsDot, glsUnsupportedType, glsUncompatibleTypes,
                          glsUnknownType, glsShaderNeedsAtLeastOneLightSource(Ex),
                          glsCadencerNotDefined(Ex), glsSceneViewerNotDefined
-      <li>16/02/07 - DaStr - Added glsOCProxyObjects, glsError, glsErrorEx,
+       16/02/07 - DaStr - Added glsOCProxyObjects, glsError, glsErrorEx,
                          glsMatLibNotDefined, glsMaterialNotFoundInMatlib(Ex)
-      <li>26/08/02 - EG - Added missing header, added glsUnknownExtension
-	</ul></font>
+       26/08/02 - EG - Added missing header, added glsUnknownExtension
+	 
 }
 unit GLStrings;
 
@@ -96,6 +95,23 @@ resourcestring
 
   glsUnknownParam =
     'Unknown %s "%s" for "%s" or program not in use';
+
+  //
+  // Context
+  strCannotAlterAnActiveContext = 'Cannot alter an active context';
+  strContextActivationFailed = 'Context activation failed: %X, %s';
+  strContextAlreadyCreated = 'Context already created';
+  strContextDeactivationFailed = 'Context deactivation failed';
+  strContextNotCreated = 'Context not created';
+  strDeleteContextFailed = 'Delete context failed';
+  strFailedToShare = 'DoCreateContext - Failed to share contexts';
+  strIncompatibleContexts = 'Incompatible contexts';
+  strInvalidContextRegistration = 'Invalid context registration';
+  strInvalidNotificationRemoval = 'Invalid notification removal';
+  strNoActiveRC = 'No active rendering context';
+  strUnbalancedContexActivations = 'Unbalanced context activations';
+  strUnableToCreateLegacyContext = 'Unable to create legacy context';
+
 
 implementation
 

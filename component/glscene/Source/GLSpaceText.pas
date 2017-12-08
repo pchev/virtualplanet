@@ -1,45 +1,44 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLSpaceText<p>
-
-  3D Text component.<p>
+{
+  3D Text component.
 
   Note: You can get valid extents (including AABB's) of this component only
   after it has been rendered for the first time. It means if you ask its
   extents during / after its creation, you will get zeros.
 
-  Also extents are valid only when SpaceText has one line. <p>
+  Also extents are valid only when SpaceText has one line. 
 
-  <b>History : </b><font size=-1><ul>
-  <li>25/03/11 - Yar - Fixed issue with unsharable virtual handle of font entry
-  <li>22/09/10 - Yar - Added unicode support (Delphi 2009 & up only)
-  <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-  <li>22/04/10 - Yar - Fixes after GLState revision
-  <li>05/03/10 - DanB - More state added to TGLStateCache
-  <li>25/12/07 - DaStr - Added MultiLine support (thanks Lexer)
+   History :  
+   25/03/11 - Yar - Fixed issue with unsharable virtual handle of font entry
+   22/09/10 - Yar - Added unicode support (Delphi 2009 & up only)
+   23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+   22/04/10 - Yar - Fixes after GLState revision
+   05/03/10 - DanB - More state added to TGLStateCache
+   25/12/07 - DaStr - Added MultiLine support (thanks Lexer)
   Fixed Memory leak in TFontManager.Destroy
   (Bugtracker ID = 1857814)
-  <li>19/09/07 - DaStr - Added some comments
+   19/09/07 - DaStr - Added some comments
   Optimized TGLSpaceText.BarycenterAbsolutePosition
-  <li>12/09/07 - DaStr - Bugfixed TGLSpaceText.BarycenterAbsolutePosition
+   12/09/07 - DaStr - Bugfixed TGLSpaceText.BarycenterAbsolutePosition
   (Didn't consider rotations)
-  <li>08/09/07 - DaStr - Implemented AxisAlignedDimensionsUnscaled and
+   08/09/07 - DaStr - Implemented AxisAlignedDimensionsUnscaled and
   BarycenterAbsolutePosition for TGLSpaceText
-  <li>28/03/07 - DaStr - Renamed parameters in some methods
+   28/03/07 - DaStr - Renamed parameters in some methods
   (thanks Burkhard Carstens) (Bugtracker ID = 1678658)
-  <li>17/03/07 - DaStr - Dropped Kylix support in favor of FPC (BugTracekrID=1681585)
-  <li>16/03/07 - DaStr - Added explicit pointer dereferencing
+   17/03/07 - DaStr - Dropped Kylix support in favor of FPC (BugTracekrID=1681585)
+   16/03/07 - DaStr - Added explicit pointer dereferencing
   (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-  <li>19/10/06 - LC - Added TGLSpaceText.Assign. Bugtracker ID=1576445 (thanks Zapology)
-  <li>16/09/06 - NC - TGLVirtualHandle update (thx Lionel Reynaud)
-  <li>03/06/02 - EG - VirtualHandle notification fix (Sören Mühlbauer)
-  <li>07/03/02 - EG - GetFontBase fix (Sören Mühlbauer)
-  <li>30/01/02 - EG - Text Alignment (Sören Mühlbauer),
+   19/10/06 - LC - Added TGLSpaceText.Assign. Bugtracker ID=1576445 (thanks Zapology)
+   16/09/06 - NC - TGLVirtualHandle update (thx Lionel Reynaud)
+   03/06/02 - EG - VirtualHandle notification fix (Sören Mühlbauer)
+   07/03/02 - EG - GetFontBase fix (Sören Mühlbauer)
+   30/01/02 - EG - Text Alignment (Sören Mühlbauer),
   TFontManager now GLContext compliant (RenderToBitmap ok!)
-  <li>28/12/01 - EG - Event persistence change (GliGli / Dephi bug)
-  <li>12/12/01 - EG - Creation (split from GLScene.pas)
-  </ul></font>
+   28/12/01 - EG - Event persistence change (GliGli / Dephi bug)
+   12/12/01 - EG - Creation (split from GLScene.pas)
+   
 }
 unit GLSpaceText;
 
@@ -49,15 +48,9 @@ interface
 {$IFDEF UNIX}{$MESSAGE Error 'Unit not supported'}{$ENDIF}
 
 uses
-{$IFDEF GLS_DELPHI_XE2_UP}
-  WinApi.Windows, WinApi.Messages, System.Classes, System.UITypes,
-  VCL.Dialogs, VCL.Graphics, VCL.Controls,
-{$ELSE}
   Windows, Messages, Classes,
   Dialogs, Graphics, Controls,
-{$ENDIF}
-
-  // GLScene
+   
   GLScene, OpenGLTokens, GLTexture, GLContext, GLVectorGeometry, GLStrings,
   GLRenderContextInfo, GLState;
 
@@ -82,7 +75,7 @@ type
   //
   TGLTextAdjust = class(TPersistent)
   private
-    { Private Declarations }
+     
     FHorz: TGLTextHorzAdjust;
     FVert: TGLTextVertAdjust;
     FOnChange: TNotifyEvent;
@@ -90,14 +83,14 @@ type
     procedure SetVert(const Value: TGLTextVertAdjust);
 
   public
-    { public Declarations }
+     
     constructor Create;
     procedure Assign(Source: TPersistent); override;
 
     property OnChange: TNotifyEvent read FOnChange write FOnChange;
 
   published
-    { Published Declarations }
+     
     property Horz: TGLTextHorzAdjust read FHorz write SetHorz default haLeft;
     property Vert: TGLTextVertAdjust read FVert write SetVert
       default vaBaseLine;
@@ -123,7 +116,7 @@ type
   { : Renders a text in 3D. }
   TGLSpaceText = class(TGLSceneObject)
   private
-    { Private Declarations }
+     
     FFont: TFont;
     FExtrusion: Single;
     FAllowedDeviation: Single;
@@ -145,7 +138,7 @@ type
     procedure SetOblique(const Value: Single);
     procedure SetTextHeight(const Value: Single);
   protected
-    { Protected Declarations }
+     
     FTextFontEntry: PFontEntry;
     FontChanged: Boolean;
     procedure DestroyHandle; override;
@@ -153,14 +146,14 @@ type
     procedure GetFirstAndLastChar(var firstChar, lastChar: Integer);
     procedure DoOnLinesChange(sender: TObject); virtual;
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
 
-    procedure BuildList(var rci: TRenderContextInfo); override;
-    procedure DoRender(var ARci: TRenderContextInfo;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
+    procedure DoRender(var ARci: TGLRenderContextInfo;
       ARenderSelf, ARenderChildren: Boolean); override;
 
     function TextWidth(const str: WideString = ''): Single;
@@ -177,8 +170,8 @@ type
     function AxisAlignedDimensionsUnscaled: TVector; override;
     function BarycenterAbsolutePosition: TVector; override;
   published
-    { Published Declarations }
-    { : Adjusts the 3D font extrusion.<p>
+     
+    { : Adjusts the 3D font extrusion.
       If Extrusion=0, the characters will be flat (2D), values >0 will
       give them a third dimension. }
     property Extrusion: Single read FExtrusion write SetExtrusion;
@@ -188,7 +181,7 @@ type
     { : Quality related, see Win32 help for wglUseFontOutlines }
     property allowedDeviation: Single read FAllowedDeviation
       write SetAllowedDeviation;
-    { : Character range to convert.<p>
+    { : Character range to convert.
       Converting less characters saves time and memory... }
     property CharacterRange: TSpaceTextCharRange read FCharacterRange
       write SetCharacterRange default stcrDefault;
@@ -203,11 +196,11 @@ type
   { : Manages a list of fonts for which display lists were created. }
   TFontManager = class(TList)
   private
-    { Private Declarations }
+     
     FCurrentBase: Integer;
 
   protected
-    { Protected Declarations }
+     
     procedure NotifyClients(Clients: TList);
     procedure VirtualHandleAlloc(sender: TGLVirtualHandle;
       var handle: Cardinal);
@@ -215,7 +208,7 @@ type
       var handle: Cardinal);
 
   public
-    { Public Declarations }
+     
     constructor Create;
     destructor Destroy; override;
 
@@ -287,7 +280,7 @@ begin
   FVert := vaBaseLine;
 end;
 
-// Assign
+ 
 //
 
 procedure TGLTextAdjust.Assign(Source: TPersistent);
@@ -429,7 +422,7 @@ begin
   TextMetrics(str, w, mh, Result);
 end;
 
-// Assign
+ 
 
 procedure TGLSpaceText.Assign(Source: TPersistent);
 begin
@@ -452,7 +445,7 @@ end;
 // BuildList
 //
 
-procedure TGLSpaceText.BuildList(var rci: TRenderContextInfo);
+procedure TGLSpaceText.BuildList(var rci: TGLRenderContextInfo);
 var
   textL, maxUnder, maxHeight: Single;
   charScale: Single;
@@ -584,7 +577,7 @@ end;
 // DoRender
 //
 
-procedure TGLSpaceText.DoRender(var ARci: TRenderContextInfo;
+procedure TGLSpaceText.DoRender(var ARci: TGLRenderContextInfo;
   ARenderSelf, ARenderChildren: Boolean);
 var
   firstChar, lastChar: Integer;

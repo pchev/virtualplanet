@@ -1,21 +1,20 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLNodes<p>
+{
+  Nodes are used to describe lines, polygons + more.
 
-  Nodes are used to describe lines, polygons + more.<p>
-
-  <b>History : </b><font size=-1><ul>
-  <li>01/03/11 - Vincent - Fix a bug in TGLNodes.Vector
-  <li>17/10/10 - Yar - Added TagObject property to TGLNode (thanks µAlexx)
-  <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-  <li>26/11/09 - DaStr - Improved Lazarus compatibility
+   History :  
+   01/03/11 - Vincent - Fix a bug in TGLNodes.Vector
+   17/10/10 - Yar - Added TagObject property to TGLNode (thanks µAlexx)
+   23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+   26/11/09 - DaStr - Improved Lazarus compatibility
   (thanks Predator) (BugtrackerID = 2893580)
-  <li>22/11/09 - DaStr - Improved Unix compatibility
+   22/11/09 - DaStr - Improved Unix compatibility
   (thanks Predator) (BugtrackerID = 2893580)
-  <li>14/07/09 - DaStr - Added $I GLScene.inc
-  <li>05/10/08 - DanB - Created from GLMisc.pas split
-  </ul></font>
+   14/07/09 - DaStr - Added $I GLScene.inc
+   05/10/08 - DanB - Created from GLMisc.pas split
+   
 }
 unit GLNodes;
 
@@ -23,11 +22,10 @@ interface
 
 uses
   Classes, SysUtils,
-  //GLS
+   
   GLVectorGeometry, OpenGLTokens, OpenGLAdapter, GLContext, GLBaseClasses,
   GLCoordinates, GLSpline,
-  XOpenGL
-, GLVectorTypes;
+  XOpenGL, GLVectorTypes;
 
 
 {$I GLScene.inc}
@@ -37,7 +35,7 @@ type
   //
   TGLNode = class(TCollectionItem)
   private
-    { Private Declarations }
+     
     FCoords: TVector;
     FTagObject: TObject;
     procedure SetAsVector(const Value: TVector);
@@ -47,25 +45,25 @@ type
     function GetCoordinate(const Index: Integer): TGLFloat;
 
   protected
-    { Protected Declarations }
+     
     function StoreCoordinate(AIndex: Integer): Boolean;
 
     function GetDisplayName: string; override;
 
   public
-    { Public Declarations }
+     
     constructor Create(ACollection: TCollection); override;
     destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
 
     function AsAddress: PGLFloat;
-    { : The coordinates viewed as a vector.<p>
+    { : The coordinates viewed as a vector.
       Assigning a value to this property will trigger notification events,
       if you don't want so, use DirectVector instead. }
     property AsVector: TVector read FCoords write SetAsVector;
-    { : The coordinates viewed as an affine vector.<p>
+    { : The coordinates viewed as an affine vector.
       Assigning a value to this property will trigger notification events,
-      if you don't want so, use DirectVector instead.<br>
+      if you don't want so, use DirectVector instead. 
       The W component is automatically adjustes depending on style. }
     property AsAffineVector: TAffineVector read GetAsAffineVector
       write SetAsAffineVector;
@@ -75,7 +73,7 @@ type
 
     property TagObject: TObject read FTagObject write FTagObject;
   published
-    { Published Declarations }
+     
     property X: TGLFloat index 0 read GetCoordinate write SetCoordinate
       stored StoreCoordinate;
     property Y: TGLFloat index 1 read GetCoordinate write SetCoordinate
@@ -88,16 +86,16 @@ type
   //
   TGLNodes = class(TOwnedCollection)
   private
-    { Private Declarations }
+     
 
   protected
-    { Protected Declarations }
+     
     procedure SetItems(Index: Integer; const Val: TGLNode);
     function GetItems(Index: Integer): TGLNode;
     procedure Update(Item: TCollectionItem); override;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TPersistent;
       AItemClass: TCollectionItemClass = nil);
     function CreateCopy(AOwner: TPersistent): TGLNodes;
@@ -121,13 +119,13 @@ type
 
     // : Calculates and returns the barycenter of the nodes
     function Barycenter: TAffineVector;
-    { : Computes normal based on the 1st three nodes.<p>
+    { : Computes normal based on the 1st three nodes.
       Returns NullVector if there are less than 3 nodes. }
     function Normal: TAffineVector;
     // : Returns normalized vector Nodes[i+1]-Nodes[i]
     function Vector(I: Integer): TAffineVector;
 
-    { : Calculates the extents of the nodes (min-max for all coordinates).<p>
+    { : Calculates the extents of the nodes (min-max for all coordinates).
       The returned values are also the two corners of the axis-aligned
       bounding box. }
     procedure GetExtents(var Min, Max: TAffineVector);
@@ -178,7 +176,7 @@ begin
   inherited Destroy;
 end;
 
-// Assign
+ 
 //
 
 procedure TGLNode.Assign(Source: TPersistent);

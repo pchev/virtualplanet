@@ -1,15 +1,14 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLEParticleMasksManager<p>
+{
+   A pretty particle mask effect manager.
 
-   A pretty particle mask effect manager.<p>
-
-   <b>History : </b><font size=-1><ul>
-      <li>16/03/11 - Yar - Fixes after emergence of GLMaterialEx
-      <li>24/03/07 - Improved Cross-Platform compatibility (BugTracker ID = 1684432)
+    History :  
+       16/03/11 - Yar - Fixes after emergence of GLMaterialEx
+       24/03/07 - Improved Cross-Platform compatibility (BugTracker ID = 1684432)
                      Got rid of Types dependancy
-      <li>29/01/07 - DaStr - Initial version (donated to GLScene by Kenneth Poulter)
+       29/01/07 - DaStr - Initial version (donated to GLScene by Kenneth Poulter)
 
 Original Header:
 
@@ -51,13 +50,7 @@ interface
 uses
   // System
   SysUtils, Classes,
-  // VCL
-{$IFDEF GLS_DELPHI_XE2_UP}
-  VCL.Graphics,
-{$ELSE}
   Graphics,
-{$ENDIF}
-  // GLScene
   GLTexture, GLMaterial, GLScene, GLVectorGeometry, GLVectorTypes,
   GLParticleFX, GLCrossPlatform, GLCoordinates;
 
@@ -70,7 +63,7 @@ type
 
   TGLEParticleMask = class(TCollectionItem, IGLMaterialLibrarySupported)
   private
-    { Private Declarations }
+     
     FName: string;
     FScale: TGLCoordinates;
     FPosition: TGLCoordinates;
@@ -101,7 +94,7 @@ type
     //implementing IGLMaterialLibrarySupported
     function GetMaterialLibrary: TGLAbstractMaterialLibrary;
     //implementing IInterface
-{$IFDEF FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -114,16 +107,11 @@ type
     function _Release: Integer;
 {$IFNDEF WINDOWS} cdecl{$ELSE} stdcall{$ENDIF};
 {$IFEND}
-{$ELSE}
-    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-    function _AddRef: Integer; stdcall;
-    function _Release: Integer; stdcall;
-{$ENDIF}
   protected
-    { Protected Declarations }
+     
     function GetDisplayName: string; override;
   public
-    { Public Declarations }
+     
     constructor Create(Collection: TCollection); override;
     destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
@@ -136,7 +124,7 @@ type
     procedure GenerateMaskFromProjection(FromMask, ToMask:
       TGLEProjectedParticleMask; Depth: Integer);
   published
-    { Published Declarations }
+     
     // scales and positions
     property Scale: TGLCoordinates read FScale write FScale;
     property Position: TGLCoordinates read FPosition write FPosition;
@@ -161,14 +149,14 @@ type
 
   TGLEParticleMasks = class(TCollection)
   protected
-    { Protected Declarations }
+     
     Owner: TComponent;
     function GetOwner: TPersistent; override;
     procedure SetItems(Index: Integer; const Val: TGLEParticleMask);
     function GetItems(Index: Integer): TGLEParticleMask;
 
   public
-    { Public Declarations }
+     
     function Add: TGLEParticleMask;
     constructor Create(AOwner: TComponent);
     property Items[Index: Integer]: TGLEParticleMask read GetItems write
@@ -178,9 +166,9 @@ type
   TGLEParticleMasksManager = class(TComponent)
   private
     FParticleMasks: TGLEParticleMasks;
-    { Private declarations }
+     
   protected
-    { Protected declarations }
+     
     procedure ApplyOrthoGraphic(var Vec: TVector3f; Mask: TGLEParticleMask);
     procedure ApplyRotation(var Vec: TVector3f; Mask: TGLEParticleMask);
     procedure ApplyRotationTarget(var Vec: TVector3f; Mask: TGLEParticleMask;
@@ -190,7 +178,7 @@ type
       TGLEParticleMask; TargetObject: TGLBaseSceneObject);
     procedure FindParticlePosition(var Vec: TVector3f; Mask: TGLEParticleMask);
   public
-    { Public declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     function CreateParticlePositionFromMask(MaskName: string): TVector3f;
@@ -203,7 +191,7 @@ type
     function ParticleMaskByName(MaskName: string): TGLEParticleMask;
 
   published
-    { Published declarations }
+     
     property ParticleMasks: TGLEParticleMasks read FParticleMasks write
       FParticleMasks;
   end;
@@ -683,20 +671,15 @@ begin
     TGLPersistentImage).Picture.Bitmap);
 end;
 
-{$IFDEF FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
 
 function TGLEParticleMask.QueryInterface(const IID: TGUID; out Obj): HResult;
   stdcall;
 {$ELSE}
-
 function TGLEParticleMask.QueryInterface(constref IID: TGUID; out Obj): HResult;
 {$IFNDEF WINDOWS} cdecl{$ELSE} stdcall{$ENDIF};
 {$IFEND}
-{$ELSE}
-
-function TGLEParticleMask.QueryInterface(const IID: TGUID; out Obj): HResult;
-{$ENDIF}
 begin
   if GetInterface(IID, Obj) then
     Result := S_OK
@@ -704,36 +687,23 @@ begin
     Result := E_NOINTERFACE;
 end;
 
-{$IFDEF FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
 
 function TGLEParticleMask._AddRef: Integer; stdcall;
 {$ELSE}
 
-function TGLEParticleMask._AddRef: Integer;
-{$IFNDEF WINDOWS} cdecl{$ELSE} stdcall{$ENDIF};
+function TGLEParticleMask._AddRef: Integer;{$IFNDEF WINDOWS} cdecl{$ELSE} stdcall{$ENDIF};
 {$IFEND}
-{$ELSE}
-
-function TGLEParticleMask._AddRef: Integer;
-{$ENDIF}
 begin
   Result := -1; //ignore
 end;
 
-{$IFDEF FPC}
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
-
 function TGLEParticleMask._Release: Integer; stdcall;
 {$ELSE}
-
-function TGLEParticleMask._Release: Integer;
-{$IFNDEF WINDOWS} cdecl{$ELSE} stdcall{$ENDIF};
+function TGLEParticleMask._Release: Integer;{$IFNDEF WINDOWS} cdecl{$ELSE} stdcall{$ENDIF};
 {$IFEND}
-{$ELSE}
-
-function TGLEParticleMask._Release: Integer;
-{$ENDIF}
 begin
   Result := -1; //ignore
 end;

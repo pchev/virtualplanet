@@ -1,16 +1,18 @@
-﻿{: GLWidgetContext<p>
+﻿//
+// This unit is part of the GLScene Project, http://glscene.org
+//
+{
+   Widget specific Context.
+   GLWidgetContext replaces old GLLinGTKContext.
 
-   Widget specific Context.<p>
-   GLWidgetContext replaces old GLLinGTKContext.<p>
-
-   <b>History : </b><font size=-1><ul>
-      <li>11/06/10 - Yar - Fixed uses section after lazarus-0.9.29.26033 release
-      <li>02/05/10 - Yar - Fixes for Linux x64
-      <li>21/04/10 - Yar - Fixed conditions
+    History :  
+       11/06/10 - Yar - Fixed uses section after lazarus-0.9.29.26033 release
+       02/05/10 - Yar - Fixes for Linux x64
+       21/04/10 - Yar - Fixed conditions
                            (by Rustam Asmandiarov aka Predator)
-      <li>06/04/10 - Yar - Added to GLScene
+       06/04/10 - Yar - Added to GLScene
                            (Created by Rustam Asmandiarov aka Predator)
-   </ul></font>
+    
 }
 unit GLWidgetContext;
 
@@ -86,7 +88,7 @@ type
 {$IFDEF MSWINDOWS}
   TGLWidgetContext = class(TGLWin32Context)
   protected
-    { Protected Declarations }
+     
     procedure DoGetHandles(outputDevice: HWND; out XWin: HWND);
       override;
   end;
@@ -95,7 +97,7 @@ type
 {$IFDEF Darwin}
   TGLWidgetContext = class(TGLCarbonContext)
   protected
-    { Protected Declarations }
+     
    // procedure DoGetHandles(outputDevice: HWND; out XWin: HWND); override;
   end;
 {$ENDIF}
@@ -103,7 +105,7 @@ type
 {$IFDEF LINUX}
   TGLWidgetContext = class(TGLGLXContext)
   protected
-    { Protected Declarations }
+     
     procedure DoGetHandles(outputDevice: HWND; out XWin: HWND); override;
   end;
 {$ENDIF}

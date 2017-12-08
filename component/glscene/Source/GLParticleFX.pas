@@ -1,70 +1,69 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLParticleFX<p>
-
-   Base classes for scene-wide blended particles FX.<p>
+{
+   Base classes for scene-wide blended particles FX.
 
    These provide a mechanism to render heterogenous particles systems with per
    particle depth-sorting (allowing correct rendering of interwoven separate
-   fire and smoke particle systems for instance).<p>
+   fire and smoke particle systems for instance).
 
-   <b>History : </b><font size=-1><ul>
-      <li>21/01/01 - DanB - Added "inherited" call to TGLParticleFXEffect.WriteToFiler
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>22/01/10 - Yar  - Added bmp32.Blank:=false for memory allocation
+    History :  
+       21/01/01 - DanB - Added "inherited" call to TGLParticleFXEffect.WriteToFiler
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       22/01/10 - Yar  - Added bmp32.Blank:=false for memory allocation
                             and fix RegisterAsOpenGLTexture
-      <li>12/10/08 - DanB - fix to TGLLifeColoredPFXManager.ComputeRotateAngle (it used lck.FDoScale
+       12/10/08 - DanB - fix to TGLLifeColoredPFXManager.ComputeRotateAngle (it used lck.FDoScale
                             instead of lck.FDoRotate), made more use of RCI instead of accessing via global variables.
                             Changed order of transformations when rendering particles, now does rotation+scaling before translation.
                             Disabled FRotationCenter,
-      <li>15/02/08 - Mrqzzz - Fixed SizeScale in Lifetimes of TGLBaseSpritePFXManager (was ignored)
-      <li>06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
-      <li>02/04/07 - DaStr - TPFXLifeColors now inherits from TOwnedCollection
+       15/02/08 - Mrqzzz - Fixed SizeScale in Lifetimes of TGLBaseSpritePFXManager (was ignored)
+       06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
+       02/04/07 - DaStr - TPFXLifeColors now inherits from TOwnedCollection
                              (thanks Burkhard Carstens)
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>14/03/07 - DaStr - Added explicit pointer dereferencing
+       30/03/07 - DaStr - Added $I GLScene.inc
+       14/03/07 - DaStr - Added explicit pointer dereferencing
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-      <li>24/01/07 - DaStr - TGLSourcePFXEffect.Burst and TGLBaseSpritePFXManager.RenderParticle bugfixed
+       24/01/07 - DaStr - TGLSourcePFXEffect.Burst and TGLBaseSpritePFXManager.RenderParticle bugfixed
                              TGLLifeColoredPFXManager.RotateVertexBuf bugfixed (all based on old code)
-      <li>28/10/06 - LC - Fixed access violation in TGLParticleFXRenderer. Bugtracker ID=1585907 (thanks Da Stranger)
-      <li>19/10/06 - LC - Fixed memory leak in TGLParticleFXManager. Bugtracker ID=1551866 (thanks Dave Gravel)
-      <li>08/10/05 - Mathx - Fixed access violation when a PFXManager was removed from
+       28/10/06 - LC - Fixed access violation in TGLParticleFXRenderer. Bugtracker ID=1585907 (thanks Da Stranger)
+       19/10/06 - LC - Fixed memory leak in TGLParticleFXManager. Bugtracker ID=1551866 (thanks Dave Gravel)
+       08/10/05 - Mathx - Fixed access violation when a PFXManager was removed from
                              form but a particleFX still had a reference to it (added
                              the FUsers property). Butracker ID=783625.
-      <li>17/02/05 - EG - Restored correct PFXSource.Burst relative/absolute behaviour,
+       17/02/05 - EG - Restored correct PFXSource.Burst relative/absolute behaviour,
                           EffectsScale support not added back (no clue what it does... Mrqz?)
-      <li>23/11/04 - SG - Fixed memory leak in TGLLifeColoredPFXManager (kenguru)
-      <li>03/10/04 - Mrqzzz - added property TGLParticleFXEffect.DisabledIfOwnerInvisible. Fixed PositionDispersionRange to honour VelocityMode=svmRelative
-      <li>25/09/04 - Graham Kennedy - Fixed restore of currentTexturingMode
-      <li>09/09/04 - Mrqzzz - added property TGLParticleFXEffect.EffectScale allowing different scaling of effect with same manager. TGLParticleFXEffect.ArchiveVersion updated to 4
-      <li>02/08/04 - LR, YHC - BCB corrections: use record instead array
+       23/11/04 - SG - Fixed memory leak in TGLLifeColoredPFXManager (kenguru)
+       03/10/04 - Mrqzzz - added property TGLParticleFXEffect.DisabledIfOwnerInvisible. Fixed PositionDispersionRange to honour VelocityMode=svmRelative
+       25/09/04 - Graham Kennedy - Fixed restore of currentTexturingMode
+       09/09/04 - Mrqzzz - added property TGLParticleFXEffect.EffectScale allowing different scaling of effect with same manager. TGLParticleFXEffect.ArchiveVersion updated to 4
+       02/08/04 - LR, YHC - BCB corrections: use record instead array
                                Replace direct access of some properties by
                                a getter and a setter.
                                fixed undefined TPFXRegion error in BCB
-      <li>29/08/04 - Mrqzzz - fixed particles initial position when VelocityMode=svmRelative
-      <li>28/08/04 - Mrqzzz - fixed particles direction when VelocityMode=svmRelative
-      <li>09/07/04 - Mrqzzz - small fixup (TGLSourcePFXEffect.WriteToFiler Archive V.4)
-      <li>08/07/04 - Eugene Kryukov - Added rotation for particles, RotateAngle in
+       29/08/04 - Mrqzzz - fixed particles initial position when VelocityMode=svmRelative
+       28/08/04 - Mrqzzz - fixed particles direction when VelocityMode=svmRelative
+       09/07/04 - Mrqzzz - small fixup (TGLSourcePFXEffect.WriteToFiler Archive V.4)
+       08/07/04 - Eugene Kryukov - Added rotation for particles, RotateAngle in
                                       LifeColor. And added AbsoluteRotation for TGLDynamicPFXManager
-      <li>25/04/04 - EG - Added friction, Life sizes, multiple sprites per texture
+       25/04/04 - EG - Added friction, Life sizes, multiple sprites per texture
                           and sprites sharing
-      <li>24/04/04 - Mrqzzz - Added property "enabled" to TGLSourcePFXEffect
-      <li>15/04/04 - EG - AspectRatio and Rotation added to sprite PFX,
+       24/04/04 - Mrqzzz - Added property "enabled" to TGLSourcePFXEffect
+       15/04/04 - EG - AspectRatio and Rotation added to sprite PFX,
                           improved texturing mode switches
-      <li>26/05/03 - EG - Improved TGLParticleFXRenderer.BuildList
-      <li>05/11/02 - EG - Enable per-manager blending mode control
-      <li>27/01/02 - EG - Added TGLLifeColoredPFXManager, TGLBaseSpritePFXManager
+       26/05/03 - EG - Improved TGLParticleFXRenderer.BuildList
+       05/11/02 - EG - Enable per-manager blending mode control
+       27/01/02 - EG - Added TGLLifeColoredPFXManager, TGLBaseSpritePFXManager
                           and TGLPointLightPFXManager.
-      <li>23/01/02 - EG - Added ZWrite and BlendingMode to the PFX renderer,
+       23/01/02 - EG - Added ZWrite and BlendingMode to the PFX renderer,
                           minor sort and render optims
-      <li>22/01/02 - EG - Another RenderParticle color lerp fix (GliGli)
-      <li>20/01/02 - EG - Several optimization (35% faster on Volcano bench)
-      <li>18/01/02 - EG - RenderParticle color lerp fix (GliGli)
-      <li>08/09/01 - EG - Creation (GLParticleFX.omm)
-   </ul></font>
+       22/01/02 - EG - Another RenderParticle color lerp fix (GliGli)
+       20/01/02 - EG - Several optimization (35% faster on Volcano bench)
+       18/01/02 - EG - RenderParticle color lerp fix (GliGli)
+       08/09/01 - EG - Creation (GLParticleFX.omm)
+    
 }
 unit GLParticleFX;
 
@@ -73,15 +72,9 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils, System.Types,
-  {$ELSE}
-    Classes, SysUtils, Types,
-  {$ENDIF}
-
-  GLScene,  OpenGLTokens,  GLCrossPlatform,  GLState
-  , GLVectorTypes,
-  GLPersistentClasses,  GLVectorGeometry,  XCollection,  GLMaterial,
+  Classes, SysUtils, Types,
+  GLScene,  OpenGLTokens,  GLCrossPlatform,  GLState, GLVectorTypes,
+  GLPersistentClasses,  GLVectorGeometry,  GLXCollection,  GLMaterial,
   GLCadencer, GLVectorLists,  GLGraphics,  GLContext,  GLColor,  GLBaseClasses,
   GLCoordinates,  GLRenderContextInfo,  GLManager,  GLTextureFormat;
 
@@ -97,13 +90,13 @@ type
 
   // TGLParticle
   //
-  {: Base class for particles.<p>
+  { Base class for particles.
      The class implements properties for position, velocity and time, whatever
      you need in excess of that will have to be placed in subclasses (this
      class should remain as compact as possible). }
   TGLParticle = class(TPersistentObject)
   private
-    { Private Declarations }
+     
     FID, FTag: Integer;
     FManager: TGLParticleFXManager; // NOT persistent
     FPosition: TAffineVector;
@@ -117,10 +110,10 @@ type
     procedure WriteVelocity(const Index: Integer; const aValue: Single);
 
   protected
-    { Protected Declarations }
+     
 
   public
-    { Public Declarations }
+     
     constructor Create; override;
     destructor Destroy; override;
     procedure WriteToFiler(writer: TVirtualWriter); override;
@@ -128,19 +121,19 @@ type
 
     property Manager: TGLParticleFXManager read FManager write FManager;
 
-    {: Particle's ID, given at birth.<p>
+    { Particle's ID, given at birth.
        ID is a value unique per manager. }
     property ID: Integer read FID;
-    {: Particle's absolute position.<p>
+    { Particle's absolute position.
        Note that this property is read-accessed directly at rendering time
        in the innards of the depth-sorting code. }
     property Position: TAffineVector read FPosition write FPosition;
-    {: Particle's velocity.<p>
+    { Particle's velocity.
        This velocity is indicative and is NOT automatically applied
        to the position during progression events by this class (subclasses
        may implement that). }
     property Velocity: TAffineVector read FVelocity write FVelocity;
-    {: Time at which particle was created }
+    { Time at which particle was created }
     property CreationTime: Double read FCreationTime write FCreationTime;
 
     property PosX : Single index 0 read GetPosition write WritePosition;
@@ -159,46 +152,46 @@ type
 
   // TGLParticleList
   //
-  {: List of particles.<p>
+  { List of particles.
      This list is managed with particles and performance in mind, make sure to
      check methods doc. }
   TGLParticleList = class(TPersistentObject)
   private
-    { Private Declarations }
+     
     FOwner: TGLParticleFXManager; // NOT persistent
     FItemList: TPersistentObjectList;
     FDirectList: PGLParticleArray; // NOT persistent
 
   protected
-    { Protected Declarations }
+     
     function GetItems(index: Integer): TGLParticle;
     procedure SetItems(index: Integer; val: TGLParticle);
     procedure AfterItemCreated(Sender: TObject);
 
   public
-    { Public Declarations }
+     
     constructor Create; override;
     destructor Destroy; override;
     procedure WriteToFiler(writer: TVirtualWriter); override;
     procedure ReadFromFiler(reader: TVirtualReader); override;
 
-    {: Refers owner manager }
+    { Refers owner manager }
     property Owner: TGLParticleFXManager read FOwner write FOwner;
     property Items[index: Integer]: TGLParticle read GetItems write SetItems; default;
 
     function ItemCount: Integer;
-    {: Adds a particle to the list.<p>
+    { Adds a particle to the list.
        Particle owneship is defined blindly, if the particle was previously
        in another list, it won't be automatically removed from that list. }
     function AddItem(aItem: TGLParticle): Integer;
-    {: Removes and frees a particular item for the list.<p>
-       If the item is not part of the list, nothing is done.<br>
+    { Removes and frees a particular item for the list.
+       If the item is not part of the list, nothing is done. 
        If found in the list, the item's "slot" is set to nil and item is
        freed (after setting its ownership to nil). The nils can be removed
        with a call to Pack. }
     procedure RemoveAndFreeItem(aItem: TGLParticle);
     function IndexOfItem(aItem: TGLParticle): Integer;
-    {: Packs the list by removing all "nil" items.<p>
+    { Packs the list by removing all "nil" items.
        Note: this functions is orders of magnitude faster than the TList
        version. }
     procedure Pack;
@@ -211,16 +204,16 @@ type
 
   // TGLParticleFXManager
   //
-  {: Base class for particle FX managers.<p>
+  { Base class for particle FX managers.
      Managers take care of life and death of particles for a particular
      particles FX system. You can have multiple scene-wide particle
-     FX managers in a scene, handled by the same ParticleFxRenderer.<p>
+     FX managers in a scene, handled by the same ParticleFxRenderer.
      Before subclassing, make sure you understood how the Initialize/Finalize
      Rendering, Begin/End Particles and RenderParticles methods (and also
      understood that rendering of manager's particles may be interwoven). }
   TGLParticleFXManager = class(TGLCadencedComponent)
   private
-    { Private Declarations }
+     
     FBlendingMode: TBlendingMode;
     FRenderer: TGLParticleFXRenderer;
     FParticles: TGLParticleList;
@@ -231,91 +224,91 @@ type
     FUsers: TList; //list of objects that use this manager
 
   protected
-    { Protected Declarations }
+     
     procedure SetRenderer(const val: TGLParticleFXRenderer);
     procedure SetParticles(const aParticles: TGLParticleList);
 
-    {: Texturing mode for the particles.<p>
+    { Texturing mode for the particles.
        Subclasses should return GL_TEXTURE_1D, 2D or 3D depending on their
        needs, and zero if they don't use texturing. This method is used
        to reduce the number of texturing activations/deactivations. }
     function TexturingMode: Cardinal; virtual; abstract;
 
-    {: Invoked when the particles of the manager will be rendered.<p>
+    { Invoked when the particles of the manager will be rendered.
        This method is fired with the "base" OpenGL states and matrices
        that will be used throughout the whole rendering, per-frame
-       initialization should take place here.<br>
+       initialization should take place here. 
        OpenGL states/matrices should not be altered in any way here. }
-    procedure InitializeRendering(var rci: TRenderContextInfo); dynamic; abstract;
-    {: Triggered just before rendering a set of particles.<p>
+    procedure InitializeRendering(var rci: TGLRenderContextInfo); dynamic; abstract;
+    { Triggered just before rendering a set of particles.
        The current OpenGL state should be assumed to be the "base" one as
        was found during InitializeRendering. Manager-specific states should
-       be established here.<br>
+       be established here. 
        Multiple BeginParticles can occur during a render (but all will be
        between InitializeRendering and Finalizerendering, and at least one
        particle will be rendered before EndParticles is invoked). }
-    procedure BeginParticles(var rci: TRenderContextInfo); virtual; abstract;
-    {: Request to render a particular particle.<p>
+    procedure BeginParticles(var rci: TGLRenderContextInfo); virtual; abstract;
+    { Request to render a particular particle.
        Due to the nature of the rendering, no particular order should be
        assumed. If possible, no OpenGL state changes should be made in this
        method, but should be placed in Begin/EndParticles. }
-    procedure RenderParticle(var rci: TRenderContextInfo; aParticle: TGLParticle); virtual; abstract;
-    {: Triggered after a set of particles as been rendered.<p>
+    procedure RenderParticle(var rci: TGLRenderContextInfo; aParticle: TGLParticle); virtual; abstract;
+    { Triggered after a set of particles as been rendered.
        If OpenGL state were altered directly (ie. not through the states
        caches of GLMisc), it should be restored back to the "base" state. }
-    procedure EndParticles(var rci: TRenderContextInfo); virtual; abstract;
-    {: Invoked when rendering of particles for this manager is done. }
-    procedure FinalizeRendering(var rci: TRenderContextInfo); dynamic; abstract;
+    procedure EndParticles(var rci: TGLRenderContextInfo); virtual; abstract;
+    { Invoked when rendering of particles for this manager is done. }
+    procedure FinalizeRendering(var rci: TGLRenderContextInfo); dynamic; abstract;
 
-    {: ID for the next created particle. }
+    { ID for the next created particle. }
     property NextID: Integer read FNextID write FNextID;
 
-    {: Blending mode for the particles.<p>
+    { Blending mode for the particles.
        Protected and unused in the base class. }
     property BlendingMode: TBlendingMode read FBlendingMode write FBlendingMode;
-    {: Apply BlendingMode relatively to the renderer's blending mode. }
-    procedure ApplyBlendingMode(var rci: TRenderContextInfo);
-    {: Unapply BlendingMode relatively by restoring the renderer's blending mode. }
-    procedure UnapplyBlendingMode(var rci: TRenderContextInfo);
+    { Apply BlendingMode relatively to the renderer's blending mode. }
+    procedure ApplyBlendingMode(var rci: TGLRenderContextInfo);
+    { Unapply BlendingMode relatively by restoring the renderer's blending mode. }
+    procedure UnapplyBlendingMode(var rci: TGLRenderContextInfo);
 
     procedure registerUser(obj: TGLParticleFXEffect);
     procedure unregisterUser(obj: TGLParticleFXEffect);
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure NotifyChange(Sender: TObject); override;
     procedure DoProgress(const progressTime: TProgressTimes); override;
 
-    //: Class of particles created by this manager. }
+    // Class of particles created by this manager. }
     class function ParticlesClass: TGLParticleClass; virtual;
-    {: Creates a new particle controled by the manager. }
+    { Creates a new particle controled by the manager. }
     function CreateParticle: TGLParticle; virtual;
-    {: Create several particles at once. }
+    { Create several particles at once. }
     procedure CreateParticles(nbParticles: Integer);
 
-    {: A TGLParticleList property. }
+    { A TGLParticleList property. }
     property Particles: TGLParticleList read FParticles write SetParticles;
-    {: Return the number of particles.<p>
+    { Return the number of particles.
        Note that subclasses may decide to return a particle count inferior
        to Particles.ItemCount, and the value returned by this method will
        be the one honoured at render time. }
     function ParticleCount: Integer; virtual;
 
-    {: If True the manager will free itself when its particle count reaches zero.<p>
+    { If True the manager will free itself when its particle count reaches zero.
        Check happens in the progression event, use with caution and only
        if you know what you're doing! }
     property AutoFreeWhenEmpty: Boolean read FAutoFreeWhenEmpty write FAutoFreeWhenEmpty;
 
   published
-    { Published Declarations }
-          {: References the renderer.<p>
+     
+          { References the renderer.
              The renderer takes care of ordering the particles of the manager
              (and other managers linked to it) and rendering them all depth-sorted. }
     property Renderer: TGLParticleFXRenderer read FRenderer write SetRenderer;
-    {: Event triggered after standard particle creation and initialization. }
+    { Event triggered after standard particle creation and initialization. }
     property OnCreateParticle: TPFXCreateParticleEvent read FOnCreateParticle write FOnCreateParticle;
 
     property Cadencer;
@@ -323,17 +316,17 @@ type
 
   // TGLParticleFXEffect
   //
-  {: Base class for linking scene objects to a particle FX manager.<p> }
+  { Base class for linking scene objects to a particle FX manager. }
   TGLParticleFXEffect = class(TGLObjectPostEffect)
   private
-    { Private Declarations }
+     
     FManager: TGLParticleFXManager;
     FManagerName: string;
     FEffectScale: single;
     procedure SetEffectScale(const Value: single); // NOT persistent, temporarily used for persistence
 
   protected
-    { Protected Declarations }
+     
     procedure SetManager(val: TGLParticleFXManager);
 
     procedure WriteToFiler(writer: TWriter); override;
@@ -344,13 +337,13 @@ type
     procedure managerNotification(aManager: TGLParticleFXManager; Operation: TOperation);
 
   public
-    { Public Declarations }
-    constructor Create(aOwner: TXCollection); override;
+     
+    constructor Create(aOwner: TGLXCollection); override;
     destructor Destroy; override;
 
   published
-    { Published Declarations }
-          {: Reference to the Particle FX manager }
+     
+          { Reference to the Particle FX manager }
     property Manager: TGLParticleFXManager read FManager write SetManager;
     property EffectScale: single read FEffectScale write SetEffectScale;
 
@@ -380,16 +373,16 @@ type
 
   // TGLParticleFXRenderer
   //
-  {: Rendering interface for scene-wide particle FX.<p>
+  { Rendering interface for scene-wide particle FX.
      A renderer can take care of rendering any number of particle systems,
      its main task being to depth-sort the particles so that they are blended
-     appropriately.<br>
+     appropriately. 
      This object will usually be placed at the end of the scene hierarchy,
      just before the HUD overlays, its position, rotation etc. is of no
      importance and has no effect on the rendering of the particles. }
   TGLParticleFXRenderer = class(TGLBaseSceneObject)
   private
-    { Private Declarations }
+     
     FManagerList: TList;
     FLastSortTime: Double;
     FLastParticleCount: Integer;
@@ -400,50 +393,50 @@ type
     FRegions: array[0..cPFXNbRegions - 1] of TPFXRegion;
 
   protected
-    { Protected Declarations }
+     
     function StoreZMaxDistance: Boolean;
 
-    {: Register a manager }
+    { Register a manager }
     procedure RegisterManager(aManager: TGLParticleFXManager);
-    {: UnRegister a manager }
+    { UnRegister a manager }
     procedure UnRegisterManager(aManager: TGLParticleFXManager);
 
     procedure UnRegisterAll;
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
 
-    {: Time (in msec) spent sorting the particles for last render. }
+    { Time (in msec) spent sorting the particles for last render. }
     property LastSortTime: Double read FLastSortTime;
-    {: Amount of particles during the last render. }
+    { Amount of particles during the last render. }
     property LastParticleCount: Integer read FLastParticleCount;
 
   published
-    { Published Declarations }
-        {: Specifies if particles should write to ZBuffer.<p>
+     
+        { Specifies if particles should write to ZBuffer.
            If the PFXRenderer is the last object to be rendered in the scene,
            it is not necessary to write to the ZBuffer since the particles
            are depth-sorted. Writing to the ZBuffer has a performance penalty. }
     property ZWrite: Boolean read FZWrite write FZWrite default False;
-    {: Specifies if particles should write to test ZBuffer.<p> }
+    { Specifies if particles should write to test ZBuffer. }
     property ZTest: Boolean read FZTest write FZTest default True;
-    {: If true the renderer will cull particles that are behind the camera. }
+    { If true the renderer will cull particles that are behind the camera. }
     property ZCull: Boolean read FZCull write FZCull default True;
-    {: If true particles will be accurately sorted back to front.<p>
+    { If true particles will be accurately sorted back to front.
        When false, only a rough ordering is used, which can result in
        visual glitches but may be faster. }
     property ZSortAccuracy: TPFXSortAccuracy read FZSortAccuracy write FZSortAccuracy default saHigh;
-    {: Maximum distance for rendering PFX particles.<p>
+    { Maximum distance for rendering PFX particles.
        If zero, camera's DepthOfView is used. }
     property ZMaxDistance: Single read FZMaxDistance write FZMaxDistance stored StoreZMaxDistance;
-    {: Default blending mode for particles.<p>
+    { Default blending mode for particles.
        "Additive" blending is the usual mode (increases brightness and
        saturates), "transparency" may be used for smoke or systems that
-       opacify view, "opaque" is more rarely used.<p>
+       opacify view, "opaque" is more rarely used.
        Note: specific PFX managers may override/ignore this setting. }
     property BlendingMode: TBlendingMode read FBlendingMode write FBlendingMode default bmAdditive;
 
@@ -464,10 +457,10 @@ type
 
   // TGLSourcePFXEffect
   //
-  {: Simple Particles Source.<p> }
+  { Simple Particles Source. }
   TGLSourcePFXEffect = class(TGLParticleFXEffect)
   private
-    { Private Declarations }
+     
     FInitialVelocity: TGLCoordinates;
     FInitialPosition: TGLCoordinates;
     FPositionDispersionRange: TGLCoordinates;
@@ -483,7 +476,7 @@ type
     FRotationDispersion: Single;
 
   protected
-    { Protected Declarations }
+     
     procedure SetInitialVelocity(const val: TGLCoordinates);
     procedure SetInitialPosition(const val: TGLCoordinates);
     procedure SetPositionDispersionRange(const val: TGLCoordinates);
@@ -494,8 +487,8 @@ type
     function ParticleAbsoluteInitialPos: TAffineVector;
 
   public
-    { Public Declarations }
-    constructor Create(aOwner: TXCollection); override;
+     
+    constructor Create(aOwner: TGLXCollection); override;
     destructor Destroy; override;
 
     class function FriendlyName: string; override;
@@ -503,14 +496,14 @@ type
 
     procedure DoProgress(const progressTime: TProgressTimes); override;
 
-    //: Instantaneously creates nb particles
+    // Instantaneously creates nb particles
     procedure Burst(time: Double; nb: Integer);
     procedure RingExplosion(time: Double;
       minInitialSpeed, maxInitialSpeed: Single;
       nbParticles: Integer);
 
   published
-    { Published Declarations }
+     
     property InitialVelocity: TGLCoordinates read FInitialVelocity write SetInitialVelocity;
     property VelocityDispersion: Single read FVelocityDispersion write FVelocityDispersion;
     property InitialPosition: TGLCoordinates read FInitialPosition write SetInitialPosition;
@@ -527,12 +520,12 @@ type
 
   // TGLDynamicPFXManager
   //
-  {: An abstract PFX manager for simple dynamic particles.<p>
+  { An abstract PFX manager for simple dynamic particles.
      Adds properties and progress implementation for handling moving particles
      (simple velocity and const acceleration integration). }
   TGLDynamicPFXManager = class(TGLParticleFXManager)
   private
-    { Private Declarations }
+     
     FAcceleration: TGLCoordinates;
     FFriction: Single;
     FCurrentTime: Double;
@@ -540,27 +533,27 @@ type
     //FRotationCenter: TAffineVector;
 
   protected
-    { Protected Declarations }
+     
     procedure SetAcceleration(const val: TGLCoordinates);
 
-    {: Returns the maximum age for a particle.<p>
+    { Returns the maximum age for a particle.
        Particles older than that will be killed by DoProgress. }
     function MaxParticleAge: Single; dynamic; abstract;
 
     property CurrentTime: Double read FCurrentTime;
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure DoProgress(const progressTime: TProgressTimes); override;
 
   published
-    { Published Declarations }
-      {: Oriented acceleration applied to the particles. }
+     
+      { Oriented acceleration applied to the particles. }
     property Acceleration: TGLCoordinates read FAcceleration write SetAcceleration;
-    {: Friction applied to the particles.<p>
+    { Friction applied to the particles.
        Friction is applied as a speed scaling factor over 1 second, ie.
        a friction of 0.5 will half speed over 1 second, a friction of 3
        will triple speed over 1 second, and a friction of 1 (default
@@ -572,7 +565,7 @@ type
   //
   TPFXLifeColor = class(TCollectionItem)
   private
-    { Private Declarations }
+     
     FColorInner: TGLColor;
     FColorOuter: TGLColor;
     FLifeTime, FInvLifeTime: Single;
@@ -584,7 +577,7 @@ type
     FRotateAngle: Single;
 
   protected
-    { Protected Declarations }
+     
     function GetDisplayName: string; override;
     procedure SetColorInner(const val: TGLColor);
     procedure SetColorOuter(const val: TGLColor);
@@ -593,19 +586,19 @@ type
     procedure SetRotateAngle(const Value: Single); // indirectly persistent
 
   public
-    { Public Declarations }
+     
     constructor Create(Collection: TCollection); override;
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
 
-    {: Stores 1/LifeTime }
+    { Stores 1/LifeTime }
     property InvLifeTime: Single read FInvLifeTime;
-    {: Stores 1/(LifeTime[Next]-LifeTime[Self]) }
+    { Stores 1/(LifeTime[Next]-LifeTime[Self]) }
     property InvIntervalRatio: Single read FIntervalRatio;
 
   published
-    { Published Declarations }
+     
     property ColorInner: TGLColor read FColorInner write SetColorInner;
     property ColorOuter: TGLColor read FColorOuter write SetColorOuter;
     property LifeTime: Single read FLifeTime write SetLifeTime;
@@ -619,12 +612,12 @@ type
   //
   TPFXLifeColors = class(TOwnedCollection)
   protected
-    { Protected Declarations }
+     
     procedure SetItems(index: Integer; const val: TPFXLifeColor);
     function GetItems(index: Integer): TPFXLifeColor;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TPersistent);
 
     function Add: TPFXLifeColor;
@@ -639,11 +632,11 @@ type
 
   // TGLLifeColoredPFXManager
   //
-  {: Base PFX manager for particles with life colors.<p>
+  { Base PFX manager for particles with life colors.
      Particles have a core and edge color, for subclassing. }
   TGLLifeColoredPFXManager = class(TGLDynamicPFXManager)
   private
-    { Private Declarations }
+     
     FLifeColors: TPFXLifeColors;
     FLifeColorsLookup: TList;
     FLifeRotations: Boolean;
@@ -653,13 +646,13 @@ type
     FParticleSize: Single;
 
   protected
-    { Protected Declarations }
+     
     procedure SetLifeColors(const val: TPFXLifeColors);
     procedure SetColorInner(const val: TGLColor);
     procedure SetColorOuter(const val: TGLColor);
 
-    procedure InitializeRendering(var rci: TRenderContextInfo); override;
-    procedure FinalizeRendering(var rci: TRenderContextInfo); override;
+    procedure InitializeRendering(var rci: TGLRenderContextInfo); override;
+    procedure FinalizeRendering(var rci: TGLRenderContextInfo); override;
 
     function MaxParticleAge: Single; override;
 
@@ -673,7 +666,7 @@ type
       const axis: TAffineVector; offsetAngle: Single);
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
@@ -683,12 +676,12 @@ type
     property LifeColors: TPFXLifeColors read FLifeColors write SetLifeColors;
 
   published
-    { Published Declarations }
+     
     property BlendingMode default bmAdditive;
   end;
 
   TPFXDirectRenderEvent = procedure(Sender: TObject; aParticle: TGLParticle;
-    var rci: TRenderContextInfo) of object;
+    var rci: TGLRenderContextInfo) of object;
   TPFXProgressEvent = procedure(Sender: TObject; const progressTime: TProgressTimes;
     var defaultProgress: Boolean) of object;
   TPFXParticleProgress = procedure(Sender: TObject; const progressTime: TProgressTimes;
@@ -697,15 +690,15 @@ type
 
   // TGLCustomPFXManager
   //
-  {: A particles FX manager offering events for customization/experimentation.<p>
+  { A particles FX manager offering events for customization/experimentation.
      This manager essentially surfaces the PFX methods as events, and is best
      suited when you have specific particles that don't fall into any existing
      category, or when you want to experiment with particles and later plan to
-     wrap things up in a full-blown manager.<br>
+     wrap things up in a full-blown manager. 
      If the events aren't handled, nothing will be rendered. }
   TGLCustomPFXManager = class(TGLLifeColoredPFXManager)
   private
-    { Private Declarations }
+     
     FOnInitializeRendering: TDirectRenderEvent;
     FOnBeginParticles: TDirectRenderEvent;
     FOnRenderParticle: TPFXDirectRenderEvent;
@@ -716,21 +709,21 @@ type
     FOnGetParticleCountEvent: TPFXGetParticleCountEvent;
 
   protected
-    { Protected Declarations }
+     
     function TexturingMode: Cardinal; override;
-    procedure InitializeRendering(var rci: TRenderContextInfo); override;
-    procedure BeginParticles(var rci: TRenderContextInfo); override;
-    procedure RenderParticle(var rci: TRenderContextInfo; aParticle: TGLParticle); override;
-    procedure EndParticles(var rci: TRenderContextInfo); override;
-    procedure FinalizeRendering(var rci: TRenderContextInfo); override;
+    procedure InitializeRendering(var rci: TGLRenderContextInfo); override;
+    procedure BeginParticles(var rci: TGLRenderContextInfo); override;
+    procedure RenderParticle(var rci: TGLRenderContextInfo; aParticle: TGLParticle); override;
+    procedure EndParticles(var rci: TGLRenderContextInfo); override;
+    procedure FinalizeRendering(var rci: TGLRenderContextInfo); override;
 
   public
-    { Public Declarations }
+     
     procedure DoProgress(const progressTime: TProgressTimes); override;
     function ParticleCount: Integer; override;
 
   published
-    { Published Declarations }
+     
     property OnInitializeRendering: TDirectRenderEvent read FOnInitializeRendering write FOnInitializeRendering;
     property OnBeginParticles: TDirectRenderEvent read FOnBeginParticles write FOnBeginParticles;
     property OnRenderParticle: TPFXDirectRenderEvent read FOnRenderParticle write FOnRenderParticle;
@@ -748,37 +741,37 @@ type
 
   // TGLPolygonPFXManager
   //
-  {: Polygonal particles FX manager.<p>
+  { Polygonal particles FX manager.
      The particles of this manager are made of N-face regular polygon with
-     a core and edge color. No texturing is available.<br>
+     a core and edge color. No texturing is available. 
      If you render large particles and don't have T&L acceleration, consider
      using TGLPointLightPFXManager. }
   TGLPolygonPFXManager = class(TGLLifeColoredPFXManager)
   private
-    { Private Declarations }
+     
     FNbSides: Integer;
     Fvx, Fvy: TAffineVector; // NOT persistent
     FVertices: TAffineVectorList; // NOT persistent
     FVertBuf: TAffineVectorList; // NOT persistent
 
   protected
-    { Protected Declarations }
+     
     procedure SetNbSides(const val: Integer);
 
     function TexturingMode: Cardinal; override;
-    procedure InitializeRendering(var rci: TRenderContextInfo); override;
-    procedure BeginParticles(var rci: TRenderContextInfo); override;
-    procedure RenderParticle(var rci: TRenderContextInfo; aParticle: TGLParticle); override;
-    procedure EndParticles(var rci: TRenderContextInfo); override;
-    procedure FinalizeRendering(var rci: TRenderContextInfo); override;
+    procedure InitializeRendering(var rci: TGLRenderContextInfo); override;
+    procedure BeginParticles(var rci: TGLRenderContextInfo); override;
+    procedure RenderParticle(var rci: TGLRenderContextInfo; aParticle: TGLParticle); override;
+    procedure EndParticles(var rci: TGLRenderContextInfo); override;
+    procedure FinalizeRendering(var rci: TGLRenderContextInfo); override;
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
   published
-    { Published Declarations }
+     
     property NbSides: Integer read FNbSides write SetNbSides default 6;
 
     property ParticleSize;
@@ -789,27 +782,27 @@ type
 
   // TSpriteColorMode
   //
-  {: Sprite color modes.<p>
-     <ul>
-     <li>scmFade: vertex coloring is used to fade inner-outer
-     <li>scmInner: vertex coloring uses inner color only
-     <li>scmOuter: vertex coloring uses outer color only
-     <li>scmNone: vertex coloring is NOT used (colors are ignored).
-     </ul> }
+  { Sprite color modes.
+      
+      scmFade: vertex coloring is used to fade inner-outer
+      scmInner: vertex coloring uses inner color only
+      scmOuter: vertex coloring uses outer color only
+      scmNone: vertex coloring is NOT used (colors are ignored).
+       }
   TSpriteColorMode = (scmFade, scmInner, scmOuter, scmNone);
 
   // TSpritesPerTexture
   //
-  {: Sprites per sprite texture for the SpritePFX. }
+  { Sprites per sprite texture for the SpritePFX. }
   TSpritesPerTexture = (sptOne, sptFour);
 
   // TGLBaseSpritePFXManager
   //
-  {: Base class for sprite-based particles FX managers.<p>
+  { Base class for sprite-based particles FX managers.
      The particles are made of optionally centered single-textured quads. }
   TGLBaseSpritePFXManager = class(TGLLifeColoredPFXManager)
   private
-    { Private Declarations }
+     
     FTexHandle: TGLTextureHandle;
     Fvx, Fvy, Fvz: TAffineVector; // NOT persistent
     FVertices: TAffineVectorList; // NOT persistent
@@ -822,11 +815,11 @@ type
     FColorMode: TSpriteColorMode;
 
   protected
-    { Protected Declarations }
-    {: Subclasses should draw their stuff in this bmp32. }
+     
+    { Subclasses should draw their stuff in this bmp32. }
     procedure PrepareImage(bmp32: TGLBitmap32; var texFormat: Integer); virtual; abstract;
 
-    procedure BindTexture(var rci: TRenderContextInfo);
+    procedure BindTexture(var rci: TGLRenderContextInfo);
     procedure SetSpritesPerTexture(const val: TSpritesPerTexture); virtual;
     procedure SetColorMode(const val: TSpriteColorMode);
     procedure SetAspectRatio(const val: Single);
@@ -835,36 +828,36 @@ type
     procedure SetShareSprites(const val: TGLBaseSpritePFXManager);
 
     function TexturingMode: Cardinal; override;
-    procedure InitializeRendering(var rci: TRenderContextInfo); override;
-    procedure BeginParticles(var rci: TRenderContextInfo); override;
-    procedure RenderParticle(var rci: TRenderContextInfo; aParticle: TGLParticle); override;
-    procedure EndParticles(var rci: TRenderContextInfo); override;
-    procedure FinalizeRendering(var rci: TRenderContextInfo); override;
+    procedure InitializeRendering(var rci: TGLRenderContextInfo); override;
+    procedure BeginParticles(var rci: TGLRenderContextInfo); override;
+    procedure RenderParticle(var rci: TGLRenderContextInfo; aParticle: TGLParticle); override;
+    procedure EndParticles(var rci: TGLRenderContextInfo); override;
+    procedure FinalizeRendering(var rci: TGLRenderContextInfo); override;
 
     property SpritesPerTexture: TSpritesPerTexture read FSpritesPerTexture write SetSpritesPerTexture;
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
     property ColorMode: TSpriteColorMode read FColorMode write SetColorMode;
 
   published
-    { Published Declarations }
-      {: Ratio between width and height.<p>
+     
+      { Ratio between width and height.
          An AspectRatio of 1 (default) will result in square sprite particles,
          values higher than one will result in horizontally stretched sprites,
          values below one will stretch vertically (assuming no rotation is applied). }
     property AspectRatio: Single read FAspectRatio write SetAspectRatio stored StoreAspectRatio;
-    {: Particle sprites rotation (in degrees).<p>
+    { Particle sprites rotation (in degrees).
        All particles of the PFX manager share this rotation. }
     property Rotation: Single read FRotation write SetRotation;
-    {: If specified the manager will reuse the other manager's sprites.<p>
+    { If specified the manager will reuse the other manager's sprites.
        Sharing sprites between PFX managers can help at the rendering stage
        if particles of the managers are mixed by helping reduce the number
        of texture switches. Note that only the texture is shared, not the
-       colors, sizes or other dynamic parameters.<br> }
+       colors, sizes or other dynamic parameters.  }
     property ShareSprites: TGLBaseSpritePFXManager read FShareSprites write FShareSprites;
   end;
 
@@ -874,24 +867,24 @@ type
 
   // TGLPointLightPFXManager
   //
-  {: A sprite-based particles FX managers using user-specified code to prepare the texture.<p> }
+  { A sprite-based particles FX managers using user-specified code to prepare the texture. }
   TGLCustomSpritePFXManager = class(TGLBaseSpritePFXManager)
   private
-    { Private Declarations }
+     
     FOnPrepareTextureImage: TPFXPrepareTextureImageEvent;
 
   protected
-    { Protected Declarations }
+     
     procedure PrepareImage(bmp32: TGLBitmap32; var texFormat: Integer); override;
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
   published
-    { Published Declarations }
-      {: Place your texture rendering code in this event.<p> }
+     
+      { Place your texture rendering code in this event. }
     property OnPrepareTextureImage: TPFXPrepareTextureImageEvent read FOnPrepareTextureImage write FOnPrepareTextureImage;
 
     property ColorMode default scmInner;
@@ -904,10 +897,10 @@ type
 
   // TGLPointLightPFXManager
   //
-  {: A sprite-based particles FX managers using point light maps.<p>
+  { A sprite-based particles FX managers using point light maps.
      The texture map is a round, distance-based transparency map (center "opaque"),
      you can adjust the quality (size) of the underlying texture map with the
-     TexMapSize property.<p>
+     TexMapSize property.
      This PFX manager renders particles similar to what you can get with
      TGLPolygonPFXManager but stresses fillrate more than T&L rate (and will
      usually be slower than the PolygonPFX when nbSides is low or T&L acceleration
@@ -915,23 +908,23 @@ type
      that may use particles with more complex textures. }
   TGLPointLightPFXManager = class(TGLBaseSpritePFXManager)
   private
-    { Private Declarations }
+     
     FTexMapSize: Integer;
 
   protected
-    { Protected Declarations }
+     
     procedure PrepareImage(bmp32: TGLBitmap32; var texFormat: Integer); override;
 
     procedure SetTexMapSize(const val: Integer);
 
   public
-    { Public Declarations }
+     
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
   published
-    { Published Declarations }
-      {: Underlying texture map size, as a power of two.<p>
+     
+      { Underlying texture map size, as a power of two.
          Min value is 3 (size=8), max value is 9 (size=512). }
     property TexMapSize: Integer read FTexMapSize write SetTexMapSize default 5;
 
@@ -942,7 +935,7 @@ type
     property LifeColors;
   end;
 
-  {: Returns or creates the TGLBInertia within the given object's behaviours.<p> }
+  { Returns or creates the TGLBInertia within the given object's behaviours. }
 function GetOrCreateSourcePFX(obj: TGLBaseSceneObject; const name: string = ''): TGLSourcePFXEffect;
 
 // ------------------------------------------------------------------
@@ -1449,7 +1442,7 @@ end;
 // Create
 //
 
-constructor TGLParticleFXEffect.Create(aOwner: TXCollection);
+constructor TGLParticleFXEffect.Create(aOwner: TGLXCollection);
 begin
   FEffectScale := 1;
   inherited;
@@ -1619,7 +1612,7 @@ end;
 // BuildList
 // (beware, large and complex stuff below... this is the heart of the ParticleFX)
 
-procedure TGLParticleFXRenderer.BuildList(var rci: TRenderContextInfo);
+procedure TGLParticleFXRenderer.BuildList(var rci: TGLRenderContextInfo);
 {
    Quick Explanation of what is below:
 
@@ -1897,7 +1890,7 @@ end;
 // Create
 //
 
-constructor TGLSourcePFXEffect.Create(aOwner: TXCollection);
+constructor TGLSourcePFXEffect.Create(aOwner: TGLXCollection);
 begin
   inherited;
   FInitialVelocity := TGLCoordinates.CreateInitialized(Self, NullHmgVector, csVector);
@@ -1924,7 +1917,7 @@ begin
   inherited Destroy;
 end;
 
-// FriendlyName
+ 
 //
 
 class function TGLSourcePFXEffect.FriendlyName: string;
@@ -2195,7 +2188,7 @@ begin
   inherited Destroy;
 end;
 
-// Assign
+ 
 //
 
 procedure TPFXLifeColor.Assign(Source: TPersistent);
@@ -2533,7 +2526,7 @@ end;
 // InitializeRendering
 //
 
-procedure TGLLifeColoredPFXManager.InitializeRendering(var rci: TRenderContextInfo);
+procedure TGLLifeColoredPFXManager.InitializeRendering(var rci: TGLRenderContextInfo);
 var
   i, n: Integer;
 begin
@@ -2550,7 +2543,7 @@ end;
 // FinalizeRendering
 //
 
-procedure TGLLifeColoredPFXManager.FinalizeRendering(var rci: TRenderContextInfo);
+procedure TGLLifeColoredPFXManager.FinalizeRendering(var rci: TGLRenderContextInfo);
 begin
   FLifeColorsLookup.Free;
 end;
@@ -2883,7 +2876,7 @@ end;
 // InitializeRendering
 //
 
-procedure TGLCustomPFXManager.InitializeRendering(var rci: TRenderContextInfo);
+procedure TGLCustomPFXManager.InitializeRendering(var rci: TGLRenderContextInfo);
 begin
   inherited;
   if Assigned(FOnInitializeRendering) then
@@ -2893,7 +2886,7 @@ end;
 // BeginParticles
 //
 
-procedure TGLCustomPFXManager.BeginParticles(var rci: TRenderContextInfo);
+procedure TGLCustomPFXManager.BeginParticles(var rci: TGLRenderContextInfo);
 begin
   if Assigned(FOnBeginParticles) then
     FOnBeginParticles(Self, rci);
@@ -2902,7 +2895,7 @@ end;
 // RenderParticle
 //
 
-procedure TGLCustomPFXManager.RenderParticle(var rci: TRenderContextInfo; aParticle: TGLParticle);
+procedure TGLCustomPFXManager.RenderParticle(var rci: TGLRenderContextInfo; aParticle: TGLParticle);
 begin
   if Assigned(FOnRenderParticle) then
     FOnRenderParticle(Self, aParticle, rci);
@@ -2911,7 +2904,7 @@ end;
 // EndParticles
 //
 
-procedure TGLCustomPFXManager.EndParticles(var rci: TRenderContextInfo);
+procedure TGLCustomPFXManager.EndParticles(var rci: TGLRenderContextInfo);
 begin
   if Assigned(FOnEndParticles) then
     FOnEndParticles(Self, rci);
@@ -2920,7 +2913,7 @@ end;
 // FinalizeRendering
 //
 
-procedure TGLCustomPFXManager.FinalizeRendering(var rci: TRenderContextInfo);
+procedure TGLCustomPFXManager.FinalizeRendering(var rci: TGLRenderContextInfo);
 begin
   if Assigned(FOnFinalizeRendering) then
     FOnFinalizeRendering(Self, rci);
@@ -2984,7 +2977,7 @@ end;
 // InitializeRendering
 //
 
-procedure TGLPolygonPFXManager.InitializeRendering(var rci: TRenderContextInfo);
+procedure TGLPolygonPFXManager.InitializeRendering(var rci: TGLRenderContextInfo);
 var
   i: Integer;
   matrix: TMatrix;
@@ -3011,7 +3004,7 @@ end;
 // BeginParticles
 //
 
-procedure TGLPolygonPFXManager.BeginParticles(var rci: TRenderContextInfo);
+procedure TGLPolygonPFXManager.BeginParticles(var rci: TGLRenderContextInfo);
 begin
   ApplyBlendingMode(rci);
 end;
@@ -3019,7 +3012,7 @@ end;
 // RenderParticle
 //
 
-procedure TGLPolygonPFXManager.RenderParticle(var rci: TRenderContextInfo; aParticle: TGLParticle);
+procedure TGLPolygonPFXManager.RenderParticle(var rci: TGLRenderContextInfo; aParticle: TGLParticle);
 var
   i: Integer;
   lifeTime, sizeScale: Single;
@@ -3070,7 +3063,7 @@ end;
 // EndParticles
 //
 
-procedure TGLPolygonPFXManager.EndParticles(var rci: TRenderContextInfo);
+procedure TGLPolygonPFXManager.EndParticles(var rci: TGLRenderContextInfo);
 begin
   UnapplyBlendingMode(rci);
 end;
@@ -3078,7 +3071,7 @@ end;
 // FinalizeRendering
 //
 
-procedure TGLPolygonPFXManager.FinalizeRendering(var rci: TRenderContextInfo);
+procedure TGLPolygonPFXManager.FinalizeRendering(var rci: TGLRenderContextInfo);
 begin
   FVertBuf.Free;
   FVertices.Free;
@@ -3185,7 +3178,7 @@ end;
 // BindTexture
 //
 
-procedure TGLBaseSpritePFXManager.BindTexture(var rci: TRenderContextInfo);
+procedure TGLBaseSpritePFXManager.BindTexture(var rci: TGLRenderContextInfo);
 var
   bmp32: TGLBitmap32;
   tw, th, td, tf: Integer;
@@ -3239,7 +3232,7 @@ end;
 // InitializeRendering
 //
 
-procedure TGLBaseSpritePFXManager.InitializeRendering(var rci: TRenderContextInfo);
+procedure TGLBaseSpritePFXManager.InitializeRendering(var rci: TGLRenderContextInfo);
 var
   i: Integer;
   matrix: TMatrix;
@@ -3277,7 +3270,7 @@ end;
 // BeginParticles
 //
 
-procedure TGLBaseSpritePFXManager.BeginParticles(var rci: TRenderContextInfo);
+procedure TGLBaseSpritePFXManager.BeginParticles(var rci: TGLRenderContextInfo);
 begin
   BindTexture(rci);
   if ColorMode = scmNone then
@@ -3292,7 +3285,7 @@ end;
 // RenderParticle
 //
 
-procedure TGLBaseSpritePFXManager.RenderParticle(var rci: TRenderContextInfo; aParticle: TGLParticle);
+procedure TGLBaseSpritePFXManager.RenderParticle(var rci: TGLRenderContextInfo; aParticle: TGLParticle);
 type
   TTexCoordsSet = array[0..3] of TTexPoint;
   PTexCoordsSet = ^TTexCoordsSet;
@@ -3401,7 +3394,7 @@ end;
 // EndParticles
 //
 
-procedure TGLBaseSpritePFXManager.EndParticles(var rci: TRenderContextInfo);
+procedure TGLBaseSpritePFXManager.EndParticles(var rci: TGLRenderContextInfo);
 begin
   if ColorMode <> scmFade then
     GL.End_;
@@ -3411,7 +3404,7 @@ end;
 // FinalizeRendering
 //
 
-procedure TGLBaseSpritePFXManager.FinalizeRendering(var rci: TRenderContextInfo);
+procedure TGLBaseSpritePFXManager.FinalizeRendering(var rci: TGLRenderContextInfo);
 begin
   FVertBuf.Free;
   FVertices.Free;
