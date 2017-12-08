@@ -1,40 +1,34 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: RegisterXCollection<p>
+{
+   Register TGLXCollection property editor
 
-	Register TXCollection property editor<p>
-
-	<b>History : </b><font size=-1><ul>
-      <li>20/05/10 - Yar - Fixes for Linux x64
-      <li>11/11/09 - DaStr - Improved FPC compatibility
+	 History :  
+       20/05/10 - Yar - Fixes for Linux x64
+       11/11/09 - DaStr - Improved FPC compatibility
                              (thanks Predator) (BugtrackerID = 2893580)
-      <li>03/07/04 - LR - Removed ..\ from the GLScene.inc
-      <li>16/04/00 - Egg - Creation
-	</ul></font>
+       03/07/04 - LR - Removed ..\ from the GLScene.inc
+       16/04/00 - Egg - Creation
+	 
 }
 unit RegisterXCollection;
 
 interface
 
-{$i GLScene.inc}
+{$I GLScene.inc}
 
 uses
-  Classes, XCollection,
-  {$IFDEF FPC}
-     componenteditors, propedits
-  {$ELSE}
-     DesignEditors, DesignIntf
-  {$ENDIF}
-   ;
+  Classes, GLXCollection,
+     componenteditors, propedits;
 
 type
 
 	// TGLXCollectionProperty
 	//
-	TXCollectionProperty = class(TClassProperty)
+	TGLXCollectionProperty = class(TClassProperty)
 		public
-			{ Public Declarations }
+			 
 			function GetAttributes: TPropertyAttributes; override;
 			procedure Edit; override;
 	end;
@@ -48,33 +42,29 @@ implementation
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
-uses {$IFNDEF FPC}FXCollectionEditor{$ELSE}FXCollectionEditorLCL{$ENDIF};
+uses FXCollectionEditor;
 
 
 procedure Register;
 begin
-  RegisterPropertyEditor(TypeInfo(TXCollection), nil, '', TXCollectionProperty);
+  RegisterPropertyEditor(TypeInfo(TGLXCollection), nil, '', TGLXCollectionProperty);
 end;
 
-//----------------- TXCollectionProperty ------------------------------------
+//----------------- TGLXCollectionProperty ------------------------------------
 
 // GetAttributes
 //
-function TXCollectionProperty.GetAttributes: TPropertyAttributes;
+function TGLXCollectionProperty.GetAttributes: TPropertyAttributes;
 begin
 	Result:=[paDialog];
 end;
 
 // Edit
 //
-procedure TXCollectionProperty.Edit;
+procedure TGLXCollectionProperty.Edit;
 begin
    with XCollectionEditor do begin
-   {$IFDEF FPC}
-      SetXCollection(TXCollection(GetObjectValue));
-   {$ELSE}
-      SetXCollection(TXCollection(GetOrdValue), Self.Designer);
-   {$ENDIF}
+      SetXCollection(TGLXCollection(GetObjectValue));
       Show;
    end;
 end;

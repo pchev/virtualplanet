@@ -1,21 +1,20 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLTilePlane<p>
+{
+   Implements a tiled texture plane.
 
-   Implements a tiled texture plane.<p>
-
-	<b>History : </b><font size=-1><ul>
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>28/03/07 - DaStr - Renamed parameters in some methods
+	 History :  
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       30/03/07 - DaStr - Added $I GLScene.inc
+       28/03/07 - DaStr - Renamed parameters in some methods
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678658)
-      <li>23/03/07 - DaStr - Added explicit pointer dereferencing
+       23/03/07 - DaStr - Added explicit pointer dereferencing
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-      <li>19/08/05 - Mathx - Made index of materials start from 0 not from 1 (thanks to uhfath)
-      <li>23/03/04 - EG - Added NoZWrite
-      <li>09/01/04 - EG - Creation
-   </ul></font>
+       19/08/05 - Mathx - Made index of materials start from 0 not from 1 (thanks to uhfath)
+       23/03/04 - EG - Added NoZWrite
+       09/01/04 - EG - Creation
+    
 }
 unit GLTilePlane;
 
@@ -31,15 +30,15 @@ type
 
    // TGLTiledAreaRow
    //
-   {: Stores row information for a tiled area.<p> }
+   { Stores row information for a tiled area. }
    TGLTiledAreaRow = class (TPersistentObject)
 	   private
-			{ Private Declarations }
+			 
          FColMin, FColMax : Integer;
          FData : TIntegerList;
 
 		protected
-			{ Protected Declarations }
+			 
          procedure SetColMin(const val : Integer);
          procedure SetColMax(const val : Integer);
 
@@ -47,7 +46,7 @@ type
          procedure SetCell(col, val : Integer);
 
 		public
-			{ Public Declarations }
+			 
 			constructor Create; override;
          destructor Destroy; override;
 	      procedure WriteToFiler(writer : TVirtualWriter); override;
@@ -67,17 +66,17 @@ type
 
    // TGLTiledArea
    //
-   {: Stores tile information in a tiled area.<p>
+   { Stores tile information in a tiled area.
       Each tile stores an integer value with zero the default value,
       assumed as "empty". }
    TGLTiledArea = class (TPersistentObject)
 	   private
-			{ Private Declarations }
+			 
          FRowMin, FRowMax : Integer;
          FRows : TPersistentObjectList;
 
 		protected
-			{ Protected Declarations }
+			 
          procedure SetRowMin(const val : Integer);
          procedure SetRowMax(const val : Integer);
 
@@ -86,7 +85,7 @@ type
          function GetRow(index : Integer) : TGLTiledAreaRow;
 
 		public
-			{ Public Declarations }
+			 
 			constructor Create; override;
          destructor Destroy; override;
 	      procedure WriteToFiler(writer : TVirtualWriter); override;
@@ -108,20 +107,20 @@ type
 
    // TGLTilePlane
    //
-   {: A tiled textured plane.<p>
+   { A tiled textured plane.
       This plane object stores and displays texture tiles that composes it,
-      and is optimized to minimize texture switches when rendering.<br>
+      and is optimized to minimize texture switches when rendering. 
       Its bounding dimensions are determined by its painted tile. }
 	TGLTilePlane = class (TGLImmaterialSceneObject)
 	   private
-			{ Private Declarations }
+			 
          FNoZWrite : Boolean;
          FTiles : TGLTiledArea;
          FMaterialLibrary : TGLMaterialLibrary;
          FSortByMaterials : Boolean;
 
 		protected
-			{ Protected Declarations }
+			 
          procedure SetNoZWrite(const val : Boolean);
          procedure SetTiles(const val : TGLTiledArea);
          procedure SetMaterialLibrary(const val : TGLMaterialLibrary);
@@ -130,28 +129,28 @@ type
          procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
 		public
-			{ Public Declarations }
+			 
 			constructor Create(AOwner: TComponent); override;
          destructor Destroy; override;
 
-         procedure DoRender(var ARci : TRenderContextInfo;
+         procedure DoRender(var ARci : TGLRenderContextInfo;
                             ARenderSelf, ARenderChildren : Boolean); override;
-         procedure BuildList(var rci : TRenderContextInfo); override;
+         procedure BuildList(var rci : TGLRenderContextInfo); override;
 
-         //: Access to the TiledArea data
+         // Access to the TiledArea data
          property Tiles : TGLTiledArea read FTiles write SetTiles;
-         {: Controls the sorting of tiles by material.<p>
+         { Controls the sorting of tiles by material.
             This property should ideally be left always at its default, True,
             except for debugging and performance measurement, which is why
             it's only public and not published. }
          property SortByMaterials : Boolean read FSortByMaterials write SetSortByMaterials;
 
 		published
-			{ Public Declarations }
+			 
 
-         {: If True the tiles are rendered without writing to the ZBuffer. }
+         { If True the tiles are rendered without writing to the ZBuffer. }
          property NoZWrite : Boolean read FNoZWrite write SetNoZWrite;
-         {: Material library where tiles materials will be stored/retrieved.<p>
+         { Material library where tiles materials will be stored/retrieved.
             The lower 16 bits of the tile integer value is understood as being
             the index of the tile's material in the library (material of
             index zero is thus unused). }
@@ -578,7 +577,7 @@ end;
 
 // DoRender
 //
-procedure TGLTilePlane.DoRender(var ARci : TRenderContextInfo;
+procedure TGLTilePlane.DoRender(var ARci : TGLRenderContextInfo;
                                 ARenderSelf, ARenderChildren : Boolean);
 var
    i : Integer;
@@ -592,7 +591,7 @@ end;
 
 // BuildList
 //
-procedure TGLTilePlane.BuildList(var rci : TRenderContextInfo);
+procedure TGLTilePlane.BuildList(var rci : TGLRenderContextInfo);
 type
    TQuadListInfo = packed record
       x, y : TIntegerList;

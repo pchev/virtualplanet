@@ -1,18 +1,17 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLCompositeImage<p>
-
+{
     This class is required for loading images such classes as TGLDDSImage,
     TGLO3TCImage, TGLHDRImage etc.
 
- <b>History : </b><font size=-1><ul>
-        <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-        <li>22/04/10 - Yar - Fixes after GLState revision
-        <li>22/02/10 - Yar - Added LoadFromStream (thanks to mif)
-        <li>23/01/10 - Yar - Replaced TextureFormat to TextureFormatEx
-        <li>21/01/10 - Yar - Creation
-   </ul><p>
+  History :  
+         23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+         22/04/10 - Yar - Fixes after GLState revision
+         22/02/10 - Yar - Added LoadFromStream (thanks to mif)
+         23/01/10 - Yar - Replaced TextureFormat to TextureFormatEx
+         21/01/10 - Yar - Creation
+    
 }
 
 unit GLCompositeImage;
@@ -91,7 +90,7 @@ begin
   inherited Destroy;
 end;
 
-// Assign
+ 
 //
 
 procedure TGLCompositeImage.Assign(Source: TPersistent);
@@ -247,7 +246,7 @@ begin
   end;
 end;
 
-// LoadFromFile
+ 
 //
 
 procedure TGLCompositeImage.LoadFromFile(const fileName: string);
@@ -305,7 +304,7 @@ begin
   end;
 end;
 
-// FriendlyName
+ 
 //
 
 class function TGLCompositeImage.FriendlyName: string;

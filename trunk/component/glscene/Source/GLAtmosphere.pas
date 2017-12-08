@@ -1,27 +1,26 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLAtmosphere <p>
+{
+   This unit contains classes that imitate an atmosphere around a planet.
 
-   This unit contains classes that imitate an atmosphere around a planet.<p>
-
-   <b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
-      <li>19/03/11 - Yar - Added setters for Low and High atmosphere colors
-      <li>04/11/10 - DaStr - Restored Delphi5 and Delphi6 compatibility
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
-      <li>03/04/07 - DaStr - Optimized TGLCustomAtmosphere.DoRender
+    History :  
+       10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
+       19/03/11 - Yar - Added setters for Low and High atmosphere colors
+       04/11/10 - DaStr - Restored Delphi5 and Delphi6 compatibility
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
+       03/04/07 - DaStr - Optimized TGLCustomAtmosphere.DoRender
                              Fixed SetPlanetRadius and SetAtmosphereRadius
-      <li>21/03/07 - DaStr - Cleaned up "uses" section
+       21/03/07 - DaStr - Cleaned up "uses" section
                              (thanks Burkhard Carstens) (Bugtracker ID = 1684432)
-      <li>01/03/07 - DaStr - Fixed TGLAtmosphereBlendingMode
+       01/03/07 - DaStr - Fixed TGLAtmosphereBlendingMode
                                              (old version did not generate RTTI)
                              Added default values to all properties
-      <li>15/02/07 - DaStr - Added TGLCustomAtmosphere.AxisAlignedDimensionsUnscaled
-      <li>07/02/07 - DaStr - Initial version (donated to GLScene)
+       15/02/07 - DaStr - Added TGLCustomAtmosphere.AxisAlignedDimensionsUnscaled
+       07/02/07 - DaStr - Initial version (donated to GLScene)
 
 
    Comments:
@@ -71,7 +70,6 @@ uses
   // VCL
   SysUtils, Classes,
 
-  // GLScene
   GLScene, GLObjects, GLCadencer, OpenGLTokens, GLVectorGeometry,
   GLContext, GLStrings, GLColor, GLRenderContextInfo, GLState, GLCrossPlatform,
   GLVectorTypes;
@@ -79,7 +77,7 @@ uses
 type
    EGLAtmosphereException = class(Exception);
 
-   {:
+   {
    With aabmOneMinusSrcAlpha atmosphere is transparent to other objects,
    but has problems, which are best seen when the Atmosphere radius is big.
 
@@ -88,7 +86,7 @@ type
   }
   TGLAtmosphereBlendingMode = (abmOneMinusDstColor, abmOneMinusSrcAlpha);
 
-  {: This class imitates an atmosphere around a planet. }
+  { This class imitates an atmosphere around a planet. }
   TGLCustomAtmosphere = class(TGLBaseSceneObject)
   private
     // Used in DoRenderl
@@ -123,11 +121,11 @@ type
     property Slices: Integer read FSlices write SetSlices default 60;
     property Opacity: Single read FOpacity write FOpacity stored StoreOpacity;
 
-    //: AtmosphereRadius > PlanetRadius!!!
+    // AtmosphereRadius > PlanetRadius!!!
     property AtmosphereRadius: Single read FAtmosphereRadius write SetAtmosphereRadius stored StoreAtmosphereRadius;
     property PlanetRadius: Single read FPlanetRadius write SetPlanetRadius stored StorePlanetRadius;
 
-    //: Use value slightly lower than actual radius, for antialiasing effect.
+    // Use value slightly lower than actual radius, for antialiasing effect.
     property LowAtmColor: TGLColor read FLowAtmColor write SetLowAtmColor stored StoreLowAtmColor;
     property HighAtmColor: TGLColor read FHighAtmColor write SetHighAtmColor stored StoreHighAtmColor;
     property BlendingMode: TGLAtmosphereBlendingMode read FBlendingMode
@@ -137,14 +135,14 @@ type
     procedure SetOptimalAtmosphere2(const ARadius: Single); //relative
     procedure TogleBlendingMode; //changes between 2 blending modes
 
-    //: Standard component stuff.
+    // Standard component stuff.
     procedure Assign(Source: TPersistent); override;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    //: Main rendering procedure.
-    procedure DoRender(var rci: TRenderContextInfo; renderSelf, renderChildren: Boolean); override;
-    //: Used to determine extents.
+    // Main rendering procedure.
+    procedure DoRender(var rci: TGLRenderContextInfo; renderSelf, renderChildren: Boolean); override;
+    // Used to determine extents.
     function AxisAlignedDimensionsUnscaled : TVector; override;
   end;
 
@@ -216,7 +214,7 @@ begin
 end;
 
 
-procedure TGLCustomAtmosphere.DoRender(var rci: TRenderContextInfo; renderSelf, renderChildren: Boolean);
+procedure TGLCustomAtmosphere.DoRender(var rci: TGLRenderContextInfo; renderSelf, renderChildren: Boolean);
 var
   radius, invAtmosphereHeight:    Single;
   sunPos, eyePos, lightingVector: TVector;

@@ -1,30 +1,29 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLImposter<p>
+{
+   Imposter building and rendering implementation for GLScene.
 
-   Imposter building and rendering implementation for GLScene.<p>
-
-   <b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPP compatibility: used direct HPPEMIT for
+    History :  
+       10/11/12 - PW - Added CPP compatibility: used direct HPPEMIT for
                           TLoadingImposterEvent as procedure instead of function in Delphi
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>28/03/07 - DaStr - Renamed parameters in some methods
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
+       30/03/07 - DaStr - Added $I GLScene.inc
+       28/03/07 - DaStr - Renamed parameters in some methods
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678658)
-      <li>23/02/07 - DaStr - Fixed TGLFireFXManager.Create (TGLCoordinatesStyle stuff)
-      <li>02/08/04 - LR, YHC - BCB corrections: use record instead array
+       23/02/07 - DaStr - Fixed TGLFireFXManager.Create (TGLCoordinatesStyle stuff)
+       02/08/04 - LR, YHC - BCB corrections: use record instead array
                                fixed BCB Compiler error "E2370 Simple type name expected"
-      <li>07/05/04 - EG - Perspective distortion properly applied
-      <li>06/05/04 - EG - Fixes, improvements, clean ups
-      <li>04/05/04 - EG - Reworked architecture
-      <li>14/04/04 - SG - Fixed texture clamping for old cards and
+       07/05/04 - EG - Perspective distortion properly applied
+       06/05/04 - EG - Fixes, improvements, clean ups
+       04/05/04 - EG - Reworked architecture
+       14/04/04 - SG - Fixed texture clamping for old cards and
                           switched to GL_NEAREST texture sampling.
-      <li>24/03/04 - SG - Initial.
-   </ul></font><p>
+       24/03/04 - SG - Initial.
+    
 }
 unit GLImposter;
 
@@ -33,12 +32,7 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils,
-  {$ELSE}
-    Classes, SysUtils,
-  {$ENDIF}
-
+  Classes, SysUtils,
   GLScene, GLContext, GLVectorTypes, GLVectorGeometry,
   GLPersistentClasses, GLCrossPlatform, GLGraphics, GLColor,
   GLRenderContextInfo, GLCoordinates, GLBaseClasses, GLState, GLTextureFormat,
@@ -47,20 +41,20 @@ uses
 type
   // TImposterOptions
   //
-  {: Imposter rendering options.<p>
-     Following options are supported:<ul>
-     <li>impoBlended : the imposters are transparently blended during renders,
+  { Imposter rendering options.
+     Following options are supported: 
+      impoBlended : the imposters are transparently blended during renders,
      this will smooth their edges but requires them to be rendered sorted
      from back to front
-     <li>impoAlphaTest : alpha test is used to eliminate transparent pixels,
+      impoAlphaTest : alpha test is used to eliminate transparent pixels,
      the alpha treshold is adjusted by the AlphaTreshold property
-     <li>impoNearestFiltering : use nearest texture filtering (the alternative
+      impoNearestFiltering : use nearest texture filtering (the alternative
      is linear filtering)
-     <li>impoPerspectiveCorrection : activates a special imposter rendering
+      impoPerspectiveCorrection : activates a special imposter rendering
      projection suitable for distorting the sprites when seen from a level
      angle of view with a wide focal camera (think trees/grass when walking
      in a forest), if not active, the imposter sprites are camera-facing
-     </ul>
+      
   }
   TImposterOption = (impoBlended, impoAlphaTest, impoNearestFiltering,
     impoPerspectiveCorrection);
@@ -74,7 +68,7 @@ type
 
   // TImposter
   //
-  {: Base class for imposters manipulation and handling.<br>
+  { Base class for imposters manipulation and handling. 
      Rendering imposters is performed by three methods, BeginRender must
      be invoked first, then Render for each of the impostr
      This class assumes a single impostor per texture.
@@ -82,7 +76,7 @@ type
      Note: Remeber to enable Destination Alpha on your viewer.}
   TImposter = class(TObject)
   private
-    { Private Declarations }
+     
     FRequestCount: Integer;
     FBuilder: TGLImposterBuilder;
     FTexture: TGLTextureHandle;
@@ -91,27 +85,27 @@ type
     FModulated: Boolean;
 
   protected
-    { Protected Declarations }
+     
     FVx, FVy: TVector;
     FStaticOffset: TVector;
     FQuad: array[0..3] of TVector;
     FStaticScale: Single;
 
-    procedure PrepareTexture(var rci: TRenderContextInfo); dynamic;
+    procedure PrepareTexture(var rci: TGLRenderContextInfo); dynamic;
     procedure RenderQuad(const texExtents, objPos: TVector; size: Single);
 
   public
-    { Public Declarations }
+     
     constructor Create(aBuilder: TGLImposterBuilder); virtual;
     destructor Destroy; override;
 
-    procedure BeginRender(var rci: TRenderContextInfo); virtual;
-    procedure Render(var rci: TRenderContextInfo;
+    procedure BeginRender(var rci: TGLRenderContextInfo); virtual;
+    procedure Render(var rci: TGLRenderContextInfo;
       const objPos, localCameraPos: TVector;
       size: Single); virtual;
-    procedure EndRender(var rci: TRenderContextInfo); virtual;
+    procedure EndRender(var rci: TGLRenderContextInfo); virtual;
 
-    procedure RenderOnce(var rci: TRenderContextInfo;
+    procedure RenderOnce(var rci: TGLRenderContextInfo;
       const objPos, localCameraPos: TVector;
       size: Single);
 
@@ -142,10 +136,10 @@ type
 
   // TGLImposterBuilder
   //
-  {: Abstract ImposterBuilder class. }
+  { Abstract ImposterBuilder class. }
   TGLImposterBuilder = class(TGLUpdateAbleComponent)
   private
-    { Private Declarations }
+     
     FBackColor: TGLColor;
     FBuildOffset: TGLCoordinates;
     FImposterRegister: TPersistentObjectList;
@@ -157,7 +151,7 @@ type
     FOnImposterLoaded: TImposterLoadedEvent;
 
   protected
-    { Protected Declarations }
+     
     procedure SetRenderPoint(AValue: TGLRenderPoint);
     procedure RenderPointFreed(Sender: TObject);
     procedure SetBackColor(AValue: TGLColor);
@@ -170,66 +164,66 @@ type
     procedure UnregisterImposter(imposter: TImposter);
 
     function CreateNewImposter: TImposter; virtual;
-    procedure PrepareImposters(Sender: TObject; var rci: TRenderContextInfo);
+    procedure PrepareImposters(Sender: TObject; var rci: TGLRenderContextInfo);
       virtual;
-    procedure DoPrepareImposter(var rci: TRenderContextInfo;
+    procedure DoPrepareImposter(var rci: TGLRenderContextInfo;
       impostoredObject: TGLBaseSceneObject;
       destImposter: TImposter); virtual; abstract;
     procedure DoUserSpecifiedImposter(
-      var rci: TRenderContextInfo;
+      var rci: TGLRenderContextInfo;
       destImposter: TImposter;
       bmp32: TGLBitmap32); virtual;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation);
       override;
     procedure NotifyChange(Sender: TObject); override;
 
-    {: Returns a valid imposter for the specified object.<p>
+    { Returns a valid imposter for the specified object.
        Imposter must have been requested first, and the builder given
        an opportunity to prepare it before it can be available. }
     function ImposterFor(impostoredObject: TGLBaseSceneObject): TImposter;
-    {: Request an imposter to be prepared for the specified object. }
+    { Request an imposter to be prepared for the specified object. }
     procedure RequestImposterFor(impostoredObject: TGLBaseSceneObject);
-    {: Tells the imposter for the specified object is no longer needed. }
+    { Tells the imposter for the specified object is no longer needed. }
     procedure UnRequestImposterFor(impostoredObject: TGLBaseSceneObject);
 
   published
-    { Published Declarations }
-      {: Specifies the render point at which the impostor texture(s) can be prepared.<p>
+     
+      { Specifies the render point at which the impostor texture(s) can be prepared.
          For best result, the render point should happen in viewer that has
          a destination alpha (otherwise, impostors will be opaque). }
     property RenderPoint: TGLRenderPoint read FRenderPoint write SetRenderPoint;
-    {: Background color for impostor rendering.<p>
+    { Background color for impostor rendering.
        Typically, you'll want to leave the alpha channel to zero, and pick
        as RGB as color that matches the impostor'ed objects edge colors most.}
     property BackColor: TGLColor read FBackColor write SetBackColor;
-    {: Offset applied to the impostor'ed object during imposter construction.<p>
+    { Offset applied to the impostor'ed object during imposter construction.
        Can be used to manually tune the centering of objects. }
     property BuildOffset: TGLCoordinates read FBuildOffset write SetBuildOffset;
-    {: Imposter rendering options. }
+    { Imposter rendering options. }
     property ImposterOptions: TImposterOptions read FImposterOptions write
       FImposterOptions default cDefaultImposterOptions;
-    {: Determines how the imposter are handled.<p>
+    { Determines how the imposter are handled.
        This is the reference point for imposters, impostor'ed objects that
        are centered should use irCenter, those whose bottom is the origin
        should use irBottom, etc. }
     property ImposterReference: TImposterReference read FImposterReference write
       SetImposterReference default irCenter;
-    {: Alpha testing teshold.<p> }
+    { Alpha testing teshold. }
     property AlphaTreshold: Single read FAlphaTreshold write FAlphaTreshold;
 
-    {: Event fired before preparing/loading an imposter.<p>
+    { Event fired before preparing/loading an imposter.
        If an already prepared version of the importer is available, place
        it in the TGLBitmap32 the event shall return (the bitmap will be
        freed by the imposter builder). If a bitmap is specified, it will
        be used in place of what automatic generation could have generated. }
     property OnLoadingImposter: TLoadingImposterEvent read FOnLoadingImposter
       write FOnLoadingImposter;
-    {: Event fired after preparing/loading an imposter.<p>
+    { Event fired after preparing/loading an imposter.
        This events gives an opportunity to save the imposter after it has
        been loaded or prepared. }
     property OnImposterLoaded: TImposterLoadedEvent read FOnImposterLoaded write
@@ -238,28 +232,28 @@ type
 
   // TGLStaticImposterBuilderCorona
   //
-    {: Describes a set of orientation in a corona fashion. }
+    { Describes a set of orientation in a corona fashion. }
   TGLStaticImposterBuilderCorona = class(TCollectionItem)
   private
-    { Private Declarations }
+     
     FSamples: Integer;
     FElevation: Single;
     FSampleBaseIndex: Integer;
 
   protected
-    { Protected Declarations }
+     
     function GetDisplayName: string; override;
     procedure SetSamples(AValue: Integer);
     procedure SetElevation(AValue: Single);
 
   public
-    { Public Declarations }
+     
     constructor Create(ACollection: TCollection); override;
     destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
 
   published
-    { Published Declarations }
+     
     property Samples: Integer read FSamples write SetSamples default 8;
     property Elevation: Single read FElevation write SetElevation;
   end;
@@ -273,11 +267,11 @@ type
   //
   TGLStaticImposterBuilderCoronas = class(TOwnedCollection)
   private
-    { Private Declarations }
+     
     FCoronaTangentLookup: array of TCoronaTangentLookup;
 
   protected
-    { Protected Declarations }
+     
     procedure SetItems(AIndex: Integer; const AValue:
       TGLStaticImposterBuilderCorona);
     function GetItems(AIndex: Integer): TGLStaticImposterBuilderCorona;
@@ -289,7 +283,7 @@ type
       TGLStaticImposterBuilderCorona;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TPersistent);
 
     function Add: TGLStaticImposterBuilderCorona; overload;
@@ -305,17 +299,17 @@ type
 
   // TStaticImposter
   //
-  {: Imposter class whose texture contains several views from different angles. }
+  { Imposter class whose texture contains several views from different angles. }
   TStaticImposter = class(TImposter)
   private
-    { Private Declarations }
+     
 
   protected
-    { Protected Declarations }
+     
 
   public
-    { Public Declarations }
-    procedure Render(var rci: TRenderContextInfo;
+     
+    procedure Render(var rci: TGLRenderContextInfo;
       const objPos, localCameraPos: TVector;
       size: Single); override;
   end;
@@ -326,10 +320,10 @@ type
 
   // TGLStaticImposterBuilder
   //
-  {: Builds imposters whose texture is a catalog of prerendered views. }
+  { Builds imposters whose texture is a catalog of prerendered views. }
   TGLStaticImposterBuilder = class(TGLImposterBuilder)
   private
-    { Private Declarations }
+     
     FCoronas: TGLStaticImposterBuilderCoronas;
     FSampleSize: Integer;
     FTextureSize: TGLPoint;
@@ -340,7 +334,7 @@ type
     FSamplesAlphaScale: Single;
 
   protected
-    { Protected Declarations }
+     
     procedure SetCoronas(AValue: TGLStaticImposterBuilderCoronas);
     procedure SetSampleSize(AValue: Integer);
     procedure SetSamplingRatioBias(AValue: Single);
@@ -352,63 +346,63 @@ type
     function GetTextureSizeInfo: string;
     procedure SetTextureSizeInfo(const texSize: string);
 
-    {: Computes the optimal texture size that would be able to hold all samples. }
+    { Computes the optimal texture size that would be able to hold all samples. }
     function ComputeOptimalTextureSize: TGLPoint;
 
     function CreateNewImposter: TImposter; override;
-    procedure DoPrepareImposter(var rci: TRenderContextInfo;
+    procedure DoPrepareImposter(var rci: TGLRenderContextInfo;
       impostoredObject: TGLBaseSceneObject;
       destImposter: TImposter); override;
     procedure DoUserSpecifiedImposter(
-      var rci: TRenderContextInfo;
+      var rci: TGLRenderContextInfo;
       destImposter: TImposter;
       bmp32: TGLBitmap32); override;
     procedure ComputeStaticParams(destImposter: TImposter);
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    {: Render imposter texture.<p>
+    { Render imposter texture.
        Buffer and object must be compatible, RC must have been activated. }
-    procedure Render(var rci: TRenderContextInfo;
+    procedure Render(var rci: TGLRenderContextInfo;
       impostoredObject: TGLBaseSceneObject;
       destImposter: TImposter);
-    {: Ratio (0..1) of the texture that will be used by samples.<p>
+    { Ratio (0..1) of the texture that will be used by samples.
        If this value is below 1, you're wasting texture space and may
        as well increase the number of samples. }
     function TextureFillRatio: Single;
 
-    {: Meaningful only after imposter texture has been prepared. }
+    { Meaningful only after imposter texture has been prepared. }
     property TextureSize: TGLPoint read FTextureSize;
     property SamplesPerAxis: TGLPoint read FSamplesPerAxis;
 
   published
-    { Published Declarations }
-      {: Description of the samples looking orientations. }
+     
+      { Description of the samples looking orientations. }
     property Coronas: TGLStaticImposterBuilderCoronas read FCoronas write
       SetCoronas;
-    {: Size of the imposter samples (square). }
+    { Size of the imposter samples (square). }
     property SampleSize: Integer read FSampleSize write SetSampleSize default
       32;
-    {: Size ratio applied to the impostor'ed objects during sampling.<p>
+    { Size ratio applied to the impostor'ed objects during sampling.
        Values greater than one can be used to "fill" the samples more
        by scaling up the object. This is especially useful when the impostor'ed
        object doesn't fill its bounding sphere, and/or if the outer details
        are not relevant for impostoring. }
     property SamplingRatioBias: Single read FSamplingRatioBias write
       SetSamplingRatioBias stored StoreSamplingRatioBias;
-    {: Scale factor apply to the sample alpha channel.<p>
+    { Scale factor apply to the sample alpha channel.
        Main use is to saturate the samples alpha channel, and make fully
        opaque what would have been partially transparent, while leaving
        fully transparent what was fully transparent. }
     property SamplesAlphaScale: Single read FSamplesAlphaScale write
       SetSamplesAlphaScale stored StoreSamplesAlphaScale;
-    {: Lighting mode to apply during samples construction. }
+    { Lighting mode to apply during samples construction. }
     property Lighting: TSIBLigthing read FLighting write FLighting default
       siblStaticLighting;
-    {: Dummy property that returns the size of the imposter texture.<p>
+    { Dummy property that returns the size of the imposter texture.
        This property is essentially here as a helper at design time,
        to give you the requirements your coronas and samplesize parameters
        imply. }
@@ -420,24 +414,24 @@ type
   //
   TGLDynamicImposterBuilder = class(TGLImposterBuilder)
   private
-    { Private Declarations }
+     
     FMinTexSize, FMaxTexSize: Integer;
     FMinDistance, FTolerance: Single;
     FUseMatrixError: Boolean;
 
   protected
-    { Protected Declarations }
+     
     procedure SetMinDistance(const AValue: Single);
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    {         procedure DoRender(var rci : TRenderContextInfo;
+    {         procedure DoRender(var rci : TGLRenderContextInfo;
                                 renderSelf, renderChildren : Boolean); override; }
 
   published
-    { Published Declarations }
+     
     property MinTexSize: Integer read FMinTexSize write FMinTexSize;
     property MaxTexSize: Integer read FMaxTexSize write FMaxTexSize;
     property MinDistance: Single read FMinDistance write SetMinDistance;
@@ -450,26 +444,26 @@ type
   //
   TGLImposter = class(TGLImmaterialSceneObject)
   private
-    { Private Declarations }
+     
     FBuilder: TGLImposterBuilder;
     FImpostoredObject: TGLBaseSceneObject;
 
   protected
-    { Protected Declarations }
+     
     procedure SetBuilder(const AValue: TGLImposterBuilder);
     procedure SetImpostoredObject(const AValue: TGLBaseSceneObject);
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation);
       override;
-    procedure DoRender(var ARci: TRenderContextInfo;
+    procedure DoRender(var ARci: TGLRenderContextInfo;
       ARenderSelf, ARenderChildren: Boolean); override;
 
   published
-    { Published Declarations }
+     
     property Builder: TGLImposterBuilder read FBuilder write SetBuilder;
     property ImpostoredObject: TGLBaseSceneObject read FImpostoredObject write
       SetImpostoredObject;
@@ -518,7 +512,7 @@ end;
 // PrepareTexture
 //
 
-procedure TImposter.PrepareTexture(var rci: TRenderContextInfo);
+procedure TImposter.PrepareTexture(var rci: TGLRenderContextInfo);
 var
   i: Integer;
 begin
@@ -544,7 +538,7 @@ end;
 // BeginRender
 //
 
-procedure TImposter.BeginRender(var rci: TRenderContextInfo);
+procedure TImposter.BeginRender(var rci: TGLRenderContextInfo);
 var
   mat: TMatrix;
   filter: TGLEnum;
@@ -630,7 +624,7 @@ end;
 // Render
 //
 
-procedure TImposter.Render(var rci: TRenderContextInfo;
+procedure TImposter.Render(var rci: TGLRenderContextInfo;
   const objPos, localCameraPos: TVector;
   size: Single);
 const
@@ -663,7 +657,7 @@ end;
 // EndRender
 //
 
-procedure TImposter.EndRender(var rci: TRenderContextInfo);
+procedure TImposter.EndRender(var rci: TGLRenderContextInfo);
 begin
   GL.End_;
   rci.GLStates.ActiveTextureEnabled[ttTexture2D] := False;
@@ -672,7 +666,7 @@ end;
 // RenderOnce
 //
 
-procedure TImposter.RenderOnce(var rci: TRenderContextInfo;
+procedure TImposter.RenderOnce(var rci: TGLRenderContextInfo;
   const objPos, localCameraPos: TVector;
   size: Single);
 begin
@@ -751,7 +745,7 @@ end;
 //
 
 procedure TGLImposterBuilder.PrepareImposters(Sender: TObject; var rci:
-  TRenderContextInfo);
+  TGLRenderContextInfo);
 var
   i: Integer;
   imp: TImposter;
@@ -783,7 +777,7 @@ end;
 //
 
 procedure TGLImposterBuilder.DoUserSpecifiedImposter(
-  var rci: TRenderContextInfo;
+  var rci: TGLRenderContextInfo;
   destImposter: TImposter;
   bmp32: TGLBitmap32);
 var
@@ -958,7 +952,7 @@ begin
   inherited;
 end;
 
-// Assign
+ 
 //
 
 procedure TGLStaticImposterBuilderCorona.Assign(Source: TPersistent);
@@ -1175,7 +1169,7 @@ end;
 // Render
 //
 
-procedure TStaticImposter.Render(var rci: TRenderContextInfo;
+procedure TStaticImposter.Render(var rci: TGLRenderContextInfo;
   const objPos, localCameraPos: TVector;
   size: Single);
 var
@@ -1358,7 +1352,7 @@ end;
 //
 
 procedure TGLStaticImposterBuilder.DoPrepareImposter(var rci:
-  TRenderContextInfo;
+  TGLRenderContextInfo;
   impostoredObject: TGLBaseSceneObject; destImposter: TImposter);
 begin
   Render(rci, impostoredObject, destImposter);
@@ -1368,7 +1362,7 @@ end;
 //
 
 procedure TGLStaticImposterBuilder.DoUserSpecifiedImposter(
-  var rci: TRenderContextInfo;
+  var rci: TGLRenderContextInfo;
   destImposter:
   TImposter;
   bmp32: TGLBitmap32);
@@ -1409,7 +1403,7 @@ end;
 // Render
 //
 
-procedure TGLStaticImposterBuilder.Render(var rci: TRenderContextInfo;
+procedure TGLStaticImposterBuilder.Render(var rci: TGLRenderContextInfo;
   impostoredObject: TGLBaseSceneObject; destImposter: TImposter);
 var
   i, coronaIdx, curSample: Integer;
@@ -1605,7 +1599,7 @@ end;
 {
 // DoRender
 //
-procedure TGLDynamicImposterBuilder.DoRender(var rci : TRenderContextInfo;
+procedure TGLDynamicImposterBuilder.DoRender(var rci : TGLRenderContextInfo;
   renderSelf, renderChildren : Boolean);
 var
   i, size, Left, Top, Width, Height : Integer;
@@ -1773,7 +1767,7 @@ end;
 // DoRender
 //
 
-procedure TGLImposter.DoRender(var ARci: TRenderContextInfo;
+procedure TGLImposter.DoRender(var ARci: TGLRenderContextInfo;
   ARenderSelf, ARenderChildren: Boolean);
 var
   camPos: TVector;
@@ -1864,8 +1858,6 @@ begin
   Result:=FTextureHandle;
 end;
 
-// Invalidate
-//
 procedure TGLImposter.Invalidate;
 begin
   FInvalidated:=True;

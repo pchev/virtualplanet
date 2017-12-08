@@ -1,10 +1,9 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLGizmoEx<p>
-
+{
    Invisible component for helping to Move, Rotate and Scale an Object
-   under GLScene (usefull for an Editor).<p>
+   under GLScene (usefull for an Editor).
 
    This is an enhanced version of TGLGizmo, which was originally created and
    modified by Adirex, J.Delauney, Degiovani, Marcus Oblak and Da Stranger
@@ -12,16 +11,16 @@
    Rustam Asmandiarov (aka Predator) re-wrote TGLGizmo from scratch and 
    contributed to GLScene. This is how TGLGizmoEx was born.
 
-   <b>History : </b><font size=-1><ul>
-      <li>28/01/13 - PW - Added CPP compatibility, moved function
+    History :  
+       28/01/13 - PW - Added CPP compatibility, moved function
                           IsPointInPolygon to GLVectorgeometry unit;
-      <li>24/08/10 - Yar - Replaced OpenGL1x to OpenGLTokens
-      <li>31/05/10 - Yar - Fixed warnings
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>17/13/2009 - DaStr - Small bugfixes (by Predator)   
-      <li>11/13/2009 - DaStr - Initial version (contributed by Predator)
-   </ul></font>
+       24/08/10 - Yar - Replaced OpenGL1x to OpenGLTokens
+       31/05/10 - Yar - Fixed warnings
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       17/13/2009 - DaStr - Small bugfixes (by Predator)   
+       11/13/2009 - DaStr - Initial version (contributed by Predator)
+    
 
    
    Note: A very nice manual for TGLGizmoEx is inclued in this download:
@@ -75,7 +74,6 @@ uses
   // Standard
   {$IFDEF MSWINDOWS}Windows,{$ENDIF} Classes, SysUtils,
 
-  // GLScene
   OpenGL1x, GLScene, GLColor, GLObjects, GLVectorGeometry, GLMaterial, GLStrings,
   GLGeomObjects, GLBitmapFont, GLViewer, GLVectorFileObjects, GLCrossPlatform,
   GLCoordinates, GLRenderContextInfo, GLGeometryBB, GLVectorTypes, GLCanvas,
@@ -191,7 +189,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -200,7 +198,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -209,7 +207,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -218,7 +216,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -227,7 +225,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -236,7 +234,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -245,7 +243,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -254,7 +252,7 @@ type
     FNoZWrite: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
     property NoZWrite: Boolean read FNoZWrite write FNoZWrite;
   end;
 
@@ -404,8 +402,8 @@ type
     procedure SetGLGizmoExThickness(const Value: Single);
 
     procedure ActivatingElements(PickList: TGLPickList);
-    procedure InterfaceRender(Sender: TObject; var rci: TRenderContextInfo);
-    procedure InternalRender(Sender: TObject; var rci: TRenderContextInfo);
+    procedure InterfaceRender(Sender: TObject; var rci: TGLRenderContextInfo);
+    procedure InternalRender(Sender: TObject; var rci: TGLRenderContextInfo);
     function InternalGetPickedObjects(const x1, y1, x2, y2: Integer; const guessCount: Integer = 8): TGLPickList;
     procedure SetViewer(const Value: TGLSceneViewer);
     procedure SetLabelFont(const Value: TGLCustomBitmapFont);
@@ -502,7 +500,7 @@ type
 
     property GizmoThickness: Single read FGizmoThickness write SeTGLGizmoExThickness;
 
-    {: Indicates whether the gizmo is enabled or not.
+    { Indicates whether the gizmo is enabled or not.
        WARNING: When loading/editing (possibly whenever a structureChanged
        call is made) a model, sometimes the gizmo will trigger a
        bug if the mouse is inside the glscene Viewer. To prevent that,
@@ -510,11 +508,11 @@ type
        messages (i.e. application.processMessage) and then enable the gizmo
        again. }
 
-    {: Warning Enable is ReadOnly property if you set to False, Gizmo is not Hidden
+    { Warning Enable is ReadOnly property if you set to False, Gizmo is not Hidden
       use Visible instead if you want to Hide, if you want to Hide but keep enabled
       see the VisibleGizmo property }
 
-    {: Use the property OperationMode=gomNone to unactivate gizmo and make it invisible}
+    { Use the property OperationMode=gomNone to unactivate gizmo and make it invisible}
     property Enabled: Boolean read FEnabled write FEnabled default True;
 
     property LabelFont: TGLCustomBitmapFont read FLabelFont write SetLabelFont default nil;
@@ -676,7 +674,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUIArrowLine.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUIArrowLine.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -692,7 +690,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUIDisk.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUIDisk.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -707,7 +705,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUISphere.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUISphere.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -722,7 +720,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUIPolyGon.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUIPolyGon.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -737,7 +735,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUIFrustrum.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUIFrustrum.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -752,7 +750,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUITorus.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUITorus.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -767,7 +765,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUILines.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUILines.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -782,7 +780,7 @@ begin
   inherited;
 end;
 
-procedure TGLGizmoExUIFlatText.BuildList(var rci: TRenderContextInfo);
+procedure TGLGizmoExUIFlatText.BuildList(var rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     rci.GLStates.Disable(stDepthTest)
@@ -2108,7 +2106,7 @@ end;
 
 
 
-procedure TGLGizmoEx.InterfaceRender(Sender: TObject; var rci: TRenderContextInfo);
+procedure TGLGizmoEx.InterfaceRender(Sender: TObject; var rci: TGLRenderContextInfo);
 
   procedure cLine(glc: TGLCanvas; p1, p2: TPoint);
   begin
@@ -2174,7 +2172,7 @@ begin
   end;
 end;
 
-procedure TGLGizmoEx.InternalRender(Sender: TObject; var rci: TRenderContextInfo);
+procedure TGLGizmoEx.InternalRender(Sender: TObject; var rci: TGLRenderContextInfo);
 
   procedure ShowBoundingBox(aObject: TGLBaseSceneObject);
   const

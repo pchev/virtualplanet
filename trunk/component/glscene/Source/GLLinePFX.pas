@@ -1,20 +1,19 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLLinePFX<p>
-
+{
    A PFX whose particles are lines
 
-   <b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>12/10/08 - DanB - updated to use RCI
-      <li>06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>20/02/05 - EG - Creation
-   </ul></font>
+    History :  
+       10/11/12 - PW - Added CPP compatibility: changed vector arrays to records
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       12/10/08 - DanB - updated to use RCI
+       06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
+       30/03/07 - DaStr - Added $I GLScene.inc
+       20/02/05 - EG - Creation
+    
 }
 unit GLLinePFX;
 
@@ -31,54 +30,54 @@ type
 
    // TGLLineParticle
    //
-   {: Linear particle.<p> }
+   { Linear particle. }
    TGLLineParticle = class (TGLParticle)
       private
-         { Private Declarations }
+          
          FDirection : TAffineVector;
          FLength : Single;
 
       protected
-         { Protected Declarations }
+          
 
       public
-         { Public Declarations }
+          
          procedure WriteToFiler(writer : TVirtualWriter); override;
          procedure ReadFromFiler(reader : TVirtualReader); override;
 
-         {: Direction of the line. }
+         { Direction of the line. }
          property Direction : TAffineVector read FDirection write FDirection;
-         {: Length of the line }
+         { Length of the line }
          property Length : Single read FLength write FLength;
    end;
 
    // TGLLinePFXManager
    //
-   {: Polygonal particles FX manager.<p>
+   { Polygonal particles FX manager.
       The particles of this manager are made of N-face regular polygon with
-      a core and edge color. No texturing is available.<br>
+      a core and edge color. No texturing is available. 
       If you render large particles and don't have T&L acceleration, consider
       using TGLPointLightPFXManager. }
    TGLLinePFXManager = class (TGLLifeColoredPFXManager)
       private
-         { Private Declarations }
+          
          Fvx, Fvy : TAffineVector;        // NOT persistent
          FNvx, FNvy : TAffineVector;        // NOT persistent
          FDefaultLength : Single;
 
       protected
-         { Protected Declarations }
+          
          function StoreDefaultLength : Boolean;
 
          function TexturingMode : Cardinal; override;
-         procedure InitializeRendering(var rci: TRenderContextInfo); override;
-         procedure BeginParticles(var rci: TRenderContextInfo); override;
-         procedure RenderParticle(var rci: TRenderContextInfo; aParticle : TGLParticle); override;
-         procedure EndParticles(var rci: TRenderContextInfo); override;
-         procedure FinalizeRendering(var rci: TRenderContextInfo); override;
+         procedure InitializeRendering(var rci: TGLRenderContextInfo); override;
+         procedure BeginParticles(var rci: TGLRenderContextInfo); override;
+         procedure RenderParticle(var rci: TGLRenderContextInfo; aParticle : TGLParticle); override;
+         procedure EndParticles(var rci: TGLRenderContextInfo); override;
+         procedure FinalizeRendering(var rci: TGLRenderContextInfo); override;
 
       public
-         { Public Declarations }
+          
          constructor Create(aOwner : TComponent); override;
          destructor Destroy; override;
 
@@ -86,7 +85,7 @@ type
          function CreateParticle : TGLParticle; override;
 
 	   published
-	      { Published Declarations }
+	       
          property DefaultLength : Single read FDefaultLength write FDefaultLength stored StoreDefaultLength;
 
          property ParticleSize;
@@ -146,7 +145,7 @@ end;
 
 // InitializeRendering
 //
-procedure TGLLinePFXManager.InitializeRendering(var rci: TRenderContextInfo);
+procedure TGLLinePFXManager.InitializeRendering(var rci: TGLRenderContextInfo);
 var
    i : Integer;
    matrix : TMatrix;
@@ -163,14 +162,14 @@ end;
 
 // BeginParticles
 //
-procedure TGLLinePFXManager.BeginParticles(var rci: TRenderContextInfo);
+procedure TGLLinePFXManager.BeginParticles(var rci: TGLRenderContextInfo);
 begin
    ApplyBlendingMode(rci);
 end;
 
 // RenderParticle
 //
-procedure TGLLinePFXManager.RenderParticle(var rci: TRenderContextInfo; aParticle : TGLParticle);
+procedure TGLLinePFXManager.RenderParticle(var rci: TGLRenderContextInfo; aParticle : TGLParticle);
 var
    lifeTime, sizeScale, fx, fy, f : Single;
    inner, outer : TColorVector;
@@ -213,14 +212,14 @@ end;
 
 // EndParticles
 //
-procedure TGLLinePFXManager.EndParticles(var rci: TRenderContextInfo);
+procedure TGLLinePFXManager.EndParticles(var rci: TGLRenderContextInfo);
 begin
    UnapplyBlendingMode(rci);
 end;
 
 // FinalizeRendering
 //
-procedure TGLLinePFXManager.FinalizeRendering(var rci: TRenderContextInfo);
+procedure TGLLinePFXManager.FinalizeRendering(var rci: TGLRenderContextInfo);
 begin
    inherited;
 end;

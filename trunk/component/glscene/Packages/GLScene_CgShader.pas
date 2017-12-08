@@ -7,8 +7,8 @@ unit GLScene_CgShader;
 interface
 
 uses
-    GLCgRegister, GLCgShader, cg, cgGL, GLCgBombShader, 
-  cgPostTransformationShader, LazarusPackageIntf;
+   GLCgRegister, GLCgShader, cg, cgGL, GLCgBombShader, 
+   cgPostTransformationShader, LazarusPackageIntf;
 
 implementation
 

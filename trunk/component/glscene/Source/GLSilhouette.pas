@@ -1,31 +1,30 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLSilhouette<p>
-
-   Enhanced silhouette classes.<p>
+{
+   Enhanced silhouette classes.
 
    Introduces more evolved/specific silhouette generation and management
-   classes.<p>
+   classes.
 
-   CAUTION : both connectivity classes leak memory.<p>
+   CAUTION : both connectivity classes leak memory.
 
-	<b>History : </b><font size=-1><ul>
-      <li>04/11/10 - DaStr - Restored Delphi5 and Delphi6 compatibility  
-      <li>28/03/07 - DaStr - Renamed parameters in some methods
+	 History :  
+       04/11/10 - DaStr - Restored Delphi5 and Delphi6 compatibility  
+       28/03/07 - DaStr - Renamed parameters in some methods
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678658)
-      <li>16/03/07 - DaStr - Added explicit pointer dereferencing
+       16/03/07 - DaStr - Added explicit pointer dereferencing
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-      <li>26/09/03 - EG - Improved performance of TConnectivity data construction
-      <li>19/06/03 - MF - Split up Connectivity classes
-      <li>10/06/03 - EG - Creation (based on code from Mattias Fagerlund)
-   </ul></font>
+       26/09/03 - EG - Improved performance of TConnectivity data construction
+       19/06/03 - MF - Split up Connectivity classes
+       10/06/03 - EG - Creation (based on code from Mattias Fagerlund)
+    
 }
 unit GLSilhouette;
 
 interface
 
-{$i GLScene.inc}
+{$I GLScene.inc}
 
 uses Classes, GLVectorGeometry, GLVectorLists, GLCrossPlatform;
 
@@ -36,7 +35,7 @@ type
 
    // TGLSilhouetteParameters
    //
-   {: Silouhette generation parameters.<p>
+   { Silouhette generation parameters.
       SeenFrom and LightDirection are expected in local coordinates. }
    TGLSilhouetteParameters = packed record
       SeenFrom, LightDirection : TAffineVector;
@@ -46,28 +45,28 @@ type
 
    // TGLSilhouette
    //
-   {: Base class storing a volume silhouette.<p>
+   { Base class storing a volume silhouette.
       Made of a set of indexed vertices defining an outline, and another set
       of indexed vertices defining a capping volume. Coordinates system
-      is the object's unscaled local coordinates system.<br>
+      is the object's unscaled local coordinates system. 
       This is the base class, you can use the TGLSilhouette subclass if you
       need some helper methods for generating the indexed sets. }
    TGLSilhouette = class
       private
-         { Private Declarations }
+          
          FVertices : TVectorList;
          FIndices : TIntegerList;
          FCapIndices : TIntegerList;
          FParameters : TGLSilhouetteParameters;
 
       protected
-         { Protected Declarations }
+          
          procedure SetIndices(const value : TIntegerList);
          procedure SetCapIndices(const value : TIntegerList);
          procedure SetVertices(const value : TVectorList);
 
       public
-         { Public Declarations }
+          
          constructor Create; virtual;
          destructor Destroy; override;
 
@@ -81,7 +80,7 @@ type
 
          procedure ExtrudeVerticesToInfinity(const origin : TAffineVector);
 
-         {: Adds an edge (two vertices) to the silhouette.<p>
+         { Adds an edge (two vertices) to the silhouette.
             If TightButSlow is true, no vertices will be doubled in the
             silhouette list. This should only be used when creating re-usable
             silhouettes, because it's much slower. }
@@ -89,7 +88,7 @@ type
                                        tightButSlow : Boolean);
          procedure AddIndexedEdgeToSilhouette(const Vi0, Vi1 : integer);
 
-         {: Adds a capping triangle to the silhouette.<p>
+         { Adds a capping triangle to the silhouette.
             If TightButSlow is true, no vertices will be doubled in the
             silhouette list. This should only be used when creating re-usable
             silhouettes, because it's much slower. }
@@ -139,7 +138,7 @@ type
           function ReuseOrFindVertexID(const seenFrom : TAffineVector;
                      aSilhouette : TGLSilhouette; index : Integer) : Integer;
        public
-          {: Clears out all connectivity information. }
+          { Clears out all connectivity information. }
           procedure Clear; virtual;
 
           procedure CreateSilhouette(const silhouetteParameters : TGLSilhouetteParameters; var aSilhouette : TGLSilhouette; AddToSilhouette : boolean); override;

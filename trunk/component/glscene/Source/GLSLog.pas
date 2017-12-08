@@ -1,36 +1,35 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLSLog<p>
+{
+  Activate GLS_LOGGING in "GLSCene.inc" to turn on inner GLScene logger.
+  You may have only one instance of TGLSLogger
+  To obtain it, call UserLog() function from any unit.
 
-  Activate GLS_LOGGING in "GLSCene.inc" to turn on inner GLScene logger.<p>
-  You may have only one instance of TGLSLogger<p>
-  To obtain it, call UserLog() function from any unit.<p>
-
-  <b>Historique : </b><font size=-1><ul>
-  <li>25/03/13 - DaStr - Added WriteInternalMessages and DisplayErrorDialogs options
-  <li>30/01/13 - DaStr - Added "save-old-logs" option
-  <li>09/01/13 - DaStr - Added Log buffering and auto-splitting options
+  History :  
+   25/03/13 - DaStr - Added WriteInternalMessages and DisplayErrorDialogs options
+   30/01/13 - DaStr - Added "save-old-logs" option
+   09/01/13 - DaStr - Added Log buffering and auto-splitting options
                          Other misc changes.
-  <li>18/01/11 - Yar - Added message sending to IDE memo in design time
-  <li>07/01/10 - Yar - Added formated string logging
-  <li>29/11/10 - Yar - Added log raising in Linux
-  <li>04/11/10 - DaStr - Added Delphi5 and Delphi6 compatibility
+   18/01/11 - Yar - Added message sending to IDE memo in design time
+   07/01/10 - Yar - Added formated string logging
+   29/11/10 - Yar - Added log raising in Linux
+   04/11/10 - DaStr - Added Delphi5 and Delphi6 compatibility
                          Fixed unit description
-  <li>07/09/10 - Yar - Added Enabled property to TLogSession
-  <li>02/04/10 - Yar - Added properties TimeFormat, LogLevels to TGLSLogger
+   07/09/10 - Yar - Added Enabled property to TGLLogSession
+   02/04/10 - Yar - Added properties TimeFormat, LogLevels to TGLSLogger
                        Added function UserLog.
                        GLS_LOGGING now only turn on inner GLScene logger
-  <li>24/03/10 - Yar - Added TGLSLogger component,
+   24/03/10 - Yar - Added TGLSLogger component,
                        possibility to use a more than one of log,
                        limit the number of error messages
-  <li>06/03/10 - Yar - Added to GLScene
-  </ul></font>
+   06/03/10 - Yar - Added to GLScene
+   
 
   (C) 2004-2007 George "Mirage" Bakhtadze.
-  <a href="http://www.casteng.com">www.casteng.com</a> <br>
+  <a href="http://www.casteng.com">www.casteng.com</a>  
   The source code may be used under either MPL 1.1 or LGPL 2.1 license.
-  See included license.txt file <br>
+  See included license.txt file  
   Unit contains some text file related utilities and logging class
 }
 
@@ -44,12 +43,8 @@ uses
 {$IFDEF GLS_DELPHI_OR_CPPB}
   Windows,
 {$ENDIF}
-{$IFDEF GLS_DELPHI_XE2_UP}
-  VCL.Dialogs, VCL.Controls, System.UITypes,
-{$ELSE}
-  Dialogs,
-  Controls,
-{$ENDIF}
+ Dialogs,
+ Controls,
  StrUtils, Classes, SysUtils, GLCrossPlatform, SyncObjs
 {$IFDEF MSWINDOWS} , ShellApi {$ENDIF}
 {$IFDEF LINUX} , Process {$ENDIF};
@@ -60,7 +55,7 @@ type
   { : Log level setting type }
   TLogLevels = set of TLogLevel;
 
-  {: What to do when number of messages exceeds message limit. }
+  { What to do when number of messages exceeds message limit. }
   TLogMessageLimitAction = (mlaContinue, mlaStopLogging, mlaHalt);
 
 var
@@ -96,7 +91,7 @@ type
     { : include time elapsed since startup in the log }
     lfElapsed);
 
-  {: How log is buffered. }
+  { How log is buffered. }
   TLogBufferingMode =
   (
    lbmWriteEmidiatly,
@@ -105,31 +100,31 @@ type
   );
 
   { : Class reference to log session class }
-  CLogSession = class of TLogSession;
-  TLogSession = class;
+  CLogSession = class of TGLLogSession;
+  TGLLogSession = class;
 
-  {: Thread that periodically flushes the buffer to disk. }
+  { Thread that periodically flushes the buffer to disk. }
   TLogBufferFlushThread = class(TThread)
   private
-    FParent: TLogSession;
+    FParent: TGLLogSession;
   protected
     procedure Execute; override;
   public
-    constructor Create(const AParent: TLogSession);
+    constructor Create(const AParent: TGLLogSession);
   end;
 
-  {: Thread that checks file size and splits the file if nessesary. }
+  { Thread that checks file size and splits the file if nessesary. }
   TLogCheckSizeThread = class(TThread)
   private
-    FParent: TLogSession;
+    FParent: TGLLogSession;
   protected
     procedure Execute; override;
   public
-    constructor Create(const AParent: TLogSession);
+    constructor Create(const AParent: TGLLogSession);
   end;
 
-  {: Abstract Logger class }
-  TLogSession = class(TPersistent)
+  { Abstract Logger class }
+  TGLLogSession = class(TPersistent)
   private
     FBuffer: TStringList;
     FBuffered: Boolean;
@@ -160,9 +155,7 @@ type
     FDisplayLogOnExitIfItContains: TLogLevels;
     FWriteInternalMessages: Boolean;
     FDisplayErrorDialogs: Boolean;
-{$IFNDEF GLS_LOGGING}
-    constructor OnlyCreate;
-{$ENDIF}
+
     procedure SetBuffered(const Value: Boolean);
     procedure SetMode(const NewMode: TLogLevels);
     procedure ChangeBufferedState();
@@ -179,15 +172,18 @@ type
     { : Appends a string to log. Thread-safe. }
     procedure AppendLog(const AString: string; const ALevel: TLogLevel; const ALogTime: Boolean = True);
 
-    {: Writes string to log. Returns True if everything went ok.}
+    { Writes string to log. Returns True if everything went ok.}
     function DoWriteToLog(const AString: string): Boolean; virtual;
 
-    {: Writes FBuffer to log. Returns True if everything went ok.}
+    { Writes FBuffer to log. Returns True if everything went ok.}
     function DoWriteBufferToLog(): Boolean; virtual;
 
-    {: Resets log. Returns True if everything went ok.}
+    { Resets log. Returns True if everything went ok.}
     function DoResetLog: Boolean; virtual;
   public
+  {$IFNDEF GLS_LOGGING}
+      constructor OnlyCreate;
+  {$ENDIF}
     { Initializes a log session with the specified log file name, time and level settings }
     constructor Init(const AFileName: string;
       const ATimeFormat: TLogTimeFormat; const ALevels: TLogLevels;
@@ -204,7 +200,7 @@ type
     procedure LogException(const E: Exception; const aFunctionName: string;
       const args: array of const; const ALevel: TLogLevel = lkError);
 
-    { : Logs a string <b>Desc</b> if <b>Level</b>
+    { : Logs a string  Desc  if  Level 
       matches current GLS_LOGGING level (see @Link(LogLevels)) }
     procedure LogDebug(const Desc: string);
     procedure LogInfo(const Desc: string);
@@ -237,12 +233,12 @@ type
     property MessageLimitAction: TLogMessageLimitAction read FMessageLimitAction write FMessageLimitAction default mlaHalt;
     property WriteInternalMessages: Boolean read FWriteInternalMessages write FWriteInternalMessages default True;
 
-    {: To always display log, put all log types. To never display log, leave this empty. }
+    { To always display log, put all log types. To never display log, leave this empty. }
     property DisplayLogOnExitIfItContains: TLogLevels read FDisplayLogOnExitIfItContains write FDisplayLogOnExitIfItContains
       default [lkDebug, lkInfo, lkNotice, lkWarning, lkError, lkFatalError];
 
 
-    {: If LogFileMaxSize is not 0, then:
+    { If LogFileMaxSize is not 0, then:
        1) At start, all logs with the same extention will be deleted.
        2) All logs wil be periodically cheked for FileSize.
           New log file will be created when this size exceeds limit.
@@ -254,29 +250,29 @@ type
   // TGLSLoger
   //
 
-  { : Abstract class for control loging.<p> }
+  { : Abstract class for control loging. }
 
   TGLSLogger = class(TComponent)
   private
-    { Private Declarations }
+     
     FReplaceAssertion: Boolean;
     FTimeFormat: TLogTimeFormat;
     FLogLevels: TLogLevels;
-    FLog: TLogSession;
+    FLog: TGLLogSession;
     procedure SetReplaceAssertion(Value: Boolean);
-    function GetLog: TLogSession;
+    function GetLog: TGLLogSession;
   protected
-    { Protected Declarations }
+     
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     { : Set component primary and then UserLog return it's log }
     procedure DoPrimary;
-    property Log: TLogSession read GetLog;
+    property Log: TGLLogSession read GetLog;
   published
-    { Published Declarations }
+     
     property ReplaceAssertion: Boolean read FReplaceAssertion
       write SetReplaceAssertion default False;
     { : Only design time sets. Define Log initial properties }
@@ -289,7 +285,7 @@ type
   TIDELogProc = procedure(const AMsg: string);
 
   { : Return logger wich created by TGLSLogger component }
-function UserLog: TLogSession;
+function UserLog: TGLLogSession;
 function SkipBeforeSTR(var TextFile: Text; SkipSTR: string): Boolean;
 function ReadLine(var TextFile: Text): string;
 
@@ -300,8 +296,8 @@ function ReadLine(var TextFile: Text): string;
     custom parameters for user's application, for example a different log path
     (Often the EXE application directory is read-only).
  }
-function GLSLogger(): TLogSession;
-procedure UseCustomGLSLogger(const ALogger: TLogSession);
+function GLSLogger(): TGLLogSession;
+procedure UseCustomGLSLogger(const ALogger: TGLLogSession);
 
 function ConstArrayToString(const Elements: array of const): String;
 
@@ -311,28 +307,28 @@ var
 implementation
 
 var
-  v_GLSLogger: TLogSession;
+  v_GLSLogger: TGLLogSession;
   vAssertErrorHandler: TAssertErrorProc;
   vCurrentLogger: TGLSLogger;
 
 { : GLScene inner logger. Create on first use, not in unit initialization. }
-function GLSLogger(): TLogSession;
+function GLSLogger(): TGLLogSession;
 begin
   if v_GLSLogger = nil then
   begin
   {$IFDEF GLS_LOGGING}
-    v_GLSLogger := TLogSession.Init(Copy(ExtractFileName(ParamStr(0)), 1,
+    v_GLSLogger := TGLLogSession.Init(Copy(ExtractFileName(ParamStr(0)), 1,
     Length(ExtractFileName(ParamStr(0))) - Length(ExtractFileExt(ParamStr(0)))) +
     '.log', lfElapsed, llMax);
   {$ELSE}
-    v_GLSLogger := TLogSession.OnlyCreate;
+    v_GLSLogger := TGLLogSession.OnlyCreate;
   {$ENDIF}
   end;
 
   Result := v_GLSLogger;
 end;
 
-procedure UseCustomGLSLogger(const ALogger: TLogSession);
+procedure UseCustomGLSLogger(const ALogger: TGLLogSession);
 begin
   if (v_GLSLogger <> nil) then v_GLSLogger.Destroy;
   v_GLSLogger := ALogger;
@@ -350,14 +346,14 @@ const
                   'AnsiString  : ', 'Currency    : ', 'Variant     : ', 'Interface   : ',
                   'WideString  : ', 'Int64       : ', '#HLType     : ');
 
-{: Function from HotLog by Olivier Touzot "QnnO".}
+{ Function from HotLog by Olivier Touzot "QnnO".}
 Function GetOriginalValue(s:String):String;
 //  Called to remove the false 'AnsiString :' assertion, for pointers and objects
 Begin
   result := RightStr(s,Length(s)-19);
 End;
 
-{: Function from HotLog by Olivier Touzot "QnnO".}
+{ Function from HotLog by Olivier Touzot "QnnO".}
 Function VarRecToStr(vr:TVarRec):String;
 // See D6PE help topic "TVarRec"
 Begin
@@ -396,7 +392,7 @@ Begin
   END;
 end;
 
-{: Function from HotLog by Olivier Touzot "QnnO".}
+{ Function from HotLog by Olivier Touzot "QnnO".}
 Function GetBasicValue(s:String; vKind:Byte):String;
 var iTmp : Integer;
     wasTObject: Boolean;
@@ -418,7 +414,7 @@ Begin
   EXCEPT; END;
 End;
 
-{: Function from HotLog by Olivier Touzot "QnnO".}
+{ Function from HotLog by Olivier Touzot "QnnO".}
 function ConstArrayToString(const Elements: array of const): String;
 // -2-> Returns à string, surrounded by parenthesis : '(elts[0]; ...; elts[n-1]);'
 //      ("Basic infos" only.)
@@ -446,7 +442,7 @@ Begin
 End;
 
 
-function UserLog: TLogSession;
+function UserLog: TGLLogSession;
 begin
   if Assigned(vCurrentLogger) then
     Result := vCurrentLogger.Log
@@ -463,7 +459,7 @@ begin
   Result := Copy(Result, 1, lExtIndex - 1);
 end;
 
-{$IFDEF FPC}
+
 
 procedure LogedAssert(const Message, FileName: ShortString; LineNumber: Integer;
   ErrorAddr: Pointer);
@@ -472,16 +468,7 @@ begin
     IntToStr(LineNumber), lkError);
   Abort;
 end;
-{$ELSE}
 
-procedure LogedAssert(const Message, FileName: string; LineNumber: Integer;
-  ErrorAddr: Pointer);
-begin
-  UserLog.Log(Message + ': in ' + FileName + ' at line ' +
-    IntToStr(LineNumber), lkError);
-  Abort;
-end;
-{$ENDIF}
 
 function FileSize(const aFilename: String): Integer;
 var
@@ -557,10 +544,10 @@ begin
   inherited Destroy;
 end;
 
-function TGLSLogger.GetLog: TLogSession;
+function TGLSLogger.GetLog: TGLLogSession;
 begin
   if not Assigned(FLog) then
-    FLog := TLogSession.Init(Name + '.log', FTimeFormat, FLogLevels);
+    FLog := TGLLogSession.Init(Name + '.log', FTimeFormat, FLogLevels);
   Result := FLog;
 end;
 
@@ -584,10 +571,10 @@ begin
 end;
 
 // ------------------
-// ------------------ TLogSession ------------------
+// ------------------ TGLLogSession ------------------
 // ------------------
 
-procedure TLogSession.BackUpOldLogs(const ACurrentLogFileName: string);
+procedure TGLLogSession.BackUpOldLogs(const ACurrentLogFileName: string);
 var
   sRec: TSearchRec;
   lLogFileName: string;
@@ -607,15 +594,10 @@ var
       lErrorMessage := 'Renaming of "%s" failed with error : %d. Try again?';
       while not RenameFile(lLogOriginalDir + sRec.Name, lLogSaveDir + sRec.Name) do
       begin
-        {$IFDEF FPC}
+
         if MessageDlg(Format(lErrorMessage, [lLogOriginalDir + sRec.Name,
-           GetLastOSError]), mtWarning, mbYesNo, -1) = mrNo
-           then Break;
-        {$ELSE}
-        if MessageDlg(Format(lErrorMessage, [lLogOriginalDir + sRec.Name,
-          GetLastError]), mtWarning, [mbNo], 0) = mrNo
-          then Break;
-        {$ENDIF}
+           GetLastOSError]), mtWarning, mbYesNo, -1) = mrNo then Break;
+
         AssignFile(lFile, lLogOriginalDir + sRec.Name);
         CloseFile(lFile);
       end;
@@ -647,14 +629,14 @@ begin
   end;
 end;
 
-procedure TLogSession.SetBuffered(const Value: Boolean);
+procedure TGLLogSession.SetBuffered(const Value: Boolean);
 begin
   if FBuffered = Value then Exit;
   FBuffered := Value;
   ChangeBufferedState();
 end;
 
-procedure TLogSession.SetEnabled(const Value: Boolean);
+procedure TGLLogSession.SetEnabled(const Value: Boolean);
 begin
   if (FEnabled = Value) then Exit;
   FEnabled := Value;
@@ -664,7 +646,7 @@ begin
     Log('Logging session paused');
 end;
 
-procedure TLogSession.SetLogFileMaxSize(const Value: Integer);
+procedure TGLLogSession.SetLogFileMaxSize(const Value: Integer);
 begin
   if FLogFileMaxSize = Value then Exit;
   FLogFileMaxSize := Value;
@@ -690,7 +672,7 @@ begin
   end;
 end;
 
-procedure TLogSession.SetMode(const NewMode: TLogLevels);
+procedure TGLLogSession.SetMode(const NewMode: TLogLevels);
 begin
 {$IFNDEF GLS_LOGGING}
   if Self = v_GLSLogger then
@@ -700,7 +682,7 @@ begin
   PrintLogLevels();
 end;
 
-function TLogSession.DoResetLog: Boolean;
+function TGLLogSession.DoResetLog: Boolean;
 begin
   try
     FFileAccessCriticalSection.Enter;
@@ -717,7 +699,7 @@ begin
   end;
 end;
 
-function TLogSession.DoWriteBufferToLog: Boolean;
+function TGLLogSession.DoWriteBufferToLog: Boolean;
 var
   I: Integer;
   lLast: Integer;
@@ -749,7 +731,7 @@ begin
   end;
 end;
 
-function TLogSession.DoWriteToLog(const AString: string): Boolean;
+function TGLLogSession.DoWriteToLog(const AString: string): Boolean;
 begin
   try
     FFileAccessCriticalSection.Enter;
@@ -765,13 +747,13 @@ begin
   end;
 end;
 
-procedure TLogSession.FlushBuffer;
+procedure TGLLogSession.FlushBuffer;
 begin
   if Buffered then
     DoWriteBufferToLog();
 end;
 
-constructor TLogSession.Init(const AFileName: string;
+constructor TGLLogSession.Init(const AFileName: string;
   const ATimeFormat: TLogTimeFormat; const ALevels: TLogLevels;
   const ALogThreadId: Boolean = True; const ABuffered: Boolean = False;
   const AMaxSize: Integer = 0; const ABackUpOldLogs: Boolean = False;
@@ -850,14 +832,14 @@ end;
 
 {$IFNDEF GLS_LOGGING}
 
-constructor TLogSession.OnlyCreate;
+constructor TGLLogSession.OnlyCreate;
 begin
   inherited;
 end;
 
 {$ENDIF}
 
-procedure TLogSession.PrintLogLevels;
+procedure TGLLogSession.PrintLogLevels;
 var
   ModeStr: string;
   i: Integer;
@@ -877,7 +859,7 @@ begin
   Log('Logging ' + ModeStr, lkInfo);
 end;
 
-procedure TLogSession.PrintLogStatistics;
+procedure TGLLogSession.PrintLogStatistics;
 begin
   Log('Logged fatal_errors: ' + IntToStr(FLogKindCount[lkFatalError]) +
     ', errors: ' + IntToStr(FLogKindCount[lkError]) +
@@ -887,7 +869,7 @@ begin
     ', debug: ' + IntToStr(FLogKindCount[lkDebug]));
 end;
 
-function TLogSession.AttachLogFile(const AFileName: string; const AResetFile: Boolean = True): Boolean;
+function TGLLogSession.AttachLogFile(const AFileName: string; const AResetFile: Boolean = True): Boolean;
 var
   lPath: string;
 begin
@@ -922,7 +904,7 @@ begin
   end;
 end;
 
-procedure TLogSession.ChangeBufferedState();
+procedure TGLLogSession.ChangeBufferedState();
 begin
   if (FBuffered) then
   begin
@@ -945,7 +927,7 @@ begin
   end;
 end;
 
-procedure TLogSession.ClearLogsInTheSameDir;
+procedure TGLLogSession.ClearLogsInTheSameDir;
 var
   sRec: TSearchRec;
   lFilePath: string;
@@ -976,7 +958,7 @@ begin
   end;
 end;
 
-procedure TLogSession.CreateNewLogFileIfNeeded;
+procedure TGLLogSession.CreateNewLogFileIfNeeded;
 var
   lNewFileName: string;
   I, Index: Integer;
@@ -1014,7 +996,7 @@ begin
   end;
 end;
 
-destructor TLogSession.Destroy;
+destructor TGLLogSession.Destroy;
 var
   I: TLogLevel;
 begin
@@ -1051,7 +1033,7 @@ begin
   FFileAccessCriticalSection.Destroy;
 end;
 
-procedure TLogSession.DisplayLog;
+procedure TGLLogSession.DisplayLog;
 {$IFDEF LINUX}
 var
   lProcess: TProcess;
@@ -1069,38 +1051,38 @@ begin
 {$ENDIF}
 end;
 
-procedure TLogSession.Log(const Desc: string; const Level: TLogLevel = lkInfo);
+procedure TGLLogSession.Log(const Desc: string; const Level: TLogLevel = lkInfo);
 begin
   AppendLog(Desc, Level);
 end;
 
-procedure TLogSession.LogAdv(const args: array of const;
+procedure TGLLogSession.LogAdv(const args: array of const;
   const ALevel: TLogLevel);
 begin
   Log(constArrayToString(args), ALevel);
 end;
 
-procedure TLogSession.LogDebug(const Desc: string);
+procedure TGLLogSession.LogDebug(const Desc: string);
 begin
   Log(Desc, lkDebug);
 end;
 
-procedure TLogSession.LogInfo(const Desc: string);
+procedure TGLLogSession.LogInfo(const Desc: string);
 begin
   Log(Desc, lkInfo);
 end;
 
-procedure TLogSession.LogNotice(const Desc: string);
+procedure TGLLogSession.LogNotice(const Desc: string);
 begin
   Log(Desc, lkNotice);
 end;
 
-procedure TLogSession.LogWarning(const Desc: string);
+procedure TGLLogSession.LogWarning(const Desc: string);
 begin
   Log(Desc, lkWarning);
 end;
 
-procedure TLogSession.LogEmtryLine;
+procedure TGLLogSession.LogEmtryLine;
 begin
  if not FEnabled then Exit;
 
@@ -1127,47 +1109,47 @@ begin
     vIDELogProc('');
 end;
 
-procedure TLogSession.LogError(const Desc: string);
+procedure TGLLogSession.LogError(const Desc: string);
 begin
   Log(Desc, lkError);
 end;
 
-procedure TLogSession.LogFatalError(const Desc: string);
+procedure TGLLogSession.LogFatalError(const Desc: string);
 begin
   Log(Desc, lkFatalError);
 end;
 
-procedure TLogSession.LogDebugFmt(const Desc: string;
+procedure TGLLogSession.LogDebugFmt(const Desc: string;
   const Args: array of const );
 begin
   Log(Format(Desc, Args), lkDebug);
 end;
 
-procedure TLogSession.LogInfoFmt(const Desc: string;
+procedure TGLLogSession.LogInfoFmt(const Desc: string;
   const Args: array of const );
 begin
   Log(Format(Desc, Args), lkInfo);
 end;
 
-procedure TLogSession.LogNoticeFmt(const Desc: string;
+procedure TGLLogSession.LogNoticeFmt(const Desc: string;
   const Args: array of const );
 begin
   Log(Format(Desc, Args), lkWarning);
 end;
 
-procedure TLogSession.LogWarningFmt(const Desc: string;
+procedure TGLLogSession.LogWarningFmt(const Desc: string;
   const Args: array of const );
 begin
   Log(Format(Desc, Args), lkWarning);
 end;
 
-procedure TLogSession.LogErrorFmt(const Desc: string;
+procedure TGLLogSession.LogErrorFmt(const Desc: string;
   const Args: array of const );
 begin
   Log(Format(Desc, Args), lkError);
 end;
 
-procedure TLogSession.LogException(const E: Exception; const aFunctionName: string;
+procedure TGLLogSession.LogException(const E: Exception; const aFunctionName: string;
   const args: array of const; const ALevel: TLogLevel = lkError);
 begin
   Log('Exception in ' + aFunctionName + ': ' + E.Message + string(#13#10) +
@@ -1175,13 +1157,13 @@ begin
    constArrayToString(args), ALevel);
 end;
 
-procedure TLogSession.LogFatalErrorFmt(const Desc: string;
+procedure TGLLogSession.LogFatalErrorFmt(const Desc: string;
   const Args: array of const );
 begin
   Log(Format(Desc, Args), lkFatalError);
 end;
 
-procedure TLogSession.AppendLog(const AString: string; const ALevel: TLogLevel;
+procedure TGLLogSession.AppendLog(const AString: string; const ALevel: TLogLevel;
   const ALogTime: Boolean);
 var
   line: string;
@@ -1262,7 +1244,7 @@ end;
 
 { TLogBufferFlushThread }
 
-constructor TLogBufferFlushThread.Create(const AParent: TLogSession);
+constructor TLogBufferFlushThread.Create(const AParent: TGLLogSession);
 begin
   FParent := AParent;
   inherited Create(True);
@@ -1279,7 +1261,7 @@ end;
 
 { TLogCheckSizeThread }
 
-constructor TLogCheckSizeThread.Create(const AParent: TLogSession);
+constructor TLogCheckSizeThread.Create(const AParent: TGLLogSession);
 begin
   FParent := AParent;
   inherited Create(True);

@@ -1,48 +1,47 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLWindows<p>
+{
+   OpenGL windows management classes and structures
 
-  OpenGL windows management classes and structures<p>
-
- <b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPP compatibility: changed vector arrays to records,
+  History :  
+       10/11/12 - PW - Added CPP compatibility: changed vector arrays to records,
                           renamed lowercase sender and accept to uppercase Sender and Accept
-      <li>16/03/11 - Yar - Fixes after emergence of GLMaterialEx
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>11/06/10 - YP - Link GUI elements to their parent
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>17/10/08 - DanB - reversed order of vertices in TGLCustomControl.InternalRender,
+       16/03/11 - Yar - Fixes after emergence of GLMaterialEx
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       11/06/10 - YP - Link GUI elements to their parent
+       22/04/10 - Yar - Fixes after GLState revision
+       05/03/10 - DanB - More state added to TGLStateCache
+       17/10/08 - DanB - reversed order of vertices in TGLCustomControl.InternalRender,
                             which fixes the GUIPaint demo
-      <li>27/04/08 - DaStr - Fixed bug in TGLButton.InternalRender()
+       27/04/08 - DaStr - Fixed bug in TGLButton.InternalRender()
                              (thanks Nicoara Adrian) (BugtrackerID = 1952711)
-      <li>06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
-      <li>20/12/06 - DaStr - Added: TGLEdit.ReadOnly, TGLScrollbar.Locked,
+       06/06/07 - DaStr - Added GLColor to uses (BugtrackerID = 1732211)
+       20/12/06 - DaStr - Added: TGLEdit.ReadOnly, TGLScrollbar.Locked,
                                     TGLStringGrid.ColSelect
-      <li>10/11/05 - Mathx - Fixed TGLPopupMenu stack overflow on method internalRender.
+       10/11/05 - Mathx - Fixed TGLPopupMenu stack overflow on method internalRender.
                              Related to bug 1193909.
-      <li>24/05/02 - JAJ - Base Unit built on basis of Jan Horn's demo at
+       24/05/02 - JAJ - Base Unit built on basis of Jan Horn's demo at
                             (http://www.sulaco.co.za/opengl/windows.zip)
-      <li>01/06/02 - JAJ - After not having received Jan Horn's blessing, the
+       01/06/02 - JAJ - After not having received Jan Horn's blessing, the
                             system have been revised all parts have been rewritten.
-      <li>01/01/03 - JAJ - Updated so that focused controls pass focus on hide...
-      <li>05/01/03 - JAJ - Cleaned up the DesignTime AccessViolations...
-      <li>07/01/03 - JAJ - Jeremy Darling modified the TGLEdit's Render, more
+       01/01/03 - JAJ - Updated so that focused controls pass focus on hide...
+       05/01/03 - JAJ - Cleaned up the DesignTime AccessViolations...
+       07/01/03 - JAJ - Jeremy Darling modified the TGLEdit's Render, more
                             updates on TGLEdit expected...
-      <li>18/01/03 - JAJ - Added TGLStringList, TGLScrollbar, TGLPopupMenu...
-      <li>08/08/03 - PS  - Added Horizontal to GLScrollbar...
-      <li>14/08/03 - SG  - Fixed TGLBaseComponent.SetGuiLayout (Joen Joensen)
-      <li>08/08/03 - JAJ - Merged PS's and SG's update... Added TitleOffset...
-      <li>03/07/04 - LR - Added constant for Keyboard (glKey_TAB, ...)
+       18/01/03 - JAJ - Added TGLStringList, TGLScrollbar, TGLPopupMenu...
+       08/08/03 - PS  - Added Horizontal to GLScrollbar...
+       14/08/03 - SG  - Fixed TGLBaseComponent.SetGuiLayout (Joen Joensen)
+       08/08/03 - JAJ - Merged PS's and SG's update... Added TitleOffset...
+       03/07/04 - LR - Added constant for Keyboard (glKey_TAB, ...)
                           Added function GLOKMessageBox to avoid the uses of Forms
                           Replace TColor, TBitmap, TMouseEvent, TKeyEvent, ...
                           by TGLColor, TGLBitmap, TGLMouseEvent, TGLKeyEvent, ...
-      <li>25/01/05 - AX - Corrected AlphaChannel default value, must be 1
+       25/01/05 - AX - Corrected AlphaChannel default value, must be 1
                           TGLButton, TGLForm - AlphaChannel behaviour text.
                           Added events OnMouseEnter/OnMouseLeave for all controls
-      <li>05/02/05 - AX - TGLLabel correct layout depending on Aligment and TextLayout.
- </ul></font>
+       05/02/05 - AX - TGLLabel correct layout depending on Aligment and TextLayout.
+  
 }
 
 unit GLWindows;
@@ -52,12 +51,7 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils,
-  {$ELSE}
-    Classes, SysUtils,
-  {$ENDIF}
-
+  Classes, SysUtils,
   GLScene, GLHUDObjects, GLMaterial, OpenGLTokens, GLContext,
   GLBitmapFont, GLWindowsFont, GLVectorGeometry, GLGui,
   GLCrossPlatform, GLColor, GLRenderContextInfo, GLBaseClasses;
@@ -90,9 +84,9 @@ type
     procedure SetDoChangesOnProgress(const Value: Boolean);
     procedure SetAutosize(const Value: Boolean);
   protected
-    procedure RenderHeader(var rci: TRenderContextInfo; renderSelf,
+    procedure RenderHeader(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean);
-    procedure RenderFooter(var rci: TRenderContextInfo; renderSelf,
+    procedure RenderFooter(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean);
 
     procedure SetGuiLayout(NewGui: TGLGuiLayout); virtual;
@@ -120,9 +114,9 @@ type
 
     procedure DoProgress(const progressTime: TProgressTimes); override;
 
-    procedure DoRender(var rci: TRenderContextInfo; renderSelf, renderChildren:
+    procedure DoRender(var rci: TGLRenderContextInfo; renderSelf, renderChildren:
       Boolean); override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); virtual;
     property GUIRedraw: Boolean read FGUIRedraw write SetGUIRedraw;
     property ReBuildGui: Boolean read FReBuildGui write FReBuildGui;
@@ -133,13 +127,13 @@ type
     property GuiLayoutName: TGLGuiComponentName read FGuiLayoutName write
       SetGuiLayoutName;
 
-    {: This the ON-SCREEN rotation of the GuiComponent.<p>
+    { This the ON-SCREEN rotation of the GuiComponent.
        Rotatation=0 is handled faster. }
     property Rotation: TGLFloat read FRotation write SetRotation;
-    {: If different from 1, this value will replace that of Diffuse.Alpha }
+    { If different from 1, this value will replace that of Diffuse.Alpha }
     property AlphaChannel: Single read FAlphaChannel write SetAlphaChannel stored
       StoreAlphaChannel;
-    {: If True, GuiComponent will not write to Z-Buffer.<p>
+    { If True, GuiComponent will not write to Z-Buffer.
        GuiComponent will STILL be maskable by ZBuffer test. }
     property NoZWrite: Boolean read FNoZWrite write SetNoZWrite;
 
@@ -225,9 +219,9 @@ type
     procedure SetDefaultColor(value: TDelphiColor);
     procedure SetBitmapFont(NewFont: TGLCustomBitmapFont);
     function GetBitmapFont: TGLCustomBitmapFont;
-    procedure WriteTextAt(var rci: TRenderContextInfo; const X, Y: TGLFloat;
+    procedure WriteTextAt(var rci: TGLRenderContextInfo; const X, Y: TGLFloat;
       const Data: UnicodeString; const Color: TColorVector); overload;
-    procedure WriteTextAt(var rci: TRenderContextInfo; const X1, Y1, X2, Y2:
+    procedure WriteTextAt(var rci: TGLRenderContextInfo; const X1, Y1, X2, Y2:
       TGLFloat; const Data: UnicodeString; const Color: TColorVector); overload;
     function GetFontHeight: Integer;
   public
@@ -316,7 +310,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
     procedure SetMaterial(AMaterial: TGLMaterial);
     property CustomData: Pointer read FCustomData write FCustomData;
@@ -354,9 +348,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure PopUp(Px, Py: Integer);
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
-    procedure DoRender(var rci: TRenderContextInfo; renderSelf, renderChildren:
+    procedure DoRender(var rci: TGLRenderContextInfo; renderSelf, renderChildren:
       Boolean); override;
     function MouseDown(Sender: TObject; Button: TGLMouseButton; Shift:
       TShiftState; X, Y: Integer): Boolean; override;
@@ -406,7 +400,7 @@ type
       TShiftState; X, Y: Integer): Boolean; override;
     function MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer):
       Boolean; override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
   published
     property TitleColor: TDelphiColor read GetTitleColor write SetTitleColor;
@@ -441,7 +435,7 @@ type
     procedure SetGroup(const val: Integer);
   public
     constructor Create(AOwner: TComponent); override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
     procedure NotifyChange(Sender: TObject); override;
   published
@@ -486,7 +480,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
   published
     property Group: Integer read FGroup write SetGroup;
@@ -520,7 +514,7 @@ type
     procedure SetEditChar(const Value: string);
   public
     constructor Create(AOwner: TComponent); override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
   published
     property EditChar: string read FEditChar write SetEditChar;
@@ -538,7 +532,7 @@ type
   protected
   public
     constructor Create(AOwner: TComponent); override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
   published
     property Alignment: TAlignment read FAlignment write SetAlignment;
@@ -549,7 +543,7 @@ type
   private
   protected
   public
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
   published
   end;
@@ -600,7 +594,7 @@ type
       TShiftState; X, Y: Integer): Boolean; override;
     function MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer):
       Boolean; override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
   published
     property Horizontal: Boolean read FHorizontal write SetHorizontal;
@@ -659,7 +653,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation);
       override;
     procedure NotifyChange(Sender: TObject); override;
-    procedure InternalRender(var rci: TRenderContextInfo; renderSelf,
+    procedure InternalRender(var rci: TGLRenderContextInfo; renderSelf,
       renderChildren: Boolean); override;
     procedure OnStringListChange(Sender: TObject);
     property Row[index: Integer]: TStringList read GetRow write SetRow;
@@ -759,7 +753,7 @@ begin
   BlockRendering := False;
 end;
 
-procedure TGLBaseComponent.RenderHeader(var rci: TRenderContextInfo; renderSelf,
+procedure TGLBaseComponent.RenderHeader(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 var
@@ -788,7 +782,7 @@ begin
   rci.GLStates.DepthWriteMask := False;
 end;
 
-procedure TGLBaseComponent.RenderFooter(var rci: TRenderContextInfo; renderSelf,
+procedure TGLBaseComponent.RenderFooter(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 begin
@@ -1112,7 +1106,7 @@ begin
   end;
 end;
 
-procedure TGLBaseComponent.InternalRender(var rci: TRenderContextInfo;
+procedure TGLBaseComponent.InternalRender(var rci: TGLRenderContextInfo;
   renderSelf, renderChildren: Boolean);
 
 begin
@@ -1129,7 +1123,7 @@ begin
   end;
 end;
 
-procedure TGLBaseComponent.DoRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLBaseComponent.DoRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 var
@@ -1809,7 +1803,7 @@ begin
   GuiRedraw := True;
 end;
 
-procedure TGLBaseFontControl.WriteTextAt(var rci: TRenderContextInfo; const X,
+procedure TGLBaseFontControl.WriteTextAt(var rci: TGLRenderContextInfo; const X,
   Y: TGLFloat; const Data: UnicodeString; const Color: TColorVector);
 var
   Position: TVector;
@@ -1824,7 +1818,7 @@ begin
   end;
 end;
 
-procedure TGLBaseFontControl.WriteTextAt(var rci: TRenderContextInfo; const X1,
+procedure TGLBaseFontControl.WriteTextAt(var rci: TGLRenderContextInfo; const X1,
   Y1, X2, Y2: TGLFloat; const Data: UnicodeString; const Color: TColorVector);
 var
   Position: TVector;
@@ -1890,7 +1884,7 @@ begin
   FBitmap.Assign(ABitmap);
 end;
 
-procedure TGLCustomControl.InternalRender(var rci: TRenderContextInfo;
+procedure TGLCustomControl.InternalRender(var rci: TGLRenderContextInfo;
   renderSelf, renderChildren: Boolean);
 
 var
@@ -2112,7 +2106,7 @@ begin
   RootControl.ActiveControl := Self;
 end;
 
-procedure TGLPopupMenu.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLPopupMenu.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 var
@@ -2169,7 +2163,7 @@ begin
     end;
 end;
 
-procedure TGLPopupMenu.DoRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLPopupMenu.DoRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 begin
@@ -2361,7 +2355,7 @@ begin
     Result := inherited MouseMove(Sender, Shift, X, Y);
 end;
 
-procedure TGLForm.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLForm.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 var
   ATitleColor: TColorVector;
@@ -2469,7 +2463,7 @@ begin
   FGroup := -1;
 end;
 
-procedure TGLCheckBox.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLCheckBox.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 begin
   if Checked then
@@ -2692,7 +2686,7 @@ begin
   FBitBtn.Free;
 end;
 
-procedure TGLButton.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLButton.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 var
@@ -2920,7 +2914,7 @@ begin
   FEditChar := '*';
 end;
 
-procedure TGLEdit.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLEdit.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 var
   Tekst: UnicodeString;
@@ -3002,7 +2996,7 @@ begin
   FTextLayout := tlCenter;
 end;
 
-procedure TGLLabel.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLLabel.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 var
@@ -3073,7 +3067,7 @@ begin
   end;
 end;
 
-procedure TGLAdvancedLabel.InternalRender(var rci: TRenderContextInfo;
+procedure TGLAdvancedLabel.InternalRender(var rci: TGLRenderContextInfo;
   renderSelf, renderChildren: Boolean);
 
 begin
@@ -3379,7 +3373,7 @@ begin
     Result := inherited MouseMove(Sender, Shift, X, Y);
 end;
 
-procedure TGLScrollbar.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLScrollbar.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
 var
@@ -3742,7 +3736,7 @@ begin
   inherited;
 end;
 
-procedure TGLStringGrid.InternalRender(var rci: TRenderContextInfo; renderSelf,
+procedure TGLStringGrid.InternalRender(var rci: TGLRenderContextInfo; renderSelf,
   renderChildren: Boolean);
 
   function CellSelected(X, Y: Integer): Boolean;

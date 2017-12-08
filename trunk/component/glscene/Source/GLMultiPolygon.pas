@@ -1,34 +1,33 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLMultiPolygon<p>
+{
+   Object with support for complex polygons.
 
-   Object with support for complex polygons.<p>
-
- <b>History : </b><font size=-1><ul>
-      <li>14/07/11 - DaStr - Bugfixed a rare case in TMultiPolygonBase.Destroy
-      <li>04/09/10 - Yar - Bugfixed RunError in TMultiPolygonBase.Destroy in Lazarus
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>22/11/09 - DaStr - Improved Unix compatibility
+  History :  
+       14/07/11 - DaStr - Bugfixed a rare case in TMultiPolygonBase.Destroy
+       04/09/10 - Yar - Bugfixed RunError in TMultiPolygonBase.Destroy in Lazarus
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       22/11/09 - DaStr - Improved Unix compatibility
                              (thanks Predator) (BugtrackerID = 2893580)
-      <li>31/07/07 - DanB - Implemented AxisAlignedDimensionsUnscaled for
+       31/07/07 - DanB - Implemented AxisAlignedDimensionsUnscaled for
                             TMultiPolygonBase
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>14/03/07 - DaStr - Added explicit pointer dereferencing
+       30/03/07 - DaStr - Added $I GLScene.inc
+       14/03/07 - DaStr - Added explicit pointer dereferencing
                              (thanks Burkhard Carstens) (Bugtracker ID = 1678644)
-      <li>18/11/04 - SG - Fixed TGLMultiPolygonBase.Destroy memory leak (Neil)
-      <li>05/09/03 - EG - TNotifyCollection moved to GLMisc
-      <li>14/07/02 - EG - Code cleanups, dropped 'absolutes', fixed mem leaks
-      <li>28/12/01 - EG - Added registration (Philipp Pammler)
-      <li>19/12/01 - EG - Removed dependency to contnrs (D4 compatibility,
+       18/11/04 - SG - Fixed TGLMultiPolygonBase.Destroy memory leak (Neil)
+       05/09/03 - EG - TNotifyCollection moved to GLMisc
+       14/07/02 - EG - Code cleanups, dropped 'absolutes', fixed mem leaks
+       28/12/01 - EG - Added registration (Philipp Pammler)
+       19/12/01 - EG - Removed dependency to contnrs (D4 compatibility,
                            TObjectList replaced with TPersistentObjectList)
-      <li>29/03/01 - Uwe - Fixes and improvements to TGLMultiPolygon
-      <li>21/02/01 - EG - Now XOpenGL based (multitexture)
-      <li>08/01/01 - EG - Compatibility fix (TGLLineNodes change),
+       29/03/01 - Uwe - Fixes and improvements to TGLMultiPolygon
+       21/02/01 - EG - Now XOpenGL based (multitexture)
+       08/01/01 - EG - Compatibility fix (TGLLineNodes change),
                            Delphi 4 compatibility (removed TVectorPool) and
                            added/renamed some properties, various fixes
-      <li>08/10/00 - EG - Added header, code contributed by Uwe Raabe
-   </ul>
+       08/10/00 - EG - Added header, code contributed by Uwe Raabe
+    
 }
 { TODO
 
@@ -51,15 +50,9 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils,
-  {$ELSE}
-    Classes, SysUtils,
-  {$ENDIF}
-
+  Classes, SysUtils,
   OpenGLTokens,  OpenGLAdapter,  GLSpline,
-  XOpenGL,  GLContext
-  , GLVectorTypes,
+  XOpenGL,  GLContext, GLVectorTypes,
   GLVectorGeometry,  GLVectorLists,  GLPersistentClasses,
   GLScene,  GLObjects,  GLGeomObjects,  GLNodes,  GLBaseClasses,
   GLCoordinates,  GLRenderContextInfo;
@@ -70,7 +63,7 @@ type
   //
   TGLContourNodes = class(TGLNodes)
   public
-    { Public Declarations }
+     
     procedure NotifyChange; override;
   end;
 
@@ -80,11 +73,11 @@ type
   private
     FNodes: TGLContourNodes;
     FDivision: Integer;
-    FSplineMode: TLineSplineMode;
+    FSplineMode: TGLLineSplineMode;
     FDescription: string;
     procedure SetNodes(const Value: TGLContourNodes);
     procedure SetDivision(Value: Integer);
-    procedure SetSplineMode(const Value: TLineSplineMode);
+    procedure SetSplineMode(const Value: TGLLineSplineMode);
     procedure SetDescription(const Value: string);
 
   protected
@@ -98,16 +91,16 @@ type
     procedure Assign(Source: TPersistent); override;
 
   published
-    { Published Declarations }
+     
     property Description: string read FDescription write SetDescription;
-    {: The nodes list.<p> }
+    { The nodes list. }
     property Nodes: TGLContourNodes read FNodes write SetNodes;
-    {: Number of divisions for each segment in spline modes.<p>
+    { Number of divisions for each segment in spline modes.
       Minimum 1 (disabled), ignored in lsmLines mode. }
     property Division: Integer read FDivision write SetDivision default 10;
-    {: Default spline drawing mode.<p>
+    { Default spline drawing mode.
       This mode is used only for the curve, not for the rotation path. }
-    property SplineMode: TLineSplineMode read FSplineMode write SetSplineMode default lsmLines;
+    property SplineMode: TGLLineSplineMode read FSplineMode write SetSplineMode default lsmLines;
   end;
 
   TGLContourClass = class of TGLContour;
@@ -144,15 +137,15 @@ type
 
   // TMultiPolygonBase
   //
-  {: Multipolygon is defined with multiple contours.<p>
+  { Multipolygon is defined with multiple contours.
      The contours have to be in the X-Y plane, otherwise they are projected
-     to it (this is done automatically by the tesselator).<br>
+     to it (this is done automatically by the tesselator). 
      The plane normal is pointing in +Z. All contours are automatically closed,
-     so there is no need to specify the last node equal to the first one.<br>
+     so there is no need to specify the last node equal to the first one. 
      Contours should be defined counterclockwise, the first contour (index = 0)
      is taken as is, all following are reversed. This means you can define the
      outer contour first and the holes and cutouts after that. If you give the
-     following contours in clockwise order, the first contour is extended.<p>
+     following contours in clockwise order, the first contour is extended.
 
      TMultiPolygonBase will take the input contours and let the tesselator
      make an outline from it (this is done in RetreiveOutline). This outline is
@@ -160,7 +153,7 @@ type
      outline will be recalculated. The ouline in fact is a list of GLVectorLists. }
   TMultiPolygonBase = class(TGLSceneObject)
   private
-    { Private Declarations }
+     
     FContours: TGLContours;
     FOutline: TPolygonList;
     FContoursNormal: TAffineVector;
@@ -172,7 +165,7 @@ type
     procedure SetContoursNormal(const Value: TAffineVector);
 
   protected
-    { Protected Declarations }
+     
     procedure RenderTesselatedPolygon(textured: Boolean;
       normal: PAffineVector; invertNormals: Boolean);
     procedure RetrieveOutline(List: TPolygonList);
@@ -180,7 +173,7 @@ type
     //property PNormal:PAffineVector read FPNormal;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
@@ -198,33 +191,33 @@ type
     procedure StructureChanged; override;
 
   published
-    { Published Declarations }
+     
     property Contours: TGLContours read FContours write SetContours;
   end;
 
   // TGLMultiPolygon
   //
-  {: A polygon that can have holes and multiple contours.<p>
+  { A polygon that can have holes and multiple contours.
      Use the Path property to access a contour or one of the AddNode methods
      to add a node to a contour (contours are allocated automatically). }
   TGLMultiPolygon = class(TMultiPolygonBase)
   private
-    { Private Declarations }
+     
     FParts: TPolygonParts;
 
   protected
-    { Protected Declarations }
+     
     procedure SetParts(const value: TPolygonParts);
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
 
     procedure Assign(Source: TPersistent); override;
-    procedure BuildList(var rci: TRenderContextInfo); override;
+    procedure BuildList(var rci: TGLRenderContextInfo); override;
 
   published
-    { Published Declarations }
+     
     property Parts: TPolygonParts read FParts write SetParts default [ppTop, ppBottom];
   end;
 
@@ -389,7 +382,7 @@ begin
   Changed(false);
 end;
 
-procedure TGLContour.SetSplineMode(const Value: TLineSplineMode);
+procedure TGLContour.SetSplineMode(const Value: TGLLineSplineMode);
 begin
   if FSplineMode <> value then
   begin
@@ -479,7 +472,7 @@ begin
   inherited;
 end;
 
-// Assign
+ 
 //
 
 procedure TMultiPolygonBase.Assign(Source: TPersistent);
@@ -537,7 +530,7 @@ begin
   Path[i].AddNode(value);
 end;
 
-// Assign
+ 
 //
 
 procedure TMultiPolygonBase.SetContours(const Value: TGLContours);
@@ -825,7 +818,7 @@ begin
   FParts := [ppTop, ppBottom];
 end;
 
-// Assign
+ 
 //
 
 procedure TGLMultiPolygon.Assign(Source: TPersistent);
@@ -840,7 +833,7 @@ end;
 // BuildList
 //
 
-procedure TGLMultiPolygon.BuildList(var rci: TRenderContextInfo);
+procedure TGLMultiPolygon.BuildList(var rci: TGLRenderContextInfo);
 var
   normal: TAffineVector;
 begin

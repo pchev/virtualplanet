@@ -1,22 +1,20 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLTimeEventsMgr<p>
-     by GliGli
+{
+   Time based events mannager using the Cadencer
+   can be useful to make animations with GlScene
 
-   Time based events mannager using the Cadencer<p>
-   can be useful to make animations with GlScene<p>
-
-	<b>History : </b><font size=-1><ul>
-      <li>07/01/10 - DaStr - Added TGLTimeEventsMGR.Reset()
+	 History :  
+       07/01/10 - DaStr - Added TGLTimeEventsMGR.Reset()
                              Fixed code formating
-      <li>25/11/09 - DanB - Changed TTimeEvent.Name from ShortString to String
-      <li>11/10/07 - DaStr - TTimeEvent.SetEnabled now updates StartTime to
+       25/11/09 - DanB - Changed TTimeEvent.Name from ShortString to String
+       11/10/07 - DaStr - TTimeEvent.SetEnabled now updates StartTime to
                              Cadencers's current time.
                              (Thanks Lukasz Sokol) (BugTracker ID = 1811141)
-      <li>28/03/07 - DaStr - Cosmetic fix for FPC compatibility
-      <li>29/01/07 - DaStr - Moved registration to GLSceneRegister.pas
-      <li>07/02/02 - EG - Added Notification, DoEvent, ElapsedTime and changed Event type
+       28/03/07 - DaStr - Cosmetic fix for FPC compatibility
+       29/01/07 - DaStr - Moved registration to GLSceneRegister.pas
+       07/02/02 - EG - Added Notification, DoEvent, ElapsedTime and changed Event type
 }
 
 unit GLTimeEventsMgr;
@@ -24,12 +22,7 @@ unit GLTimeEventsMgr;
 interface
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils,
-  {$ELSE}
-    Classes, SysUtils,
-  {$ENDIF}
-
+  Classes, SysUtils,
   GLCadencer,  GLBaseClasses;
 
 type
@@ -41,7 +34,7 @@ type
 	//
    TGLTimeEventsMGR = class(TGLUpdateAbleComponent)
    private
-      { Déclarations privées }
+       
       FCadencer : TGLCadencer;
       FEnabled : boolean;
       FFreeEventOnEnd : boolean;
@@ -55,7 +48,7 @@ type
       procedure SetEvents(const val : TTimeEvents);
 
    public
-      { Déclarations publiques }
+       
       constructor Create(aOwner : TComponent); override;
       destructor Destroy; override;
 
@@ -74,14 +67,14 @@ type
 	//
 	TTimeEvents = class (TCollection)
    protected
-      { Protected Declarations }
+       
       Owner : TComponent;
       function GetOwner: TPersistent; override;
       procedure SetItems(index : Integer; const val : TTimeEvent);
       function GetItems(index : Integer) : TTimeEvent;
 
    public
-      { Public Declarations }
+       
       constructor Create(AOwner : TComponent);
 
       function Add: TTimeEvent;
@@ -98,7 +91,7 @@ type
    //
    TTimeEvent = class (TCollectionItem)
       private
-         { Private Declarations }
+          
          FName: String;
          FStartTime, FEndTime, FElapsedTime : Double;
          FPeriod : Double;
@@ -110,24 +103,24 @@ type
          procedure SetEnabled(const Value: Boolean);
 
       protected
-         { Protected Declarations }
+          
          function GetDisplayName : String; override;
          procedure SetName(val : String);
 
          procedure DoEvent(const curTime : Double);
 
       public
-         { Public Declarations }
+          
          constructor Create(Collection : TCollection); override;
          destructor Destroy; override;
 
-         //: Number of times the event was triggered since activation
+         // Number of times the event was triggered since activation
          property TickCount : Cardinal read FTickCount;
-         //: Elapsed time since the event was activated
+         // Elapsed time since the event was activated
          property ElapsedTime : Double read FElapsedTime; 
 
       published
-         { Published Declarations }
+          
          property Name : String read FName write SetName;
          property StartTime : Double read FStartTime write FStartTime;
          property EndTime : Double read FEndTime write FEndTime;

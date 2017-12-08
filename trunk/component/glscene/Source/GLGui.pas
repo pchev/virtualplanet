@@ -1,27 +1,26 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLGui<p>
+{
+  In GL windows management classes and structures
 
-  In GL windows management classes and structures<p>
-
- <b>History : </b><font size=-1><ul>
-      <li>15/04/11 - Yar - Added TGLGuiLayout.Assign
-      <li>16/03/11 - Yar - Fixes after emergence of GLMaterialEx
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>11/06/10 - YP - Link GUI elements to their parent
-      <li>06/06/10 - Yar - Fixed warnings
-      <li>30/03/07 - DaStr - Added $I GLScene.inc, cosmetic changes
-      <li>17/02/07 - DaStr - TGLGuiElement.Create - vectors creation fixed
+  History :  
+       15/04/11 - Yar - Added TGLGuiLayout.Assign
+       16/03/11 - Yar - Fixes after emergence of GLMaterialEx
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       11/06/10 - YP - Link GUI elements to their parent
+       06/06/10 - Yar - Fixed warnings
+       30/03/07 - DaStr - Added $I GLScene.inc, cosmetic changes
+       17/02/07 - DaStr - TGLGuiElement.Create - vectors creation fixed
                           Changed some types from TGLCoordinates to TGLCoordinates2
                           Removed some empty lines
-      <li>16/12/05 - DK - Removed GuiSkinEditorFormUnit dependancy
-      <li>30/11/04 - DB - Fixed memory leaks (thanks dikoe Kenguru)
-      <li>16/07/03 - EG - TGLBaseGuiObject moved in along with RecursiveVisible mechanism
-      <li>25/11/02 - EG - TGLGuiLayout.Clear fix (Sternas Stefanos)
-      <li>06/09/02 - JAJ - Updated and added to CVS..
-      <li>01/06/02 - JAJ - Base Unit built..
- </ul></font>
+       16/12/05 - DK - Removed GuiSkinEditorFormUnit dependancy
+       30/11/04 - DB - Fixed memory leaks (thanks dikoe Kenguru)
+       16/07/03 - EG - TGLBaseGuiObject moved in along with RecursiveVisible mechanism
+       25/11/02 - EG - TGLGuiLayout.Clear fix (Sternas Stefanos)
+       06/09/02 - JAJ - Updated and added to CVS..
+       01/06/02 - JAJ - Base Unit built..
+  
 }
 unit GLGui;
 
@@ -30,13 +29,8 @@ interface
 {$I GLScene.inc}
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils,
-  {$ELSE}
-    Classes, SysUtils,
-  {$ENDIF}
+  Classes, SysUtils,
 
-  // GLScene
   GLScene, GLBitmapFont, GLMaterial, GLCrossPlatform, OpenGLTokens, GLContext,
   GLPersistentClasses, GLVectorGeometry, GLCoordinates, GLBaseClasses;
 
@@ -49,9 +43,9 @@ type
     FHeight: Single;
 
   protected
-    //: self notification on hide. Also notifies children.
+    // self notification on hide. Also notifies children.
     procedure NotifyHide; dynamic;
-    //: child notification on show. Also notifies children.
+    // child notification on show. Also notifies children.
     procedure NotifyShow; dynamic;
 
     procedure SetLeft(const Value: TGLFloat);
@@ -68,13 +62,13 @@ type
     procedure AddChild(AChild: TGLBaseSceneObject); override;
     procedure Insert(aIndex: Integer; aChild: TGLBaseSceneObject); override;
 
-    {: GuiComponent Width in 3D world units. }
+    { GuiComponent Width in 3D world units. }
     property Width: Single read FWidth write SetWidth;
-    {: GuiComponent Height in 3D world units. }
+    { GuiComponent Height in 3D world units. }
     property Height: Single read FHeight write SetHeight;
-    {: GuiComponent Left in 3D world units. }
+    { GuiComponent Left in 3D world units. }
     property Left: TGLFloat read GetLeft write SetLeft;
-    {: GuiComponent Top in 3D world units. }
+    { GuiComponent Top in 3D world units. }
     property Top: TGLFloat read GetTop write SetTop;
 
     property RecursiveVisible: Boolean read FRecursiveVisible;
@@ -537,7 +531,7 @@ begin
       TGLUpdateAbleComponent(FGuiComponentList[I]).FreeNotification(Self);
   end
   else
-    inherited; // Assign Error
+    inherited; // Assigned Error
 end;
 
 procedure TGLGuiLayout.Clear;

@@ -1,60 +1,54 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLMaterial<p>
+{
+   Handles all the material + material library stuff.
 
- Handles all the material + material library stuff.<p>
-
- <b>History : </b><font size=-1><ul>
-      <li>10/11/12 - PW - Added CPPB compatibility: used dummy instead abstract methods
+  History :  
+       10/11/12 - PW - Added CPPB compatibility: used dummy instead abstract methods
                           in TGLShader and TGLAbstractLibMaterial for GLS_CPPB
-      <li>11/03/11 - Yar - Extracted abstract classes from TGLLibMaterial, TGLLibMaterials, TGLMaterialLibrary
-      <li>20/02/11 - Yar - Fixed TGLShader's virtual handle behavior with multicontext situation
-      <li>07/01/11 - Yar - Added separate blending function factors for alpha in TGLBlendingParameters
-      <li>20/10/10 - Yar - Added property TextureRotate to TGLLibMaterial, make TextureMatrix writable
-      <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-      <li>07/05/10 - Yar - Fixed TGLMaterial.Assign (BugTracker ID = 2998153)
-      <li>22/04/10 - Yar - Fixes after GLState revision
-      <li>06/03/10 - Yar - Added to TGLDepthProperties DepthClamp property
-      <li>05/03/10 - DanB - More state added to TGLStateCache
-      <li>21/02/10 - Yar - Added TGLDepthProperties,
+       11/03/11 - Yar - Extracted abstract classes from TGLLibMaterial, TGLLibMaterials, TGLMaterialLibrary
+       20/02/11 - Yar - Fixed TGLShader's virtual handle behavior with multicontext situation
+       07/01/11 - Yar - Added separate blending function factors for alpha in TGLBlendingParameters
+       20/10/10 - Yar - Added property TextureRotate to TGLLibMaterial, make TextureMatrix writable
+       23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+       07/05/10 - Yar - Fixed TGLMaterial.Assign (BugTracker ID = 2998153)
+       22/04/10 - Yar - Fixes after GLState revision
+       06/03/10 - Yar - Added to TGLDepthProperties DepthClamp property
+       05/03/10 - DanB - More state added to TGLStateCache
+       21/02/10 - Yar - Added TGLDepthProperties,
                            optimization of switching states
-      <li>22/01/10 - Yar - Remove Texture.Border and
+       22/01/10 - Yar - Remove Texture.Border and
                            added MappingRCoordinates, MappingQCoordinates
                            to WriteToFiler, ReadFromFiler
-      <li>07/01/10 - DaStr - TexturePaths are now cross-platform (thanks Predator)
-      <li>22/12/09 - DaStr - Updated TGLMaterialLibrary.WriteToFiler(),
+       07/01/10 - DaStr - TexturePaths are now cross-platform (thanks Predator)
+       22/12/09 - DaStr - Updated TGLMaterialLibrary.WriteToFiler(),
                               ReadFromFiler() (thanks dAlex)
                              Small update for blending constants
-      <li>13/12/09 - DaStr - Added a temporary work-around for multithread
+       13/12/09 - DaStr - Added a temporary work-around for multithread
                               mode (thanks Controller)
                              Added TGLBlendingParameters and bmCustom blending
                               mode(thanks DungeonLords, Fantom)
                              Fixed code formating in some places
-      <li>24/08/09 - DaStr - Updated TGLLibMaterial.DoOnTextureNeeded:
+       24/08/09 - DaStr - Updated TGLLibMaterial.DoOnTextureNeeded:
                               Replaced IncludeTrailingBackslash() with
                               IncludeTrailingPathDelimiter()
-      <li>28/07/09 - DaStr - Updated TGLShader.GetStardardNotSupportedMessage()
+       28/07/09 - DaStr - Updated TGLShader.GetStardardNotSupportedMessage()
                               to use component name instead class name
-      <li>24/07/09 - DaStr - TGLShader.DoInitialize() now passes rci
+       24/07/09 - DaStr - TGLShader.DoInitialize() now passes rci
                               (BugTracker ID = 2826217)
-      <li>14/07/09 - DaStr - Added $I GLScene.inc
-      <li>08/10/08 - DanB - Created from split from GLTexture.pas,
+       14/07/09 - DaStr - Added $I GLScene.inc
+       08/10/08 - DanB - Created from split from GLTexture.pas,
                             Textures + materials are no longer so tightly bound
-   </ul></font>
+    
 }
 unit GLMaterial;
 
 interface
 
 uses
-  {$IFDEF GLS_DELPHI_XE2_UP}
-    System.Classes, System.SysUtils, System.Types,
-  {$ELSE}
-    Classes, SysUtils, Types,
-  {$ENDIF}
-
-  //GLScene
+  Classes, SysUtils, Types,
+   
   GLRenderContextInfo, GLBaseClasses, OpenGLTokens, GLContext,
   GLTexture, GLColor, GLCoordinates, GLVectorGeometry, GLPersistentClasses,
   GLCrossPlatform, GLState, GLTextureFormat, GLStrings, XOpenGL,
@@ -79,26 +73,26 @@ type
 
   // TGLShaderStyle
   //
-  {: Define GLShader style application relatively to a material.<ul>
-     <li>ssHighLevel: shader is applied before material application, and unapplied
+  { Define GLShader style application relatively to a material. 
+      ssHighLevel: shader is applied before material application, and unapplied
            after material unapplication
-     <li>ssLowLevel: shader is applied after material application, and unapplied
+      ssLowLevel: shader is applied after material application, and unapplied
            before material unapplication
-     <li>ssReplace: shader is applied in place of the material (and material
+      ssReplace: shader is applied in place of the material (and material
            is completely ignored)
-     </ul> }
+       }
   TGLShaderStyle = (ssHighLevel, ssLowLevel, ssReplace);
 
   // TGLShaderFailedInitAction
   //
-  {: Defines what to do if for some reason shader failed to initialize.<ul>
-     <li>fiaSilentdisable:          just disable it
-     <li>fiaRaiseHandledException:  raise an exception, and handle it right away
+  { Defines what to do if for some reason shader failed to initialize. 
+      fiaSilentdisable:          just disable it
+      fiaRaiseHandledException:  raise an exception, and handle it right away
                                     (usefull, when debigging within Delphi)
-     <li>fiaRaiseStardardException: raises the exception with a string from this
+      fiaRaiseStardardException: raises the exception with a string from this
                                       function GetStardardNotSupportedMessage
-     <li>fiaReRaiseException:       Re-raises the exception
-     <li>fiaGenerateEvent:          Handles the exception, but generates an event
+      fiaReRaiseException:       Re-raises the exception
+      fiaGenerateEvent:          Handles the exception, but generates an event
                                     that user can respond to. For example, he can
                                     try to compile a substitude shader, or replace
                                     it by a material.
@@ -108,7 +102,7 @@ type
                                     Commented out, because not sure if this
                                     option should exist, let other generations of
                                     developers decide ;)
-     </ul> }
+       }
   TGLShaderFailedInitAction = (
     fiaSilentDisable, fiaRaiseStandardException,
     fiaRaiseHandledException, fiaReRaiseException
@@ -116,15 +110,15 @@ type
 
   // TGLShader
   //
-  {: Generic, abstract shader class.<p>
+  { Generic, abstract shader class.
      Shaders are modeled here as an abstract material-altering entity with
      transaction-like behaviour. The base class provides basic context and user
-     tracking, as well as setup/application facilities.<br>
+     tracking, as well as setup/application facilities. 
      Subclasses are expected to provide implementation for DoInitialize,
      DoApply, DoUnApply and DoFinalize. }
   TGLShader = class(TGLUpdateAbleComponent)
   private
-    { Private Declarations }
+     
     FEnabled: Boolean;
     FLibMatUsers: TList;
     FVirtualHandle: TGLVirtualHandle;
@@ -134,26 +128,26 @@ type
     FFailedInitAction: TGLShaderFailedInitAction;
 
   protected
-    { Protected Declarations }
-          {: Invoked once, before the first call to DoApply.<p>
+     
+          { Invoked once, before the first call to DoApply.
              The call happens with the OpenGL context being active. }
-    procedure DoInitialize(var rci: TRenderContextInfo; Sender: TObject);
+    procedure DoInitialize(var rci: TGLRenderContextInfo; Sender: TObject);
       dynamic;
-    {: Request to apply the shader.<p>
+    { Request to apply the shader.
        Always followed by a DoUnApply when the shader is no longer needed. }
-    procedure DoApply(var rci: TRenderContextInfo; Sender: TObject); virtual;
+    procedure DoApply(var rci: TGLRenderContextInfo; Sender: TObject); virtual;
        {$IFNDEF GLS_CPPB} abstract; {$ENDIF}
-    {: Request to un-apply the shader.<p>
-       Subclasses can assume the shader has been applied previously.<br>
+    { Request to un-apply the shader.
+       Subclasses can assume the shader has been applied previously. 
        Return True to request a multipass. }
-    function DoUnApply(var rci: TRenderContextInfo): Boolean; virtual;
+    function DoUnApply(var rci: TGLRenderContextInfo): Boolean; virtual;
        {$IFNDEF GLS_CPPB} abstract; {$ENDIF}
-    {: Invoked once, before the destruction of context or release of shader.<p>
+    { Invoked once, before the destruction of context or release of shader.
        The call happens with the OpenGL context being active. }
     procedure DoFinalize; dynamic;
 
     function GetShaderInitialized: Boolean;
-    procedure InitializeShader(var rci: TRenderContextInfo; Sender: TObject);
+    procedure InitializeShader(var rci: TGLRenderContextInfo; Sender: TObject);
     procedure FinalizeShader;
     procedure OnVirtualHandleAllocate(sender: TGLVirtualHandle; var handle:
       Cardinal);
@@ -167,44 +161,44 @@ type
     procedure RegisterUser(libMat: TGLLibMaterial);
     procedure UnRegisterUser(libMat: TGLLibMaterial);
 
-    {: Used by the DoInitialize procedure of descendant classes to raise errors. }
+    { Used by the DoInitialize procedure of descendant classes to raise errors. }
     procedure HandleFailedInitialization(const LastErrorMessage: string = '');
       virtual;
 
-    {: May be this should be a function inside HandleFailedInitialization... }
+    { May be this should be a function inside HandleFailedInitialization... }
     function GetStardardNotSupportedMessage: string; virtual;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    {: Subclasses should invoke this function when shader properties are altered.
+    { Subclasses should invoke this function when shader properties are altered.
         This procedure can also be used to reset/recompile the shader. }
     procedure NotifyChange(Sender: TObject); override;
     procedure BeginUpdate;
     procedure EndUpdate;
 
-    {: Apply shader to OpenGL state machine.}
-    procedure Apply(var rci: TRenderContextInfo; Sender: TObject);
-    {: UnApply shader.<p>
+    { Apply shader to OpenGL state machine.}
+    procedure Apply(var rci: TGLRenderContextInfo; Sender: TObject);
+    { UnApply shader.
        When returning True, the caller is expected to perform a multipass
        rendering by re-rendering then invoking UnApply again, until a
        "False" is returned. }
-    function UnApply(var rci: TRenderContextInfo): Boolean;
+    function UnApply(var rci: TGLRenderContextInfo): Boolean;
 
-    {: Shader application style (default is ssLowLevel). }
+    { Shader application style (default is ssLowLevel). }
     property ShaderStyle: TGLShaderStyle read FShaderStyle write FShaderStyle
       default ssLowLevel;
 
     procedure Assign(Source: TPersistent); override;
 
-    {: Defines if shader is supported by hardware/drivers.
+    { Defines if shader is supported by hardware/drivers.
        Default - always supported. Descendants are encouraged to override
        this function. }
     function ShaderSupported: Boolean; virtual;
 
-    {: Defines what to do if for some reason shader failed to initialize.
+    { Defines what to do if for some reason shader failed to initialize.
        Note, that in some cases it cannon be determined by just checking the
        required OpenGL extentions. You need to try to compile and link the
        shader - only at that stage you might catch an error }
@@ -213,8 +207,8 @@ type
       fiaRaiseStandardException;
 
   published
-    { Published Declarations }
-      {: Turns on/off shader application.<p>
+     
+      { Turns on/off shader application.
          Note that this only turns on/off the shader application, if the
          ShaderStyle is ssReplace, the material won't be applied even if
          the shader is disabled. }
@@ -227,19 +221,19 @@ type
 
   // TGLFaceProperties
   //
-  {: Stores basic face lighting properties.<p>
+  { Stores basic face lighting properties.
      The lighting is described with the standard ambient/diffuse/emission/specular
-     properties that behave like those of most rendering tools.<br>
+     properties that behave like those of most rendering tools. 
      You also have control over shininess (governs specular lighting) and
      polygon mode (lines / fill). }
   TGLFaceProperties = class(TGLUpdateAbleObject)
   private
-    { Private Declarations }
+     
     FAmbient, FDiffuse, FSpecular, FEmission: TGLColor;
     FShininess: TShininess;
 
   protected
-    { Protected Declarations }
+     
     procedure SetAmbient(AValue: TGLColor);
     procedure SetDiffuse(AValue: TGLColor);
     procedure SetEmission(AValue: TGLColor);
@@ -247,17 +241,17 @@ type
     procedure SetShininess(AValue: TShininess);
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TPersistent); override;
     destructor Destroy; override;
 
-    procedure Apply(var rci: TRenderContextInfo; aFace: TCullFaceMode);
-    procedure ApplyNoLighting(var rci: TRenderContextInfo; aFace:
+    procedure Apply(var rci: TGLRenderContextInfo; aFace: TCullFaceMode);
+    procedure ApplyNoLighting(var rci: TGLRenderContextInfo; aFace:
       TCullFaceMode);
     procedure Assign(Source: TPersistent); override;
 
   published
-    { Published Declarations }
+     
     property Ambient: TGLColor read FAmbient write SetAmbient;
     property Diffuse: TGLColor read FDiffuse write SetDiffuse;
     property Emission: TGLColor read FEmission write SetEmission;
@@ -267,14 +261,14 @@ type
 
   TGLDepthProperties = class(TGLUpdateAbleObject)
   private
-    { Private Declarations }
+     
     FDepthTest: boolean;
     FDepthWrite: boolean;
     FZNear, FZFar: Single;
     FCompareFunc: TDepthfunction;
     FDepthClamp: Boolean;
   protected
-    { Protected Declarations }
+     
     procedure SetZNear(Value: Single);
     procedure SetZFar(Value: Single);
     procedure SetCompareFunc(Value: TGLDepthCompareFunc);
@@ -285,37 +279,37 @@ type
     function StoreZNear: Boolean;
     function StoreZFar: Boolean;
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TPersistent); override;
 
-    procedure Apply(var rci: TRenderContextInfo);
+    procedure Apply(var rci: TGLRenderContextInfo);
     procedure Assign(Source: TPersistent); override;
 
   published
-    { Published Declarations }
-    {: Specifies the mapping of the near clipping plane to
+     
+    { Specifies the mapping of the near clipping plane to
        window coordinates.  The initial value is 0.  }
     property ZNear: Single read FZNear write SetZNear stored StoreZNear;
-    {: Specifies the mapping of the far clipping plane to
+    { Specifies the mapping of the far clipping plane to
        window coordinates.  The initial value is 1. }
     property ZFar: Single read FZFar write SetZFar stored StoreZFar;
-    {: Specifies the function used to compare each
+    { Specifies the function used to compare each
       incoming pixel depth value with the depth value present in
       the depth buffer. }
     property DepthCompareFunction: TDepthFunction
       read FCompareFunc write SetCompareFunc default cfLequal;
-    {: DepthTest enabling.<p>
+    { DepthTest enabling.
        When DepthTest is enabled, objects closer to the camera will hide
-       farther ones (via use of Z-Buffering).<br>
+       farther ones (via use of Z-Buffering). 
        When DepthTest is disabled, the latest objects drawn/rendered overlap
-       all previous objects, whatever their distance to the camera.<br>
+       all previous objects, whatever their distance to the camera. 
        Even when DepthTest is enabled, objects may chose to ignore depth
        testing through the osIgnoreDepthBuffer of their ObjectStyle property. }
     property DepthTest: boolean read FDepthTest write SetDepthTest default True;
-    {: If True, object will not write to Z-Buffer. }
+    { If True, object will not write to Z-Buffer. }
     property DepthWrite: boolean read FDepthWrite write SetDepthWrite default
       True;
-    {: Enable clipping depth to the near and far planes }
+    { Enable clipping depth to the near and far planes }
     property DepthClamp: Boolean read FDepthClamp write SetDepthClamp default
       False;
   end;
@@ -354,7 +348,7 @@ type
     function StoreAlphaFuncRef: Boolean;
   public
     constructor Create(AOwner: TPersistent); override;
-    procedure Apply(var rci: TRenderContextInfo);
+    procedure Apply(var rci: TGLRenderContextInfo);
   published
     property UseAlphaFunc: Boolean read FUseAlphaFunc write SetUseAlphaFunc
       default False;
@@ -379,14 +373,14 @@ type
 
   // TBlendingMode
   //
-  {: Simplified blending options.<p>
-     bmOpaque : disable blending<br>
-     bmTransparency : uses standard alpha blending<br>
-     bmAdditive : activates additive blending (with saturation)<br>
+  { Simplified blending options.
+     bmOpaque : disable blending 
+     bmTransparency : uses standard alpha blending 
+     bmAdditive : activates additive blending (with saturation) 
      bmAlphaTest50 : uses opaque blending, with alpha-testing at 50% (full
-        transparency if alpha is below 0.5, full opacity otherwise)<br>
-     bmAlphaTest100 : uses opaque blending, with alpha-testing at 100%<br>
-     bmModulate : uses modulation blending<br>
+        transparency if alpha is below 0.5, full opacity otherwise) 
+     bmAlphaTest100 : uses opaque blending, with alpha-testing at 100% 
+     bmModulate : uses modulation blending 
      bmCustom : uses TGLBlendingParameters options
      }
   TBlendingMode = (bmOpaque, bmTransparency, bmAdditive,
@@ -398,26 +392,26 @@ type
 
   // TMaterialOptions
   //
-  {: Control special rendering options for a material.<p>
+  { Control special rendering options for a material.
      moIgnoreFog : fog is deactivated when the material is rendered }
   TMaterialOption = (moIgnoreFog, moNoLighting);
   TMaterialOptions = set of TMaterialOption;
 
   // TGLMaterial
    //
-   {: Describes a rendering material.<p>
+   { Describes a rendering material.
       A material is basicly a set of face properties (front and back) that take
       care of standard material rendering parameters (diffuse, ambient, emission
-      and specular) and texture mapping.<br>
+      and specular) and texture mapping. 
       An instance of this class is available for almost all objects in GLScene
       to allow quick definition of material properties. It can link to a
-      TGLLibMaterial (taken for a material library).<p>
+      TGLLibMaterial (taken for a material library).
       The TGLLibMaterial has more adavanced properties (like texture transforms)
       and provides a standard way of sharing definitions and texture maps. }
   TGLMaterial = class(TGLUpdateAbleObject, IGLMaterialLibrarySupported,
       IGLNotifyAble, IGLTextureNotifyAble)
   private
-    { Private Declarations }
+     
     FFrontProperties, FBackProperties: TGLFaceProperties;
     FDepthProperties: TGLDepthProperties;
     FBlendingMode: TBlendingMode;
@@ -434,7 +428,7 @@ type
     // Implementing IGLMaterialLibrarySupported.
     function GetMaterialLibrary: TGLAbstractMaterialLibrary;
   protected
-    { Protected Declarations }
+     
     function GetBackProperties: TGLFaceProperties;
     procedure SetBackProperties(Values: TGLFaceProperties);
     procedure SetFrontProperties(Values: TGLFaceProperties);
@@ -453,19 +447,19 @@ type
     procedure SetBlendingParams(const Value: TGLBlendingParameters);
 
     procedure NotifyLibMaterialDestruction;
-    //: Back, Front, Texture and blending not stored if linked to a LibMaterial
+    // Back, Front, Texture and blending not stored if linked to a LibMaterial
     function StoreMaterialProps: Boolean;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TPersistent); override;
     destructor Destroy; override;
 
     procedure PrepareBuildList;
-    procedure Apply(var rci: TRenderContextInfo);
-    {: Restore non-standard material states that were altered;<p>
+    procedure Apply(var rci: TGLRenderContextInfo);
+    { Restore non-standard material states that were altered;
        A return value of True is a multipass request. }
-    function UnApply(var rci: TRenderContextInfo): Boolean;
+    function UnApply(var rci: TGLRenderContextInfo): Boolean;
     procedure Assign(Source: TPersistent); override;
     procedure NotifyChange(Sender: TObject); override;
     procedure NotifyTexMapChange(Sender: TObject);
@@ -473,30 +467,30 @@ type
 
     procedure Loaded;
 
-    {: Returns True if the material is blended.<p>
+    { Returns True if the material is blended.
        Will return the libmaterial's blending if it is linked to a material
        library. }
     function Blended: Boolean;
 
-    //: True if the material has a secondary texture
+    // True if the material has a secondary texture
     function HasSecondaryTexture: Boolean;
 
-    //: True if the material comes from the library instead of the texture property
+    // True if the material comes from the library instead of the texture property
     function MaterialIsLinkedToLib: Boolean;
 
-    //: Gets the primary texture either from material library or the texture property
+    // Gets the primary texture either from material library or the texture property
     function GetActualPrimaryTexture: TGLTexture;
 
-    //: Gets the primary Material either from material library or the texture property
+    // Gets the primary Material either from material library or the texture property
     function GetActualPrimaryMaterial: TGLMaterial;
 
-    //: Return the LibMaterial (see LibMaterialName)
+    // Return the LibMaterial (see LibMaterialName)
     function GetLibMaterial: TGLLibMaterial;
 
     procedure QuickAssignMaterial(const MaterialLibrary: TGLMaterialLibrary;
       const Material: TGLLibMaterial);
   published
-    { Published Declarations }
+     
     property BackProperties: TGLFaceProperties read GetBackProperties write
       SetBackProperties stored StoreMaterialProps;
     property FrontProperties: TGLFaceProperties read FFrontProperties write
@@ -533,7 +527,7 @@ type
     IGLMaterialLibrarySupported,
     IGLNotifyAble)
   protected
-    { Protected Declarations }
+     
     FUserList: TList;
     FName: TGLLibMaterialName;
     FNameHashKey: Integer;
@@ -542,7 +536,7 @@ type
     //implementing IGLMaterialLibrarySupported
     function GetMaterialLibrary: TGLAbstractMaterialLibrary;
     //implementing IInterface
-  {$IfDef FPC}
+
     {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -552,28 +546,24 @@ type
     function _AddRef: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     function _Release: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
     {$IFEND}
-  {$Else}
-    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-    function _AddRef: Integer; stdcall;
-    function _Release: Integer; stdcall;
-  {$EndIf}
+
   protected
-    { Protected Declarations }
+     
     function GetDisplayName: string; override;
     class function ComputeNameHashKey(const name: string): Integer;
     procedure SetName(const val: TGLLibMaterialName);
     procedure Loaded; virtual;{$IFNDEF GLS_CPPB} abstract; {$ENDIF}
 
   public
-    { Public Declarations }
+     
     constructor Create(ACollection: TCollection); override;
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
 
-    procedure Apply(var ARci: TRenderContextInfo); virtual; {$IFNDEF GLS_CPPB} abstract; {$ENDIF}
-    //: Restore non-standard material states that were altered
-    function UnApply(var ARci: TRenderContextInfo): Boolean; virtual; {$IFNDEF GLS_CPPB} abstract; {$ENDIF}
+    procedure Apply(var ARci: TGLRenderContextInfo); virtual; {$IFNDEF GLS_CPPB} abstract; {$ENDIF}
+    // Restore non-standard material states that were altered
+    function UnApply(var ARci: TGLRenderContextInfo): Boolean; virtual; {$IFNDEF GLS_CPPB} abstract; {$ENDIF}
 
     procedure RegisterUser(obj: TGLUpdateAbleObject); overload;
     procedure UnregisterUser(obj: TGLUpdateAbleObject); overload;
@@ -588,20 +578,20 @@ type
     function Blended: Boolean; virtual;
     property MaterialLibrary: TGLAbstractMaterialLibrary read GetMaterialLibrary;
   published
-    { Published Declarations }
+     
     property Name: TGLLibMaterialName read FName write SetName;
     property Tag: Integer read FTag write FTag;
   end;
 
   // TGLLibMaterial
   //
-    {: Material in a material library.<p>
+    { Material in a material library.
        Introduces Texture transformations (offset and scale). Those transformations
        are available only for lib materials to minimize the memory cost of basic
        materials (which are used in almost all objects). }
   TGLLibMaterial = class(TGLAbstractLibMaterial, IGLTextureNotifyAble)
   private
-    { Private Declarations }
+     
     FMaterial: TGLMaterial;
     FTextureOffset, FTextureScale: TGLCoordinates;
     FTextureRotate: Single;
@@ -612,7 +602,7 @@ type
     FShader: TGLShader;
     libMatTexture2: TGLLibMaterial; // internal cache
   protected
-    { Protected Declarations }
+     
     procedure Loaded; override;
     procedure SetMaterial(const val: TGLMaterial);
     procedure SetTextureOffset(const val: TGLCoordinates);
@@ -628,16 +618,16 @@ type
     procedure DoOnTextureNeeded(Sender: TObject; var textureFileName: string);
     procedure OnNotifyChange(Sender: TObject);
   public
-    { Public Declarations }
+     
     constructor Create(ACollection: TCollection); override;
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
 
     procedure PrepareBuildList;
-    procedure Apply(var ARci: TRenderContextInfo); override;
-    //: Restore non-standard material states that were altered
-    function UnApply(var ARci: TRenderContextInfo): Boolean; override;
+    procedure Apply(var ARci: TGLRenderContextInfo); override;
+    // Restore non-standard material states that were altered
+    function UnApply(var ARci: TGLRenderContextInfo): Boolean; override;
 
     procedure NotifyUsersOfTexMapChange;
     property TextureMatrix: TMatrix read FTextureMatrix write SetTextureMatrix;
@@ -645,14 +635,14 @@ type
     procedure NotifyTexMapChange(Sender: TObject);
     function Blended: Boolean; override;
   published
-    { Published Declarations }
+     
     property Material: TGLMaterial read FMaterial write SetMaterial;
 
-    {: Texture offset in texture coordinates.<p>
+    { Texture offset in texture coordinates.
        The offset is applied <i>after</i> scaling. }
     property TextureOffset: TGLCoordinates read FTextureOffset write
       SetTextureOffset;
-    {: Texture coordinates scaling.<p>
+    { Texture coordinates scaling.
        Scaling is applied <i>before</i> applying the offset, and is applied
        to the texture coordinates, meaning that a scale factor of (2, 2, 2)
        will make your texture look twice <i>smaller</i>. }
@@ -661,14 +651,14 @@ type
 
     property TextureRotate: Single read FTextureRotate write
       SetTextureRotate stored StoreTextureRotate;
-    {: Reference to the second texture.<p>
-       The referred LibMaterial *must* be in the same material library.<p>
+    { Reference to the second texture.
+       The referred LibMaterial *must* be in the same material library.
        Second textures are supported only through ARB multitexturing (ignored
        if not supported). }
     property Texture2Name: TGLLibMaterialName read FTexture2Name write
       SetTexture2Name;
 
-    {: Optionnal shader for the material. }
+    { Optionnal shader for the material. }
     property Shader: TGLShader read FShader write SetShader;
   end;
 
@@ -677,7 +667,7 @@ type
 
   TGLAbstractLibMaterials = class(TOwnedCollection)
   protected
-    { Protected Declarations }
+     
     procedure Loaded;
     function GetMaterial(const AName: TGLLibMaterialName): TGLAbstractLibMaterial;
     {$IFDEF GLS_INLINE}inline;{$ENDIF}
@@ -688,17 +678,17 @@ type
 
   // TGLLibMaterials
   //
-    {: A collection of materials, mainly used in material libraries. }
+    { A collection of materials, mainly used in material libraries. }
 
   TGLLibMaterials = class(TGLAbstractLibMaterials)
   protected
-    { Protected Declarations }
+     
     procedure SetItems(index: Integer; const val: TGLLibMaterial);
     function GetItems(index: Integer): TGLLibMaterial;
     procedure DestroyHandles;
 
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent);
 
     function Owner: TPersistent;
@@ -711,21 +701,21 @@ type
 
     function GetLibMaterialByName(const AName: TGLLibMaterialName):
       TGLLibMaterial;
-    {: Returns index of this Texture if it exists. }
+    { Returns index of this Texture if it exists. }
     function GetTextureIndex(const Texture: TGLTexture): Integer;
 
-    {: Returns index of this Material if it exists. }
+    { Returns index of this Material if it exists. }
     function GetMaterialIndex(const Material: TGLMaterial): Integer;
 
-    {: Returns name of this Texture if it exists. }
+    { Returns name of this Texture if it exists. }
     function GetNameOfTexture(const Texture: TGLTexture): TGLLibMaterialName;
 
-    {: Returns name of this Material if it exists. }
+    { Returns name of this Material if it exists. }
     function GetNameOfLibMaterial(const Material: TGLLibMaterial):
       TGLLibMaterialName;
 
     procedure PrepareBuildList;
-    {: Deletes all the unused materials in the collection.<p>
+    { Deletes all the unused materials in the collection.
        A material is considered unused if no other material or updateable object references it.
        WARNING: For this to work, objects that use the textuere, have to REGISTER to the texture.}
     procedure DeleteUnusedMaterials;
@@ -736,7 +726,7 @@ type
 
   TGLAbstractMaterialLibrary = class(TGLCadenceAbleComponent)
   protected
-    { Protected Declarations }
+     
     FMaterials: TGLAbstractLibMaterials;
     FLastAppliedMaterial: TGLAbstractLibMaterial;
     FTexturePaths: string;
@@ -745,43 +735,43 @@ type
     property TexturePaths: string read FTexturePaths write SetTexturePaths;
     procedure Loaded; override;
   public
-    { Public Declarations }
+     
 
     procedure SetNamesToTStrings(AStrings: TStrings);
-    {: Applies the material of given name.<p>
+    { Applies the material of given name.
        Returns False if the material could not be found. ake sure this
        call is balanced with a corresponding UnApplyMaterial (or an
-       assertion will be triggered in the destructor).<br>
+       assertion will be triggered in the destructor). 
        If a material is already applied, and has not yet been unapplied,
        an assertion will be triggered. }
     function ApplyMaterial(const AName: string;
-      var ARci: TRenderContextInfo): Boolean; virtual;
-    {: Un-applies the last applied material.<p>
-       Use this function in conjunction with ApplyMaterial.<br>
+      var ARci: TGLRenderContextInfo): Boolean; virtual;
+    { Un-applies the last applied material.
+       Use this function in conjunction with ApplyMaterial. 
        If no material was applied, an assertion will be triggered. }
-    function UnApplyMaterial(var ARci: TRenderContextInfo): Boolean; virtual;
+    function UnApplyMaterial(var ARci: TGLRenderContextInfo): Boolean; virtual;
   end;
 
   // TGLMaterialLibrary
   //
-  {: Stores a set of materials, to be used and shared by scene objects.<p>
+  { Stores a set of materials, to be used and shared by scene objects.
      Use a material libraries for storing commonly used materials, it provides
      an efficient way to share texture and material data among many objects,
-     thus reducing memory needs and rendering time.<p>
+     thus reducing memory needs and rendering time.
      Materials in a material library also feature advanced control properties
      like texture coordinates transforms. }
   TGLMaterialLibrary = class(TGLAbstractMaterialLibrary)
   private
-    { Private Declarations }
+     
     FDoNotClearMaterialsOnLoad: Boolean;
     FOnTextureNeeded: TTextureNeededEvent;
   protected
-    { Protected Declarations }
+     
     function GetMaterials: TGLLibMaterials;
     procedure SetMaterials(const val: TGLLibMaterials);
     function StoreMaterials: Boolean;
   public
-    { Public Declarations }
+     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure DestroyHandles;
@@ -792,55 +782,55 @@ type
     procedure LoadFromStream(aStream: TStream); dynamic;
     procedure AddMaterialsFromStream(aStream: TStream);
 
-    {: Save library content to a file.<p>
-       Recommended extension : .GLML<br>
+    { Save library content to a file.
+       Recommended extension : .GLML 
        Currently saves only texture, ambient, diffuse, emission
        and specular colors. }
     procedure SaveToFile(const fileName: string);
     procedure LoadFromFile(const fileName: string);
     procedure AddMaterialsFromFile(const fileName: string);
 
-    {: Add a "standard" texture material.<p>
+    { Add a "standard" texture material.
        "standard" means linear texturing mode with mipmaps and texture
-       modulation mode with default-strength color components.<br>
+       modulation mode with default-strength color components. 
        If persistent is True, the image will be loaded persistently in memory
        (via a TGLPersistentImage), if false, it will be unloaded after upload
        to OpenGL (via TGLPicFileImage). }
     function AddTextureMaterial(const materialName, fileName: string;
       persistent: Boolean = True): TGLLibMaterial; overload;
-    {: Add a "standard" texture material.<p>
+    { Add a "standard" texture material.
        TGLGraphic based variant. }
     function AddTextureMaterial(const materialName: string; graphic:
       TGLGraphic): TGLLibMaterial; overload;
 
-    {: Returns libMaterial of given name if any exists. }
+    { Returns libMaterial of given name if any exists. }
     function LibMaterialByName(const AName: TGLLibMaterialName): TGLLibMaterial;
 
-    {: Returns Texture of given material's name if any exists. }
+    { Returns Texture of given material's name if any exists. }
     function TextureByName(const LibMatName: TGLLibMaterialName): TGLTexture;
 
-    {: Returns name of texture if any exists. }
+    { Returns name of texture if any exists. }
     function GetNameOfTexture(const Texture: TGLTexture): TGLLibMaterialName;
 
-    {: Returns name of Material if any exists. }
+    { Returns name of Material if any exists. }
     function GetNameOfLibMaterial(const LibMat: TGLLibMaterial):
       TGLLibMaterialName;
 
   published
-    { Published Declarations }
-      {: The materials collection. }
+     
+      { The materials collection. }
     property Materials: TGLLibMaterials read GetMaterials write SetMaterials stored
       StoreMaterials;
-    {: This event is fired whenever a texture needs to be loaded from disk.<p>
+    { This event is fired whenever a texture needs to be loaded from disk.
        The event is triggered before even attempting to load the texture,
        and before TexturePaths is used. }
     property OnTextureNeeded: TTextureNeededEvent read FOnTextureNeeded write
       FOnTextureNeeded;
-    {: Paths to lookup when attempting to load a texture.<p>
+    { Paths to lookup when attempting to load a texture.
        You can specify multiple paths when loading a texture, the separator
        being the semi-colon ';' character. Directories are looked up from
-       first to last, the first file name match is used.<br>
-       The current directory is always implicit and checked last.<p>
+       first to last, the first file name match is used. 
+       The current directory is always implicit and checked last.
        Note that you can also use the OnTextureNeeded event to provide a
        filename. }
     property TexturePaths;
@@ -854,7 +844,7 @@ implementation
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
-
+uses Dialogs;
 
 resourcestring
   strCyclicRefMat = 'Cyclic reference detected in material "%s"';
@@ -863,11 +853,11 @@ resourcestring
   // Dummy methods for CPP
   //
 {$IFDEF GLS_CPPB}
-procedure TGLShader.DoApply(var Rci: TRenderContextInfo; Sender: TObject);
+procedure TGLShader.DoApply(var Rci: TGLRenderContextInfo; Sender: TObject);
 begin
 end;
 
-function TGLShader.DoUnApply(var Rci: TRenderContextInfo): Boolean;
+function TGLShader.DoUnApply(var Rci: TGLRenderContextInfo): Boolean;
 begin
   Result := True;
 end;
@@ -876,11 +866,11 @@ procedure TGLAbstractLibMaterial.Loaded;
 begin
 end;
 
-procedure TGLAbstractLibMaterial.Apply(var ARci: TRenderContextInfo);
+procedure TGLAbstractLibMaterial.Apply(var ARci: TGLRenderContextInfo);
 begin
 end;
 
-function TGLAbstractLibMaterial.UnApply(var ARci: TRenderContextInfo): Boolean;
+function TGLAbstractLibMaterial.UnApply(var ARci: TGLRenderContextInfo): Boolean;
 begin
   Result := True;
 end;
@@ -918,7 +908,7 @@ end;
 
 // Apply
 //
-procedure TGLFaceProperties.Apply(var rci: TRenderContextInfo;
+procedure TGLFaceProperties.Apply(var rci: TGLRenderContextInfo;
   aFace: TCullFaceMode);
 begin
   with rci.GLStates do
@@ -930,13 +920,13 @@ end;
 
 // ApplyNoLighting
 //
-procedure TGLFaceProperties.ApplyNoLighting(var rci: TRenderContextInfo;
+procedure TGLFaceProperties.ApplyNoLighting(var rci: TGLRenderContextInfo;
   aFace: TCullFaceMode);
 begin
   GL.Color4fv(Diffuse.AsAddress);
 end;
 
-// Assign
+ 
 //
 procedure TGLFaceProperties.Assign(Source: TPersistent);
 begin
@@ -1014,7 +1004,7 @@ begin
   FDepthClamp := False;
 end;
 
-procedure TGLDepthProperties.Apply(var rci: TRenderContextInfo);
+procedure TGLDepthProperties.Apply(var rci: TGLRenderContextInfo);
 begin
   with rci.GLStates do
   begin
@@ -1186,7 +1176,7 @@ end;
 // DoInitialize
 //
 
-procedure TGLShader.DoInitialize(var rci: TRenderContextInfo; Sender: TObject);
+procedure TGLShader.DoInitialize(var rci: TGLRenderContextInfo; Sender: TObject);
 begin
   // nothing here
 end;
@@ -1210,7 +1200,7 @@ end;
 // InitializeShader
 //
 
-procedure TGLShader.InitializeShader(var rci: TRenderContextInfo; Sender:
+procedure TGLShader.InitializeShader(var rci: TGLRenderContextInfo; Sender:
   TObject);
 begin
   FVirtualHandle.AllocateHandle;
@@ -1233,7 +1223,7 @@ end;
 // Apply
 //
 
-procedure TGLShader.Apply(var rci: TRenderContextInfo; Sender: TObject);
+procedure TGLShader.Apply(var rci: TGLRenderContextInfo; Sender: TObject);
 begin
 {$IFNDEF GLS_MULTITHREAD}
   Assert(not FShaderActive, 'Unbalanced shader application.');
@@ -1253,7 +1243,7 @@ end;
 // UnApply
 //
 
-function TGLShader.UnApply(var rci: TRenderContextInfo): Boolean;
+function TGLShader.UnApply(var rci: TGLRenderContextInfo): Boolean;
 begin
 {$IFNDEF GLS_MULTITHREAD}
   Assert(FShaderActive, 'Unbalanced shader application.');
@@ -1325,7 +1315,7 @@ begin
     FLibMatUsers.Remove(libMat);
 end;
 
-// Assign
+ 
 //
 
 procedure TGLShader.Assign(Source: TPersistent);
@@ -1340,7 +1330,7 @@ begin
     inherited Assign(Source); //to the pit of doom ;)
 end;
 
-// Assign
+ 
 //
 
 function TGLShader.ShaderSupported: Boolean;
@@ -1672,7 +1662,7 @@ end;
 // Apply
 //
 
-procedure TGLMaterial.Apply(var rci: TRenderContextInfo);
+procedure TGLMaterial.Apply(var rci: TGLRenderContextInfo);
 begin
   if Assigned(currentLibMaterial) then
     currentLibMaterial.Apply(rci)
@@ -1792,7 +1782,7 @@ end;
 // UnApply
 //
 
-function TGLMaterial.UnApply(var rci: TRenderContextInfo): Boolean;
+function TGLMaterial.UnApply(var rci: TGLRenderContextInfo): Boolean;
 begin
   if Assigned(currentLibMaterial) then
     Result := currentLibMaterial.UnApply(rci)
@@ -1807,7 +1797,7 @@ begin
   end;
 end;
 
-// Assign
+ 
 //
 
 procedure TGLMaterial.Assign(Source: TPersistent);
@@ -1997,7 +1987,7 @@ begin
   inherited Destroy;
 end;
 
-// Assign
+ 
 //
 
 procedure TGLAbstractLibMaterial.Assign(Source: TPersistent);
@@ -2015,15 +2005,11 @@ end;
 // QueryInterface
 //
 
-{$IfDef FPC}
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
   function TGLAbstractLibMaterial.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
 {$ELSE}
   function TGLAbstractLibMaterial.QueryInterface(constref IID: TGUID; out Obj): HResult; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
 {$IFEND}
-{$Else}
-  function TGLAbstractLibMaterial.QueryInterface(const IID: TGUID; out Obj): HResult;
-{$EndIf}
 begin
   if GetInterface(IID, Obj) then
     Result := S_OK
@@ -2033,30 +2019,23 @@ end;
 
 // _AddRef
 //
-{$IfDef FPC}
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
   function TGLAbstractLibMaterial._AddRef: Integer; stdcall;
 {$ELSE}
   function TGLAbstractLibMaterial._AddRef: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
 {$IFEND}
-{$Else}
-  function TGLAbstractLibMaterial._AddRef: Integer;
-{$EndIf}
 begin
   Result := -1; //ignore
 end;
 
 // _Release
 //
-{$IfDef FPC}
+
 {$IF (FPC_VERSION = 2) and (FPC_RELEASE < 5)}
   function TGLAbstractLibMaterial._Release: Integer; stdcall;
 {$ELSE}
   function TGLAbstractLibMaterial._Release: Integer; {$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
 {$IFEND}
-{$Else}
-  function TGLAbstractLibMaterial._Release: Integer;
-{$EndIf}
 begin
   Result := -1; //ignore
 end;
@@ -2274,7 +2253,7 @@ begin
   inherited;
 end;
 
-// Assign
+ 
 //
 
 procedure TGLLibMaterial.Assign(Source: TPersistent);
@@ -2310,7 +2289,7 @@ end;
 // Apply
 //
 
-procedure TGLLibMaterial.Apply(var ARci: TRenderContextInfo);
+procedure TGLLibMaterial.Apply(var ARci: TGLRenderContextInfo);
 var
   multitextured: Boolean;
 begin
@@ -2390,7 +2369,7 @@ end;
 // UnApply
 //
 
-function TGLLibMaterial.UnApply(var ARci: TRenderContextInfo): Boolean;
+function TGLLibMaterial.UnApply(var ARci: TGLRenderContextInfo): Boolean;
 begin
   Result := False;
   if Assigned(FShader) then
@@ -2930,7 +2909,7 @@ end;
 //
 
 function TGLAbstractMaterialLibrary.ApplyMaterial(const AName: string;
-  var ARci: TRenderContextInfo): Boolean;
+  var ARci: TGLRenderContextInfo): Boolean;
 begin
   FLastAppliedMaterial := FMaterials.GetMaterial(AName);
   Result := Assigned(FLastAppliedMaterial);
@@ -2942,7 +2921,7 @@ end;
 //
 
 function TGLAbstractMaterialLibrary.UnApplyMaterial(
-  var ARci: TRenderContextInfo): Boolean;
+  var ARci: TGLRenderContextInfo): Boolean;
 begin
   if Assigned(FLastAppliedMaterial) then
   begin
@@ -3320,7 +3299,7 @@ begin
             Read(Emission.AsAddress^, SizeOf(Single) * 3);
             Read(Specular.AsAddress^, SizeOf(Single) * 3);
             Read(FShininess, 1);
-            {: PolygonMode := TPolygonMode(} ReadInteger;
+            { PolygonMode := TPolygonMode(} ReadInteger;
           end;
           libMat.Material.BlendingMode := TBlendingMode(ReadInteger);
 
@@ -3442,7 +3421,7 @@ begin
   end;
 end;
 
-// LoadFromFile
+ 
 //
 
 procedure TGLMaterialLibrary.LoadFromFile(const fileName: string);
@@ -3480,23 +3459,29 @@ function TGLMaterialLibrary.AddTextureMaterial(const materialName, fileName:
   persistent: Boolean = True): TGLLibMaterial;
 begin
   Result := Materials.Add;
+
   with Result do
   begin
     Name := materialName;
+
     with Material.Texture do
     begin
       MinFilter := miLinearMipmapLinear;
       MagFilter := maLinear;
       TextureMode := tmModulate;
       Disabled := False;
+
       if persistent then
       begin
+
+        Image := TGLPersistentImage.Create(Material.Texture);
         ImageClassName := TGLPersistentImage.ClassName;
         if fileName <> '' then
           Image.LoadFromFile(fileName);
       end
       else
       begin
+        ShowMessage(filename);
         ImageClassName := TGLPicFileImage.ClassName;
         TGLPicFileImage(Image).PictureFileName := fileName;
       end;
@@ -3598,7 +3583,7 @@ end;
 
 {$IFDEF GLS_REGION}{$REGION 'TGLBlendingParameters'}{$ENDIF}
 
-procedure TGLBlendingParameters.Apply(var rci: TRenderContextInfo);
+procedure TGLBlendingParameters.Apply(var rci: TGLRenderContextInfo);
 begin
   if FUseAlphaFunc then
   begin

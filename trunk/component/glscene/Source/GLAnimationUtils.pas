@@ -1,15 +1,14 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLAnimationUtils<p>
+{
+  Main purpose is to give an easy way to create an interpolation.
 
-  Main purpose is to give an easy way to create an interpolation.<p>
-
-  <b>Historique : </b><font size=-1><ul>
-  <li>17/11/14 - PW - Renamed from AnimationUtils.pas to GLAnimationUtils.pas
-  <li>27/06/12 - YP - First pascal implementation of the tweener library
+  History :  
+   17/11/14 - PW - Renamed from AnimationUtils.pas to GLAnimationUtils.pas
+   27/06/12 - YP - First pascal implementation of the tweener library
                       http://code.google.com/p/tweener/
-  </ul></font>
+   
 }
 
 unit GLAnimationUtils;
@@ -20,9 +19,12 @@ interface
 {$I GLScene.inc}
 
 uses
-  SysUtils, Classes,
-  //GLS
-  GLCrossPlatform, GLVectorTypes, GLVectorGeometry;
+  SysUtils, 
+  Classes,
+   
+  GLCrossPlatform, 
+  GLVectorTypes, 
+  GLVectorGeometry;
 
 type
 

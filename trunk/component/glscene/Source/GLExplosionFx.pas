@@ -1,16 +1,15 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLExplosionFx<p>
+{
+   Explosion FX Effect
 
-  TGLBExplosionFX Effect<p>
-
-	<b>History : </b><font size=-1><ul>
-    <li>23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
-    <li>23/02/07 - DaStr - Fixed TGLBExplosionFx.Create (TGLCoordinatesStyle stuff)
-    <li>23/12/04 - PhP - GLScene Headerized, replaced some VectorXXX functions with XXXVector procedures
-    <li>07/03/04 - Matheus Degiovani - Creation
-  </ul></font>
+	 History :  
+     23/08/10 - Yar - Added OpenGLTokens to uses, replaced OpenGL1x functions to OpenGLAdapter
+     23/02/07 - DaStr - Fixed TGLBExplosionFx.Create (TGLCoordinatesStyle stuff)
+     23/12/04 - PhP - GLScene Headerized, replaced some VectorXXX functions with XXXVector procedures
+     07/03/04 - Matheus Degiovani - Creation
+   
 
   Description: this effect explodes a mesh object into triangles
   that fly over. You can define a default direction, in wich case
@@ -18,7 +17,7 @@
   or if you define a null vector as the direction, a vector will be
   calculated for each triangle, based on the normal vector of that
   triangle, with a little random addition so things look better.
-  Pretty neat :)<p>
+  Pretty neat :)
 
   Note: the owner of this behaviour should be any class that derives
   from TGLBaseMesh class or any other class derived from TGLBaseMesh.
@@ -30,11 +29,11 @@ unit GLExplosionFx;
 
 interface
 
-{$i GLScene.inc}
+{$I GLScene.inc}
 
 uses
   OpenGLTokens, GLVectorGeometry, GLScene, GLVectorFileObjects, GLVectorTypes,
-  GLVectorLists, XCollection, GLCoordinates, GLRenderContextInfo;
+  GLVectorLists, GLXCollection, GLCoordinates, GLRenderContextInfo;
 
 type
   TGLBExplosionFX = class(TGLObjectPreEffect)
@@ -65,9 +64,9 @@ type
   public
     property Enabled: boolean read FEnabled write SetEnabled;
     property Step: integer read FStep;
-    constructor Create(aOwner : TXCollection); override;
+    constructor Create(aOwner : TGLXCollection); override;
     destructor Destroy; override;
-    procedure Render(var rci : TRenderContextInfo); override;
+    procedure Render(var rci : TGLRenderContextInfo); override;
     { resets the behaviour, so the information can be re-cached and
       the mesh can be exploded again }
     procedure Reset;
@@ -88,7 +87,7 @@ uses
 
 // Create
 //
-constructor TGLBExplosionFx.Create(aOwner: TXCollection);
+constructor TGLBExplosionFx.Create(aOwner: TGLXCollection);
 begin
   inherited Create(AOwner);
   FTriList := TAffineVectorList.Create;
@@ -111,7 +110,7 @@ begin
   inherited Destroy;
 end;
 
-// FriendlyName
+ 
 //
 class function TGLBExplosionFX.FriendlyName: string;
 begin
@@ -238,7 +237,7 @@ end;
 
 // Render
 //
-procedure TGLBExplosionFX.Render(var rci : TRenderContextInfo);
+procedure TGLBExplosionFX.Render(var rci : TGLRenderContextInfo);
 var
   Face: integer;
   dir, p1, p2, p3: TAffineVector;

@@ -1,5 +1,8 @@
-//GLTexturedHDS
-{: Implements a HDS, which automatically maps textures onto a parent HDS .<p>
+//
+// This unit is part of the GLScene Project, http://glscene.org
+//
+{
+   Implements a HDS, which automatically maps textures onto a parent HDS .
    This HDS links to and extracts its height data from a parent HDS. (like TGLHeightTileFile)
 
    The HDS also links to a TGLMaterial Library, and maps ALL textures from the
@@ -14,12 +17,12 @@
    sure your texture edges are alligned to height tile edges, or gaps will show.
    (Of course you can still multitexture in a detail texture too.)
 
-	<b>History : </b><font size=-1><ul>
-      <li>22/01/07 - LIN - Added 'TileSize' and 'TilesPerTexture' properties
+	 History :  
+       22/01/07 - LIN - Added 'TileSize' and 'TilesPerTexture' properties
                            Removed 'Active' property
                            Now works with both TGLHeightTileFileHDS AND TGLBitmapHDS
-      <li>19/01/07 - LIN - Creation 
-	</ul></font>
+       19/01/07 - LIN - Creation 
+	 
 }
 
 unit GLTexturedHDS;
@@ -31,32 +34,32 @@ interface
 uses Classes, GLCrossPlatform, GLHeightData, GLMaterial;
 
 type
-	TGLTexturedHDS = class (THeightDataSource)
+	TGLTexturedHDS = class (TGLHeightDataSource)
 	   private
-	      { Private Declarations }
+	       
          FOnStartPreparingData : TStartPreparingDataEvent;
          FOnMarkDirty : TMarkDirtyEvent;
-         FHeightDataSource : THeightDataSource;
+         FHeightDataSource : TGLHeightDataSource;
          FMaterialLibrary  : TGLMaterialLibrary;
          FWholeTilesOnly   : Boolean;
          FTileSize         : integer;
          FTilesPerTexture  : integer;
 	   protected
-	      { Protected Declarations }
-         procedure SetHeightDataSource(val:THeightDataSource);
+	       
+         procedure SeTGLHeightDataSource(val:TGLHeightDataSource);
 	   public
-	      { Public Declarations }
+	       
   	     constructor Create(AOwner: TComponent); override;
          destructor Destroy; override;
-         procedure StartPreparingData(heightData : THeightData); override;
+         procedure StartPreparingData(heightData : TGLHeightData); override;
          procedure MarkDirty(const area : TGLRect); override;
 
 	   published
-	      { Published Declarations }
+	       
          property MaxPoolSize;
          property OnStartPreparingData : TStartPreparingDataEvent read FOnStartPreparingData write FOnStartPreparingData;
          property OnMarkDirtyEvent : TMarkDirtyEvent read FOnMarkDirty write FOnMarkDirty;
-         property HeightDataSource : THeightDataSource  read FHeightDataSource write SetHeightDataSource;
+         property HeightDataSource : TGLHeightDataSource  read FHeightDataSource write SeTGLHeightDataSource;
          property MaterialLibrary  : TGLMaterialLibrary read FMaterialLibrary  write FMaterialLibrary;
          property WholeTilesOnly   : Boolean read FWholeTilesOnly write FWholeTilesOnly;
                   {This should match TileSize in TGLTerrainRenderer}
@@ -99,12 +102,12 @@ begin
 end;
 
 
-procedure TGLTexturedHDS.StartPreparingData(heightData : THeightData);
-var HDS:THeightDataSource;
-    htfHD:THeightData;
+procedure TGLTexturedHDS.StartPreparingData(heightData : TGLHeightData);
+var HDS:TGLHeightDataSource;
+    htfHD:TGLHeightData;
     MatLib:TGLMaterialLibrary;
     Mat:TGLLibMaterial;
-    HD:THeightData;
+    HD:TGLHeightData;
     MatInx:integer;
     tileL,tileR,tileT,tileB:single;
     found:boolean;
@@ -176,7 +179,7 @@ begin
   inherited;
 end;
 
-procedure TGLTexturedHDS.SetHeightDataSource(val:THeightDataSource);
+procedure TGLTexturedHDS.SeTGLHeightDataSource(val:TGLHeightDataSource);
 begin
   if val=self then FHeightDataSource:=nil
               else FHeightDataSource:=val;

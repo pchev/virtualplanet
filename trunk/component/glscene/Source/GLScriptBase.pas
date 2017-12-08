@@ -1,20 +1,22 @@
-// GLScriptBase
-{: An abstract scripting interface for GLScene<p>
-
+//
+// This unit is part of the GLScene Project, http://glscene.org
+//
+{
+   An abstract scripting interface for GLScene
    This unit provides the base methods for compiling and executing scripts as
    well as calling scripted functions. No scripting APIs are implemented here,
-   only abstracted functions.<p>
+   only abstracted functions.
 
-   <b>History : </b><font size=-1><ul>
-      <li>04/11/2004 - SG - Creation
-   </ul></font>
+    History :  
+       04/11/2004 - SG - Creation
+    
 }
 unit GLScriptBase;
 
 interface
 
 uses
-  Classes, XCollection;
+  Classes, GLXCollection;
 
 type
   TGLScriptState = ( ssUncompiled,    // The script has yet to be compiled.
@@ -28,18 +30,18 @@ type
 
   // TGLScriptBase
   //
-  {: The base script class that defines the abstract functions and properties. 
+  { The base script class that defines the abstract functions and properties. 
      Don't use this class directly, use the script classes descended from this 
      base class.  }
-  TGLScriptBase = class(TXCollectionItem)
+  TGLScriptBase = class(TGLXCollectionItem)
 		private
-      { Private Declarations }
+       
       FText : TStringList;
       FDescription : String;
       FErrors : TStringList; // not persistent
 
 		protected
-			{ Protected Declarations }
+			 
       procedure WriteToFiler(writer : TWriter); override;
       procedure ReadFromFiler(reader : TReader); override;
       function GetState : TGLScriptState; virtual; abstract;
@@ -47,8 +49,8 @@ type
       procedure Notification(AComponent: TComponent; Operation: TOperation); virtual;
 
 		public
-      { Public Declarations }
-      constructor Create(aOwner : TXCollection); override;
+       
+      constructor Create(aOwner : TGLXCollection); override;
       destructor Destroy; override;
 
       procedure Assign(Source: TPersistent); override;
@@ -66,7 +68,7 @@ type
       property State : TGLScriptState read GetState;
 
 		published
-      { Published Declarations }
+       
       property Text : TStringList read FText write SetText;
       property Description : String read FDescription write FDescription;
 
@@ -74,37 +76,37 @@ type
 
   // TGLScripts
   //
-  {: XCollection descendant for storing and handling scripts. }
-  TGLScripts = class(TXCollection)
+  { XCollection descendant for storing and handling scripts. }
+  TGLScripts = class(TGLXCollection)
 		private
-			{ Private Declarations }
+			 
 
 		protected
-			{ Protected Declarations }
+			 
       function GetItems(index : Integer) : TGLScriptBase;
 
 		public
-			{ Public Declarations }
+			 
 			procedure Assign(Source: TPersistent); override;
 
-      class function ItemsClass : TXCollectionItemClass; override;
+      class function ItemsClass : TGLXCollectionItemClass; override;
 
-      function CanAdd(aClass : TXCollectionItemClass) : Boolean; override;
+      function CanAdd(aClass : TGLXCollectionItemClass) : Boolean; override;
       property Items[index : Integer] : TGLScriptBase read GetItems; default;
 
   end;
 
   // TGLScriptLibrary
   //
-  {: Encapsulation of the scripts XCollection to help with script handling at
+  { Encapsulation of the scripts XCollection to help with script handling at
      design-time. Links the scripts to Delphi's persistence model. }
   TGLScriptLibrary = class (TComponent)
     private
-      { Private Declarations }
+       
       FScripts : TGLScripts;
 
     protected
-      { Protected Declarations }
+       
       procedure DefineProperties(Filer : TFiler); override;
       procedure WriteScriptsData(Stream : TStream);
       procedure ReadScriptsData(Stream : TStream);
@@ -112,12 +114,12 @@ type
       procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
     public
-      { Public Declarations }
+       
       constructor Create(AOwner : TComponent); override;
       destructor Destroy; override;
 
     published
-      { Published Declarations }
+       
       property Scripts : TGLScripts read FScripts;
 
   end;
@@ -130,7 +132,7 @@ implementation
 
 // Create
 //
-constructor TGLScriptBase.Create(aOwner: TXCollection);
+constructor TGLScriptBase.Create(aOwner: TGLXCollection);
 begin
   inherited;
   FText:=TStringList.Create;
@@ -146,7 +148,7 @@ begin
   inherited;
 end;
 
-// Assign
+ 
 //
 procedure TGLScriptBase.Assign(Source: TPersistent);
 begin
@@ -204,7 +206,7 @@ end;
 // --------------- TGLScripts ---------------
 // ---------------
 
-// Assign
+ 
 //
 procedure TGLScripts.Assign(Source: TPersistent);
 begin
@@ -221,14 +223,14 @@ end;
 
 // ItemsClass
 //
-class function TGLScripts.ItemsClass: TXCollectionItemClass;
+class function TGLScripts.ItemsClass: TGLXCollectionItemClass;
 begin
   Result:=TGLScriptBase;
 end;
 
 // CanAdd
 //
-function TGLScripts.CanAdd(aClass: TXCollectionItemClass): Boolean;
+function TGLScripts.CanAdd(aClass: TGLXCollectionItemClass): Boolean;
 begin
   Result:=aClass.InheritsFrom(TGLScriptBase);
 end;

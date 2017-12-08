@@ -1,29 +1,28 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLFBO<p>
-
+{
   Implements FBO support for GLScene.
 
   Original author of the unit is Riz.
   Modified by C4 and YarUnderoaker (hope, I didn't miss anybody).
 
-  <b>History : </b><font size=-1><ul>
-  <li>30/08/13 - NelC - Added OnSetTextureTargets
-  <li>09/07/12 - Yar - Fixed DoPostInitialize and DoPreInitialize events (thanks to Gabriel Corneanu)
-  <li>22/04/11 - Yar - Bugfixed lighting state restoration
-  <li>13/02/11 - Yar - Added RenderContextInfo to BeforeRender and AfterRender event
-  <li>07/01/11 - Yar - Added properties Active and PickableTarget
-  <li>23/08/10 - Yar - Changes for forward core
-  <li>02/06/10 - Yar - Replaced OpenGL functions to OpenGLAdapter
-  <li>22/04/10 - Yar - Fixes after GLState revision
-  <li>15/02/10 - Yar - Added notification of freeing RootObject
-  <li>22/01/10 - Yar - Added ClearOptions, Level, Layer, PostGenerateMipmap
+   History :  
+   30/08/13 - NelC - Added OnSetTextureTargets
+   09/07/12 - Yar - Fixed DoPostInitialize and DoPreInitialize events (thanks to Gabriel Corneanu)
+   22/04/11 - Yar - Bugfixed lighting state restoration
+   13/02/11 - Yar - Added RenderContextInfo to BeforeRender and AfterRender event
+   07/01/11 - Yar - Added properties Active and PickableTarget
+   23/08/10 - Yar - Changes for forward core
+   02/06/10 - Yar - Replaced OpenGL functions to OpenGLAdapter
+   22/04/10 - Yar - Fixes after GLState revision
+   15/02/10 - Yar - Added notification of freeing RootObject
+   22/01/10 - Yar - Added ClearOptions, Level, Layer, PostGenerateMipmap
   UseBufferBackground moved to coUseBufferBackground
-  <li>14/12/09 - DaStr - Fixed memory leak (thanks YarUnderoaker)
-  <li>11/11/09 - DaStr - Added $I GLScene.inc
-  <li>09/11/09 - DaStr - Initial version (contributed to GLScene)
-  </ul></font>
+   14/12/09 - DaStr - Fixed memory leak (thanks YarUnderoaker)
+   11/11/09 - DaStr - Added $I GLScene.inc
+   09/11/09 - DaStr - Initial version (contributed to GLScene)
+   
 }
 unit GLFBORenderer;
 
@@ -33,7 +32,7 @@ interface
 
 uses
   Classes, SysUtils,
-  //GLS
+   
   GLVectorGeometry, GLScene, GLTexture, GLContext, GLFBO, GLColor,
   GLMaterial, GLRenderContextInfo, GLState, OpenGLTokens,
   GLTextureFormat,
@@ -124,13 +123,13 @@ type
 
     procedure ForceDimensions(Texture: TGLTexture);
 
-    procedure RenderToFBO(var ARci: TRenderContextInfo);
+    procedure RenderToFBO(var ARci: TGLRenderContextInfo);
 
-    procedure ApplyCamera(var ARci: TRenderContextInfo);
-    procedure UnApplyCamera(var ARci: TRenderContextInfo);
+    procedure ApplyCamera(var ARci: TGLRenderContextInfo);
+    procedure UnApplyCamera(var ARci: TGLRenderContextInfo);
 
-    procedure DoBeforeRender(var ARci: TRenderContextInfo);
-    procedure DoAfterRender(var ARci: TRenderContextInfo);
+    procedure DoBeforeRender(var ARci: TGLRenderContextInfo);
+    procedure DoAfterRender(var ARci: TGLRenderContextInfo);
     procedure DoPreInitialize;
     procedure DoPostInitialize;
 
@@ -143,7 +142,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure DoRender(var ARci: TRenderContextInfo; ARenderSelf: Boolean;
+    procedure DoRender(var ARci: TGLRenderContextInfo; ARenderSelf: Boolean;
       ARenderChildren: Boolean); override;
 
     { : Layer (also cube map face) is activated only on
@@ -243,7 +242,7 @@ implementation
 
 { TGLFBORenderer }
 
-procedure TGLFBORenderer.ApplyCamera(var ARci: TRenderContextInfo);
+procedure TGLFBORenderer.ApplyCamera(var ARci: TGLRenderContextInfo);
 var
   sc: Single;
 begin
@@ -274,7 +273,7 @@ begin
   end;
 end;
 
-procedure TGLFBORenderer.UnApplyCamera(var ARci: TRenderContextInfo);
+procedure TGLFBORenderer.UnApplyCamera(var ARci: TGLRenderContextInfo);
 begin
   ARci.cameraPosition := FStoreCamera[0];
   ARci.cameraDirection := FStoreCamera[1];
@@ -319,13 +318,13 @@ begin
     FRootObject := nil;
 end;
 
-procedure TGLFBORenderer.DoAfterRender(var ARci: TRenderContextInfo);
+procedure TGLFBORenderer.DoAfterRender(var ARci: TGLRenderContextInfo);
 begin
   if Assigned(FAfterRender) then
     FAfterRender(Self, ARci);
 end;
 
-procedure TGLFBORenderer.DoBeforeRender(var ARci: TRenderContextInfo);
+procedure TGLFBORenderer.DoBeforeRender(var ARci: TGLRenderContextInfo);
 begin
   if Assigned(FBeforeRender) then
     FBeforeRender(Self, ARci);
@@ -343,7 +342,7 @@ begin
     FPreInitialize(Self);
 end;
 
-procedure TGLFBORenderer.DoRender(var ARci: TRenderContextInfo;
+procedure TGLFBORenderer.DoRender(var ARci: TGLRenderContextInfo;
   ARenderSelf, ARenderChildren: Boolean);
 begin
   if not (csDesigning in ComponentState) then
@@ -573,7 +572,7 @@ begin
   ClearStructureChanged;
 end;
 
-procedure TGLFBORenderer.RenderToFBO(var ARci: TRenderContextInfo);
+procedure TGLFBORenderer.RenderToFBO(var ARci: TGLRenderContextInfo);
 
   function GetClearBits: cardinal;
   begin

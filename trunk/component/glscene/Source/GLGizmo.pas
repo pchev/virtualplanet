@@ -1,21 +1,20 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLGizmo<p>
-
+{
   Invisible component for helping to Move, Rotate and Scale an Object
-  under GLScene (usefull for an Editor).<p>
+  under GLScene (usefull for an Editor).
 
-  <b>History : </b><font size=-1><ul>
-  <li>10/11/12 - PW - Added CPP compatibility by changing arrays to records for vectors;
+   History :  
+   10/11/12 - PW - Added CPP compatibility by changing arrays to records for vectors;
                  replaced uppercase characters in prefixes for enum types to lower case
-  <li>22/04/10 - Yar - Fixes after GLState revision
-  <li>14/07/09 - DaStr - Bugfixed object selection from code (thanks Predator)
-  <li>20/01/08 - DaStr - Cleaned up uses section for proper FPC support
+   22/04/10 - Yar - Fixes after GLState revision
+   14/07/09 - DaStr - Bugfixed object selection from code (thanks Predator)
+   20/01/08 - DaStr - Cleaned up uses section for proper FPC support
                 (thanks Lukasz Sokol)
-  <li>18/09/07 - DaStr - Initial version (based on GLGizmo.pas by Adirex,
+   18/09/07 - DaStr - Initial version (based on GLGizmo.pas by Adirex,
                  J.Delauney, Degiovani, Marcus Oblak and a bit myself)
-  </ul></font>
+   
 }
 //
 // Original Header:
@@ -70,7 +69,6 @@ uses
   // Standard
   Classes, SysUtils,
 
-  // GLScene
   GLScene, GLColor, GLObjects, GLVectorGeometry, GLMaterial, GLStrings,
   GLGeomObjects, GLBitmapFont, GLViewer, GLVectorFileObjects, GLCrossPlatform,
   GLCoordinates, GLRenderContextInfo, GLState, GLSelection
@@ -244,8 +242,8 @@ type
 
     procedure SetExcludeObjectsList(const AValue: TStrings);
 
-    procedure DirectGlDisable(Sender: TObject; var Rci: TRenderContextInfo);
-    procedure DirectGlEnable(Sender: TObject; var Rci: TRenderContextInfo);
+    procedure DirectGlDisable(Sender: TObject; var Rci: TGLRenderContextInfo);
+    procedure DirectGlEnable(Sender: TObject; var Rci: TGLRenderContextInfo);
 
     function MouseWorldPos(const X, Y: Integer): TVector;
     function CheckObjectInExcludeList(const Obj: TGLBaseSceneObject): Boolean;
@@ -935,7 +933,7 @@ end;
 // ------------------------------------------------------------------------------
 
 procedure TGLGizmo.DirectGlDisable(Sender: TObject;
-  var Rci: TRenderContextInfo);
+  var Rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     Rci.GLStates.Disable(StDepthTest);
@@ -958,7 +956,7 @@ begin
   end;
 end;
 
-procedure TGLGizmo.DirectGlEnable(Sender: TObject; var Rci: TRenderContextInfo);
+procedure TGLGizmo.DirectGlEnable(Sender: TObject; var Rci: TGLRenderContextInfo);
 begin
   if FNoZWrite then
     Rci.GLStates.Enable(StDepthTest);

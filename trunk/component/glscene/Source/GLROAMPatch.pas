@@ -1,31 +1,30 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLROAMPatch<p>
+{
+  Class for managing a ROAM (square) patch.
 
-  Class for managing a ROAM (square) patch.<p>
-
-  <b>History : </b><font size=-1><ul>
-  <li>29/12/14 - PW - Fixed SafeTesselation function that caused gaps between tiles
-  <li>22/08/10 - DaStr - Fixed compiler warning
-  <li>27/07/10 - YP - Safe tesselation operation to avoid AV after a memory shift
-  <li>26/07/10 - YP - Invalid range test when splitting, we need to check space for n and n+1
-  <li>20/05/10 - Yar - Fixes for Linux x64
-  <li>16/10/08 - UweR - Compatibility fix for Delphi 2009
-  <li>30/03/07 - DaStr - Added $I GLScene.inc
-  <li>19/10/06 - LC - Added code to gracefully handle the case when MaxCLODTriangles is reached.
+   History :  
+   29/12/14 - PW - Fixed SafeTesselation function that caused gaps between tiles
+   22/08/10 - DaStr - Fixed compiler warning
+   27/07/10 - YP - Safe tesselation operation to avoid AV after a memory shift
+   26/07/10 - YP - Invalid range test when splitting, we need to check space for n and n+1
+   20/05/10 - Yar - Fixes for Linux x64
+   16/10/08 - UweR - Compatibility fix for Delphi 2009
+   30/03/07 - DaStr - Added $I GLScene.inc
+   19/10/06 - LC - Added code to gracefully handle the case when MaxCLODTriangles is reached.
   It will now increase the buffer instead of not splitting. Bugtracker ID=1574111
-  <li>09/10/06 - Lin - Added OnMaxCLODTrianglesReached event.
-  <li>09/06/06 - Lin - Bugfix: Stop splitting Triangles when MaxCLODTriangles is reached (prevents Access Violations)
-  <li>10/06/05 - Mathx - Protection against cards that have GL_EXT_compiled_vertex_array
+   09/10/06 - Lin - Added OnMaxCLODTrianglesReached event.
+   09/06/06 - Lin - Bugfix: Stop splitting Triangles when MaxCLODTriangles is reached (prevents Access Violations)
+   10/06/05 - Mathx - Protection against cards that have GL_EXT_compiled_vertex_array
   but not GL_EXT_draw_range_elements
-  <li>25/04/04 - EG - Occlusion testing support
-  <li>06/02/03 - EG - Adaptative variance computation
-  <li>03/12/02 - EG - Minor ROAM tessel/render optimizations
-  <li>15/06/02 - EG - Fixed patch rendering bug "introduced" by TBaseList fix
-  <li>24/02/02 - EG - Hybrid ROAM-stripifier engine
-  <li>10/09/01 - EG - Creation
-  </ul></font>
+   25/04/04 - EG - Occlusion testing support
+   06/02/03 - EG - Adaptative variance computation
+   03/12/02 - EG - Minor ROAM tessel/render optimizations
+   15/06/02 - EG - Fixed patch rendering bug "introduced" by TBaseList fix
+   24/02/02 - EG - Hybrid ROAM-stripifier engine
+   10/09/01 - EG - Creation
+   
 }
 unit GLROAMPatch;
 
@@ -63,9 +62,9 @@ type
   //
   TGLROAMPatch = class(TObject)
   private
-    { Private Declarations }
+     
     FID: Integer;
-    FHeightData: THeightData; // Referred, not owned
+    FHeightData: TGLHeightData; // Referred, not owned
     FHeightRaster: PSmallIntRaster;
     FTLNode, FBRNode: Integer;
     FTLVariance, FBRVariance: array of cardinal;
@@ -85,8 +84,8 @@ type
     FLastOcclusionTestPassed: Boolean;
 
   protected
-    { Protected Declarations }
-    procedure SetHeightData(val: THeightData);
+     
+    procedure SeTGLHeightData(val: TGLHeightData);
     procedure SetOcclusionSkip(val: Integer);
 
     procedure RenderROAM(vertices: TAffineVectorList;
@@ -97,7 +96,7 @@ type
     function Tesselate: boolean;
     // Returns false if MaxCLODTriangles limit is reached(Lin)
   public
-    { Public Declarations }
+     
     constructor Create;
     destructor Destroy; override;
 
@@ -107,23 +106,23 @@ type
     procedure ConnectToTheWest(westPatch: TGLROAMPatch);
     procedure ConnectToTheNorth(northPatch: TGLROAMPatch);
 
-    { : AV free version of Tesselate.<p>
+    { : AV free version of Tesselate.
       When IncreaseTrianglesCapacity is called, all PROAMTriangleNode
       values in higher function became invalid due to the memory shifting.
       Recursivity is the main problem, that's why SafeTesselate is calling
       Tesselate in a try..except . }
     function SafeTesselate: boolean;
 
-    { : Render the patch in high-resolution.<p>
+    { : Render the patch in high-resolution.
       The lists are assumed to have enough capacity to allow AddNC calls
       (additions without capacity check). High-resolution renders use
       display lists, and are assumed to be made together. }
     procedure RenderHighRes(vertices: TAffineVectorList;
       vertexIndices: TIntegerList; texCoords: TTexPointList;
       forceROAM: Boolean);
-    { : Render the patch by accumulating triangles.<p>
+    { : Render the patch by accumulating triangles.
       The lists are assumed to have enough capacity to allow AddNC calls
-      (additions without capacity check).<br>
+      (additions without capacity check). 
       Once at least autoFlushVertexCount vertices have been accumulated,
       perform a FlushAccum }
     procedure RenderAccum(vertices: TAffineVectorList;
@@ -134,7 +133,7 @@ type
     class procedure FlushAccum(vertices: TAffineVectorList;
       vertexIndices: TIntegerList; texCoords: TTexPointList);
 
-    property HeightData: THeightData read FHeightData write SetHeightData;
+    property HeightData: TGLHeightData read FHeightData write SeTGLHeightData;
     property VertexScale: TAffineVector read FVertexScale write FVertexScale;
     property VertexOffset: TAffineVector read FVertexOffset write FVertexOffset;
 
@@ -152,7 +151,7 @@ type
     { : Number of frames remaining to next occlusion test. }
     property OcclusionCounter: Integer read FOcclusionCounter
       write FOcclusionCounter;
-    { : Result for the last occlusion test.<p>
+    { : Result for the last occlusion test.
       Note that this value is updated upon rendering the tile in
       non-high-res mode only. }
     property LastOcclusionTestPassed: Boolean read FLastOcclusionTestPassed;
@@ -396,9 +395,9 @@ begin
   inherited Destroy;
 end;
 
-// SetHeightData
+// SeTGLHeightData
 //
-procedure TGLROAMPatch.SetHeightData(val: THeightData);
+procedure TGLROAMPatch.SeTGLHeightData(val: TGLHeightData);
 begin
   FHeightData := val;
   FPatchSize := FHeightData.Size - 1;

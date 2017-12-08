@@ -1,18 +1,20 @@
-﻿{: GLCarbonContext<p>
+﻿//
+// This unit is part of the GLScene Project, http://glscene.org
+//
+{
+   Carbon specific Context.
 
-   Carbon specific Context.<p>
-
-   <b>History : </b><font size=-1><ul>
-      <li>19/02/11 - PREDATOR - Added Share Context, MemoryViewerContext. 
+    History :  
+       19/02/11 - PREDATOR - Added Share Context, MemoryViewerContext. 
                                 Updated Chose Pixel Format
-      <li>16/02/11 - PREDATOR - Added support for Mac OS X. Tested on Mac OS X 10.6.5.
-      <li>10/06/09 - DanB - Added to main GLScene CVS repository (from GLScene-Lazarus).
-      <li>14/11/08 - Creation
-   </ul></font>
+       16/02/11 - PREDATOR - Added support for Mac OS X. Tested on Mac OS X 10.6.5.
+       10/06/09 - DanB - Added to main GLScene CVS repository (from GLScene-Lazarus).
+       14/11/08 - Creation
+    
 }
 unit GLCarbonContext;
 
-{$i GLScene.inc}
+{$I GLScene.inc}
 
 interface
 
@@ -24,10 +26,10 @@ uses
 type
    // TGLCarbonContext
    //
-   {: A context driver for standard XOpenGL. }
+   { A context driver for standard XOpenGL. }
    TGLCarbonContext = class (TGLContext)
       private
-         { Private Declarations }
+          
          FRC: TAGLContext;
          FShareContext: TGLCarbonContext;
          FHPBUFFER: PAGLPBuffer;
@@ -48,7 +50,7 @@ type
          procedure CreateNewContext;
          procedure Validate;
       protected
-         { Protected Declarations }
+          
          procedure ClearIAttribs;
          procedure AddIAttrib(attrib, value : Integer);
          procedure ChangeIAttrib(attrib, newValue : Integer);
@@ -56,7 +58,7 @@ type
 
          procedure DestructionEarlyWarning(sender: TObject);
 
-         {: DoGetHandles must be implemented in child classes,
+         { DoGetHandles must be implemented in child classes,
             and return the display + window }
          procedure DoGetHandles(outputDevice: HWND; out XWin: HWND); virtual;
            abstract;
@@ -70,7 +72,7 @@ type
          //property DC: HWND read FDC;
          property RenderingContext: TAGLContext read FRC;
       public
-         { Public Declarations }
+          
          constructor Create; override;
          destructor Destroy; override;
 
@@ -107,7 +109,7 @@ var
   var
     I, Res, OverRes: integer;
   begin
-    {: Appointment of a function to look for equal or approximate values
+    { Appointment of a function to look for equal or approximate values
        of attributes from the list AGL.
       If you just ask all the attributes
       that the user can put it out of ignorance

@@ -1,13 +1,12 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{ : GLSceneForm<p>
-
-  <b>History : </b><font size=-1><ul>
-  <li>05/04/11 - Yar - Added property FullScreenVideoMode (thanks to ltyrosine)
-  <li>08/12/10 - Yar - Added code for Lazarus (thanks Rustam Asmandiarov aka Predator)
-  <li>23/08/10 - Yar - Creation
-  </ul></font>
+{
+   History :  
+   05/04/11 - Yar - Added property FullScreenVideoMode (thanks to ltyrosine)
+   08/12/10 - Yar - Added code for Lazarus (thanks Rustam Asmandiarov aka Predator)
+   23/08/10 - Yar - Creation
+   
 }
 
 unit GLSceneForm;
@@ -32,14 +31,8 @@ uses
 {$IFEND}
 {$ENDIF}
   Classes,
-{$IFDEF GLS_DELPHI_XE2_UP}
-  VCL.Controls,
-  VCL.Forms,
-{$ELSE}
   Controls,
   Forms,
-{$ENDIF}
-
   GLScene,
   GLContext,
   GLCrossPlatform,
@@ -58,7 +51,7 @@ type
 
   // TGLFullScreenResolution
   //
-  {: Defines how GLSceneForm will handle fullscreen request
+  { Defines how GLSceneForm will handle fullscreen request
      fcWindowMaximize: Use current resolution (just maximize form and hide OS bars)
      fcNearestResolution: Change to nearest valid resolution from current window size
      fcManualResolution: Use FFullScreenVideoMode settings }
@@ -69,7 +62,7 @@ type
 
   // TGLFullScreenVideoMode
   //
-  {: Screen mode settings }
+  { Screen mode settings }
   TGLFullScreenVideoMode = class(TPersistent)
   private
     FOwner: TGLSceneForm;
@@ -100,7 +93,7 @@ type
 
   TGLSceneForm = class(TForm)
   private
-    { Private Declarations }
+     
     FBuffer: TGLSceneBuffer;
     FVSync: TVSyncMode;
     FOwnDC: HDC;
@@ -118,14 +111,7 @@ type
     function GetFieldOfView: single;
     procedure SetFieldOfView(const Value: single);
     function GetIsRenderingContextAvailable: Boolean;
-{$IFDEF GLS_DELPHI_OR_CPPB}
-    procedure WMEraseBkgnd(var Message: TWMEraseBkgnd); message WM_ERASEBKGND;
-    procedure WMPaint(var Message: TWMPaint); message WM_PAINT;
-    procedure WMSize(var Message: TWMSize); message WM_SIZE;
-    procedure WMDestroy(var Message: TWMDestroy); message WM_DESTROY;
-    procedure LastFocus(var Mess: TMessage); message WM_ACTIVATE;
-{$ENDIF}
-{$IFDEF FPC}
+
     procedure LMEraseBkgnd(var Message: TLMEraseBkgnd); message LM_ERASEBKGND;
     procedure LMPaint(var Message: TLMPaint); message LM_PAINT;
     procedure LMSize(var Message: TLMSize); message LM_SIZE;
@@ -134,12 +120,12 @@ type
 {$IF (lcl_major <= 0) and (lcl_minor <= 9) and (lcl_release < 31)}
     procedure LastFocus(var Mess: TLMessage); message LM_DEACTIVATE;
 {$IFEND}
-{$ENDIF}
+
     procedure SetFullScreenVideoMode(AValue: TGLFullScreenVideoMode);
     procedure StartupFS;
     procedure ShutdownFS;
   protected
-    { Protected Declarations }
+     
     procedure Notification(AComponent: TComponent; Operation: TOperation);
       override;
     procedure CreateWnd; override;
@@ -159,24 +145,24 @@ type
       GetIsRenderingContextAvailable;
     property RenderDC: HDC read FOwnDC;
   published
-    { Published Declarations }
+     
     { : Camera from which the scene is rendered. }
     property Camera: TGLCamera read GetCamera write SetCamera;
 
-    { : Specifies if the refresh should be synchronized with the VSync signal.<p>
+    { : Specifies if the refresh should be synchronized with the VSync signal.
       If the underlying OpenGL ICD does not support the WGL_EXT_swap_control
       extension, this property is ignored. }
     property VSync: TVSyncMode read FVSync write FVSync default vsmNoSync;
 
-    { : Triggered before the scene's objects get rendered.<p>
+    { : Triggered before the scene's objects get rendered.
       You may use this event to execute your own OpenGL rendering. }
     property BeforeRender: TNotifyEvent read GetBeforeRender write
       SetBeforeRender;
-    { : Triggered just after all the scene's objects have been rendered.<p>
+    { : Triggered just after all the scene's objects have been rendered.
       The OpenGL context is still active in this event, and you may use it
-      to execute your own OpenGL rendering.<p> }
+      to execute your own OpenGL rendering. }
     property PostRender: TNotifyEvent read GetPostRender write SetPostRender;
-    { : Called after rendering.<p>
+    { : Called after rendering.
       You cannot issue OpenGL calls in this event, if you want to do your own
       OpenGL stuff, use the PostRender event. }
     property AfterRender: TNotifyEvent read GetAfterRender write SetAfterRender;
@@ -184,7 +170,7 @@ type
     { : Access to buffer properties. }
     property Buffer: TGLSceneBuffer read FBuffer write SetBuffer;
 
-    { : Returns or sets the field of view for the viewer, in degrees.<p>
+    { : Returns or sets the field of view for the viewer, in degrees.
       This value depends on the camera and the width and height of the scene.
       The value isn't persisted, if the width/height or camera.focallength is
       changed, FieldOfView is changed also. }
@@ -194,9 +180,8 @@ type
       FFullScreenVideoMode
       write SetFullScreenVideoMode;
   end;
-{$IFDEF FPC}
+
   // Code created to workaround black screen and blinking when Manifest is enabled
-  // Код создан для обхода черного экрана и мерцания при включенном Manifest'е
 {$IF DEFINED(LCLwin32) or DEFINED(LCLwin64)}
 
   TGLSOpenGLForm = class(TWin32WSForm)
@@ -207,7 +192,7 @@ type
 
 procedure GLRegisterWSComponent(aControl: TComponentClass);
 {$IFEND}
-{$ENDIF}
+
 
 implementation
 
@@ -292,86 +277,6 @@ begin
   end;
 end;
 
-{$IFDEF GLS_DELPHI_OR_CPPB}
-// WMEraseBkgnd
-//
-
-procedure TGLSceneForm.WMEraseBkgnd(var Message: TWMEraseBkgnd);
-begin
-  if GetIsRenderingContextAvailable then
-    Message.Result := 1
-  else
-    inherited;
-end;
-
-// WMSize
-//
-
-procedure TGLSceneForm.WMSize(var Message: TWMSize);
-begin
-  inherited;
-  if Assigned(FBuffer) then
-    FBuffer.Resize(0, 0, Message.Width, Message.Height);
-end;
-
-// WMPaint
-//
-
-procedure TGLSceneForm.WMPaint(var Message: TWMPaint);
-var
-  PS: TPaintStruct;
-begin
-  BeginPaint(Handle, PS);
-  try
-    if GetIsRenderingContextAvailable and (Width > 0) and (Height > 0) then
-      FBuffer.Render;
-  finally
-    EndPaint(Handle, PS);
-    Message.Result := 0;
-  end;
-end;
-
-// WMDestroy
-//
-
-procedure TGLSceneForm.WMDestroy(var Message: TWMDestroy);
-begin
-  if Assigned(FBuffer) then
-  begin
-    FBuffer.DestroyRC;
-    if FOwnDC <> 0 then
-    begin
-      ReleaseDC(Handle, FOwnDC);
-      FOwnDC := 0;
-    end;
-  end;
-  inherited;
-end;
-
-// LastFocus
-//
-
-procedure TGLSceneForm.LastFocus(var Mess: TMessage);
-begin
-  if not (csDesigning in ComponentState)
-    and FFullScreenVideoMode.FEnabled
-    and FFullScreenVideoMode.FAltTabSupportEnable then
-    begin
-      if Mess.wParam = WA_INACTIVE then
-      begin
-        ShutdownFS;
-      end
-      else
-      begin
-        StartupFS;
-      end;
-    end;
-  inherited;
-end;
-
-{$ENDIF GLS_DELPHI_OR_CPPB}
-
-{$IFDEF FPC}
 
 procedure TGLSceneForm.LMEraseBkgnd(var Message: TLMEraseBkgnd);
 begin
@@ -440,7 +345,7 @@ begin
 end;
 {$IFEND}
 
-{$ENDIF FPC}
+
 
 procedure TGLFullScreenVideoMode.SetEnabled(aValue: Boolean);
 begin
@@ -519,14 +424,7 @@ begin
   FormStyle := fsStayOnTop;
   BringToFront;
   WindowState := wsMaximized;
-
-{$IFDEF FPC}
   ShowInTaskBar := stAlways;
-{$ELSE}
-{$IFDEF GLS_DELPHI_2009_UP}
-  Application.MainFormOnTaskBar := True;
-{$ENDIF}
-{$ENDIF}
 end;
 
 procedure TGLSceneForm.ShutdownFS;
@@ -562,12 +460,8 @@ end;
 
 procedure TGLSceneForm.DoBufferStructuralChange(Sender: TObject);
 begin
-{$IFNDEF FPC}
-  RecreateWnd;
-{$ELSE}
   DestroyWnd;
   CreateWnd;
-{$ENDIF}
 end;
 
 procedure TGLSceneForm.MouseMove(Shift: TShiftState; X, Y: Integer);
@@ -688,7 +582,6 @@ begin
   Result := FBuffer.RCInstantiated and FBuffer.RenderingContext.IsValid;
 end;
 
-{$IFDEF FPC}
 {$IF DEFINED(LCLwin32) or DEFINED(LCLwin64)}
 // FixBSod
 
@@ -893,7 +786,6 @@ begin
   RegisterWSComponent(aControl, TGLSOpenGLForm);
 end;
 {$IFEND}
-{$ENDIF}
 
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
@@ -905,7 +797,7 @@ initialization
   // ------------------------------------------------------------------
 
   RegisterClass(TGLSceneForm);
-{$IFDEF FPC}
+
 {$IF DEFINED(LCLwin32) or DEFINED(LCLwin64)}
   // Code created to workaround black screen and blinking when Manifest is enabled
   // You may comment it for Win2000\98
@@ -913,6 +805,6 @@ initialization
   // Можно закоментировать для Win2000\98
   GLRegisterWSComponent(TGLSceneForm);
 {$IFEND}
-{$ENDIF}
+
 
 end.

@@ -1,31 +1,30 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLUtils<p>
+{
+   Miscellaneous support utilities & classes.
 
-   Miscellaneous support utilities & classes.<p>
-
- <b>History : </b><font size=-1><ul>
-      <li>02/01/13 - Yar - Added SetGLSceneMediaDir
-      <li>07/01/11 - Yar - Added SaveModelDialog, OpenModelDialog
-      <li>04/03/10 - DanB - Now uses CharInSet
-      <li>27/05/09 - DanB - re-added TryStrToFloat, since it ignores user's locale.
-      <li>24/03/09 - DanB - removed TryStrToFloat (exists in SysUtils or GLCrossPlatform already)
+  History :  
+       02/01/13 - Yar - Added SetGLSceneMediaDir
+       07/01/11 - Yar - Added SaveModelDialog, OpenModelDialog
+       04/03/10 - DanB - Now uses CharInSet
+       27/05/09 - DanB - re-added TryStrToFloat, since it ignores user's locale.
+       24/03/09 - DanB - removed TryStrToFloat (exists in SysUtils or GLCrossPlatform already)
                             changed StrToFloatDef to accept only 1 param + now overloaded
-      <li>24/03/09 - DanB - Moved Dialog utilities here from GLCrossPlatform, because
+       24/03/09 - DanB - Moved Dialog utilities here from GLCrossPlatform, because
                             they work on all platforms (with FPC)
-      <li>16/10/08 - UweR - corrected typo in TryStringToColorAdvanced parameter
-      <li>16/10/08 - DanB - renamed Save/LoadStringFromFile to Save/LoadAnsiStringFromFile
-      <li>24/03/08 - DaStr - Removed OpenGL1x dependancy
+       16/10/08 - UweR - corrected typo in TryStringToColorAdvanced parameter
+       16/10/08 - DanB - renamed Save/LoadStringFromFile to Save/LoadAnsiStringFromFile
+       24/03/08 - DaStr - Removed OpenGL1x dependancy
                              Moved TGLMinFilter and TGLMagFilter from GLUtils.pas
                               to GLGraphics.pas (BugTracker ID = 1923844)
-      <li>25/03/07 - DaStr - Replaced StrUtils with GLCrossPlatform
-      <li>23/03/07 - DaStr - Removed compiler warnings caused by
+       25/03/07 - DaStr - Replaced StrUtils with GLCrossPlatform
+       23/03/07 - DaStr - Removed compiler warnings caused by
                                SaveComponentToFile and LoadComponentFromFile
-      <li>22/03/07 - DaStr - Added SaveComponentToFile, LoadComponentFromFile
-      <li>07/02/07 - DaStr - Added StringToColorAdvanced() functions
-      <li>05/09/03 - EG - Creation from GLMisc split
-   </ul></font>
+       22/03/07 - DaStr - Added SaveComponentToFile, LoadComponentFromFile
+       07/02/07 - DaStr - Added StringToColorAdvanced() functions
+       05/09/03 - EG - Creation from GLMisc split
+    
 }
 unit GLUtils;
 
@@ -34,12 +33,8 @@ interface
 {$I GLScene.inc}
 
 uses
-  // VCL
-  {$IFDEF GLS_DELPHI_XE2_UP}
-  System.Classes, System.SysUtils, VCL.Graphics, VCL.Controls, System.UITypes,
-  {$ELSE}
-  Classes, SysUtils, Graphics, Controls,
-{$ENDIF}
+  Classes, SysUtils, types,
+  Graphics, Controls, FileUtil, LazUtf8, lazfileutils, Dialogs, ExtDlgs,
   // GLScene
   GLVectorGeometry, GLCrossPlatform;
 
@@ -49,72 +44,74 @@ type
   TSqrt255Array = array[0..255] of Byte;
   PSqrt255Array = ^TSqrt255Array;
 
-  //: Copies the values of Source to Dest (converting word values to integer values)
+  // Copies the values of Source to Dest (converting word values to integer values)
 procedure WordToIntegerArray(Source: PWordArray; Dest: PIntegerArray; Count: Cardinal);
-//: Round ups to the nearest power of two, value must be positive
+// Round ups to the nearest power of two, value must be positive
 function RoundUpToPowerOf2(value: Integer): Integer;
-//: Round down to the nearest power of two, value must be strictly positive
+// Round down to the nearest power of two, value must be strictly positive
 function RoundDownToPowerOf2(value: Integer): Integer;
-//: Returns True if value is a true power of two
+// Returns True if value is a true power of two
 function IsPowerOf2(value: Integer): Boolean;
-{: Read a CRLF terminated string from a stream.<p>
+{ Read a CRLF terminated string from a stream.
    The CRLF is NOT in the returned string. }
 function ReadCRLFString(aStream: TStream): AnsiString;
-//: Write the string and a CRLF in the stream
+// Write the string and a CRLF in the stream
 procedure WriteCRLFString(aStream: TStream; const aString: AnsiString);
-//: Similar to SysUtils.TryStrToFloat, but ignores user's locale
+// Similar to SysUtils.TryStrToFloat, but ignores user's locale
 function TryStrToFloat(const strValue: string; var val: Extended): Boolean;
-//: Similar to SysUtils.StrToFloatDef, but ignores user's locale
+// Similar to SysUtils.StrToFloatDef, but ignores user's locale
 function StrToFloatDef(const strValue: string; defValue: Extended = 0): Extended;
 
-//: Converts a string into color
+// Converts a string into color
 function StringToColorAdvancedSafe(const Str: string; const Default: TColor): TColor;
-//: Converts a string into color
+// Converts a string into color
 function TryStringToColorAdvanced(const Str: string; var OutColor: TColor): Boolean;
-//: Converts a string into color
+// Converts a string into color
 function StringToColorAdvanced(const Str: string): TColor;
 
-{: Parses the next integer in the string.<p>
+{ Parses the next integer in the string.
    Initial non-numeric characters are skipper, p is altered, returns 0 if none
    found. '+' and '-' are acknowledged. }
 function ParseInteger(var p: PChar): Integer;
-{: Parses the next integer in the string.<p>
+{ Parses the next integer in the string.
    Initial non-numeric characters are skipper, p is altered, returns 0 if none
    found. Both '.' and ',' are accepted as decimal separators. }
 function ParseFloat(var p: PChar): Extended;
 
-{: Saves "data" to "filename". }
+{ Saves "data" to "filename". }
 procedure SaveAnsiStringToFile(const fileName: string; const data: AnsiString);
-{: Returns the content of "filename". }
+{ Returns the content of "filename". }
 function LoadAnsiStringFromFile(const fileName: string): AnsiString;
 
-{: Saves component to a file. }
+{ Saves component to a file. }
 procedure SaveComponentToFile(const Component: TComponent; const FileName: string; const AsText: Boolean = True);
-{: Loads component from a file. }
+{ Loads component from a file. }
 procedure LoadComponentFromFile(const Component: TComponent; const FileName: string; const AsText: Boolean = True);
 
-{: Returns the size of "filename".<p>
+{ Returns the size of "filename".
    Returns 0 (zero) is file does not exists. }
 function SizeOfFile(const fileName: string): Int64;
 
-{: Returns a pointer to an array containing the results of "255*sqrt(i/255)". }
+{ Returns a pointer to an array containing the results of "255*sqrt(i/255)". }
 function GetSqrt255Array: PSqrt255Array;
 
-{: Pops up a simple dialog with msg and an Ok button. }
+{ Pops up a simple dialog with msg and an Ok button. }
 procedure InformationDlg(const msg: string);
-{: Pops up a simple question dialog with msg and yes/no buttons.<p>
+{ Pops up a simple question dialog with msg and yes/no buttons.
    Returns True if answer was "yes". }
 function QuestionDlg(const msg: string): Boolean;
-{: Posp a simple dialog with a string input. }
+{ Posp a simple dialog with a string input. }
 function InputDlg(const aCaption, aPrompt, aDefault: string): string;
 
-{: Pops up a simple save picture dialog. }
+{ Pops up a simple save picture dialog. }
 function SavePictureDialog(var aFileName: string; const aTitle: string = ''): Boolean;
-{: Pops up a simple open picture dialog. }
+{ Pops up a simple open picture dialog. }
 function OpenPictureDialog(var aFileName: string; const aTitle: string = ''): Boolean;
 
-procedure SetGLSceneMediaDir();
+//procedure SetGLSceneMediaDir();
+Function SetGLSceneMediaDir:string;
 
+var MediaPath:String;
 //------------------------------------------------------
 //------------------------------------------------------
 //------------------------------------------------------
@@ -124,17 +121,8 @@ implementation
 //------------------------------------------------------
 
 uses
-{$IFDEF FPC}
-  FileUtil,
-{$ENDIF}
-  GLApplicationFileIO,
-{$IFDEF GLS_DELPHI_XE2_UP}
-  VCL.Dialogs,
-  VCL.ExtDlgs;
-{$ELSE}
-  Dialogs,
-  ExtDlgs;
-{$ENDIF}
+  GLApplicationFileIO;
+
 
 
 var
@@ -711,17 +699,28 @@ begin
   end;
 end;
 
-procedure SetGLSceneMediaDir();
+Function SetGLSceneMediaDir:string;
 var
-  {$IFDEF FPC}path: UTF8String{$ELSE}path: String {$ENDIF};
-  p: Integer;
+  path: UTF8String;
+  p: integer;
 begin
-   path := {$IFDEF FPC}ParamStrUTF8(0){$ELSE}ParamStr(0){$ENDIF};
-   path := LowerCase(ExtractFilePath(path));
+   result:='';
+
+   // We need to lower case path because the functions are case sensible
+//   path := lowercase(ExtractFilePath(ParamStrUTF8(0)));
+   path := lowercase(ExtractFilePath(ParamStr(0)));
    p := Pos('samples', path);
-   Delete(path, p+7, Length(path));
-   path := IncludeTrailingPathDelimiter(path) + 'media';
-   {$IFDEF FPC}SetCurrentDirUTF8(path);{$ELSE}SetCurrentDir(path);{$ENDIF}
+   Delete(path, p + 7, Length(path));
+   path := IncludeTrailingPathDelimiter(IncludeTrailingPathDelimiter(path) + 'media');
+   SetCurrentDir(path);
+   // SetCurrentDirUTF8(path) -->  NOT WORKING ON W10 64Bits !
+     // We need to store the result in a global var "MediaPath"
+     // The function SetCurrentDirUTF8 return TRUE but we are always in the application's folder
+     // NB These functions provide from LazFileUtils unit and not from deprecated functions in FileUtils unit.
+
+   MediaPath:=Path ;
+   result:=path;
+
 end;
 
 end.

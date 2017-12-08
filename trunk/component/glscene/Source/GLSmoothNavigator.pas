@@ -1,9 +1,8 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLSmoothNavigator<p>
-
-     An extention of TGLNavigator, which allows to move objects with inertia
+{
+   An extention of TGLNavigator, which allows to move objects with inertia
    Note: it is not completely FPS-independant. Only Moving code is, but
    MoveAroundTarget, Turn[Vertical/Horizontal] and AdjustDistanceTo[..] is not.
 
@@ -11,18 +10,18 @@
    working completely. So you probably have to call the AutoScaleParameters
    procedure once in a while for it to adjust to the current framerate.
    If someone knows a better way to solve this issue, please contact me via
-   glscene newsgroups.<p>
+   glscene newsgroups.
 
 
-   <b>History : </b><font size=-1><ul>
-      <li>30/06/11 - DaStr - Converted many procedures to functions
+    History :  
+       30/06/11 - DaStr - Converted many procedures to functions
                              Bugfixed Assign() in some places
                              Added "Cutoff" property instead of fixed EPS values
-      <li>02/06/11 - DaStr - DeltaTime is now Double, like in Cadencer
+       02/06/11 - DaStr - DeltaTime is now Double, like in Cadencer
                              Added CustomAnimatedItems
-      <li>28/05/11 - DaStr - Added the AdjustDistanceTo[..]Ex procedures
-      <li>25/02/07 - DaStr - Added the AdjustDistanceTo[..] procedures
-      <li>23/02/07 - DaStr - Initial version (contributed to GLScene)
+       28/05/11 - DaStr - Added the AdjustDistanceTo[..]Ex procedures
+       25/02/07 - DaStr - Added the AdjustDistanceTo[..] procedures
+       23/02/07 - DaStr - Initial version (contributed to GLScene)
 
 
     TODO:
@@ -55,14 +54,13 @@ uses
   // VCL
   Classes,
 
-  // GLScene
   GLNavigator, GLVectorGeometry, GLScene, GLCrossPlatform, GLCoordinates,
-  GLScreen, XCollection;
+  GLScreen, GLXCollection;
 
 type
 
-  {: TGLNavigatorAdjustDistanceParameters includes a basic set of parameters
-     that control the smoothness of movement.<p>
+  { TGLNavigatorAdjustDistanceParameters includes a basic set of parameters
+     that control the smoothness of movement.
   }
   TGLNavigatorAbstractParameters = class(TPersistent)
   private
@@ -88,10 +86,10 @@ type
 
   TGLSmoothNavigator = class;
 
-  {: TGLNavigatorSmoothChangeItem includes a basic set of parameters
-     that control the smoothness of movement.<p>
+  { TGLNavigatorSmoothChangeItem includes a basic set of parameters
+     that control the smoothness of movement.
   }
-  TGLNavigatorSmoothChangeItem = class(TXCollectionItem)
+  TGLNavigatorSmoothChangeItem = class(TGLXCollectionItem)
   private
     FInertia: Single;
     FSpeed: Single;
@@ -105,9 +103,9 @@ type
   protected
     function GetNavigator: TGLSmoothNavigator;
   public
-    {: Returns False if there was no change. }
+    { Returns False if there was no change. }
     function Proceed(ADeltaTime: Double): Boolean; virtual; abstract;
-    constructor Create(aOwner: TXCollection); override;
+    constructor Create(aOwner: TGLXCollection); override;
     procedure Assign(Source: TPersistent); override;
     procedure ScaleParameters(const Value: Single); virtual;
     procedure ResetTargetValue(); virtual; abstract;
@@ -123,7 +121,7 @@ type
   TGLNavigatorSmoothChangeSingleGetEvent = function(const ASender: TGLNavigatorSmoothChangeSingle): Single of object;
   TGLNavigatorSmoothChangeSingleSetEvent = procedure(const ASender: TGLNavigatorSmoothChangeSingle; const AValue: Single) of object;
 
-  {: Smoothly change any Single value, so it will become TargetValue in the end.<p> }
+  { Smoothly change any Single value, so it will become TargetValue in the end. }
   TGLNavigatorSmoothChangeSingle = class(TGLNavigatorSmoothChangeItem)
   private
     FTargetValue: Single;
@@ -144,7 +142,7 @@ type
   TGLNavigatorSmoothChangeVectorGetEvent = function(const ASender: TGLNavigatorSmoothChangeVector): TVector of object;
   TGLNavigatorSmoothChangeVectorSetEvent = procedure(const ASender: TGLNavigatorSmoothChangeVector; const AValue: TVector) of object;
 
-  {: Smoothly change any Vector4f value, so it will become TargetValue in the end.<p> }
+  { Smoothly change any Vector4f value, so it will become TargetValue in the end. }
   TGLNavigatorSmoothChangeVector = class(TGLNavigatorSmoothChangeItem)
   private
     FTargetValue: TGLCoordinates;
@@ -155,7 +153,7 @@ type
     class function FriendlyName: string; override;
     function Proceed(ADeltaTime: Double): Boolean; override;
     procedure Assign(Source: TPersistent); override;
-    constructor Create(aOwner: TXCollection); override;
+    constructor Create(aOwner: TGLXCollection); override;
     destructor Destroy; override;
     procedure ResetTargetValue(); override;
   published
@@ -166,8 +164,8 @@ type
 
   TGLNavigatorSmoothChangeItemClass = class of TGLNavigatorSmoothChangeItem;
 
-  {: XCollection of TGLNavigatorSmoothChangeItem. }
-  TGLNavigatorSmoothChangeItems = class(TXCollection)
+  { XCollection of TGLNavigatorSmoothChangeItem. }
+  TGLNavigatorSmoothChangeItems = class(TGLXCollection)
   private
     function GetItems(const Index : Integer): TGLNavigatorSmoothChangeItem;
     procedure SetItems(const Index : Integer; const Value: TGLNavigatorSmoothChangeItem);
@@ -175,14 +173,14 @@ type
     procedure DoProceed(ADeltaTime: Double);
   public
     function Add(AClass : TGLNavigatorSmoothChangeItemClass): TGLNavigatorSmoothChangeItem;
-    function CanAdd(AClass: TXCollectionItemClass): Boolean; override;
-    class function ItemsClass: TXCollectionItemClass; override;
+    function CanAdd(AClass: TGLXCollectionItemClass): Boolean; override;
+    class function ItemsClass: TGLXCollectionItemClass; override;
     property Items[const Index : Integer]: TGLNavigatorSmoothChangeItem read GetItems write
             SetItems; default;
   end;
 
-  {: TGLNavigatorAdjustDistanceParameters is wrapper for all parameters that
-       affect how the AdjustDisanceTo[...] methods work<p>
+  { TGLNavigatorAdjustDistanceParameters is wrapper for all parameters that
+       affect how the AdjustDisanceTo[...] methods work
   }
   TGLNavigatorAdjustDistanceParameters = class(TGLNavigatorAbstractParameters)
   private
@@ -199,8 +197,8 @@ type
     property ImpulseSpeed: Single read FImpulseSpeed write FImpulseSpeed stored StoreImpulseSpeed;
   end;
 
-  {: TGLNavigatorAdjustDistanceParameters is wrapper for all parameters that
-       affect how the AdjustDisanceTo[...]Ex methods work<p>
+  { TGLNavigatorAdjustDistanceParameters is wrapper for all parameters that
+       affect how the AdjustDisanceTo[...]Ex methods work
 
      You need to set the TargetObject and desired distance to it,
      then call AdjustDisanceTo[...]Ex() in your Cadencer.OnProgress code.
@@ -222,8 +220,8 @@ type
     property SpeedLimit: Single read FSpeedLimit write FSpeedLimit stored StoreSpeedLimit;
   end;
 
-  {: TGLNavigatorInertiaParameters is wrapper for all parameters that affect the
-       smoothness of movement<p>
+  { TGLNavigatorInertiaParameters is wrapper for all parameters that affect the
+       smoothness of movement
   }
   TGLNavigatorInertiaParameters = class(TPersistent)
   private
@@ -266,7 +264,7 @@ type
   end;
 
 
-  {: TGLNavigatorGeneralParameters is a wrapper for all general inertia parameters.
+  { TGLNavigatorGeneralParameters is a wrapper for all general inertia parameters.
 
      These properties mean that if ExpectedMaxFPS is 100, FAutoScaleMin is 0.1,
      FAutoScaleMax is 0.75 then the "safe range" for it to change is [10..75].
@@ -295,7 +293,7 @@ type
   end;
 
 
-  {: TGLNavigatorMoveAroundParameters is a wrapper for all parameters that
+  { TGLNavigatorMoveAroundParameters is a wrapper for all parameters that
       effect how the TGLBaseSceneObject.MoveObjectAround() procedure works
   }
   TGLNavigatorMoveAroundParameters = class(TPersistent)
@@ -336,8 +334,8 @@ type
 
   // TGLSmoothNavigator
   //
-  {: TGLSmoothNavigator is the component for moving a TGLBaseSceneObject, and all
-       classes based on it, this includes all the objects from the Scene Editor.<p>
+  { TGLSmoothNavigator is the component for moving a TGLBaseSceneObject, and all
+       classes based on it, this includes all the objects from the Scene Editor.
 
      It uses complex smoothing algorithms, most of which are FPS-dependant.
      Make sure your limit your FPS and set MaxExpectedDeltaTime to a value
@@ -364,14 +362,14 @@ type
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
-    //: Constructors-destructors.
+    // Constructors-destructors.
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    //: From TGLNavigator. Probably, should not be public.
+    // From TGLNavigator. Probably, should not be public.
     procedure SetObject(Value: TGLBaseSceneObject); override;
 
-    //: Uses InertiaParams.
+    // Uses InertiaParams.
     procedure TurnHorizontal(Angle: Single; ADeltaTime: Double); virtual;
     procedure TurnVertical(Angle: Single; ADeltaTime: Double); virtual;
     procedure FlyForward(const Plus, Minus: Boolean; ADeltaTime: Double; const Accelerate: Boolean = False); virtual;
@@ -379,23 +377,23 @@ type
     procedure StrafeHorizontal(const Plus, Minus: Boolean; ADeltaTime: Double; const Accelerate: Boolean = False); virtual;
     procedure StrafeVertical(const Plus, Minus: Boolean; ADeltaTime: Double; const Accelerate: Boolean = False); virtual;
 
-    //: Uses MoveAroundParams. Returns True, if object was actually moved.
+    // Uses MoveAroundParams. Returns True, if object was actually moved.
     function MoveAroundTarget(const PitchDelta, TurnDelta : Single; const ADeltaTime: Double): Boolean; virtual;
     function MoveObjectAround(const AObject: TGLBaseSceneObject; PitchDelta, TurnDelta : Single; ADeltaTime: Double): Boolean; virtual;
 
-    //: Uses AdjustDistanceParams.
+    // Uses AdjustDistanceParams.
     function AdjustDistanceToPoint(const  APoint: TVector; const DistanceRatio : Single; ADeltaTime: Double): Boolean; virtual;
     function AdjustDistanceToTarget(const DistanceRatio : Single; const ADeltaTime: Double): Boolean; virtual;
 
-    //: Uses AdjustDistanceParamsEx.
+    // Uses AdjustDistanceParamsEx.
     function AdjustDistanceToPointEx(const  APoint: TVector; ADeltaTime: Double): Boolean; virtual;
     function AdjustDistanceToTargetEx(const ADeltaTime: Double): Boolean; virtual;
 
-    //: Uses CustomAnimatedItems.
+    // Uses CustomAnimatedItems.
     procedure AnimateCustomItems(const ADeltaTime: Double); virtual;
 
-    //: Uses GeneralParams.
-      {: In ScaleParameters, Value should be around 1. }
+    // Uses GeneralParams.
+      { In ScaleParameters, Value should be around 1. }
     procedure ScaleParameters(const Value: Single); virtual;
     procedure AutoScaleParameters(const FPS: Single); virtual;
     procedure AutoScaleParametersUp(const FPS: Single); virtual;
@@ -412,19 +410,19 @@ type
 
   // TGLSmoothUserInterface
   //
-  {: TGLSmoothUserInterface is the component which reads the userinput and transform it into action.<p>
-      <ul>
-	   <li>Mouselook(ADeltaTime: double) : handles mouse look... Should be called
+  { TGLSmoothUserInterface is the component which reads the userinput and transform it into action.
+       
+	    Mouselook(ADeltaTime: double) : handles mouse look... Should be called
                            in the Cadencer event. (Though it works everywhere!)
-      </ul>
+       
 	   The four properties to get you started are:
-      <ul>
-	   <li>InvertMouse     : Inverts the mouse Y axis.
-	   <li>AutoUpdateMouse : If enabled (by defaul), than handles all mouse updates.
-	   <li>GLNavigator     : The Navigator which receives the user movement.
-	   <li>GLVertNavigator : The Navigator which if set receives the vertical user
+       
+	    InvertMouse     : Inverts the mouse Y axis.
+	    AutoUpdateMouse : If enabled (by defaul), than handles all mouse updates.
+	    GLNavigator     : The Navigator which receives the user movement.
+	    GLVertNavigator : The Navigator which if set receives the vertical user
                            movement. Used mostly for cameras....
-      </ul>
+       
    }
   TGLSmoothUserInterface = class(TComponent)
   private
@@ -1438,7 +1436,7 @@ begin
   end;
 end;
 
-constructor TGLNavigatorSmoothChangeItem.Create(aOwner: TXCollection);
+constructor TGLNavigatorSmoothChangeItem.Create(aOwner: TGLXCollection);
 begin
   inherited;
   FInertia := 1;
@@ -1491,7 +1489,7 @@ begin
   Result := AClass.Create(Self);
 end;
 
-function TGLNavigatorSmoothChangeItems.CanAdd(AClass: TXCollectionItemClass): Boolean;
+function TGLNavigatorSmoothChangeItems.CanAdd(AClass: TGLXCollectionItemClass): Boolean;
 begin
   Result := AClass.InheritsFrom(TGLNavigatorSmoothChangeItem);
 end;
@@ -1509,7 +1507,7 @@ begin
   Result := TGLNavigatorSmoothChangeItem(inherited GetItems(Index));
 end;
 
-class function TGLNavigatorSmoothChangeItems.ItemsClass: TXCollectionItemClass;
+class function TGLNavigatorSmoothChangeItems.ItemsClass: TGLXCollectionItemClass;
 begin
   Result := TGLNavigatorSmoothChangeItem;
 end;
@@ -1594,7 +1592,7 @@ begin
   end;
 end;
 
-constructor TGLNavigatorSmoothChangeVector.Create(aOwner: TXCollection);
+constructor TGLNavigatorSmoothChangeVector.Create(aOwner: TGLXCollection);
 begin
   inherited;
   FTargetValue := TGLCoordinates.CreateInitialized(Self, NullHmgVector, csVector);

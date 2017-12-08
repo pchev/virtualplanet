@@ -1,22 +1,21 @@
 //
 // This unit is part of the GLScene Project, http://glscene.org
 //
-{: GLHeightTileFileHDS<p>
+{
+   HeightDataSource for the HTF (HeightTileFile) format.
 
-   HeightDataSource for the HTF (HeightTileFile) format.<p>
-
-	<b>History : </b><font size=-1><ul>
-      <li>10/03/09 - DanB - Bug fix for invisible terrain, now changes
+	 History :  
+       10/03/09 - DanB - Bug fix for invisible terrain, now changes
                             heightdata.DataState to hdsPreparing in StartPreparingData
-      <li>30/03/07 - DaStr - Added $I GLScene.inc
-      <li>15/02/07 - LIN -Added OpenHTF function, for direct access to the HeightTileFile object.
-      <li>25/01/07 - LIN -Added Width and Height properties to GLHeightTileFieHDS
-      <li>19/01/07 - LIN -Bug fix/workaround: Added 'Inverted' property to GLHeightTileFieHDS
+       30/03/07 - DaStr - Added $I GLScene.inc
+       15/02/07 - LIN -Added OpenHTF function, for direct access to the HeightTileFile object.
+       25/01/07 - LIN -Added Width and Height properties to GLHeightTileFieHDS
+       19/01/07 - LIN -Bug fix/workaround: Added 'Inverted' property to GLHeightTileFieHDS
                           Set Inverted to false, if you DONT want your rendered
                           terrain to be a mirror image of your height data.
                           (Defaults to true, so it doesnt affect existing apps);
-      <li>29/01/03 - EG - Creation
-	</ul></font>
+       29/01/03 - EG - Creation
+	 
 }
 unit GLHeightTileFileHDS;
 
@@ -26,17 +25,17 @@ interface
 
 uses
   Classes, SysUtils,
-  //GLS
+   
   GLHeightData, GLHeightTileFile;
 
 type
 
 	// TGLHeightTileFileHDS
 	//
-   {: An Height Data Source for the HTF format.<p> }
-	TGLHeightTileFileHDS = class (THeightDataSource)
+   { An Height Data Source for the HTF format. }
+	TGLHeightTileFileHDS = class (TGLHeightDataSource)
 	   private
-	      { Private Declarations }
+	       
          FInfiniteWrap : Boolean;
          FInverted     : Boolean;
          FHTFFileName : String;
@@ -44,33 +43,33 @@ type
          FMinElevation : Integer;
 
 	   protected
-	      { Protected Declarations }
+	       
          procedure SetHTFFileName(const val : String);
          procedure SetInfiniteWrap(val : Boolean);
          procedure SetInverted(val : Boolean);
          procedure SetMinElevation(val : Integer);
 
 	   public
-	      { Public Declarations }
+	       
 	        constructor Create(AOwner: TComponent); override;
          destructor Destroy; override;
-         procedure StartPreparingData(HeightData : THeightData); override;
+         procedure StartPreparingData(HeightData : TGLHeightData); override;
          function Width :integer;    override;
          function Height:integer;    override;
          function OpenHTF:THeightTileFile; //gives you direct access to the HTF object
 
 	   published
-	      { Published Declarations }
+	       
 
-         {: FileName of the HTF file.<p>
+         { FileName of the HTF file.
             Note that it is accessed via the services of GLApplicationFileIO,
             so this may not necessarily be a regular file on a disk... }
          property HTFFileName : String read FHTFFileName write SetHTFFileName;
-         {: If true the height field is wrapped indefinetely. }
+         { If true the height field is wrapped indefinetely. }
          property InfiniteWrap : Boolean read FInfiniteWrap write SetInfiniteWrap default True;
-         {: If true the height data is inverted.(Top to bottom) }
+         { If true the height data is inverted.(Top to bottom) }
          property Inverted : Boolean read FInverted write SetInverted default True;
-         {: Minimum elevation of the tiles that are considered to exist.<p>
+         { Minimum elevation of the tiles that are considered to exist.
             This property can typically be used to hide underwater tiles. }
          property MinElevation : Integer read FMinElevation write SetMinElevation default -32768;
 
@@ -161,9 +160,9 @@ end;
 
 // StartPreparingData
 //
-procedure TGLHeightTileFileHDS.StartPreparingData(HeightData : THeightData);
+procedure TGLHeightTileFileHDS.StartPreparingData(HeightData : TGLHeightData);
 var
-   oldType : THeightDataType;
+   oldType : TGLHeightDataType;
    htfTile : PHeightTile;
    htfTileInfo : PHeightTileInfo;
    x, y : Integer;
