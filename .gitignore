@@ -1,6 +1,13 @@
 BaseData/*.tgz
 BaseData/*.xz
 BaseData/Readme.txt
+Makefile
+Makefile.fpc
+Makefile.fpcxxx
+
 vpa/backup/
 vpa/units/
+vpa/vpa
+vpa/vpa.exe
 
+component/glscene/Packages/lib/

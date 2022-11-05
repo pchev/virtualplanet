@@ -18,7 +18,7 @@ unset make_win32
 if [[ $arch == x86_64 ]]; then 
    make_linux64=1
    make_linux_data=1
-   make_win32=1
+#   make_win32=1
    extratarget=",x86_64-linux"
 fi
 if [[ $arch == i686 ]]; then 
@@ -61,15 +61,6 @@ fi
 wd=`pwd`
 mkdir $wd/$outdir
 
-# check if new revision since last run
-read lastrev <last.build
-currentrev=$(LC_ALL=C svn info . | grep Revision: | sed 's/Revision: //')
-  echo $lastrev ' - ' $currentrev
-  if [[ $lastrev -eq $currentrev ]]; then
-    echo Already build at revision $currentrev
-    exit 4
-  fi
-
 # delete old files
   deldir=$outdir; 
 
@@ -81,6 +72,9 @@ currentrev=$(LC_ALL=C svn info . | grep Revision: | sed 's/Revision: //')
   rm $deldir/bin-*.zip
   rm $deldir/bin-*.bz2
   rm -rf $builddir
+  
+currentrev=$(git rev-list --count --first-parent HEAD)
+  
 
 # make Linux i386 version
 if [[ $make_linux32 ]]; then 
@@ -101,6 +95,7 @@ if [[ $make_linux32 ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/debian $builddir
     cd $builddir
+    mkdir debian/virtualplanet/usr/
     mv bin debian/virtualplanet/usr/
     mv share debian/virtualplanet/usr/
     cd debian
@@ -113,6 +108,7 @@ if [[ $make_linux32 ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
+    mkdir rpm/virtualplanet/usr/
     mv debian/virtualplanet/usr/* rpm/virtualplanet/usr/
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet.spec
@@ -155,6 +151,7 @@ if [[ $make_linux64 ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/debian $builddir
     cd $builddir
+    mkdir debian/virtualplanet64/usr/
     mv bin debian/virtualplanet64/usr/
     mv share debian/virtualplanet64/usr/
     cd debian
@@ -167,6 +164,7 @@ if [[ $make_linux64 ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
+    mkdir rpm/virtualplanet/usr/
     mv debian/virtualplanet64/usr/* rpm/virtualplanet/usr/
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet64.spec
@@ -211,6 +209,7 @@ if [[ $make_linux_data ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/debian $builddir
     cd $builddir
+    mkdir debian/virtualplanet-data/usr/
     mv share debian/virtualplanet-data/usr/
     cd debian
     sed -i "/Version:/ s/1/$version/" virtualplanet-data/DEBIAN/control
@@ -222,6 +221,7 @@ if [[ $make_linux_data ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
+    mkdir rpm/virtualplanet-data/usr/
     mv debian/virtualplanet-data/usr/* rpm/virtualplanet-data/usr/
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet-data.spec
@@ -283,5 +283,3 @@ if [[ $make_win32 ]]; then
   rm -rf $builddir
 fi
 
-  # store revision 
-  echo $currentrev > last.build
