@@ -1,0 +1,8 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: glfile3ds.gls3dsmapnotfound
+#, object-pascal-format
+msgid "Loading %s map texture failed: %s in %s"
+msgstr ""
+

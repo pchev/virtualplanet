@@ -88,14 +88,14 @@ uses
   Windows,
 {$ENDIF}
 {$IFDEF UNIX}
-  Unix, BaseUnix, LazUTF8,
+  Unix, BaseUnix,
 {$ENDIF}
 {$IFDEF GLS_X11_SUPPORT}
   xlib,
 {$ENDIF}
   Types,
    Classes, SysUtils, StrUtils, Graphics,  Controls,
-   Forms,  Dialogs,LCLVersion,  LCLType,  LazFileUtils;
+   Forms,  Dialogs,LCLVersion,  LCLType,  LazFileUtils, LazUTF8;
 
 
 
@@ -825,7 +825,7 @@ begin
   else
   begin
 
-    path := ExtractFilePath(ParamStr(0));
+    path := ExtractFilePath(ParamStrUTF8(0));
     path := IncludeTrailingPathDelimiter(path);
     SetCurrentDirUTF8(path);
   end;

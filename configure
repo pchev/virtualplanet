@@ -12,7 +12,7 @@ if [ $# -gt 0 ]; then
 fi
 
 dirs="component/libsql \
-     component/synapse/source/lib \
+     component/synapse \
      component/downloaddialog \
      component/uniqueinstance \
      component/enhedits \
