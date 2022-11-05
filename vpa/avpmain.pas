@@ -278,6 +278,7 @@ type
     CheckBox8: TCheckBox;
     ImageList1: TImageList;
     ToolButton12: TToolButton;
+    UniqueInstance1: TUniqueInstance;
     procedure Button21Click(Sender: TObject);
     procedure Button3MouseLeave(Sender: TObject);
     procedure CheckBox3Click(Sender: TObject);
@@ -344,6 +345,7 @@ type
     procedure TrackBar7Change(Sender: TObject);
     procedure TrackBar8Change(Sender: TObject);
     procedure TrackBarLabelChange(Sender: TObject);
+    procedure UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer; const Parameters: array of String);
     procedure x21Click(Sender: TObject);
     procedure x41Click(Sender: TObject);
     procedure Button12MouseUp(Sender: TObject; Button: TMouseButton;
@@ -397,7 +399,6 @@ type
     procedure ZoomEyepieceClick(Sender: TObject);
     procedure ZoomTimerTimer(Sender: TObject);
   private
-    UniqueInstance1: TCdCUniqueInstance;
     planet1, planet2, activeplanet : TF_planet;
     CursorImage1: TCursorImage;
     tz: TCdCTimeZone;
@@ -416,8 +417,6 @@ type
     savetop,saveleft,savewidth,saveheight: integer;
     {$endif}
     procedure OpenCDC(objname,otherparam:string);
-    procedure OtherInstance(Sender : TObject; ParamCount: Integer; Parameters: array of String);
-    procedure InstanceRunning(Sender : TObject);
     procedure SetEyepieceMenu;
     procedure SetCCDMenu;
     procedure SetLang1;
@@ -2693,12 +2692,6 @@ begin
 
   DefaultFormatSettings.DecimalSeparator := '.';
   DefaultFormatSettings.ThousandSeparator:=' ';
-  UniqueInstance1:=TCdCUniqueInstance.Create(self);
-  UniqueInstance1.Identifier:='Virtual_planet_Atlas_vpa';
-  UniqueInstance1.OnOtherInstance:=OtherInstance;
-  UniqueInstance1.OnInstanceRunning:=InstanceRunning;
-  UniqueInstance1.Enabled:=true;
-  UniqueInstance1.Loaded;
   ToolsWidth:=340;
   {$ifdef mswindows}
   ScaleForm(self,Screen.PixelsPerInch/96);
@@ -3955,6 +3948,20 @@ LabelDensity:=abs(TrackBarLabel.Position);
 activeplanet.RefreshAll;
 end;
 
+procedure Tf_avpmain.UniqueInstance1OtherInstance(Sender: TObject; ParamCount: Integer; const Parameters: array of String);
+var i: integer;
+begin
+  application.Restore;
+  application.BringToFront;
+  if ParamCount > 0 then begin
+     param.Clear;
+     for i:=0 to ParamCount-1 do begin
+        param.add(Parameters[i]);
+     end;
+     ReadParam(false);
+  end;
+end;
+
 procedure Tf_avpmain.ComboBox2Change(Sender: TObject);
 begin
   UpdCentralMeridian;
@@ -4035,25 +4042,6 @@ begin
   Pagecontrol1.ActivePage := Position;
   PageControl1Change(Sender);
   combobox1.SetFocus;
-end;
-
-procedure Tf_avpmain.OtherInstance(Sender : TObject; ParamCount: Integer; Parameters: array of String);
-var i: integer;
-begin
-  application.Restore;
-  application.BringToFront;
-  if ParamCount > 0 then begin
-     param.Clear;
-     for i:=0 to ParamCount-1 do begin
-        param.add(Parameters[i]);
-     end;
-     ReadParam(false);
-  end;
-end;
-
-procedure Tf_avpmain.InstanceRunning(Sender : TObject);
-begin
-  UniqueInstance1.RetryOrHalt;
 end;
 
 procedure Tf_avpmain.Notes1Click(Sender: TObject);

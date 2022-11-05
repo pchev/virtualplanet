@@ -1,1 +1,6 @@
-BaseData/
+BaseData/*.tgz
+BaseData/*.xz
+BaseData/Readme.txt
+vpa/backup/
+vpa/units/
+
