@@ -108,7 +108,8 @@ if [[ $make_linux32 ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
-    mkdir rpm/virtualplanet/usr/
+    mkdir rpm/virtualplanet
+    mkdir rpm/virtualplanet/usr
     mv debian/virtualplanet/usr/* rpm/virtualplanet/usr/
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet.spec
@@ -164,7 +165,8 @@ if [[ $make_linux64 ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
-    mkdir rpm/virtualplanet/usr/
+    mkdir rpm/virtualplanet
+    mkdir rpm/virtualplanet/usr
     mv debian/virtualplanet64/usr/* rpm/virtualplanet/usr/
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet64.spec
@@ -221,7 +223,8 @@ if [[ $make_linux_data ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
-    mkdir rpm/virtualplanet-data/usr/
+    mkdir rpm/virtualplanet-data
+    mkdir rpm/virtualplanet-data/usr
     mv debian/virtualplanet-data/usr/* rpm/virtualplanet-data/usr/
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet-data.spec
