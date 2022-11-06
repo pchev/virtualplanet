@@ -7,7 +7,7 @@ AppVerName=Virtual Planet Atlas V1
 AppPublisherURL={cm:MyAppUrl}
 AppSupportURL={cm:MyAppUrl}
 AppUpdatesURL={cm:MyAppUrl}
-DefaultDirName={reg:HKCU\Software\Astro_PC\VirtualPlanet,Install_Dir|{pf}\VirtualPlanet}
+DefaultDirName={reg:HKCU\Software\Astro_PC\VirtualPlanet,Install_Dir|{commonpf32}\VirtualPlanet}
 DefaultGroupName={cm:MyAppName}
 LicenseFile=virtualplanet\Data\licence.txt
 InfoBeforeFile=virtualplanet\Data\readme.txt
@@ -18,7 +18,9 @@ SolidCompression=true
 UseSetupLdr=true
 ShowLanguageDialog=yes
 UsePreviousAppDir=false
+UsedUserAreasWarning=no
 DirExistsWarning=no
+WizardStyle=modern
 WizardImageFile=setup_pict\WizPlanetImage.bmp
 WizardSmallImageFile=setup_pict\WizPlanetSmallImage.bmp
 UninstallLogMode=append
@@ -61,16 +63,10 @@ Filename: {app}\vpa.url; Section: InternetShortcut; Key: URL; String: {cm:MyAppU
 Name: {group}\{cm:MyAppName}; Filename: {app}\virtualplanet.exe; WorkingDir: {app}; IconIndex: 0; Tasks: ; Languages: 
 Name: {group}\Documentation; Filename: {app}\{cm:MyDocFile}; WorkingDir: {app}/doc
 Name: {group}\{cm:ProgramOnTheWeb,{cm:MyWebPage}}; Filename: {app}\vpa.url
-Name: {userdesktop}\{cm:MyAppName}; Filename: {app}\virtualplanet.exe; Tasks: desktopicon; WorkingDir: {app}; IconIndex: 0
+Name: {commondesktop}\{cm:MyAppName}; Filename: {app}\virtualplanet.exe; Tasks: desktopicon; WorkingDir: {app}; IconIndex: 0
 
 [Run]
 Filename: {app}\{cm:MyTutorial}; Flags: postinstall shellexec nowait skipifsilent; Description: {cm:MyTutorialMsg}
-
-[UninstallDelete]
-Type: files; Name: {app}\vpa.url
-Name: {localappdata}\Virtualmoon\Database\*.dbl; Type: files
-Name: {localappdata}\Virtualmoon\Database\database_journal.txt; Type: files
-Name: {localappdata}\Virtualmoon\vma.rc; Type: files
 
 [_ISTool]
 UseAbsolutePaths=false

@@ -2,7 +2,7 @@
 
 # script to build virtualplanet on a Linux system
 
-version=2.0
+version=2.5
 
 arch=$(arch)
 unset extratarget
@@ -18,7 +18,7 @@ unset make_win32
 if [[ $arch == x86_64 ]]; then 
    make_linux64=1
    make_linux_data=1
-#   make_win32=1
+   make_win32=1
    extratarget=",x86_64-linux"
 fi
 if [[ $arch == i686 ]]; then 
@@ -26,8 +26,10 @@ if [[ $arch == i686 ]]; then
 fi
 
 builddir=/tmp/virtualplanet  # Be sure this is set to a non existent directory, it is removed after the run!
-innosetup="C:\Program Files (x86)\Inno Setup 5\ISCC.exe"  # Install under Wine from http://www.jrsoftware.org/isinfo.php
+export WINEPREFIX=~/.wine
+innosetup="C:\Program Files\Inno Setup 6\ISCC.exe"  # Install under Wine from http://www.jrsoftware.org/isinfo.php
 wine_build="Z:\tmp\virtualplanet" # Change to match builddir, Z: is defined in ~/.wine/dosdevices
+
 
 if [[ -n $1 ]]; then
   configopt="fpc=$1"
@@ -35,35 +37,18 @@ fi
 if [[ -n $2 ]]; then
   configopt=$configopt" lazarus=$2"
 fi
-unset pro
-unset basic
-unset updname
-pro=1
-#if [[ -n $3 ]]; then
-#  if [[ $3 == basic ]]; then basic=1; fi
-#  if [[ $3 == pro ]]; then pro=1; fi
-#fi
-if [[ $basic ]]; then
-  echo make basic
-  updname=_basic
-  outdir='BASIC';
-fi
-if [[ $pro ]]; then
-  echo make pro
-  updname=_pro
-  outdir='PRO';
-fi
-if [[ -z $updname ]]; then
-  echo "Syntaxe : daily_build.sh freepascal_path lazarus_path [basic|pro]"
+if [[ -z $configopt ]]; then
+  echo "Syntaxe : buildpkg.sh freepascal_path lazarus_path"
   exit 1;
 fi
+
+outdir='PROG';
 
 wd=`pwd`
 mkdir $wd/$outdir
 
 # delete old files
   deldir=$outdir; 
-
   rm $deldir/virtualplanet*.tgz
   rm $deldir/virtualplanet*.deb
   rm $deldir/virtualplanet*.rpm
@@ -74,7 +59,6 @@ mkdir $wd/$outdir
   rm -rf $builddir
   
 currentrev=$(git rev-list --count --first-parent HEAD)
-  
 
 # make Linux i386 version
 if [[ $make_linux32 ]]; then 
@@ -124,9 +108,9 @@ if [[ $make_linux32 ]]; then
     mkdir $builddir/debug
     cp vpa/vpa $builddir/debug/virtualplanet
     cd $builddir/debug/
-    tar cvzf virtualplanet$updname-bin-linux_i386-debug-$currentrev.tgz --owner=root --group=root *
+    tar cvzf virtualplanet-bin-linux_i386-debug-$currentrev.tgz --owner=root --group=root *
     if [[ $? -ne 0 ]]; then exit 1;fi
-    mv virtualplanet$updname-bin-*.tgz $wd/$outdir/
+    mv virtualplanet-bin-*.tgz $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
   fi
   cd $wd
@@ -181,9 +165,9 @@ if [[ $make_linux64 ]]; then
     mkdir $builddir/debug
     cp vpa/vpa $builddir/debug/virtualplanet
     cd $builddir/debug/
-    tar cvzf virtualplanet$updname-bin-linux_x86_64-debug-$currentrev.tgz --owner=root --group=root *
+    tar cvzf virtualplanet-bin-linux_x86_64-debug-$currentrev.tgz --owner=root --group=root *
     if [[ $? -ne 0 ]]; then exit 1;fi
-    mv virtualplanet$updname-bin-*.tgz $wd/$outdir/
+    mv virtualplanet-bin-*.tgz $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
   fi
   cd $wd
@@ -196,10 +180,8 @@ if [[ $make_linux_data ]]; then
   if [[ $? -ne 0 ]]; then exit 1;fi
   make install_data
   if [[ $? -ne 0 ]]; then exit 1;fi
-  if [[ $pro ]]; then
-     make install_data2
-     if [[ $? -ne 0 ]]; then exit 1;fi
-  fi
+  make install_data2
+  if [[ $? -ne 0 ]]; then exit 1;fi
   # tar
     cd $builddir
     tar cvzf virtualplanet-data-$version-linux_all.tgz --owner=root --group=root *
@@ -253,20 +235,18 @@ if [[ $make_win32 ]]; then
   if [[ $? -ne 0 ]]; then exit 1;fi
   make install_win_data
   if [[ $? -ne 0 ]]; then exit 1;fi
-  if [[ $pro ]]; then
-    make install_win_data2
-    if [[ $? -ne 0 ]]; then exit 1;fi
-  fi 
+  make install_win_data2
+  if [[ $? -ne 0 ]]; then exit 1;fi
   # zip
     cd $builddir/virtualplanet/Data
-    zip -r  virtualplanet$updname-$version-$currentrev-windows.zip *
+    zip -r  virtualplanet-$version-$currentrev-windows.zip *
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv virtualplanet*.zip $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
   # exe
     cd $builddir
     sed -i "/AppVerName/ s/V1/V$version/" virtualplanet.iss
-    sed -i "/OutputBaseFilename/ s/-windows/$updname-$version-windows/" virtualplanet.iss
+    sed -i "/OutputBaseFilename/ s/-windows/-$version-windows/" virtualplanet.iss
     wine "$innosetup" "$wine_build\virtualplanet.iss"
     if [[ $? -ne 0 ]]; then exit 1;fi
     mv $builddir/virtualplanet*.exe $wd/$outdir/
@@ -277,9 +257,9 @@ if [[ $make_win32 ]]; then
     mkdir $builddir/debug
     cp vpa/vpa.exe $builddir/debug/virtualplanet.exe
     cd $builddir/debug/
-    zip virtualplanet$updname-bin-windows_i386-debug-$currentrev.zip *
+    zip virtualplanet-bin-windows_i386-debug-$currentrev.zip *
     if [[ $? -ne 0 ]]; then exit 1;fi
-    mv virtualplanet$updname-bin-*.zip $wd/$outdir/
+    mv virtualplanet-bin-*.zip $wd/$outdir/
     if [[ $? -ne 0 ]]; then exit 1;fi
   fi
   cd $wd

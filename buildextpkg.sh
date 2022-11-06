@@ -2,7 +2,7 @@
 
 # script to build extra texture for virtualplanet on a Linux system
 
-version=2.0
+version=2.5
 
 arch=$(arch)
 unset extratarget
@@ -18,10 +18,11 @@ make_linux_data=1
 unset make_win32
 make_win32=1
 
-outdir='EXT'
+outdir='EXTRA'
 
 builddir=/tmp/virtualplanet  # Be sure this is set to a non existent directory, it is removed after the run!
-innosetup="C:\Program Files (x86)\Inno Setup 5\ISCC.exe"  # Install under Wine from http://www.jrsoftware.org/isinfo.php
+export WINEPREFIX=~/.wine
+innosetup="C:\Program Files\Inno Setup 6\ISCC.exe"  # Install under Wine from http://www.jrsoftware.org/isinfo.php
 wine_build="Z:\tmp\virtualplanet" # Change to match builddir, Z: is defined in ~/.wine/dosdevices
 
 if [[ -n $1 ]]; then
@@ -37,11 +38,11 @@ mkdir $wd/$outdir
 # delete old files
   deldir=$outdir; 
 
-  rm $deldir/virtualplanet*.tgz
-  rm $deldir/virtualplanet*.deb
-  rm $deldir/virtualplanet*.rpm
-  rm $deldir/virtualplanet*.zip
-  rm $deldir/virtualplanet*.exe
+  rm $deldir/virtualplanet-extra*.tgz
+  rm $deldir/virtualplanet-extra*.deb
+  rm $deldir/virtualplanet-extra*.rpm
+  rm $deldir/virtualplanet-extra*.zip
+  rm $deldir/virtualplanet-extra*.exe
   rm -rf $builddir
 
 
@@ -62,6 +63,7 @@ if [[ $make_linux_data ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/debian $builddir
     cd $builddir
+    mkdir debian/virtualplanet-extra/usr/
     mv share debian/virtualplanet-extra/usr/
     cd debian
     sed -i "/Version:/ s/1/$version/" virtualplanet-extra/DEBIAN/control
@@ -73,6 +75,8 @@ if [[ $make_linux_data ]]; then
     cd $wd
     rsync -a --exclude=.svn Installer/Linux/rpm $builddir
     cd $builddir
+    mkdir rpm/virtualplanet-extra
+    mkdir rpm/virtualplanet-extra/usr/
     mv debian/virtualplanet-extra/usr/* rpm/virtualplanet-extra/usr/
     cd rpm
     sed -i "/Version:/ s/1/$version/"  SPECS/virtualplanet-extra.spec
