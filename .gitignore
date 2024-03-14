@@ -6,9 +6,16 @@ Makefile.fpc
 Makefile.fpcxxx
 vpa/backup/
 vpa/units/
+vpa/vpa.lps
 vpa/vpa
 vpa/vpa.exe
 component/glscene/Packages/lib/
+component/downloaddialog/lib/
+component/enhedits/lib/
+component/lib/
+component/libsql/lib/
+component/synapse/lib/
+component/uniqueinstance/lib/
 data/zoneinfo/
 PROG/
 EXTRA/
